@@ -11,6 +11,8 @@ public class Main
 {
     private static ArrayList<String> vokals = new ArrayList<>();
     private static ArrayList<String> konsonants = new ArrayList<>();
+    private static ArrayList<String> vokalKonsonant = new ArrayList<>();
+    private static ArrayList<String> konsonantVokals = new ArrayList<>();
 
     public static void main(String[] args)
     {
@@ -40,25 +42,25 @@ public class Main
         vokals.add("a");
         vokals.add("i");
         vokals.add("o");
-
         vokals.add("ai");
-        vokals.add("an");
-        vokals.add("ah");
-        vokals.add("aj");
-        vokals.add("al");
-        vokals.add("ay");
         vokals.add("ia");
         vokals.add("io");
-        vokals.add("ih");
-        vokals.add("il");
-        vokals.add("iv");
         vokals.add("oi");
-        vokals.add("og");
-        vokals.add("oh");
-        vokals.add("ol");
-        vokals.add("on");
-        vokals.add("ov");
-        vokals.add("oy");
+
+        vokalKonsonant.add("an");
+        vokalKonsonant.add("ah");
+        vokalKonsonant.add("aj");
+        vokalKonsonant.add("al");
+        vokalKonsonant.add("ay");
+        vokalKonsonant.add("ih");
+        vokalKonsonant.add("il");
+        vokalKonsonant.add("iv");
+        vokalKonsonant.add("og");
+        vokalKonsonant.add("oh");
+        vokalKonsonant.add("ol");
+        vokalKonsonant.add("on");
+        vokalKonsonant.add("ov");
+        vokalKonsonant.add("oy");
 
         konsonants.add("d");
         konsonants.add("g");
@@ -68,52 +70,75 @@ public class Main
         konsonants.add("n");
         konsonants.add("v");
         konsonants.add("y");
-
-        konsonants.add("da");
-        konsonants.add("do");
-        konsonants.add("ga");
-        konsonants.add("go");
         konsonants.add("gl");
         konsonants.add("gn");
         konsonants.add("gy");
-        konsonants.add("ha");
         konsonants.add("hn");
         konsonants.add("hy");
-        konsonants.add("ja");
-        konsonants.add("jo");
-        konsonants.add("la");
-        konsonants.add("li");
-        konsonants.add("lo");
         konsonants.add("ln");
-        konsonants.add("na");
-        konsonants.add("no");
         konsonants.add("nh");
         konsonants.add("ny");
-        konsonants.add("va");
-        konsonants.add("vo");
         konsonants.add("vy");
-        konsonants.add("ya");
-        konsonants.add("yo");
         konsonants.add("yh");
         konsonants.add("yl");
         konsonants.add("yv");
         konsonants.add("ll");
         konsonants.add("nn");
+
+        konsonantVokals.add("da");
+        konsonantVokals.add("do");
+        konsonantVokals.add("ga");
+        konsonantVokals.add("go");
+        konsonantVokals.add("ha");
+        konsonantVokals.add("ja");
+        konsonantVokals.add("jo");
+        konsonantVokals.add("la");
+        konsonantVokals.add("li");
+        konsonantVokals.add("lo");
+        konsonantVokals.add("na");
+        konsonantVokals.add("no");
+        konsonantVokals.add("va");
+        konsonantVokals.add("vo");
+        konsonantVokals.add("ya");
+        konsonantVokals.add("yo");
     }
 
     private static String generateName()
     {
         StringBuilder name = new StringBuilder();
-        for(int i = (int) (Math.random() * 5 + 2); i > 0; i--)
+        for(int i = 0; i < (int) (Math.random() * 5 + 2); i++)
         {
-            if(i % 2 == 0)
-                name.append(randomVokal());
-            else
-                name.append(randomKonsonant());
+            switch(i % 4)
+            {
+                case 0:
+                    System.out.println("Adding vokalEnd");
+                    name.append(vokalEnd());
+                    break;
+                case 1:
+                    System.out.println("Adding konsonant");
+                    name.append(randomKonsonant());
+                    break;
+                case 2:
+                    System.out.println("Adding vokalStart");
+                    name.append(vokalStart());
+                    break;
+                default:
+                    System.out.println("Adding vokal");
+                    name.append(randomVokal());
+                    break;
+            }
         }
         return name.toString();
     }
 
+    private static String vokalEnd()
+    {
+        return konsonantVokals.get((int) (Math.random() * konsonantVokals.size()));
+    }
+    private static String vokalStart()
+    {
+        return vokalKonsonant.get((int) (Math.random() * vokalKonsonant.size()));
+    }
     private static String randomVokal()
     {
         return vokals.get((int) (Math.random() * vokals.size()));
