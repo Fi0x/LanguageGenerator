@@ -11,6 +11,7 @@ public class Setup
         Logger.getInstance().setVerbose(true);
         Logger.createNewTemplate(LOG.QUESTION, LogColor.CYAN_BRIGHT, "", false, false, false, true);
         Logger.createNewTemplate(LOG.OUTPUT, LogColor.PURPLE_BRIGHT, "", false, false, false, true);
+        Logger.createNewTemplate(LOG.SUCCESS, LogColor.GREEN_BRIGHT, "", false, false, false, true);
         Logger.createNewTemplate(LOG.ERROR, LogColor.RED_BRIGHT, "", false, false, false, true);
         Logger.createNewTemplate(LOG.INFO, LogColor.WHITE_BRIGHT, "", false, false, false, true);
     }
