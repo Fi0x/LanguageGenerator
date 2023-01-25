@@ -1,29 +1,27 @@
 package io.fi0x;
 
-import io.fi0x.javalogger.logging.LogColor;
 import io.fi0x.javalogger.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main
 {
-    private static ArrayList<String> vokals = new ArrayList<>();
-    private static ArrayList<String> konsonants = new ArrayList<>();
-    private static ArrayList<String> vokalKonsonant = new ArrayList<>();
-    private static ArrayList<String> konsonantVokals = new ArrayList<>();
+    private static final ArrayList<String> vokals = new ArrayList<>();
+    private static final ArrayList<String> konsonants = new ArrayList<>();
+    private static final ArrayList<String> vokalKonsonant = new ArrayList<>();
+    private static final ArrayList<String> konsonantVokals = new ArrayList<>();
 
     public static void main(String[] args)
     {
-        Logger.getInstance().setDebug(true);
-        Logger.getInstance().setVerbose(true);
-        Logger.createNewTemplate("Name", LogColor.GREEN, "", false, false, false, true, false, "");
+        Setup.initializeLogger();
 
-        Logger.log("Programm starting...", Logger.TEMPLATE.INFO);
+        Logger.log("Programm starting...", LOG.INFO);
         loadLanguage();
 
-        Logger.log("How many names?", Logger.TEMPLATE.INFO);
+        Logger.log("How many names would you like to generate?", LOG.QUESTION);
         Scanner sc = new Scanner(System.in);
         int count = 5;
         try
@@ -34,7 +32,7 @@ public class Main
         }
 
         for(; count > 0; count--)
-            Logger.log(generateName(), "Name");
+            Logger.log(generateName(), LOG.OUTPUT);
     }
 
     private static void loadLanguage()
@@ -110,24 +108,14 @@ public class Main
         {
             switch(i % 4)
             {
-                case 0:
-                    System.out.println("Adding vokalEnd");
-                    name.append(vokalEnd());
-                    break;
-                case 1:
-                    System.out.println("Adding konsonant");
-                    name.append(randomKonsonant());
-                    break;
-                case 2:
-                    System.out.println("Adding vokalStart");
-                    name.append(vokalStart());
-                    break;
-                default:
-                    System.out.println("Adding vokal");
-                    name.append(randomVokal());
-                    break;
+                case 0 -> name.append(vokalEnd());
+                case 1 -> name.append(randomKonsonant());
+                case 2 -> name.append(vokalStart());
+                default -> name.append(randomVokal());
             }
         }
+
+        name.setCharAt(0, String.valueOf(name.charAt(0)).toUpperCase(Locale.ROOT).charAt(0));
         return name.toString();
     }
 
