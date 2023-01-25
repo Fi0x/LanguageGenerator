@@ -14,5 +14,6 @@ public class Setup
         Logger.createNewTemplate(LOG.SUCCESS, LogColor.GREEN_BRIGHT, "", false, false, false, true);
         Logger.createNewTemplate(LOG.ERROR, LogColor.RED_BRIGHT, "", false, false, false, true);
         Logger.createNewTemplate(LOG.INFO, LogColor.WHITE_BRIGHT, "", false, false, false, true);
+        Logger.createNewTemplate(LOG.MENU, LogColor.BLUE_BRIGHT, "", false, false, false, true);
     }
 }

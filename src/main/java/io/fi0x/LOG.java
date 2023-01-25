@@ -6,5 +6,6 @@ public enum LOG
     OUTPUT,
     SUCCESS,
     ERROR,
-    INFO
+    INFO,
+    MENU
 }

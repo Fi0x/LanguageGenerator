@@ -15,10 +15,16 @@ public class LanguageTraits
     public static final ArrayList<String> vocalConsonant = new ArrayList<>();
     public static final ArrayList<String> consonantVocals = new ArrayList<>();
 
-    public void loadDefaultLanguage()
+    public static void loadDefaultLanguage()
     {
         String fileName = "languages/kaiserreich_revin.json";
-        File languageFile = new File(Objects.requireNonNull(getClass().getClassLoader().getResource(fileName)).getFile());
+        loadLanguageFile(fileName);
+    }
+
+    public static void loadLanguageFile(String filePath)
+    {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        File languageFile = new File(Objects.requireNonNull(classLoader.getResource(filePath)).getFile());
         StringBuilder fileContent = new StringBuilder();
         try
         {
