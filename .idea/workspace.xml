@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Created default language file and automated loading of it">
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/InputHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/Menu.java" afterDir="false" />
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added fancy menus">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/LOG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/LOG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/FileLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/FileLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/InputHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/InputHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/LanguageTraits.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/LanguageTraits.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/Setup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/Setup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +79,9 @@
       <workItem from="1674503897320" duration="208000" />
       <workItem from="1674504116945" duration="2023000" />
       <workItem from="1674635705634" duration="744000" />
-      <workItem from="1674679447195" duration="7153000" />
+      <workItem from="1674679447195" duration="7233000" />
+      <workItem from="1674729143227" duration="1299000" />
+      <workItem from="1674740669690" duration="1612000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -111,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674687111868</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added fancy menus">
+      <created>1674689134984</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1674689134984</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -133,6 +140,7 @@
     <MESSAGE value="Updated randomizer to create words that are easier to pronounce" />
     <MESSAGE value="Updated structure" />
     <MESSAGE value="Created default language file and automated loading of it" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created default language file and automated loading of it" />
+    <MESSAGE value="Added fancy menus" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added fancy menus" />
   </component>
 </project>
