@@ -7,7 +7,8 @@ public class Randomizer
     public static String generateName()
     {
         StringBuilder name = new StringBuilder();
-        for(int i = 0; i < (int) (Math.random() * 5 + 2); i++)
+        int desiredLength = (int) (Math.random() * (LanguageTraits.maxNameLength - LanguageTraits.minNameLength) + LanguageTraits.minNameLength);
+        for(int i = (int) (Math.random() * 4); name.length() < desiredLength; i++)
         {
             switch(i % 4)
             {

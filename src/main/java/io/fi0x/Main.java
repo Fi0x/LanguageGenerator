@@ -12,6 +12,8 @@ public class Main
         LanguageTraits.loadDefaultLanguage();
         Logger.log("Default language loaded", LOG.INFO);
 
+        //TODO: Create a default folder where languages can be stored (See EDCT) and allow use of these with a list view
+
         Menu.start();
     }
 }
