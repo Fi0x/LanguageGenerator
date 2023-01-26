@@ -162,36 +162,46 @@ public class Menu
         String userInput = scanner.nextLine();
         switch(userInput.toUpperCase(Locale.ROOT))
         {
-            case "A":
-                Logger.log("Returning to main-menu...", LOG.SUCCESS);
-                break;
-            case "E":
+            case "A" -> Logger.log("Returning to main-menu...", LOG.SUCCESS);
+            case "E" ->
+            {
                 Logger.log("Exiting program...", LOG.SUCCESS);
                 System.exit(0);
-            case "V":
+            }
+            case "V" ->
+            {
                 Logger.log("Type each vocal in a new line. Add an empty line to finish", LOG.SUCCESS);
                 LanguageTraits.vocals.addAll(getFullLines());
                 addFrequentlyUsedLetters();
                 return;
-            case "C":
+            }
+            case "C" ->
+            {
                 Logger.log("Type each consonant in a new line. Add an empty line to finish", LOG.SUCCESS);
                 LanguageTraits.consonants.addAll(getFullLines());
                 addFrequentlyUsedLetters();
                 return;
-            case "VO":
+            }
+            case "VO" ->
+            {
                 Logger.log("Type each vocal-consonant-combination in a new line. Add an empty line to finish", LOG.SUCCESS);
                 LanguageTraits.vocalConsonant.addAll(getFullLines());
                 addFrequentlyUsedLetters();
                 return;
-            case "CO":
+            }
+            case "CO" ->
+            {
                 Logger.log("Type each consonant-vocal-combination in a new line. Add an empty line to finish", LOG.SUCCESS);
                 LanguageTraits.consonantVocals.addAll(getFullLines());
                 addFrequentlyUsedLetters();
                 return;
-            default:
+            }
+            default ->
+            {
                 Logger.log("Invalid input", LOG.ERROR);
                 addFrequentlyUsedLetters();
                 return;
+            }
         }
         mainMenu();
     }
@@ -215,11 +225,12 @@ public class Menu
             {
                 Logger.log("How long should the shortest names be?", LOG.QUESTION);
                 userInput = scanner.nextLine();
+                int min = 3;
                 if(InputHandler.isInt(userInput))
                 {
                     try
                     {
-                        LanguageTraits.minNameLength = InputHandler.getInt(userInput);
+                        min = InputHandler.getInt(userInput);
                     } catch(Exception e)
                     {
                         Logger.log("Invalid input", LOG.ERROR);
@@ -229,11 +240,12 @@ public class Menu
                 }
                 Logger.log("How long should the longest names be?", LOG.QUESTION);
                 userInput = scanner.nextLine();
+                int max = 10;
                 if(InputHandler.isInt(userInput))
                 {
                     try
                     {
-                        LanguageTraits.maxNameLength = InputHandler.getInt(userInput);
+                        max = InputHandler.getInt(userInput);
                     } catch(Exception e)
                     {
                         Logger.log("Invalid input", LOG.ERROR);
@@ -241,12 +253,7 @@ public class Menu
                         return;
                     }
                 }
-                if(LanguageTraits.minNameLength > LanguageTraits.maxNameLength)
-                {
-                    int tmp = LanguageTraits.minNameLength;
-                    LanguageTraits.minNameLength = LanguageTraits.maxNameLength;
-                    LanguageTraits.maxNameLength = tmp;
-                }
+                LanguageTraits.setNameLengths(min, max);
                 changeLanguageRules();
                 return;
             }

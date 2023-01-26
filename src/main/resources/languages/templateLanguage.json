@@ -1,0 +1,23 @@
+{
+  "nameLengths": [
+    3, 10
+  ],
+  "vocals": [
+    "a",
+    "aa",
+    "aba"
+  ],
+  "vocalConsonant": [
+    "ab",
+    "abab"
+  ],
+  "consonants": [
+    "b",
+    "bb",
+    "bab"
+  ],
+  "consonantVocals": [
+    "ba",
+    "baba"
+  ]
+}

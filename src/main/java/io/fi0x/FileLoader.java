@@ -1,9 +1,11 @@
 package io.fi0x;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileLoader
@@ -22,6 +24,9 @@ public class FileLoader
             throw new RuntimeException(e);
         }
         JSONObject jsonObject = new JSONObject(fileContent.toString());
+
+        JSONArray lengths = jsonObject.getJSONArray("nameLengths");
+        LanguageTraits.setNameLengths(lengths.getInt(0), lengths.getInt(1));
 
         LanguageTraits.vocals.clear();
         for(Object entry : jsonObject.getJSONArray("vocals"))

@@ -27,4 +27,14 @@ public class LanguageTraits
         vocalConsonant.clear();
         consonantVocals.clear();
     }
+
+    public static void setNameLengths(int minLength, int maxLength)
+    {
+        if(LanguageTraits.minNameLength > LanguageTraits.maxNameLength)
+        {
+            int tmp = LanguageTraits.minNameLength;
+            LanguageTraits.minNameLength = LanguageTraits.maxNameLength;
+            LanguageTraits.maxNameLength = tmp;
+        }
+    }
 }
