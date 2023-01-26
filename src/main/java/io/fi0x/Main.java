@@ -34,8 +34,11 @@ public class Main
             Logger.log("Could not create template for language file in language folder", LOG.INFO);
         }
 
-        LanguageTraits.loadDefaultLanguage();
-        Logger.log("Default language loaded", LOG.INFO);
+        int langAmount = FileLoader.loadAllLanguageFiles();
+        Logger.log(langAmount + " language" + (langAmount > 1 ? "s" : "") + " loaded", LOG.INFO);
+
+        LanguageTraits.loadTemplateLanguage();
+        Logger.log("Template language is now active", LOG.INFO);
 
         Menu.start();
     }

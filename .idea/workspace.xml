@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added option to adjust language&#10;&#10;Improved randomizer">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/languages/templateLanguage.json" afterDir="false" />
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Created folder to store languages and added template file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/FileLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/FileLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/LanguageTraits.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/LanguageTraits.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/Setup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/Setup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/languages/kaiserreich_revin.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/languages/kaiserreich_revin.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +87,7 @@
       <workItem from="1674635705634" duration="744000" />
       <workItem from="1674679447195" duration="7233000" />
       <workItem from="1674729143227" duration="1299000" />
-      <workItem from="1674740669690" duration="9791000" />
+      <workItem from="1674740669690" duration="11882000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -141,7 +138,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674772098563</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Created folder to store languages and added template file">
+      <created>1674774220343</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1674774220343</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,6 +170,7 @@
     <MESSAGE value="Added fancy menus" />
     <MESSAGE value="Finished loading of new language files" />
     <MESSAGE value="Added option to adjust language&#10;&#10;Improved randomizer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added option to adjust language&#10;&#10;Improved randomizer" />
+    <MESSAGE value="Created folder to store languages and added template file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created folder to store languages and added template file" />
   </component>
 </project>

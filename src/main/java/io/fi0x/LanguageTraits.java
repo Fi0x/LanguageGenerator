@@ -12,9 +12,9 @@ public class LanguageTraits
     public static final ArrayList<String> vocalConsonant = new ArrayList<>();
     public static final ArrayList<String> consonantVocals = new ArrayList<>();
 
-    public static void loadDefaultLanguage()
+    public static void loadTemplateLanguage()
     {
-        String fileName = "languages/kaiserreich_revin.json";
+        String fileName = "languages/templateLanguage.json";
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         File languageFile = new File(Objects.requireNonNull(classLoader.getResource(fileName)).getFile());
         FileLoader.loadLanguageFile(languageFile);

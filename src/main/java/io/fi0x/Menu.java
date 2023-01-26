@@ -3,6 +3,7 @@ package io.fi0x;
 import io.fi0x.javalogger.logging.LogEntry;
 import io.fi0x.javalogger.logging.Logger;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
@@ -19,9 +20,11 @@ public class Menu
     private static void mainMenu()
     {
         Logger.log("\n---Main Menu---", LOG.MENU);
+        Logger.log("-(G)enerate random names with current language (You can also just enter a number)", LOG.MENU);
+        Logger.log("-(S)how a list of all loaded languages", LOG.MENU);
+        Logger.log("-(A)ctivate loaded language", LOG.MENU);
         Logger.log("-(L)oad new language file", LOG.MENU);
         Logger.log("-(T)ype in new language traits", LOG.MENU);
-        Logger.log("-(G)enerate random names with current language (You can also just enter a number)", LOG.MENU);
         Logger.log("-(E)xit program", LOG.MENU);
 
         String userInput = scanner.nextLine();
@@ -36,6 +39,17 @@ public class Menu
                 break;
             case "G":
                 generateNames();
+                break;
+            case "S":
+                Logger.log("Loaded Languages:", LOG.SUCCESS);
+                for(String name : FileLoader.getLoadedLanguageNames())
+                    Logger.log(name, LOG.OUTPUT);
+                mainMenu();
+                break;
+            case "A":
+                Logger.log("Please type in the name of the language you want to change to", LOG.QUESTION);
+                FileLoader.loadLanguageFile(new File(Main.languageFolder + File.separator + scanner.nextLine() + ".json"));
+                mainMenu();
                 break;
             case "E":
                 Logger.log("Exiting program...", LOG.SUCCESS);
@@ -170,28 +184,28 @@ public class Menu
             }
             case "V" ->
             {
-                Logger.log("Type each vocal in a new line. Add an empty line to finish", LOG.SUCCESS);
+                Logger.log("Type each vocal in a new line. Add an empty line to finish", LOG.QUESTION);
                 LanguageTraits.vocals.addAll(getFullLines());
                 addFrequentlyUsedLetters();
                 return;
             }
             case "C" ->
             {
-                Logger.log("Type each consonant in a new line. Add an empty line to finish", LOG.SUCCESS);
+                Logger.log("Type each consonant in a new line. Add an empty line to finish", LOG.QUESTION);
                 LanguageTraits.consonants.addAll(getFullLines());
                 addFrequentlyUsedLetters();
                 return;
             }
             case "VO" ->
             {
-                Logger.log("Type each vocal-consonant-combination in a new line. Add an empty line to finish", LOG.SUCCESS);
+                Logger.log("Type each vocal-consonant-combination in a new line. Add an empty line to finish", LOG.QUESTION);
                 LanguageTraits.vocalConsonant.addAll(getFullLines());
                 addFrequentlyUsedLetters();
                 return;
             }
             case "CO" ->
             {
-                Logger.log("Type each consonant-vocal-combination in a new line. Add an empty line to finish", LOG.SUCCESS);
+                Logger.log("Type each consonant-vocal-combination in a new line. Add an empty line to finish", LOG.QUESTION);
                 LanguageTraits.consonantVocals.addAll(getFullLines());
                 addFrequentlyUsedLetters();
                 return;
