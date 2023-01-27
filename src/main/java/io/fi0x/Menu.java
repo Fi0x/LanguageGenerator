@@ -121,7 +121,7 @@ public class Menu
     private static void typeInLanguageTraits()
     {
         Logger.log("\n---Setup Language Traits---", LOG.MENU);
-        Logger.log("-(N)ew frequently used letters", LOG.MENU);
+        Logger.log("-(N)ew frequently used letters or forbidden combinations", LOG.MENU);
         Logger.log("-(R)ules for this language", LOG.MENU);
         Logger.log("-(C)lear all current settings and remove stored information", LOG.MENU);
         Logger.log("-(A)bort and go back to main-menu", LOG.MENU);
@@ -165,11 +165,12 @@ public class Menu
     }
     private static void addFrequentlyUsedLetters()
     {
-        Logger.log("\n---Add frequently used letters---", LOG.MENU);
+        Logger.log("\n---Add frequently used letters or forbidden combinations---", LOG.MENU);
         Logger.log("-(V)ocals", LOG.MENU);
         Logger.log("-(C)onsonants", LOG.MENU);
         Logger.log("-(VO)cal start, consonant end", LOG.MENU);
         Logger.log("-(CO)nsonant start, vocal end", LOG.MENU);
+        Logger.log("-(F)orbidden combinations", LOG.MENU);
         Logger.log("-(A)bort and go back to main-menu", LOG.MENU);
         Logger.log("-(E)xit program", LOG.MENU);
 
@@ -207,6 +208,13 @@ public class Menu
             {
                 Logger.log("Type each consonant-vocal-combination in a new line. Add an empty line to finish", LOG.QUESTION);
                 LanguageTraits.consonantVocals.addAll(getFullLines());
+                addFrequentlyUsedLetters();
+                return;
+            }
+            case "F" ->
+            {
+                Logger.log("Type each combination of letters in a new line. Add an empty line to finish", LOG.QUESTION);
+                LanguageTraits.forbiddenCombinations.addAll(getFullLines());
                 addFrequentlyUsedLetters();
                 return;
             }

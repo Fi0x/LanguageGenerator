@@ -1,5 +1,6 @@
 package io.fi0x;
 
+import io.fi0x.javalogger.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -24,7 +25,8 @@ public class FileLoader
             fileReader.close();
         } catch(FileNotFoundException e)
         {
-            throw new RuntimeException(e);
+            Logger.log("Selected language could not be found", LOG.ERROR);
+            return;
         }
         JSONObject jsonObject = new JSONObject(fileContent.toString());
 
@@ -46,6 +48,10 @@ public class FileLoader
         LanguageTraits.consonantVocals.clear();
         for(Object entry : jsonObject.getJSONArray("consonantVocals"))
             LanguageTraits.consonantVocals.add((String) entry);
+
+        LanguageTraits.forbiddenCombinations.clear();
+        for(Object entry : jsonObject.getJSONArray("forbiddenCombinations"))
+            LanguageTraits.forbiddenCombinations.add((String) entry);
     }
 
     public static boolean storeCurrentLanguage(String name) throws IOException
@@ -78,6 +84,10 @@ public class FileLoader
         consonantVocals.put(LanguageTraits.consonantVocals);
         jsonObject.put("consonantVocals", consonantVocals);
 
+        JSONArray forbiddenCombinations = new JSONArray();
+        forbiddenCombinations.put(LanguageTraits.forbiddenCombinations);
+        jsonObject.put("forbiddenCombinations", forbiddenCombinations);
+
         String content = jsonObject.toString();
         Files.write(file.toPath(), Collections.singleton(content), StandardCharsets.UTF_8);
 
@@ -100,7 +110,7 @@ public class FileLoader
         ArrayList<String> names = new ArrayList<>();
 
         for(File f : languageFiles)
-            names.add(f.getName());
+            names.add(f.getName().replace(".json", ""));
 
         return names;
     }

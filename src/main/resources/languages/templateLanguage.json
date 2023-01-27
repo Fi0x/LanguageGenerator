@@ -14,10 +14,14 @@
   "consonants": [
     "b",
     "bb",
-    "bab"
+    "bab",
+    "c"
   ],
   "consonantVocals": [
     "ba",
     "baba"
+  ],
+  "forbiddenCombinations": [
+    "ca"
   ]
 }

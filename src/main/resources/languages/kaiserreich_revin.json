@@ -68,5 +68,7 @@
     "vo",
     "ya",
     "yo"
+  ],
+  "forbiddenCombinations": [
   ]
 }

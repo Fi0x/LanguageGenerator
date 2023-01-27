@@ -12,10 +12,10 @@ public class Randomizer
         {
             switch(i % 4)
             {
-                case 0 -> name.append(vokalEnd());
-                case 1 -> name.append(randomKonsonant());
-                case 2 -> name.append(vokalStart());
-                default -> name.append(randomVokal());
+                case 0 -> name.append(vokalEnd(name.toString()));
+                case 1 -> name.append(randomKonsonant(name.toString()));
+                case 2 -> name.append(vokalStart(name.toString()));
+                default -> name.append(randomVokal(name.toString()));
             }
         }
 
@@ -23,20 +23,24 @@ public class Randomizer
         return name.toString();
     }
 
-    private static String vokalEnd()
+    private static String vokalEnd(String previousLetters)
     {
+        //TODO: Add forbidden combination check
         return LanguageTraits.consonantVocals.get((int) (Math.random() * LanguageTraits.consonantVocals.size()));
     }
-    private static String vokalStart()
+    private static String vokalStart(String previousLetters)
     {
+        //TODO: Add forbidden combination check
         return LanguageTraits.vocalConsonant.get((int) (Math.random() * LanguageTraits.vocalConsonant.size()));
     }
-    private static String randomVokal()
+    private static String randomVokal(String previousLetters)
     {
+        //TODO: Add forbidden combination check
         return LanguageTraits.vocals.get((int) (Math.random() * LanguageTraits.vocals.size()));
     }
-    private static String randomKonsonant()
+    private static String randomKonsonant(String previousLetters)
     {
+        //TODO: Add forbidden combination check
         return LanguageTraits.consonants.get((int) (Math.random() * LanguageTraits.consonants.size()));
     }
 }

@@ -11,6 +11,7 @@ public class LanguageTraits
     public static final ArrayList<String> consonants = new ArrayList<>();
     public static final ArrayList<String> vocalConsonant = new ArrayList<>();
     public static final ArrayList<String> consonantVocals = new ArrayList<>();
+    public static final ArrayList<String> forbiddenCombinations = new ArrayList<>();
 
     public static void loadTemplateLanguage()
     {
@@ -26,15 +27,20 @@ public class LanguageTraits
         consonants.clear();
         vocalConsonant.clear();
         consonantVocals.clear();
+        forbiddenCombinations.clear();
     }
 
     public static void setNameLengths(int minLength, int maxLength)
     {
-        if(LanguageTraits.minNameLength > LanguageTraits.maxNameLength)
+        if(minLength > maxLength)
         {
-            int tmp = LanguageTraits.minNameLength;
-            LanguageTraits.minNameLength = LanguageTraits.maxNameLength;
-            LanguageTraits.maxNameLength = tmp;
+            minNameLength = maxLength;
+            maxNameLength = minLength;
+        }
+        else
+        {
+            minNameLength = minLength;
+            maxNameLength = maxLength;
         }
     }
 }
