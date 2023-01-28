@@ -47,8 +47,9 @@ public class Menu
                 mainMenu();
                 break;
             case "A":
-                Logger.log("Please type in the name of the language you want to change to", LOG.QUESTION);
-                FileLoader.loadLanguageFile(new File(Main.languageFolder + File.separator + scanner.nextLine() + ".json"));
+                Logger.log("Please type in the name of the language you want to change to or its number from the list", LOG.QUESTION);
+                if(!FileLoader.loadLanguageFile(scanner.nextLine()))
+                    Logger.log("Could not find the specified language file", LOG.ERROR);
                 mainMenu();
                 break;
             case "E":
