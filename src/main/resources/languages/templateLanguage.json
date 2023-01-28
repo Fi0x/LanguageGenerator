@@ -9,13 +9,16 @@
   ],
   "vocalConsonant": [
     "ab",
-    "abab"
+    "abab",
+    "ac"
   ],
   "consonants": [
     "b",
     "bb",
     "bab",
-    "c"
+    "c",
+    "cc",
+    "cbc"
   ],
   "consonantVocals": [
     "ba",
