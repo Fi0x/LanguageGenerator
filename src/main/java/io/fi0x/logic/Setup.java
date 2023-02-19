@@ -1,5 +1,6 @@
-package io.fi0x;
+package io.fi0x.logic;
 
+import io.fi0x.Main;
 import io.fi0x.javalogger.logging.LogColor;
 import io.fi0x.javalogger.logging.Logger;
 

@@ -1,4 +1,4 @@
-package io.fi0x;
+package io.fi0x.logic;
 
 import java.io.File;
 

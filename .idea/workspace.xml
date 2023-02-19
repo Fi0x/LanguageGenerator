@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added check for forbidden combinations to randomizer">
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added option to select language by index">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/languages/Halblingsprache.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/FileLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/FileLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/languages/kaiserreich_revin.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/languages/Elfensprache.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +59,7 @@
       <module name="LanguageGenerator" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="io.fi0x.*" />
+          <option name="PATTERN" value="io.fi0x.logic.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -68,7 +69,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.io.fi0x.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -87,7 +88,15 @@
       <workItem from="1674729143227" duration="1299000" />
       <workItem from="1674740669690" duration="11989000" />
       <workItem from="1674821712027" duration="4064000" />
-      <workItem from="1674896309292" duration="3539000" />
+      <workItem from="1674896309292" duration="3578000" />
+      <workItem from="1675104843937" duration="194000" />
+      <workItem from="1675793323413" duration="1922000" />
+      <workItem from="1675842348512" duration="1197000" />
+      <workItem from="1675983388585" duration="200000" />
+      <workItem from="1676141740899" duration="634000" />
+      <workItem from="1676458208473" duration="605000" />
+      <workItem from="1676712489658" duration="2937000" />
+      <workItem from="1676799686869" duration="432000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -166,7 +175,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674897844416</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Added option to select language by index">
+      <created>1674940104388</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1674940104388</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,6 +211,7 @@
     <MESSAGE value="Added option to display a list of loaded languages and to switch to another language" />
     <MESSAGE value="Added language trait for forbidden combinations" />
     <MESSAGE value="Added check for forbidden combinations to randomizer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added check for forbidden combinations to randomizer" />
+    <MESSAGE value="Added option to select language by index" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added option to select language by index" />
   </component>
 </project>

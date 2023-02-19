@@ -1,0 +1,49 @@
+{
+  "nameLengths": [
+    3, 15
+  ],
+  "vocals": [
+    "a",
+    "e",
+    "i",
+    "o",
+    "u",
+    "ai",
+    "ao",
+    "au",
+    "ei",
+    "io",
+    "oa",
+    "oi",
+    "ui",
+    "aba"
+  ],
+  "vocalConsonant": [
+  ],
+  "consonants": [
+    "b",
+    "d",
+    "g",
+    "h",
+    "j",
+    "k",
+    "l",
+    "n",
+    "q",
+    "r",
+    "s",
+    "t",
+    "y",
+    "z"
+  ],
+  "consonantVocals": [
+  ],
+  "forbiddenCombinations": [
+    "f",
+    "m",
+    "p",
+    "v",
+    "w",
+    "x"
+  ]
+}

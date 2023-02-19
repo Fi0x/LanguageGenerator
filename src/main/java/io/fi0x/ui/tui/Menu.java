@@ -1,9 +1,9 @@
-package io.fi0x;
+package io.fi0x.ui.tui;
 
 import io.fi0x.javalogger.logging.LogEntry;
 import io.fi0x.javalogger.logging.Logger;
+import io.fi0x.logic.*;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;

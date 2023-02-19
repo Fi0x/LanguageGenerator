@@ -1,6 +1,11 @@
 package io.fi0x;
 
 import io.fi0x.javalogger.logging.Logger;
+import io.fi0x.logic.FileLoader;
+import io.fi0x.logic.LOG;
+import io.fi0x.logic.LanguageTraits;
+import io.fi0x.logic.Setup;
+import io.fi0x.ui.tui.Menu;
 
 import java.io.File;
 import java.io.IOException;

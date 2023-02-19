@@ -1,6 +1,6 @@
 {
   "nameLengths": [
-    3, 10
+    2, 12
   ],
   "vocals": [
     "a",
@@ -9,7 +9,8 @@
     "ai",
     "ia",
     "io",
-    "oi"
+    "oi",
+    "ae"
   ],
   "vocalConsonant": [
     "an",
@@ -25,7 +26,8 @@
     "ol",
     "on",
     "ov",
-    "oy"
+    "oy",
+    "ess"
   ],
   "consonants": [
     "d",
