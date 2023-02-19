@@ -100,16 +100,12 @@
               <jar>target/LanguageGenerator-${project.version}-jar-with-dependencies.jar</jar>
               <downloadUrl>https://jdk.java.net/archive/</downloadUrl>
               <stayAlive>true</stayAlive>
-              <icon>src\main\resources\images\icon.ico</icon>
+              <icon>src\main\resources\images\ico.ico</icon>
               <classPath>
-                <mainClass>com.fi0x.edct.Main</mainClass>
+                <mainClass>io.fi0x.Main</mainClass>
               </classPath>
-              <singleInstance>
-                <mutexName>LanguageGenerator</mutexName>
-                <windowTitle>Language Generator</windowTitle>
-              </singleInstance>
               <jre>
-                <minVersion>13.0.1</minVersion>
+                <path>jre</path>
               </jre>
               <versionInfo>
                 <fileVersion>${project.version}</fileVersion>
