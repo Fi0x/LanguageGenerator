@@ -42,7 +42,7 @@ public class Menu
                 break;
             case "S":
                 Logger.log("Loaded Languages:", LOG.SUCCESS);
-                for(String name : FileLoader.getLoadedLanguageNames())
+                for(String name : FileLoader.getLoadedLanguageNames(true))
                     Logger.log(name, LOG.OUTPUT);
                 mainMenu();
                 break;
@@ -63,21 +63,17 @@ public class Menu
                     {
                         int amount = InputHandler.getInt(userInput);
                         Logger.log("Generating " + amount + " names", LOG.SUCCESS);
-                        for(; amount > 0; amount--)
-                            Logger.log(Randomizer.generateName(), LOG.OUTPUT);
+                        Randomizer.generateWords(amount);
                         Logger.log("Names generated", LOG.SUCCESS);
-                        mainMenu();
                     } catch(Exception e)
                     {
                         Logger.log("Invalid input", LOG.ERROR);
-                        mainMenu();
                     }
                 }
                 else
-                {
                     Logger.log("Invalid input", LOG.ERROR);
-                    mainMenu();
-                }
+                mainMenu();
+                break;
         }
     }
     private static void loadNewFile()
@@ -310,8 +306,7 @@ public class Menu
                 {
                     int amount = InputHandler.getInt(userInput);
                     Logger.log("Generating " + amount + " names", LOG.SUCCESS);
-                    for(; amount > 0; amount--)
-                        Logger.log(Randomizer.generateName(), LOG.OUTPUT);
+                    Randomizer.generateWords(amount);
                     Logger.log("Names generated", LOG.SUCCESS);
                 } catch(Exception e)
                 {

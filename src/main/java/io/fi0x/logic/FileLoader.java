@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class FileLoader
 {
     private static final ArrayList<File> languageFiles = new ArrayList<>();
+    private static String activeLanguage;
     public static boolean loadLanguageFile(String nameOrIdx)
     {
         if(InputHandler.isInt(nameOrIdx))
@@ -71,7 +72,8 @@ public class FileLoader
         for(Object entry : jsonObject.getJSONArray("forbiddenCombinations"))
             LanguageTraits.forbiddenCombinations.add((String) entry);
 
-        Logger.log("Active language is now \"" + languageFile.getName().replace(".json", "") + "\"", LOG.SUCCESS);
+        activeLanguage = languageFile.getName().replace(".json", "");
+        Logger.log("Active language is now \"" + activeLanguage + "\"", LOG.SUCCESS);
     }
 
     public static boolean storeCurrentLanguage(String name) throws IOException
@@ -125,14 +127,18 @@ public class FileLoader
         }
         return languageFiles.size() - 1;
     }
-    public static ArrayList<String> getLoadedLanguageNames()
+    public static ArrayList<String> getLoadedLanguageNames(boolean showNumber)
     {
         loadAllLanguageFiles();
         ArrayList<String> names = new ArrayList<>();
 
         for(int i = 0; i < languageFiles.size(); i++)
-            names.add((i + 1) + ") " + languageFiles.get(i).getName().replace(".json", ""));
+            names.add((showNumber ? (i + 1) + ") " : "") + languageFiles.get(i).getName().replace(".json", ""));
 
         return names;
+    }
+    public static String getActiveLanguage()
+    {
+        return activeLanguage;
     }
 }

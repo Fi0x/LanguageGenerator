@@ -1,11 +1,29 @@
 package io.fi0x.logic;
 
+import io.fi0x.javalogger.logging.Logger;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class Randomizer
 {
-    public static String generateName()
+    private static final ArrayList<String> generatedWords = new ArrayList<>();
+
+    public static void generateWords(int count)
+    {
+        generatedWords.clear();
+        for(int i = 0; i < count; i++)
+        {
+            String word = generateName();
+            generatedWords.add(word);
+            Logger.log(word, LOG.OUTPUT);
+        }
+    }
+    public static ArrayList<String> getGeneratedWords()
+    {
+        return generatedWords;
+    }
+    private static String generateName()
     {
         StringBuilder name = new StringBuilder();
         int desiredLength = (int) (Math.random() * (LanguageTraits.maxNameLength - LanguageTraits.minNameLength) + LanguageTraits.minNameLength);

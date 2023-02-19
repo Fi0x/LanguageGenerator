@@ -4,11 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added option to select language by index">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/languages/Halblingsprache.json" afterDir="false" />
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added pom launch4j setup for gui-app">
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/ui/gui/MainWindow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/ui/gui/controller/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/css/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/languages/kaiserreich_revin.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/languages/Elfensprache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/logic/FileLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/logic/FileLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/logic/LanguageTraits.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/logic/LanguageTraits.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/logic/Randomizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/logic/Randomizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/ui/tui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/ui/tui/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,28 +44,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/Users/felpe/IdeaProjects/LanguageGenerator/src/main/resources/languages&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "E:/Users/felpe/IdeaProjects/LanguageGenerator/src/main/resources/images",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\images" />
+      <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\fxml" />
+      <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\css" />
       <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\languages" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="io.fi0x.Main" />
       <module name="LanguageGenerator" />
+      <option name="PROGRAM_PARAMETERS" value="-d -v" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="io.fi0x.logic.*" />
@@ -67,11 +80,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.io.fi0x.Main" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -96,7 +104,7 @@
       <workItem from="1676141740899" duration="634000" />
       <workItem from="1676458208473" duration="605000" />
       <workItem from="1676712489658" duration="2937000" />
-      <workItem from="1676799686869" duration="432000" />
+      <workItem from="1676799686869" duration="10299000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -182,7 +190,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674940104388</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Added pom launch4j setup for gui-app">
+      <created>1676800297687</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1676800297688</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,6 +227,7 @@
     <MESSAGE value="Added language trait for forbidden combinations" />
     <MESSAGE value="Added check for forbidden combinations to randomizer" />
     <MESSAGE value="Added option to select language by index" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added option to select language by index" />
+    <MESSAGE value="Added pom launch4j setup for gui-app" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added pom launch4j setup for gui-app" />
   </component>
 </project>

@@ -5,6 +5,7 @@ import io.fi0x.logic.FileLoader;
 import io.fi0x.logic.LOG;
 import io.fi0x.logic.LanguageTraits;
 import io.fi0x.logic.Setup;
+import io.fi0x.ui.gui.MainWindow;
 import io.fi0x.ui.tui.Menu;
 
 import java.io.File;
@@ -45,6 +46,7 @@ public class Main
         LanguageTraits.loadTemplateLanguage();
         Logger.log("Template language is now active", LOG.INFO);
 
-        Menu.start();
+        new Thread(Menu::start).start();
+        MainWindow.launchGUI(args);
     }
 }

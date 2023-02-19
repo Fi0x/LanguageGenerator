@@ -1,5 +1,8 @@
 package io.fi0x.logic;
+import io.fi0x.Main;
+
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -15,9 +18,8 @@ public class LanguageTraits
 
     public static void loadTemplateLanguage()
     {
-        String fileName = "languages/templateLanguage.json";
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        File languageFile = new File(Objects.requireNonNull(classLoader.getResource(fileName)).getFile());
+        String fileName = Main.languageFolder.getPath() + File.separator + "Language Template.json";
+        File languageFile = new File(fileName);
         FileLoader.loadLanguageFile(languageFile);
     }
 
