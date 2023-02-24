@@ -64,7 +64,7 @@ public class Randomizer
     {
         for(String forbidden : LanguageTraits.forbiddenCombinations)
         {
-            if((originalPart + newPart).contains(forbidden))
+            if((" " + originalPart + newPart).contains(forbidden))
                 return false;
         }
         return true;

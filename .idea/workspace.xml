@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added gui">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/ico.ico" afterDir="false" />
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Updated icon">
+      <change afterPath="$PROJECT_DIR$/setup.iss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/icon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/logic/Randomizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/logic/Randomizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/languages/templateLanguage.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/languages/templateLanguage.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +44,8 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "E:/Users/felpe/IdeaProjects/LanguageGenerator/src/main/resources/images",
-    "project.structure.last.edited": "Facets",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
   }
@@ -97,7 +97,8 @@
       <workItem from="1676141740899" duration="634000" />
       <workItem from="1676458208473" duration="605000" />
       <workItem from="1676712489658" duration="2937000" />
-      <workItem from="1676799686869" duration="11440000" />
+      <workItem from="1676799686869" duration="12107000" />
+      <workItem from="1677237656267" duration="2208000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -197,7 +198,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676811643276</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Updated icon">
+      <created>1676812701705</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1676812701705</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -229,6 +237,7 @@
     <MESSAGE value="Added option to select language by index" />
     <MESSAGE value="Added pom launch4j setup for gui-app" />
     <MESSAGE value="Added gui" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added gui" />
+    <MESSAGE value="Updated icon" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated icon" />
   </component>
 </project>
