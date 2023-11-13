@@ -7,7 +7,6 @@ import io.fi0x.logic.Randomizer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 
 import java.net.URL;
@@ -26,11 +25,7 @@ public class Main implements Initializable
     {
         languageDropDown.getItems().addAll(FileLoader.getLoadedLanguageNames(false));
         languageDropDown.getSelectionModel().select(FileLoader.getActiveLanguage());
-        languageDropDown.setOnAction(actionEvent ->
-        {
-            FileLoader.loadLanguageFile(languageDropDown.getValue());
-            //TODO: Close combobox again
-        });
+        languageDropDown.setOnAction(actionEvent -> FileLoader.loadLanguageFile(languageDropDown.getValue()));
     }
 
     @FXML
