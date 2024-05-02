@@ -5,7 +5,7 @@
 <head>
     <link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="webjars/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
-    <title>Language-Generator Word View</title>
+    <title>Language-Generator Language View</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-3 p-1">
@@ -21,17 +21,17 @@
     </ul>
 </nav>
 <div class="container">
-    <h1>Generated words:</h1>
+    <h1>Loaded languages:</h1>
     <table class="table">
         <thead>
         <tr>
-            <th>Word</th>
+            <th>Language</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${words}" var="word">
+        <c:forEach items="${languages}" var="language">
             <tr>
-                <td>${word.word}</td>
+                <td>${language}</td>
             </tr>
         </c:forEach>
         </tbody>

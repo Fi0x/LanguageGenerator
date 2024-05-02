@@ -5,6 +5,7 @@ import io.fi0x.languagegenerator.Main;
 import java.io.File;
 import java.util.ArrayList;
 
+@Deprecated
 public class LanguageTraits
 {
     public static int minNameLength = 3;

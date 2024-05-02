@@ -1,5 +1,6 @@
 package io.fi0x.languagegenerator.rest;
 
+import io.fi0x.languagegenerator.logic.FileLoader;
 import io.fi0x.languagegenerator.rest.entities.Language;
 import io.fi0x.languagegenerator.service.GenerationService;
 import lombok.AllArgsConstructor;
@@ -54,9 +55,11 @@ public class LanguageController
     {
         log.info("showPossibleLanguages() called");
 
-        // TODO: Return a page, that shows all loaded languages
+        model.put("languages", FileLoader.getLoadedLanguageNames(false));
 
-        return null;
+        // TODO: make the languages selectable to generate words in the selected language
+
+        return "languageView";
     }
 
     @PostMapping("/set-language/{language}")
