@@ -1,7 +1,8 @@
 package io.fi0x.logic;
 
 import io.fi0x.Main;
-import io.fi0x.javalogger.logging.Logger;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,9 +13,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+@Slf4j
 public class FileLoader
 {
     private static final ArrayList<File> languageFiles = new ArrayList<>();
+    @Getter
     private static String activeLanguage;
     public static boolean loadLanguageFile(String nameOrIdx)
     {
@@ -44,7 +47,7 @@ public class FileLoader
             fileReader.close();
         } catch(FileNotFoundException e)
         {
-            Logger.log("Selected language could not be found", LOG.ERROR);
+            log.warn("Selected language could not be found: {}", languageFile, e);
             return;
         }
         JSONObject jsonObject = new JSONObject(fileContent.toString());
@@ -73,7 +76,7 @@ public class FileLoader
             LanguageTraits.forbiddenCombinations.add((String) entry);
 
         activeLanguage = languageFile.getName().replace(".json", "");
-        Logger.log("Active language is now \"" + activeLanguage + "\"", LOG.SUCCESS);
+        log.debug("Active language is now '{}'", activeLanguage);
     }
 
     public static boolean storeCurrentLanguage(String name) throws IOException
@@ -136,9 +139,5 @@ public class FileLoader
             names.add((showNumber ? (i + 1) + ") " : "") + languageFiles.get(i).getName().replace(".json", ""));
 
         return names;
-    }
-    public static String getActiveLanguage()
-    {
-        return activeLanguage;
     }
 }

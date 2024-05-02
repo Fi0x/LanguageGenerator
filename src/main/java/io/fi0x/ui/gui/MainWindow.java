@@ -1,16 +1,16 @@
 package io.fi0x.ui.gui;
 
-import io.fi0x.javalogger.logging.Logger;
-import io.fi0x.logic.LOG;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
+@Slf4j
 public class MainWindow extends Application
 {
     @Override
@@ -23,7 +23,7 @@ public class MainWindow extends Application
             root = loader.load();
         } catch(IOException e)
         {
-            Logger.log("Could not load main fxml", LOG.ERROR);
+            log.error("Could not load main fxml", e);
             throw new RuntimeException(e);
         }
 

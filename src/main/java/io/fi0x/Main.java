@@ -1,50 +1,50 @@
 package io.fi0x;
 
-import io.fi0x.javalogger.logging.Logger;
 import io.fi0x.logic.FileLoader;
-import io.fi0x.logic.LOG;
 import io.fi0x.logic.LanguageTraits;
 import io.fi0x.logic.Setup;
 import io.fi0x.ui.gui.MainWindow;
 import io.fi0x.ui.tui.Menu;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
 
+@Slf4j
 public class Main
 {
     public static File languageFolder = new File(System.getenv("APPDATA") + File.separator + "LanguageGenerator");
     public static void main(String[] args)
     {
         Setup.initializeLogger();
-        Logger.log("Programm starting...", LOG.INFO);
+        log.info("Programm is starting...");
 
         try
         {
             if(Setup.createDefaultFileStructure())
-                Logger.log("Language folder created at " + languageFolder.getPath(), LOG.INFO);
+                log.info("Language folder created at {}", languageFolder.getPath());
             else
-                Logger.log("Language folder exists at " + languageFolder.getPath(), LOG.INFO);
+                log.info("Language folder exists at {}", languageFolder.getPath());
         } catch(Exception e)
         {
-            Logger.log("Could not create language folder at " + languageFolder.getPath(), LOG.INFO);
+            log.warn("Could not create language folder at {}", languageFolder.getPath(), e);
         }
         try
         {
             if(Setup.createTemplateLanguageFile())
-                Logger.log("Template for language file created in language folder", LOG.INFO);
+                log.info("Template for language file created in language folder");
             else
-                Logger.log("Template for language file already exists", LOG.INFO);
+                log.info("Template for language file already exists in language folder");
         } catch(IOException e)
         {
-            Logger.log("Could not create template for language file in language folder", LOG.INFO);
+            log.warn("Could not create template for language file in language folder", e);
         }
 
         int langAmount = FileLoader.loadAllLanguageFiles();
-        Logger.log(langAmount + " language" + (langAmount > 1 ? "s" : "") + " loaded", LOG.INFO);
+        log.info("{} language{} loaded", langAmount, (langAmount != 1 ? "s" : ""));
 
         LanguageTraits.loadTemplateLanguage();
-        Logger.log("Template language is now active", LOG.INFO);
+        log.info("Template language is now active");
 
         new Thread(Menu::start).start();
         MainWindow.launchGUI(args);

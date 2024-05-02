@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
+
+// TODO: Remove when all features are in GUI
+@Deprecated
 public class Menu
 {
     private static Scanner scanner;

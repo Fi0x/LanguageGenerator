@@ -1,12 +1,15 @@
 package io.fi0x.logic;
 
-import io.fi0x.javalogger.logging.Logger;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
+@Slf4j
 public class Randomizer
 {
+    @Getter
     private static final ArrayList<String> generatedWords = new ArrayList<>();
 
     public static void generateWords(int count)
@@ -16,13 +19,9 @@ public class Randomizer
         {
             String word = generateName();
             generatedWords.add(word);
-            Logger.log(word, LOG.OUTPUT);
         }
     }
-    public static ArrayList<String> getGeneratedWords()
-    {
-        return generatedWords;
-    }
+
     private static String generateName()
     {
         StringBuilder name = new StringBuilder();
