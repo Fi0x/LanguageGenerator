@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
     <title>Language-Generator Word View</title>
@@ -14,7 +16,7 @@
         <tbody>
         <c:forEach items="${words}" var="word">
             <tr>
-                <td>${word}</td>
+                <td>${word.word}</td>
             </tr>
         </c:forEach>
         </tbody>

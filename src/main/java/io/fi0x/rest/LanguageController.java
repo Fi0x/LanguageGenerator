@@ -17,9 +17,8 @@ public class LanguageController
         // TODO: Load correct language-file
         //  Use Generator to generate a single word
 
-        // TODO: Fix jsp-file with correct word usage
-        List<String> wordList = new ArrayList<>();
-        wordList.add(language);
+        List<Word> wordList = new ArrayList<>();
+        wordList.add(new Word(language, "Test Word"));
         model.put("words", wordList);
         return "wordView";
     }
