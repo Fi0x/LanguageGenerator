@@ -21,14 +21,9 @@ public class LanguageController
         // TODO: Load correct language-file
 
         Randomizer.generateWords(amount);
-        List<Word> wordList = Randomizer.getGeneratedWords().stream().map((word) -> convert(language, word)).toList();
+        List<Word> wordList = Randomizer.getGeneratedWords().stream().map((word) -> new Word(language, word)).toList();
         model.put("words", wordList);
 
         return "wordView";
-    }
-
-    private Word convert(String language, String word)
-    {
-        return new Word(language, word);
     }
 }
