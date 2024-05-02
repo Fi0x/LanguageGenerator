@@ -1,4 +1,4 @@
-package io.fi0x.logic;
+package io.fi0x.languagegenerator.logic;
 
 import java.io.File;
 

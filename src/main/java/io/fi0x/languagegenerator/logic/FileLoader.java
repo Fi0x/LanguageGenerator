@@ -1,6 +1,5 @@
-package io.fi0x.logic;
+package io.fi0x.languagegenerator.logic;
 
-import io.fi0x.Main;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;

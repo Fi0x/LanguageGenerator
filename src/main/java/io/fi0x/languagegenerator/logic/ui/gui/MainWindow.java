@@ -1,4 +1,4 @@
-package io.fi0x.ui.gui;
+package io.fi0x.languagegenerator.logic.ui.gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

@@ -1,8 +1,5 @@
-package io.fi0x;
+package io.fi0x.languagegenerator.logic;
 
-import io.fi0x.logic.FileLoader;
-import io.fi0x.logic.LanguageTraits;
-import io.fi0x.logic.Setup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

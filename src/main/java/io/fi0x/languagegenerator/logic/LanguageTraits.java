@@ -1,10 +1,7 @@
-package io.fi0x.logic;
-import io.fi0x.Main;
+package io.fi0x.languagegenerator.logic;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class LanguageTraits
 {

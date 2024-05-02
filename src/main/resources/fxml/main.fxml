@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.fi0x.ui.gui.controller.Main">
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.fi0x.languagegenerator.logic.ui.gui.controller.Main">
     <ComboBox fx:id="languageDropDown" visibleRowCount="5" />
     <Button onMouseClicked="#onGenerateNamesClicked" text="Generate 100 random words" />
     <TextArea fx:id="outputWords" editable="false" minHeight="500.0" minWidth="300.0" prefHeight="500.0" prefWidth="300.0" />

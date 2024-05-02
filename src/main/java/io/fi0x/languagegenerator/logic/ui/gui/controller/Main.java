@@ -1,7 +1,7 @@
-package io.fi0x.ui.gui.controller;
+package io.fi0x.languagegenerator.logic.ui.gui.controller;
 
-import io.fi0x.logic.FileLoader;
-import io.fi0x.logic.Randomizer;
+import io.fi0x.languagegenerator.logic.FileLoader;
+import io.fi0x.languagegenerator.logic.Randomizer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;

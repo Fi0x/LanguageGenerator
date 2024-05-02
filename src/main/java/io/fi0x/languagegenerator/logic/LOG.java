@@ -1,4 +1,4 @@
-package io.fi0x.logic;
+package io.fi0x.languagegenerator.logic;
 
 @Deprecated
 public enum LOG

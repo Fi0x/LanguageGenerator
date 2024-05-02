@@ -1,38 +1,37 @@
-package io.fi0x.service;
+package io.fi0x.languagegenerator.logic;
 
-import io.fi0x.logic.FileLoader;
-import io.fi0x.logic.LanguageTraits;
-import io.fi0x.logic.dto.Word;
-import org.springframework.stereotype.Service;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-@Service
-public class GenerationService
+@Deprecated
+@Slf4j
+public class Randomizer
 {
-    public List<Word> generateWords(String languageName, int count)
+    @Getter
+    private static final ArrayList<String> generatedWords = new ArrayList<>();
+
+    public static void generateWords(int count)
     {
-        FileLoader.loadLanguageFile(languageName);
-
-        ArrayList<Word> generatedWords = new ArrayList<>();
-
-        for (int i = 0; i < count; i++) {
-            Word word = generateWord(languageName);
+        generatedWords.clear();
+        for(int i = 0; i < count; i++)
+        {
+            String word = generateName();
             generatedWords.add(word);
         }
-
-        return generatedWords;
     }
 
-    private static Word generateWord(String language)
+    private static String generateName()
     {
         StringBuilder name = new StringBuilder();
         int desiredLength = (int) (Math.random() * (LanguageTraits.maxNameLength - LanguageTraits.minNameLength) + LanguageTraits.minNameLength);
-        for (int i = (int) (Math.random() * 4); name.length() < desiredLength && i < desiredLength + 4; i++) {
+        for(int i = (int) (Math.random() * 4); name.length() < desiredLength && i < desiredLength + 4; i++)
+        {
             ArrayList<String> selectedList;
-            switch (i % 4) {
+            switch(i % 4)
+            {
                 case 0 -> selectedList = LanguageTraits.consonantVocals;
                 case 1 -> selectedList = LanguageTraits.consonants;
                 case 2 -> selectedList = LanguageTraits.vocalConsonant;
@@ -42,7 +41,7 @@ public class GenerationService
         }
 
         name.setCharAt(0, String.valueOf(name.charAt(0)).toUpperCase(Locale.ROOT).charAt(0));
-        return new Word(language, name.toString());
+        return name.toString();
     }
 
     private static String getNewRandom(String previousLetters, ArrayList<String> newPossibilities)
@@ -50,19 +49,24 @@ public class GenerationService
         int tries = 0;
         int randomIdx = (int) (Math.random() * newPossibilities.size());
 
-        while (tries < newPossibilities.size()) {
+        while(tries < newPossibilities.size())
+        {
             String nextPossiblePart = newPossibilities.get((randomIdx + tries) % newPossibilities.size());
 
-            if (isAllowed(previousLetters, nextPossiblePart))
+            if(isAllowed(previousLetters, nextPossiblePart))
                 return nextPossiblePart;
 
             tries++;
         }
         return "";
     }
-
     private static boolean isAllowed(String originalPart, String newPart)
     {
-        return LanguageTraits.forbiddenCombinations.stream().noneMatch((" " + originalPart + newPart)::contains);
+        for(String forbidden : LanguageTraits.forbiddenCombinations)
+        {
+            if((" " + originalPart + newPart).contains(forbidden))
+                return false;
+        }
+        return true;
     }
 }

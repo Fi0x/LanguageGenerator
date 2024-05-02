@@ -1,9 +1,9 @@
-package io.fi0x.ui.tui;
+package io.fi0x.languagegenerator.logic.ui.tui;
 
 import io.fi0x.javalogger.logging.LogColor;
 import io.fi0x.javalogger.logging.LogEntry;
 import io.fi0x.javalogger.logging.Logger;
-import io.fi0x.logic.*;
+import io.fi0x.languagegenerator.logic.*;
 
 import java.util.ArrayList;
 import java.util.Locale;

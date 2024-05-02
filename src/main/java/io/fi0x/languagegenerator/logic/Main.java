@@ -1,10 +1,10 @@
-package io.fi0x;
+package io.fi0x.languagegenerator.logic;
 
-import io.fi0x.logic.FileLoader;
-import io.fi0x.logic.LanguageTraits;
-import io.fi0x.logic.Setup;
-import io.fi0x.ui.gui.MainWindow;
-import io.fi0x.ui.tui.Menu;
+import io.fi0x.languagegenerator.logic.FileLoader;
+import io.fi0x.languagegenerator.logic.LanguageTraits;
+import io.fi0x.languagegenerator.logic.Setup;
+import io.fi0x.languagegenerator.logic.ui.gui.MainWindow;
+import io.fi0x.languagegenerator.logic.ui.tui.Menu;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;

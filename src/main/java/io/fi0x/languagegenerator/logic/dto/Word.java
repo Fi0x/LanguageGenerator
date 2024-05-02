@@ -1,4 +1,4 @@
-package io.fi0x.logic.dto;
+package io.fi0x.languagegenerator.logic.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
