@@ -1,20 +1,21 @@
 package io.fi0x.rest;
 
-import io.fi0x.logic.LanguageTraits;
-import io.fi0x.logic.Randomizer;
-import io.fi0x.logic.dto.Word;
+import io.fi0x.service.GenerationService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
+@Slf4j
 @Controller
+@AllArgsConstructor
 public class LanguageController
 {
+    private GenerationService generationService;
+
     /**
      * Generates random words in the provided language
      *
@@ -27,12 +28,9 @@ public class LanguageController
     public String generateWord(ModelMap model, @PathVariable(value = "language") String language,
                                @RequestParam(value = "amount", defaultValue = "1", required = false) int amount)
     {
-        LanguageTraits.loadTemplateLanguage();
-        // TODO: Load correct language-file
+        log.info("generateWord() called");
 
-        Randomizer.generateWords(amount);
-        List<Word> wordList = Randomizer.getGeneratedWords().stream().map((word) -> new Word(language, word)).toList();
-        model.put("words", wordList);
+        model.put("words", generationService.generateWords(language, amount));
 
         return "wordView";
     }
