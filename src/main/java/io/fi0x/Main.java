@@ -16,7 +16,7 @@ public class Main
     public static File languageFolder = new File(System.getenv("APPDATA") + File.separator + "LanguageGenerator");
     public static void main(String[] args)
     {
-        Setup.initializeLogger();
+        Menu.initializeLogger();
         log.info("Programm is starting...");
 
         try

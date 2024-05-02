@@ -1,8 +1,6 @@
 package io.fi0x.logic;
 
 import io.fi0x.Main;
-import io.fi0x.javalogger.logging.LogColor;
-import io.fi0x.javalogger.logging.Logger;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -11,18 +9,6 @@ import java.util.List;
 
 public class Setup
 {
-    public static void initializeLogger()
-    {
-        Logger.getInstance().setDebug(true);
-        Logger.getInstance().setVerbose(true);
-        Logger.createNewTemplate(LOG.QUESTION, LogColor.CYAN_BRIGHT, "", "INF", false, false, 0, false, true, false, false, "", "");
-        Logger.createNewTemplate(LOG.OUTPUT, LogColor.PURPLE_BRIGHT, "", "INF", false, false, 0, false, true, false, false, "", "");
-        Logger.createNewTemplate(LOG.SUCCESS, LogColor.GREEN_BRIGHT, "", "INF", false, false, 0, false, true, false, false, "", "");
-        Logger.createNewTemplate(LOG.ERROR, LogColor.RED_BRIGHT, "", "ERR", false, false, 0, false, true, false, false, "", "");
-        Logger.createNewTemplate(LOG.INFO, LogColor.WHITE_BRIGHT, "", "INF", false, false, 0, false, true, false, false, "", "");
-        Logger.createNewTemplate(LOG.MENU, LogColor.BLUE_BRIGHT, "", "INF", false, false, 0, false, true, false, false, "", "");
-    }
-
     public static boolean createDefaultFileStructure() throws Exception
     {
         if(!Main.languageFolder.exists())

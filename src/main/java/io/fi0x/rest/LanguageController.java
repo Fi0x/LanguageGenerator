@@ -2,6 +2,7 @@ package io.fi0x.rest;
 
 import io.fi0x.logic.LanguageTraits;
 import io.fi0x.logic.Randomizer;
+import io.fi0x.logic.dto.Word;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
