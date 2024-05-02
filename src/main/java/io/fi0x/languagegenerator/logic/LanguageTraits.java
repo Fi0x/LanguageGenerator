@@ -1,5 +1,7 @@
 package io.fi0x.languagegenerator.logic;
 
+import io.fi0x.languagegenerator.Main;
+
 import java.io.File;
 import java.util.ArrayList;
 

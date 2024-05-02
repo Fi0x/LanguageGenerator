@@ -1,7 +1,7 @@
-package io.fi0x.languagegenerator.logic.rest;
+package io.fi0x.languagegenerator.rest;
 
-import io.fi0x.languagegenerator.logic.rest.entities.Language;
-import io.fi0x.languagegenerator.logic.service.GenerationService;
+import io.fi0x.languagegenerator.rest.entities.Language;
+import io.fi0x.languagegenerator.service.GenerationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

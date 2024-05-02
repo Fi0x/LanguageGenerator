@@ -1,5 +1,7 @@
 package io.fi0x.languagegenerator.logic;
 
+import io.fi0x.languagegenerator.Main;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

@@ -1,4 +1,4 @@
-package io.fi0x.languagegenerator.logic.ui.tui;
+package io.fi0x.languagegenerator.ui.tui;
 
 import io.fi0x.javalogger.logging.LogColor;
 import io.fi0x.javalogger.logging.LogEntry;

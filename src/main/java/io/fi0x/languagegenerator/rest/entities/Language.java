@@ -1,4 +1,4 @@
-package io.fi0x.languagegenerator.logic.rest.entities;
+package io.fi0x.languagegenerator.rest.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package io.fi0x.languagegenerator.logic.service;
+package io.fi0x.languagegenerator.service;
 
 import io.fi0x.languagegenerator.logic.FileLoader;
 import io.fi0x.languagegenerator.logic.LanguageTraits;
