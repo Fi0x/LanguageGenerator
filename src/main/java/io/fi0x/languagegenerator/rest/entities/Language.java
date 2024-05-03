@@ -17,6 +17,7 @@ public class Language
     private Long id;
 
     private String name;
+    private String username;
     private int minWordLength = 3;
     private int maxWordLength = 10;
 }

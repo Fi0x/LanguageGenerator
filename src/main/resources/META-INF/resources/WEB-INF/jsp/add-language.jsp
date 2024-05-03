@@ -4,7 +4,7 @@
 <html>
 <head>
     <link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <title>Language-Generator Language View</title>
+    <title>Language Details</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-3 p-1">
@@ -20,22 +20,11 @@
     </ul>
 </nav>
 <div class="container">
-    <h1>Loaded languages:</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Language</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${languages}" var="language">
-            <tr>
-                <td>${language}</td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-    <a href="add-language" class="btn-success">Add Language</a>
+    <h1>Edit Language Details</h1>
+    <form method="post">
+        Name: <input type="text" name="languageName">
+        <input type="submit" class="btn-success">
+    </form>
 </div>
 <script src="webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
 <script src="webjars/jquery/3.6.0/jquery.min.js"></script>

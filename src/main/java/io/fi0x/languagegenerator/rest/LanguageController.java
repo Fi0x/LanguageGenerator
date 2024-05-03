@@ -3,6 +3,7 @@ package io.fi0x.languagegenerator.rest;
 import io.fi0x.languagegenerator.logic.FileLoader;
 import io.fi0x.languagegenerator.rest.entities.Language;
 import io.fi0x.languagegenerator.service.GenerationService;
+import io.fi0x.languagegenerator.service.LanguageService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ public class LanguageController
     // TODO: Add user accounts that can be created for free and are stored in a local db
 
     private GenerationService generationService;
+    private LanguageService languageService;
 
     /**
      * Generates random words in the provided language
@@ -32,6 +34,7 @@ public class LanguageController
     public String generateWordFromLanguage(ModelMap model, @PathVariable(value = "language") String language,
                                            @RequestParam(value = "amount", defaultValue = "1", required = false) int amount)
     {
+        //TODO: remove this in the future and only use /generate with model-information
         log.info("generateWordFromLanguage() called");
 
         model.put("words", generationService.generateWords(language, amount));
@@ -47,7 +50,9 @@ public class LanguageController
         if (!model.containsKey("selectedLanguage"))
             model.put("selectedLanguage", "languagetemplate");
 
-        return generateWordFromLanguage(model, (String) model.get("selectedLanguage"), amount);
+        model.put("words", generationService.generateWords((String) model.get("selectedLanguage"), amount));
+
+        return "wordView";
     }
 
     @GetMapping("/list-languages")
@@ -78,9 +83,7 @@ public class LanguageController
     {
         log.info("createLanguage() called");
 
-        // TODO: Show a page, where a user can create a new language or edit an existing one
-
-        return null;
+        return "add-language";
     }
 
     @PostMapping("/add-language")
@@ -94,7 +97,7 @@ public class LanguageController
             return null;
         }
 
-        // TODO: Save the language
+        languageService.addLanguage(null, language.getName());
 
         return "redirect:list-languages";
     }
