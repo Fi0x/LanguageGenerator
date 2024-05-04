@@ -7,18 +7,7 @@
     <title>Language-Generator Language View</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-light bg-light mb-3 p-1">
-    <a class="navbar-brand m-1" href="https://courses.in28minutes.com">in28minutes</a>
-    <div class="collapse navbar-collapse">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="/list-todos">Todos</a></li>
-        </ul>
-    </div>
-    <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
-    </ul>
-</nav>
+<%@include file="common/navigation.jspf" %>
 <div class="container">
     <h1>Loaded languages:</h1>
     <table class="table">
@@ -31,6 +20,9 @@
         <c:forEach items="${languages}" var="language">
             <tr>
                 <td>${language}</td>
+                <td>
+                    <a href="generate?language=${language}&amount=10" class="btn">Generate</a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>

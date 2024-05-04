@@ -4,6 +4,7 @@ import io.fi0x.languagegenerator.logic.FileLoader;
 import io.fi0x.languagegenerator.rest.entities.Language;
 import io.fi0x.languagegenerator.service.GenerationService;
 import io.fi0x.languagegenerator.service.LanguageService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Controller
 @AllArgsConstructor
-@SessionAttributes("selectedLanguage")
+@SessionAttributes("username")
 public class LanguageController
 {
     // TODO: Add user accounts that can be created for free and are stored in a local db
@@ -39,20 +40,18 @@ public class LanguageController
 
         model.put("words", generationService.generateWords(language, amount));
 
-        return "wordView";
+        return "list-words";
     }
 
     @GetMapping("/generate")
-    public String generateWords(ModelMap model, @RequestParam(value = "amount", defaultValue = "1", required = false) int amount)
+    public String generateWords(ModelMap model, @RequestParam(value = "language", defaultValue = "language template") String language,
+                                @RequestParam(value = "amount", defaultValue = "1", required = false) int amount)
     {
-        log.info("generateWords() called");
+        log.info("generateWords() called with language={}, amount={}", language, amount);
 
-        if (!model.containsKey("selectedLanguage"))
-            model.put("selectedLanguage", "languagetemplate");
+        model.put("words", generationService.generateWords(language, amount));
 
-        model.put("words", generationService.generateWords((String) model.get("selectedLanguage"), amount));
-
-        return "wordView";
+        return "list-words";
     }
 
     @GetMapping("/list-languages")
@@ -64,18 +63,7 @@ public class LanguageController
 
         // TODO: make the languages selectable to generate words in the selected language
 
-        return "languageView";
-    }
-
-    @PostMapping("/set-language/{language}")
-    public String setDefaultLanguage(ModelMap model, @PathVariable(value = "language") String language)
-    {
-        log.info("setDefaultLanguage() called");
-
-        model.put("selectedLanguage", language);
-
-        //TODO: Return to the previous page
-        return null;
+        return "list-languages";
     }
 
     @GetMapping("/add-language")
@@ -83,21 +71,21 @@ public class LanguageController
     {
         log.info("createLanguage() called");
 
-        return "add-language";
+        Language language = new Language();
+        language.setId(0L);
+        language.setName("");
+        language.setUsername((String) model.get("username"));
+        model.put("language", language);
+
+        return "language";
     }
 
     @PostMapping("/add-language")
-    public String addLanguage(ModelMap model, Language language, BindingResult result)
+    public String addLanguage(ModelMap model, Language language)
     {
         log.info("addLanguage() called");
 
-        if(result.hasErrors())
-        {
-            // TODO: Return to the add-language GET site
-            return null;
-        }
-
-        languageService.addLanguage(null, language.getName());
+        languageService.addLanguage(language);
 
         return "redirect:list-languages";
     }

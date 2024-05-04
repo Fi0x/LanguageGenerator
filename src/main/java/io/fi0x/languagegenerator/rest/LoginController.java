@@ -28,7 +28,7 @@ public class LoginController
         if(authenticationService.authenticate(username, password))
         {
             model.put("username", username);
-            return "languageView";
+            return "list-languages";
         }
 
         model.put("exception", "Invalid Credentials! Please try again");

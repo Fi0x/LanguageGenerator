@@ -11,9 +11,9 @@ public class LanguageService
 {
     private static final List<Language> languages = new ArrayList<>();
 
-    public void addLanguage(String username, String languageName)
+    public void addLanguage(Language language)
     {
         //TODO: Add language correctly
-        languages.add(new Language());
+        languages.add(language);
     }
 }
