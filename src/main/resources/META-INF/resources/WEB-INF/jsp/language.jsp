@@ -11,7 +11,8 @@
 <div class="container">
     <h1>Edit Language Details</h1>
     <form:form method="post" modelAttribute="language">
-        Name: <form:input type="text" path="name" />
+        <form:input type="hidden" path="id"/>
+        Name: <form:input type="text" path="name"/>
         <form:input type="hidden" path="username"/>
         <form:input type="hidden" path="minWordLength"/>
         <form:input type="hidden" path="maxWordLength"/>

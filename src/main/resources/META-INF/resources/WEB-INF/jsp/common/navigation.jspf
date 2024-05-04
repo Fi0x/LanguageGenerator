@@ -3,8 +3,7 @@
     <a class="navbar-brand m-2" href="https://github.com/Fi0x/LanguageGenerator">My github</a>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="list-languages">Languages</a></li>
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
         </ul>
     </div>
     <ul class="navbar-nav">
