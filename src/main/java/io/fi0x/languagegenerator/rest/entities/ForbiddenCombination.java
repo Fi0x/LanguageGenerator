@@ -9,9 +9,9 @@ import lombok.Data;
 @Entity
 public class ForbiddenCombination
 {
-    /**
-     * The combination of the {@link Language} and {@link Letter} ids, with the {@link Language} id coming first.
-     */
     @Id
-    private Pair<Long, Long> id;
+    private Long languageId;
+
+    @Id
+    private Long letterId;
 }

@@ -4,9 +4,7 @@ import io.fi0x.languagegenerator.logic.FileLoader;
 import io.fi0x.languagegenerator.logic.LanguageTraits;
 import io.fi0x.languagegenerator.logic.Setup;
 import io.fi0x.languagegenerator.service.LanguageService;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
