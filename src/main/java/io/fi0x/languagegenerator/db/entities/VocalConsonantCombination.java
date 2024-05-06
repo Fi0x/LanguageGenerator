@@ -1,4 +1,4 @@
-package io.fi0x.languagegenerator.rest.entities;
+package io.fi0x.languagegenerator.db.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class VocalCombination
+public class VocalConsonantCombination
 {
     @Id
     private Long languageId;

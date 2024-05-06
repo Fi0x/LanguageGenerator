@@ -1,6 +1,7 @@
 package io.fi0x.languagegenerator.rest;
 
-import io.fi0x.languagegenerator.rest.entities.Language;
+import io.fi0x.languagegenerator.db.LanguageRepository;
+import io.fi0x.languagegenerator.db.entities.Language;
 import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.GenerationService;
 import io.fi0x.languagegenerator.service.LanguageService;

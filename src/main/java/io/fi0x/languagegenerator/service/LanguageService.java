@@ -1,18 +1,21 @@
 package io.fi0x.languagegenerator.service;
 
+import io.fi0x.languagegenerator.db.LanguageRepository;
 import io.fi0x.languagegenerator.logic.FileLoader;
-import io.fi0x.languagegenerator.rest.entities.Language;
+import io.fi0x.languagegenerator.db.entities.Language;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class LanguageService
 {
+    private LanguageRepository languageRepository;
+
     @Getter
     private static final List<Language> languages = new ArrayList<>();
 
@@ -24,9 +27,7 @@ public class LanguageService
 
     public List<Language> getUserLanguages(String username)
     {
-        return languages;
-        // TODO: Use filtered results, once languages are user-specific
-//        return languages.stream().filter(language -> language.getName().equals(username)).toList();
+        return languageRepository.findByUsername(username);
     }
 
     public static void loadInitialLanguages()

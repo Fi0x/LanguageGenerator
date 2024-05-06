@@ -1,4 +1,4 @@
-package io.fi0x.languagegenerator.security;
+package io.fi0x.languagegenerator.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
