@@ -1,6 +1,5 @@
 package io.fi0x.languagegenerator.rest;
 
-import io.fi0x.languagegenerator.logic.FileLoader;
 import io.fi0x.languagegenerator.rest.entities.Language;
 import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.GenerationService;
@@ -38,9 +37,7 @@ public class LanguageController
     {
         log.info("listLanguages() called");
 
-        model.put("languages", FileLoader.getLoadedLanguageNames(false));
-
-        // TODO: make the languages selectable to generate words in the selected language
+        model.put("languages", languageService.getUserLanguages(authenticationService.getAuthenticatedUsername()));
 
         return "list-languages";
     }
