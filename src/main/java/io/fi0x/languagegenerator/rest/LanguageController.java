@@ -21,6 +21,7 @@ public class LanguageController
     private GenerationService generationService;
     private LanguageService languageService;
 
+    //TODO: Use id instead of language name
     @GetMapping("/generate")
     public String generateWords(ModelMap model, @RequestParam(value = "language", defaultValue = "language template") String language,
                                 @RequestParam(value = "amount", defaultValue = "1", required = false) int amount)
