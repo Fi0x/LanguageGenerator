@@ -10,12 +10,18 @@
 <%@include file="common/navigation.jspf" %>
 <div class="container">
     <h1>Edit Language Details</h1>
-    <form:form method="post" modelAttribute="language">
+    <form:form method="post" modelAttribute="languageData">
         <form:input type="hidden" path="id"/>
         Name: <form:input type="text" path="name"/>
         <form:input type="hidden" path="username"/>
-        <form:input type="number" path="minWordLength"/>
-        <form:input type="number" path="maxWordLength"/>
+        Min-Word-Length: <form:input type="number" path="minWordLength"/>
+        Max-Word-Length: <form:input type="number" path="maxWordLength"/>
+        <a>Separate individual letter-combinations by ','</a>
+        Possible Vocals: <form:input type="text" path="vocals"/>
+        Possible Consonants: <form:input type="text" path="consonants"/>
+        Possible Vocal-Consonant-Combinations: <form:input type="text" path="vocalConsonant"/>
+        Possible Consonant-Vocal-Combinations: <form:input type="text" path="consonantVocals"/>
+        Forbidden Combinations: <form:input type="text" path="forbiddenCombinations"/>
         <input type="submit" class="btn-success">
     </form:form>
 </div>

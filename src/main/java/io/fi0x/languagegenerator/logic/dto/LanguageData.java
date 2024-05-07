@@ -1,6 +1,8 @@
 package io.fi0x.languagegenerator.logic.dto;
 
 import io.fi0x.languagegenerator.db.entities.Language;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 
@@ -28,9 +30,25 @@ public class LanguageData
                 .minWordLength(language.getMinWordLength()).maxWordLength(language.getMaxWordLength()).build();
     }
 
+    public Language toLanguageEntity()
+    {
+        Language language = new Language();
+        language.setId(id);
+        language.setName(name);
+        language.setUsername(username);
+        language.setMinWordLength(minWordLength);
+        language.setMaxWordLength(maxWordLength);
+        return language;
+    }
+
     public boolean invalid()
     {
+        if(id == null || name == null || username == null)
+            return true;
         if(vocals == null || consonants == null || vocalConsonant == null || consonantVocals == null)
+            return true;
+
+        if(name.isBlank() || username.isBlank() || minWordLength <= 0 || maxWordLength <= 0)
             return true;
         return vocals.isEmpty() && consonants.isEmpty() && vocalConsonant.isEmpty() && consonantVocals.isEmpty();
     }

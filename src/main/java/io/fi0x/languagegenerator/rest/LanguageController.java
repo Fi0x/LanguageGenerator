@@ -1,11 +1,11 @@
 package io.fi0x.languagegenerator.rest;
 
-import io.fi0x.languagegenerator.db.LanguageRepository;
-import io.fi0x.languagegenerator.db.entities.Language;
+import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.GenerationService;
 import io.fi0x.languagegenerator.service.LanguageService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -61,22 +61,26 @@ public class LanguageController
     {
         log.info("createLanguage() called");
 
-        //TODO: Change this to use LanguageData for more information
-        Language language = new Language();
-        language.setName("");
-        language.setUsername(authenticationService.getAuthenticatedUsername());
-        model.put("language", language);
+        LanguageData languageData = LanguageData.builder().username(authenticationService.getAuthenticatedUsername()).build();
+        model.put("languageData", languageData);
 
         return "language";
     }
 
     @PostMapping("/add-language")
-    public String addLanguage(ModelMap model, Language language)
+    public String addLanguage(ModelMap model, @Valid LanguageData languageData)
     {
         log.info("addLanguage() called");
-        log.debug("arguments for addLanguage() call are model={}, language={}", model, language);
+        log.debug("arguments for addLanguage() call are model={}, languageData={}", model, languageData);
 
-        languageService.addLanguage(language);
+        try
+        {
+            languageService.addLanguage(languageData);
+        } catch (InvalidObjectException e)
+        {
+            log.info("Could not save the language because it was not complete.");
+            return "redirect:add-language";
+        }
 
         return "redirect:/";
     }
