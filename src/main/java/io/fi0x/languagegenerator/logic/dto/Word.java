@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Word
 {
-    private String language;
+    private Long languageId;
     private String word;
 }

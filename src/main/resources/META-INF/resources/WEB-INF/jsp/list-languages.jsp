@@ -21,7 +21,7 @@
             <tr>
                 <td>${language.name}</td>
                 <td>
-                    <a href="generate?language=${language.name}&amount=10" class="btn">Generate</a>
+                    <a href="generate?language=${language.id}&amount=10" class="btn">Generate</a>
                 </td>
             </tr>
         </c:forEach>

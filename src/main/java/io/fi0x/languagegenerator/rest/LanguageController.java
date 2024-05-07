@@ -5,6 +5,7 @@ import io.fi0x.languagegenerator.db.entities.Language;
 import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.GenerationService;
 import io.fi0x.languagegenerator.service.LanguageService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,14 +23,20 @@ public class LanguageController
     private GenerationService generationService;
     private LanguageService languageService;
 
-    //TODO: Use id instead of language name
     @GetMapping("/generate")
-    public String generateWords(ModelMap model, @RequestParam(value = "language", defaultValue = "language template") String language,
+    public String generateWords(ModelMap model, @RequestParam(value = "language", defaultValue = "language template") long language,
                                 @RequestParam(value = "amount", defaultValue = "1", required = false) int amount)
     {
         log.info("generateWords() called with language={}, amount={}", language, amount);
 
-        model.put("words", generationService.generateWords(language, amount));
+        try
+        {
+            model.put("words", generationService.generateWords(language, amount));
+        } catch (EntityNotFoundException e)
+        {
+            log.warn("Could not find a language with id={}", language);
+            return "redirect:/";
+        }
 
         return "list-words";
     }
