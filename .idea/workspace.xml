@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Removed FileLoader from GenerationService">
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added default data to fill database with language">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/language.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/language.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +168,8 @@
       <workItem from="1715076112913" duration="2024000" />
       <workItem from="1715079509488" duration="339000" />
       <workItem from="1715079887822" duration="4175000" />
-      <workItem from="1715089767290" duration="1629000" />
+      <workItem from="1715089767290" duration="1846000" />
+      <workItem from="1715094912941" duration="420000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -336,7 +338,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715084904265</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Added default data to fill database with language">
+      <option name="closed" value="true" />
+      <created>1715092733495</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1715092733495</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -377,7 +387,8 @@
     <MESSAGE value="Using language id instead of name for references" />
     <MESSAGE value="Added repositories and updated table-names" />
     <MESSAGE value="Removed FileLoader from GenerationService" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed FileLoader from GenerationService" />
+    <MESSAGE value="Added default data to fill database with language" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added default data to fill database with language" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

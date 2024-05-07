@@ -14,8 +14,8 @@
         <form:input type="hidden" path="id"/>
         Name: <form:input type="text" path="name"/>
         <form:input type="hidden" path="username"/>
-        <form:input type="hidden" path="minWordLength"/>
-        <form:input type="hidden" path="maxWordLength"/>
+        <form:input type="number" path="minWordLength"/>
+        <form:input type="number" path="maxWordLength"/>
         <input type="submit" class="btn-success">
     </form:form>
 </div>
