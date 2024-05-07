@@ -12,8 +12,7 @@ import lombok.Data;
 public class ForbiddenCombination
 {
     @Id
+    private Long id;
     private Long languageId;
-
-    @Id
     private Long letterId;
 }

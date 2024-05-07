@@ -1,11 +1,12 @@
 package io.fi0x.languagegenerator.db;
 
 import io.fi0x.languagegenerator.db.entities.ConsonantCombination;
+import io.fi0x.languagegenerator.db.entities.ForbiddenCombination;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ForbiddenRepository extends JpaRepository<ConsonantCombination, Long>
+public interface ForbiddenRepository extends JpaRepository<ForbiddenCombination, Long>
 {
-    List<ConsonantCombination> findByLanguageId(String languageId);
+    List<ForbiddenCombination> findByLanguageId(Long languageId);
 }

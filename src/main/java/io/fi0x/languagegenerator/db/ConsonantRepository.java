@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ConsonantRepository extends JpaRepository<ConsonantCombination, Long>
 {
-    List<ConsonantCombination> findByLanguageId(String languageId);
+    List<ConsonantCombination> findByLanguageId(Long languageId);
 }

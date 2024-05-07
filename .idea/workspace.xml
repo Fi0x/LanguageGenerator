@@ -4,20 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Using language id instead of name for references">
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/ConsonantRepository.java" afterDir="false" />
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added repositories and updated table-names">
+      <change afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/dto/LanguageData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/LanguageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/LanguageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/ConsonantRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/ConsonantRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/ConsonantVocalRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/ConsonantVocalRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/ForbiddenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/ForbiddenRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/VocalConsonantRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/VocalConsonantRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/VocalRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/VocalRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/ConsonantCombination.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/ConsonantCombination.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/ConsonantVocalCombination.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/ConsonantVocalCombination.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/ForbiddenCombination.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/ForbiddenCombination.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/Language.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/Language.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/Letter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/Letter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/VocalCombination.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/VocalCombination.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/VocalConsonantCombination.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/entities/VocalConsonantCombination.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/service/LanguageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/service/LanguageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/ui/tui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/ui/tui/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/dto/Word.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/dto/Word.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/service/GenerationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/service/GenerationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +114,7 @@
       <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\languages" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="io.fi0x.languagegenerator.db" />
       <recent name="io.fi0x.languagegenerator.rest.entities" />
     </key>
   </component>
@@ -174,7 +179,9 @@
       <workItem from="1714671970807" duration="4380000" />
       <workItem from="1714753442536" duration="5690000" />
       <workItem from="1714838500065" duration="6315000" />
-      <workItem from="1715076112913" duration="1252000" />
+      <workItem from="1715076112913" duration="2024000" />
+      <workItem from="1715079509488" duration="339000" />
+      <workItem from="1715079887822" duration="4081000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -327,7 +334,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715073958242</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Added repositories and updated table-names">
+      <option name="closed" value="true" />
+      <created>1715077538826</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1715077538826</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -366,7 +381,8 @@
     <MESSAGE value="Changed language-list to use Language class" />
     <MESSAGE value="Added h2 for languages" />
     <MESSAGE value="Using language id instead of name for references" />
-    <option name="LAST_COMMIT_MESSAGE" value="Using language id instead of name for references" />
+    <MESSAGE value="Added repositories and updated table-names" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added repositories and updated table-names" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

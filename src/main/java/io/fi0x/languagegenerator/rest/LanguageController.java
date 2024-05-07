@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.InvalidObjectException;
+
 @Slf4j
 @Controller
 @AllArgsConstructor
@@ -35,6 +37,9 @@ public class LanguageController
         } catch (EntityNotFoundException e)
         {
             log.warn("Could not find a language with id={}", language);
+            return "redirect:/";
+        } catch (InvalidObjectException e) {
+            log.warn("The constraints for the language with id={} are not valid to generate a word", language);
             return "redirect:/";
         }
 
