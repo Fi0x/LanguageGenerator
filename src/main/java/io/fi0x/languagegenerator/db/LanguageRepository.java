@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface LanguageRepository extends JpaRepository<Language, Long>
 {
-    public List<Language> findByUsername(String username);
+    List<Language> findByUsername(String username);
 }

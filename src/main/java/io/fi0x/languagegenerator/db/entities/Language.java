@@ -3,6 +3,7 @@ package io.fi0x.languagegenerator.db.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "LANG")
 public class Language
 {
     @Id

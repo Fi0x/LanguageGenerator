@@ -18,7 +18,6 @@ public class MainApplication
         Setup.createTemplateLanguageFile();
         FileLoader.loadAllLanguageFiles();
         LanguageTraits.loadTemplateLanguage();
-        LanguageService.loadInitialLanguages();
         log.info("Initial loading complete");
 
         SpringApplication.run(MainApplication.class, args);
