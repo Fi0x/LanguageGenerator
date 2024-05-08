@@ -46,6 +46,12 @@ public class LanguageController
         return "list-words";
     }
 
+    @GetMapping("/**")
+    public String redirectWrongUrl()
+    {
+        return "redirect:/";
+    }
+
     @GetMapping("/")
     public String listLanguages(ModelMap model)
     {
