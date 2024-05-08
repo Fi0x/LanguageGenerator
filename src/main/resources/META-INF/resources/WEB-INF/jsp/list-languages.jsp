@@ -21,6 +21,7 @@
             <tr>
                 <td>${language.name}</td>
                 <td>
+<%--                    TODO: Add a button to edit a language--%>
                     <a href="generate?language=${language.id}&amount=10" class="btn">Generate</a>
                 </td>
             </tr>

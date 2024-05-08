@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Fixed first call to add-language throwing error">
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added default redirect for non-matching urls">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/list-words.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/list-words.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -354,7 +353,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715167727400</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Added default redirect for non-matching urls">
+      <option name="closed" value="true" />
+      <created>1715177374992</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1715177374992</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -372,7 +379,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Initial commit" />
     <MESSAGE value="Updated randomizer to create words that are easier to pronounce" />
     <MESSAGE value="Updated structure" />
     <MESSAGE value="Created default language file and automated loading of it" />
@@ -397,7 +403,8 @@
     <MESSAGE value="Removed FileLoader from GenerationService" />
     <MESSAGE value="Added default data to fill database with language" />
     <MESSAGE value="Fixed first call to add-language throwing error" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed first call to add-language throwing error" />
+    <MESSAGE value="Added default redirect for non-matching urls" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added default redirect for non-matching urls" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
