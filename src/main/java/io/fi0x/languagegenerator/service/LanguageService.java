@@ -34,7 +34,6 @@ public class LanguageService
         if (languageData.invalid())
             throw new InvalidObjectException("Can't save language with the provided settings");
 
-        //TODO: Find out, why the first call always throws an error if data.sql has generated the first language
         languageRepository.save(languageData.toLanguageEntity());
 
         languageData.getConsonants().forEach(letterCombination -> {
