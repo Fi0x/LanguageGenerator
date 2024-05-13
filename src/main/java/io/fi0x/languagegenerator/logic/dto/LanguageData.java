@@ -1,8 +1,6 @@
 package io.fi0x.languagegenerator.logic.dto;
 
 import io.fi0x.languagegenerator.db.entities.Language;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,6 +13,7 @@ public class LanguageData
     private Long id;
     private String name;
     private String username;
+    private boolean isPublic;
     private int minWordLength;
     private int maxWordLength;
 
@@ -36,6 +35,7 @@ public class LanguageData
         language.setId(id);
         language.setName(name);
         language.setUsername(username);
+        language.setIsPublic(isPublic);
         language.setMinWordLength(minWordLength);
         language.setMaxWordLength(maxWordLength);
         return language;

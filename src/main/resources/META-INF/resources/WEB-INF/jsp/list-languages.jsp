@@ -21,8 +21,13 @@
             <tr>
                 <td>${language.name}</td>
                 <td>
-                        <%--                    TODO: Add a button to edit a language--%>
-                    <a href="generate?language=${language.id}&amount=10" class="btn">Generate</a>
+                    <a href="add-language?languageId=${language.id}" class="btn">Edit</a>
+                </td>
+                <td>
+                    <a href="generate?language=${language.id}&amount=10" class="btn">Generate 10</a>
+                </td>
+                <td>
+                    <a href="generate?language=${language.id}&amount=100" class="btn">Generate 100</a>
                 </td>
             </tr>
         </c:forEach>

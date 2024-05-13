@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface VocalConsonantRepository extends JpaRepository<VocalConsonantCombination, Long>
 {
-    List<VocalConsonantCombination> findByLanguageId(Long languageId);
+    List<VocalConsonantCombination> getAllByLanguageId(Long languageId);
 
     @Query(value = "SELECT MAX(ID) FROM VOCCONCOM", nativeQuery = true)
     Optional<Long> getHighestId();

@@ -33,11 +33,11 @@ public class GenerationService
             throw new EntityNotFoundException("Could not find language with id=" + languageId);
 
         LanguageData language = LanguageData.getFromEntity(result.get());
-        language.setConsonants(getLetters(cRepository.findByLanguageId(languageId).stream().map(ConsonantCombination::getLetterId).collect(Collectors.toList())));
-        language.setConsonantVocals(getLetters(cvRepository.findByLanguageId(languageId).stream().map(ConsonantVocalCombination::getLetterId).collect(Collectors.toList())));
-        language.setVocals(getLetters(vRepository.findByLanguageId(languageId).stream().map(VocalCombination::getLetterId).collect(Collectors.toList())));
-        language.setVocalConsonant(getLetters(vcRepository.findByLanguageId(languageId).stream().map(VocalConsonantCombination::getLetterId).collect(Collectors.toList())));
-        language.setForbiddenCombinations(getLetters(fRepository.findByLanguageId(languageId).stream().map(ForbiddenCombination::getLetterId).collect(Collectors.toList())));
+        language.setConsonants(getLetters(cRepository.getAllByLanguageId(languageId).stream().map(ConsonantCombination::getLetterId).collect(Collectors.toList())));
+        language.setConsonantVocals(getLetters(cvRepository.getAllByLanguageId(languageId).stream().map(ConsonantVocalCombination::getLetterId).collect(Collectors.toList())));
+        language.setVocals(getLetters(vRepository.getAllByLanguageId(languageId).stream().map(VocalCombination::getLetterId).collect(Collectors.toList())));
+        language.setVocalConsonant(getLetters(vcRepository.getAllByLanguageId(languageId).stream().map(VocalConsonantCombination::getLetterId).collect(Collectors.toList())));
+        language.setForbiddenCombinations(getLetters(fRepository.getAllByLanguageId(languageId).stream().map(ForbiddenCombination::getLetterId).collect(Collectors.toList())));
 
         if(language.invalid())
             throw new InvalidObjectException("Can't generate words with the settings of language: " + languageId);

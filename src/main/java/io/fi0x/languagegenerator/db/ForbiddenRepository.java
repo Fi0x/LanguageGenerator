@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface ForbiddenRepository extends JpaRepository<ForbiddenCombination, Long>
 {
-    List<ForbiddenCombination> findByLanguageId(Long languageId);
+    List<ForbiddenCombination> getAllByLanguageId(Long languageId);
 
     @Query(value = "SELECT MAX(ID) FROM FORBCOM", nativeQuery = true)
     Optional<Long> getHighestId();

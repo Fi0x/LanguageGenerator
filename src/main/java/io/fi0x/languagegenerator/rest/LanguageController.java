@@ -13,10 +13,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.InvalidObjectException;
+import java.util.Objects;
 
 @Slf4j
 @Controller
 @AllArgsConstructor
+@SessionAttributes({"language", "amount", "words"})
 public class LanguageController
 {
     // TODO: Add user accounts that can be created for free and are stored in a local db
@@ -30,10 +32,20 @@ public class LanguageController
     private LanguageService languageService;
 
     @GetMapping("/generate")
-    public String generateWords(ModelMap model, @RequestParam(value = "language", defaultValue = "language template") long language,
-                                @RequestParam(value = "amount", defaultValue = "1", required = false) int amount)
+    public String generateWords(ModelMap model, @RequestParam(value = "language", defaultValue = "-1", required = false) long language,
+                                @RequestParam(value = "amount", defaultValue = "-1", required = false) int amount)
     {
         log.info("generateWords() called with language={}, amount={}", language, amount);
+
+        if (language < 0)
+            language = Long.parseLong(Objects.requireNonNullElse(model.get("language"), "0").toString());
+        else
+            model.put("language", language);
+
+        if (amount < 0)
+            amount = Integer.parseInt(Objects.requireNonNullElse(model.get("amount"), "10").toString());
+        else
+            model.put("amount", amount);
 
         try
         {
@@ -62,18 +74,18 @@ public class LanguageController
     {
         log.info("listLanguages() called");
 
+        //TODO: Also add public languages to every user
         model.put("languages", languageService.getUserLanguages(authenticationService.getAuthenticatedUsername()));
 
         return "list-languages";
     }
 
     @GetMapping("/add-language")
-    public String createLanguage(ModelMap model, @RequestParam(value = "") Long languageId)
+    public String createLanguage(ModelMap model, @RequestParam(value = "languageId", defaultValue = "-1", required = false) long languageId)
     {
         log.info("createLanguage() called");
 
-        LanguageData languageData = LanguageData.builder().username(authenticationService.getAuthenticatedUsername()).build();
-        model.put("languageData", languageData);
+        model.put("languageData", languageService.getLanguageData(languageId));
 
         return "language";
     }

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface LetterRepository extends JpaRepository<Letter, Long>
 {
-    List<Letter> findByLetters(String letters);
+    List<Letter> getAllByLetters(String letters);
 
     @Query(value = "SELECT MAX(ID) FROM LTTRS", nativeQuery = true)
     Optional<Long> getHighestId();

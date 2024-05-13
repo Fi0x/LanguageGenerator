@@ -91,22 +91,28 @@ public class LanguageService
 
     public List<Language> getUserLanguages(String username)
     {
-        return languageRepository.findByUsername(username);
+        return languageRepository.getAllByUsername(username);
     }
 
-    public LanguageData getLanguageData(Long languageId)
+    public List<Language> getPublicLanguages()
+    {
+        return languageRepository.getAllByIsPublic(true);
+    }
+
+    public LanguageData getLanguageData(long languageId)
     {
         Optional<Language> languageEntity = languageRepository.findById(languageId);
 
         if(languageEntity.isEmpty())
             return LanguageData.builder().username(authenticationService.getAuthenticatedUsername()).build();
 
+        // TODO: Fill letter-combinations in Dto to show them in edit-page
         return LanguageData.getFromEntity(languageEntity.get());
     }
 
     private long getLetterIdOrSaveIfNew(String letterCombination)
     {
-        List<Letter> letters = letterRepository.findByLetters(letterCombination);
+        List<Letter> letters = letterRepository.getAllByLetters(letterCombination);
         if (letters.isEmpty())
         {
             Letter letter = new Letter();

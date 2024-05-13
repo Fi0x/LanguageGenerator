@@ -9,7 +9,9 @@ import java.util.Optional;
 
 public interface LanguageRepository extends JpaRepository<Language, Long>
 {
-    List<Language> findByUsername(String username);
+    List<Language> getAllByUsername(String username);
+
+    List<Language> getAllByIsPublic(boolean isPublic);
 
     @Query(value = "SELECT MAX(ID) FROM LANG", nativeQuery = true)
     Optional<Long> getHighestId();

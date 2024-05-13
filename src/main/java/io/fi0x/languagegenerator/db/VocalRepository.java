@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface VocalRepository extends JpaRepository<VocalCombination, Long>
 {
-    List<VocalCombination> findByLanguageId(Long languageId);
+    List<VocalCombination> getAllByLanguageId(Long languageId);
 
     @Query(value = "SELECT MAX(ID) FROM VOCCOM", nativeQuery = true)
     Optional<Long> getHighestId();

@@ -17,6 +17,7 @@ public class Language
 
     private String name;
     private String username;
+    private Boolean isPublic;
     private int minWordLength = 3;
     private int maxWordLength = 10;
 }
