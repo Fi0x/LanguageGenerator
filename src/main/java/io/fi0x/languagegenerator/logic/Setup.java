@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Setup
 {
+    @Deprecated
     public static boolean createDefaultFileStructure() throws Exception
     {
         if(!Main.languageFolder.exists())
@@ -21,6 +22,7 @@ public class Setup
         else
             return false;
     }
+    @Deprecated
     public static boolean createTemplateLanguageFile() throws IOException
     {
         File template = new File(Main.languageFolder.getPath() + File.separator + "Language Template.json");

@@ -3,8 +3,7 @@ package io.fi0x.languagegenerator;
 import io.fi0x.languagegenerator.logic.FileLoader;
 import io.fi0x.languagegenerator.logic.LanguageTraits;
 import io.fi0x.languagegenerator.logic.Setup;
-import io.fi0x.languagegenerator.ui.gui.MainWindow;
-import io.fi0x.languagegenerator.ui.tui.Menu;
+import io.fi0x.languagegenerator.gui.MainWindow;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -16,7 +15,6 @@ public class Main
     public static File languageFolder = new File(System.getenv("APPDATA") + File.separator + "LanguageGenerator");
     public static void main(String[] args)
     {
-        Menu.initializeLogger();
         log.info("Programm is starting...");
 
         try
@@ -46,7 +44,6 @@ public class Main
         LanguageTraits.loadTemplateLanguage();
         log.info("Template language is now active");
 
-        new Thread(Menu::start).start();
         MainWindow.launchGUI(args);
     }
 }

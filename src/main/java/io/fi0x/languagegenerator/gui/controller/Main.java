@@ -1,4 +1,4 @@
-package io.fi0x.languagegenerator.ui.gui.controller;
+package io.fi0x.languagegenerator.gui.controller;
 
 import io.fi0x.languagegenerator.logic.FileLoader;
 import io.fi0x.languagegenerator.logic.Randomizer;

@@ -15,6 +15,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class LanguageService
 {
+    private AuthenticationService authenticationService;
+
     private LanguageRepository languageRepository;
     private LetterRepository letterRepository;
     private ConsonantRepository cRepo;
@@ -90,6 +92,16 @@ public class LanguageService
     public List<Language> getUserLanguages(String username)
     {
         return languageRepository.findByUsername(username);
+    }
+
+    public LanguageData getLanguageData(Long languageId)
+    {
+        Optional<Language> languageEntity = languageRepository.findById(languageId);
+
+        if(languageEntity.isEmpty())
+            return LanguageData.builder().username(authenticationService.getAuthenticatedUsername()).build();
+
+        return LanguageData.getFromEntity(languageEntity.get());
     }
 
     private long getLetterIdOrSaveIfNew(String letterCombination)

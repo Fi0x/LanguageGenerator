@@ -24,7 +24,7 @@
         </c:forEach>
         </tbody>
     </table>
-<%--    TODO: Also add the option, to generate the new words additionally, instead of replacing the old ones--%>
+<%--    TODO: Also add the option, to generate the new words additionally, instead of replacing the old ones. And add an option to decide how many words should get generated--%>
     <a href="generate?language=${param.language}&amount=10" class="btn">Generate new words in this language</a>
 </div>
 <script src="webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>

@@ -2,6 +2,7 @@ package io.fi0x.languagegenerator.logic;
 
 import java.io.File;
 
+@Deprecated
 public class InputHandler
 {
     public static boolean isInt(String userInput)

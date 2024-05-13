@@ -21,6 +21,10 @@ public class LanguageController
 {
     // TODO: Add user accounts that can be created for free and are stored in a local db
 
+    // TODO: Add the possibility to import and export language-files
+
+    // TODO: Add the option to delete a language
+
     private AuthenticationService authenticationService;
     private GenerationService generationService;
     private LanguageService languageService;
@@ -38,7 +42,8 @@ public class LanguageController
         {
             log.warn("Could not find a language with id={}", language);
             return "redirect:/";
-        } catch (InvalidObjectException e) {
+        } catch (InvalidObjectException e)
+        {
             log.warn("The constraints for the language with id={} are not valid to generate a word", language);
             return "redirect:/";
         }
@@ -63,7 +68,7 @@ public class LanguageController
     }
 
     @GetMapping("/add-language")
-    public String createLanguage(ModelMap model)
+    public String createLanguage(ModelMap model, @RequestParam(value = "") Long languageId)
     {
         log.info("createLanguage() called");
 
