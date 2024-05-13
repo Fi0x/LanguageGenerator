@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 
 import java.io.InvalidObjectException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -103,11 +105,9 @@ public class LanguageService
     {
         Optional<Language> languageEntity = languageRepository.findById(languageId);
 
-        if(languageEntity.isEmpty())
-            return LanguageData.builder().username(authenticationService.getAuthenticatedUsername()).build();
+        return languageEntity.map(language -> addLettersToLanguage(LanguageData.getFromEntity(language)))
+                .orElseGet(() -> LanguageData.builder().username(authenticationService.getAuthenticatedUsername()).build());
 
-        // TODO: Fill letter-combinations in Dto to show them in edit-page
-        return LanguageData.getFromEntity(languageEntity.get());
     }
 
     private long getLetterIdOrSaveIfNew(String letterCombination)
@@ -123,5 +123,30 @@ public class LanguageService
             return letter.getId();
         }
         return letters.get(0).getId();
+    }
+
+    private LanguageData addLettersToLanguage(LanguageData languageData)
+    {
+        List<VocalCombination> vCom = vRepo.getAllByLanguageId(languageData.getId());
+        List<String> vLetters = vCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        languageData.setVocals(vLetters);
+
+        List<ConsonantCombination> cCom = cRepo.getAllByLanguageId(languageData.getId());
+        List<String> cLetters = cCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        languageData.setConsonants(cLetters);
+
+        List<VocalConsonantCombination> vcCom = vcRepo.getAllByLanguageId(languageData.getId());
+        List<String> vcLetters = vcCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        languageData.setConsonants(vcLetters);
+
+        List<ConsonantVocalCombination> cvCom = cvRepo.getAllByLanguageId(languageData.getId());
+        List<String> cvLetters = cvCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        languageData.setConsonants(cvLetters);
+
+        List<ForbiddenCombination> fCom = fRepo.getAllByLanguageId(languageData.getId());
+        List<String> fLetters = fCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        languageData.setConsonants(fLetters);
+
+        return languageData;
     }
 }
