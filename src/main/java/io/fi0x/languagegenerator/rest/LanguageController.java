@@ -51,7 +51,7 @@ public class LanguageController
         return "list-words";
     }
 
-    @GetMapping("/**")
+    @GetMapping("/*")
     public String redirectWrongUrl()
     {
         return "redirect:/";
