@@ -14,8 +14,8 @@
         <form:input type="hidden" path="id"/>
         Name: <form:input type="text" path="name"/>
         <form:input type="hidden" path="username"/>
-<%--        TODO: Fix type issue--%>
-        Public: <form:input type="boolean" path="isPublic" />
+<%--        TODO: make this visible and changeable--%>
+        <form:input type="hidden" path="isPublic" />
         Min-Word-Length: <form:input type="number" path="minWordLength"/>
         Max-Word-Length: <form:input type="number" path="maxWordLength"/>
         <a>Separate individual letter-combinations by ','</a>
