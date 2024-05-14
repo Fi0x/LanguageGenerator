@@ -27,8 +27,7 @@ public class LanguageService
 
     public void addLanguage(LanguageData languageData) throws InvalidObjectException
     {
-        if (languageData.getId() == null)
-        {
+        if (languageData.getId() == null) {
             Optional<Long> id = languageRepository.getHighestId();
             languageData.setId((id.isPresent() ? id.get() : 0) + 1);
         }
@@ -94,14 +93,12 @@ public class LanguageService
         });
     }
 
-    public List<Language> getUserLanguages(String username)
+    public List<Language> getUserAndPublicLanguages()
     {
-        return languageRepository.getAllByUsername(username);
-    }
+        List<Language> result = languageRepository.getAllByUsername(authenticationService.getAuthenticatedUsername());
+        result.addAll(languageRepository.getAllByIsPublic(true));
 
-    public List<Language> getPublicLanguages()
-    {
-        return languageRepository.getAllByIsPublic(true);
+        return result;
     }
 
     public LanguageData getLanguageData(long languageId)
@@ -112,21 +109,23 @@ public class LanguageService
                 .orElseGet(() -> LanguageData.builder().username(authenticationService.getAuthenticatedUsername()).build());
     }
 
-    public void deleteLanguage(long languageId)
+    public boolean deleteLanguage(long languageId)
     {
         Optional<Language> languageEntity = languageRepository.findById(languageId);
-        if(languageEntity.isEmpty())
-            return;
+        if (languageEntity.isEmpty())
+            return false;
 
-        if(authenticationService.getAuthenticatedUsername().equals(languageEntity.get().getUsername()))
-            languageRepository.deleteById(languageId);
+        if (!authenticationService.getAuthenticatedUsername().equals(languageEntity.get().getUsername()))
+            return false;
+
+        languageRepository.deleteById(languageId);
+        return true;
     }
 
     private long getLetterIdOrSaveIfNew(String letterCombination)
     {
         List<Letter> letters = letterRepository.getAllByLetters(letterCombination);
-        if (letters.isEmpty())
-        {
+        if (letters.isEmpty()) {
             Letter letter = new Letter();
             Optional<Long> id = letterRepository.getHighestId();
             letter.setId((id.isPresent() ? id.get() : 0) + 1);

@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Fixed key violation error">
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Deleting letter combinations that are no longer valid for a language">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/ConsonantRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/db/ConsonantRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/service/LanguageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/service/LanguageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/list-languages.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/list-languages.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +74,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.MainApplication.executor": "Debug",
+    "Spring Boot.MainApplication.executor": "Run",
     "WebServerToolWindowFactoryState": "false",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
@@ -181,7 +178,7 @@
       <workItem from="1715094912941" duration="420000" />
       <workItem from="1715502974057" duration="304000" />
       <workItem from="1715614996178" duration="658000" />
-      <workItem from="1715674151444" duration="5266000" />
+      <workItem from="1715674151444" duration="6427000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -406,7 +403,23 @@
       <option name="project" value="LOCAL" />
       <updated>1715676724144</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Added delete option for languages">
+      <option name="closed" value="true" />
+      <created>1715684057404</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1715684057404</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Deleting letter combinations that are no longer valid for a language">
+      <option name="closed" value="true" />
+      <created>1715684182930</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1715684182930</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -424,8 +437,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added option to adjust language&#10;&#10;Improved randomizer" />
-    <MESSAGE value="Created folder to store languages and added template file" />
     <MESSAGE value="Added option to display a list of loaded languages and to switch to another language" />
     <MESSAGE value="Added language trait for forbidden combinations" />
     <MESSAGE value="Added check for forbidden combinations to randomizer" />
@@ -449,7 +460,9 @@
     <MESSAGE value="Added more functionality and completed some todos" />
     <MESSAGE value="Made isPublic property hidden&#10;&#10;SAVING NEW LETTERS CURRENTLY PRODUCES ERRORS" />
     <MESSAGE value="Fixed key violation error" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed key violation error" />
+    <MESSAGE value="Added delete option for languages" />
+    <MESSAGE value="Deleting letter combinations that are no longer valid for a language" />
+    <option name="LAST_COMMIT_MESSAGE" value="Deleting letter combinations that are no longer valid for a language" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

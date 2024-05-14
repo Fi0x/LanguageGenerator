@@ -1,7 +1,6 @@
 package io.fi0x.languagegenerator.rest;
 
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
-import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.GenerationService;
 import io.fi0x.languagegenerator.service.LanguageService;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,9 +24,6 @@ public class LanguageController
 
     // TODO: Add the possibility to import and export language-files
 
-    // TODO: Add the option to delete a language
-
-    private AuthenticationService authenticationService;
     private GenerationService generationService;
     private LanguageService languageService;
 
@@ -74,8 +70,7 @@ public class LanguageController
     {
         log.info("listLanguages() called");
 
-        //TODO: Also add public languages to every user
-        model.put("languages", languageService.getUserLanguages(authenticationService.getAuthenticatedUsername()));
+        model.put("languages", languageService.getUserAndPublicLanguages());
 
         return "list-languages";
     }
