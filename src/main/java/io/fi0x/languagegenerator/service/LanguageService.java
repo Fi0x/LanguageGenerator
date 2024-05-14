@@ -40,6 +40,7 @@ public class LanguageService
 
         languageRepository.save(languageData.toLanguageEntity());
 
+        //TODO: First remove all existing entries for the language, then make sure the new ones are saved
         languageData.getConsonants().forEach(letterCombination -> {
             long letterId = getLetterIdOrSaveIfNew(letterCombination);
             ConsonantCombination combination = new ConsonantCombination();

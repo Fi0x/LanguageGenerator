@@ -12,7 +12,6 @@ import lombok.Data;
 public class Letter
 {
     @Id
-    @GeneratedValue
     private Long id;
     private String letters;
 }
