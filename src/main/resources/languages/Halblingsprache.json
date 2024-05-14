@@ -19,6 +19,37 @@
     "aba"
   ],
   "vocalConsonant": [
+    "ab",
+    "ad",
+    "an",
+    "al",
+    "as",
+    "at",
+    "az",
+    "es",
+    "et",
+    "ez",
+    "id",
+    "ir",
+    "is",
+    "it",
+    "im",
+    "in",
+    "od",
+    "oh",
+    "on",
+    "os",
+    "oy",
+    "oz",
+    "ud",
+    "ug",
+    "uk",
+    "ul",
+    "un",
+    "ur",
+    "us",
+    "uy",
+    "iks"
   ],
   "consonants": [
     "b",
@@ -34,16 +65,11 @@
     "s",
     "t",
     "y",
-    "z"
+    "z",
+    "vim"
   ],
   "consonantVocals": [
   ],
   "forbiddenCombinations": [
-    "f",
-    "m",
-    "p",
-    "v",
-    "w",
-    "x"
   ]
 }

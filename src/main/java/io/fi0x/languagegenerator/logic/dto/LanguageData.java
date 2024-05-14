@@ -29,18 +29,6 @@ public class LanguageData
                 .minWordLength(language.getMinWordLength()).maxWordLength(language.getMaxWordLength()).build();
     }
 
-    public Language toLanguageEntity()
-    {
-        Language language = new Language();
-        language.setId(id);
-        language.setName(name);
-        language.setUsername(username);
-        language.setIsPublic(isPublic);
-        language.setMinWordLength(minWordLength);
-        language.setMaxWordLength(maxWordLength);
-        return language;
-    }
-
     public boolean invalid()
     {
         if(id == null || name == null || username == null)

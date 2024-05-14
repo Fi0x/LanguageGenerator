@@ -2,7 +2,9 @@ package io.fi0x.languagegenerator.service;
 
 import io.fi0x.languagegenerator.db.*;
 import io.fi0x.languagegenerator.db.entities.*;
+import io.fi0x.languagegenerator.logic.converter.LanguageConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
+import io.fi0x.languagegenerator.logic.dto.LanguageJson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +31,13 @@ public class LanguageService
     {
         if (languageData.getId() == null) {
             Optional<Long> id = languageRepository.getHighestId();
-            languageData.setId((id.isPresent() ? id.get() : 0) + 1);
+            languageData.setId((id.isPresent() ? id.get() : -1) + 1);
         }
 
         if (languageData.invalid())
             throw new InvalidObjectException("Can't save language with the provided settings");
 
-        languageRepository.save(languageData.toLanguageEntity());
+        languageRepository.save(LanguageConverter.convert(languageData));
 
         cRepo.deleteAllByLanguageId(languageData.getId());
         languageData.getConsonants().forEach(letterCombination -> {
@@ -91,6 +93,11 @@ public class LanguageService
             combination.setLetterId(letterId);
             fRepo.save(combination);
         });
+    }
+
+    public void addLanguage(LanguageJson languageJson, String name, boolean isPublic) throws InvalidObjectException
+    {
+        addLanguage(LanguageConverter.convert(languageJson, languageRepository.getHighestId().orElse(0L), name, authenticationService.getAuthenticatedUsername(), isPublic));
     }
 
     public List<Language> getUserAndPublicLanguages()

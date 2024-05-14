@@ -62,6 +62,8 @@ public class LanguageController
     @GetMapping("/*")
     public String redirectWrongUrl()
     {
+        log.info("redirectWrongUrl() called");
+
         return "redirect:/";
     }
 
