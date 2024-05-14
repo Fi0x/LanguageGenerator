@@ -38,8 +38,6 @@ public class LanguageService
 
         languageRepository.save(languageData.toLanguageEntity());
 
-        //TODO: First remove all existing entries for the language, then make sure the new ones are saved
-
         cRepo.deleteAllByLanguageId(languageData.getId());
         languageData.getConsonants().forEach(letterCombination -> {
             long letterId = getLetterIdOrSaveIfNew(letterCombination);
@@ -51,6 +49,7 @@ public class LanguageService
             cRepo.save(combination);
         });
 
+        vRepo.deleteAllByLanguageId(languageData.getId());
         languageData.getVocals().forEach(letterCombination -> {
             long letterId = getLetterIdOrSaveIfNew(letterCombination);
             VocalCombination combination = new VocalCombination();
@@ -61,6 +60,7 @@ public class LanguageService
             vRepo.save(combination);
         });
 
+        vcRepo.deleteAllByLanguageId(languageData.getId());
         languageData.getVocalConsonant().forEach(letterCombination -> {
             long letterId = getLetterIdOrSaveIfNew(letterCombination);
             VocalConsonantCombination combination = new VocalConsonantCombination();
@@ -71,6 +71,7 @@ public class LanguageService
             vcRepo.save(combination);
         });
 
+        cvRepo.deleteAllByLanguageId(languageData.getId());
         languageData.getConsonantVocals().forEach(letterCombination -> {
             long letterId = getLetterIdOrSaveIfNew(letterCombination);
             ConsonantVocalCombination combination = new ConsonantVocalCombination();
@@ -81,6 +82,7 @@ public class LanguageService
             cvRepo.save(combination);
         });
 
+        fRepo.deleteAllByLanguageId(languageData.getId());
         languageData.getForbiddenCombinations().forEach(letterCombination -> {
             long letterId = getLetterIdOrSaveIfNew(letterCombination);
             ForbiddenCombination combination = new ForbiddenCombination();
