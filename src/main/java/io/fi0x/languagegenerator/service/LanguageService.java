@@ -96,7 +96,9 @@ public class LanguageService
     public List<Language> getUserAndPublicLanguages()
     {
         List<Language> result = languageRepository.getAllByUsername(authenticationService.getAuthenticatedUsername());
-        result.addAll(languageRepository.getAllByIsPublic(true));
+        List<Language> publicLanguages = languageRepository.getAllByIsPublic(true);
+        result.removeAll(publicLanguages);
+        result.addAll(publicLanguages);
 
         return result;
     }
