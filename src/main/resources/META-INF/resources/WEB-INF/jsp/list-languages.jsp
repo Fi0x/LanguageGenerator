@@ -21,7 +21,7 @@
             <tr>
                 <td>${language.name}</td>
                 <td>
-                    <a href="add-language?languageId=${language.id}" class="btn">Edit</a>
+                    <a href="language?languageId=${language.id}" class="btn">Edit</a>
                 </td>
                 <td>
                     <a href="generate?language=${language.id}&amount=10" class="btn">Generate 10</a>
@@ -29,11 +29,14 @@
                 <td>
                     <a href="generate?language=${language.id}&amount=100" class="btn">Generate 100</a>
                 </td>
+                <td>
+                    <a href="delete-language?languageId=${language.id}" class="btn-danger">Delete</a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <a href="add-language" class="btn-success">Add Language</a>
+    <a href="language" class="btn-success">Add Language</a>
 </div>
 <script src="webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
 <script src="webjars/jquery/3.6.0/jquery.min.js"></script>

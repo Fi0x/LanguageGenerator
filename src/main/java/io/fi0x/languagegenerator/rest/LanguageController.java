@@ -80,17 +80,17 @@ public class LanguageController
         return "list-languages";
     }
 
-    @GetMapping("/add-language")
-    public String createLanguage(ModelMap model, @RequestParam(value = "languageId", defaultValue = "-1", required = false) long languageId)
+    @GetMapping("/language")
+    public String editLanguage(ModelMap model, @RequestParam(value = "languageId", defaultValue = "-1", required = false) long languageId)
     {
-        log.info("createLanguage() called");
+        log.info("editLanguage() called");
 
         model.put("languageData", languageService.getLanguageData(languageId));
 
         return "language";
     }
 
-    @PostMapping("/add-language")
+    @PostMapping("/language")
     public String addLanguage(ModelMap model, @Valid LanguageData languageData)
     {
         log.info("addLanguage() called");
@@ -102,8 +102,18 @@ public class LanguageController
         } catch (InvalidObjectException e)
         {
             log.info("Could not save the language because it was not complete.");
-            return "redirect:add-language";
+            return "redirect:language";
         }
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/delete-language")
+    public String deleteLanguage(ModelMap model, @RequestParam(value = "languageId") long languageId)
+    {
+        log.info("deleteLanguage() called for languageId={}", languageId);
+
+        languageService.deleteLanguage(languageId);
 
         return "redirect:/";
     }

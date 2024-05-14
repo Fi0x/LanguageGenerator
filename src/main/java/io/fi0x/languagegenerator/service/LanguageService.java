@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 
 
 import java.io.InvalidObjectException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -41,6 +39,8 @@ public class LanguageService
         languageRepository.save(languageData.toLanguageEntity());
 
         //TODO: First remove all existing entries for the language, then make sure the new ones are saved
+
+        cRepo.deleteAllByLanguageId(languageData.getId());
         languageData.getConsonants().forEach(letterCombination -> {
             long letterId = getLetterIdOrSaveIfNew(letterCombination);
             ConsonantCombination combination = new ConsonantCombination();
@@ -108,7 +108,16 @@ public class LanguageService
 
         return languageEntity.map(language -> addLettersToLanguage(LanguageData.getFromEntity(language)))
                 .orElseGet(() -> LanguageData.builder().username(authenticationService.getAuthenticatedUsername()).build());
+    }
 
+    public void deleteLanguage(long languageId)
+    {
+        Optional<Language> languageEntity = languageRepository.findById(languageId);
+        if(languageEntity.isEmpty())
+            return;
+
+        if(authenticationService.getAuthenticatedUsername().equals(languageEntity.get().getUsername()))
+            languageRepository.deleteById(languageId);
     }
 
     private long getLetterIdOrSaveIfNew(String letterCombination)
