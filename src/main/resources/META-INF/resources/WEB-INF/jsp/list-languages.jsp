@@ -36,7 +36,8 @@
         </c:forEach>
         </tbody>
     </table>
-    <a href="language" class="btn-success">Add Language</a>
+    <a href="language" class="btn-success">Create new Language</a>
+    <a href="upload" class="btn-success">Upload language.json file</a>
 </div>
 <script src="webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
 <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
