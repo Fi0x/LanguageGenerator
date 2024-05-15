@@ -25,8 +25,6 @@ public class LanguageController
 {
     // TODO: Add user accounts that can be created for free and are stored in a local db
 
-    // TODO: Add the possibility to export language-files
-
     private GenerationService generationService;
     private LanguageService languageService;
 

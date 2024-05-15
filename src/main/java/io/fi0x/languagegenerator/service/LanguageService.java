@@ -8,7 +8,6 @@ import io.fi0x.languagegenerator.logic.dto.LanguageJson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 import java.io.InvalidObjectException;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +36,7 @@ public class LanguageService
         if (languageData.invalid())
             throw new InvalidObjectException("Can't save language with the provided settings");
 
-        languageRepository.save(LanguageConverter.convert(languageData));
+        languageRepository.save(LanguageConverter.convertToEntity(languageData));
 
         cRepo.deleteAllByLanguageId(languageData.getId());
         languageData.getConsonants().forEach(letterCombination -> {
@@ -97,7 +96,7 @@ public class LanguageService
 
     public void addLanguage(LanguageJson languageJson, String name, boolean isPublic) throws InvalidObjectException
     {
-        addLanguage(LanguageConverter.convert(languageJson, languageRepository.getHighestId().orElse(0L) + 1, name, authenticationService.getAuthenticatedUsername(), isPublic));
+        addLanguage(LanguageConverter.convertToData(languageJson, languageRepository.getHighestId().orElse(0L) + 1, name, authenticationService.getAuthenticatedUsername(), isPublic));
     }
 
     public List<Language> getUserAndPublicLanguages()

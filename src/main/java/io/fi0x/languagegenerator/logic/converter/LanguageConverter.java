@@ -4,11 +4,9 @@ import io.fi0x.languagegenerator.db.entities.Language;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
 
-import java.util.Arrays;
-
 public class LanguageConverter
 {
-    public static Language convert(final LanguageData languageData)
+    public static Language convertToEntity(final LanguageData languageData)
     {
         Language language = new Language();
         language.setId(languageData.getId());
@@ -21,18 +19,19 @@ public class LanguageConverter
 
     }
 
-    public static LanguageData convert(final Language language)
+    public static LanguageJson convertToJson(LanguageData languageData)
     {
-        return LanguageData.builder()
-                .id(language.getId())
-                .name(language.getName())
-                .username(language.getUsername())
-                .isPublic(language.getIsPublic())
-                .minWordLength(language.getMinWordLength())
-                .maxWordLength(language.getMaxWordLength()).build();
+        LanguageJson languageJson = new LanguageJson();
+        languageJson.setNameLengths(new int[]{languageData.getMinWordLength(), languageData.getMaxWordLength()});
+        languageJson.setVocals(languageData.getVocals());
+        languageJson.setConsonants(languageData.getConsonants());
+        languageJson.setVocalConsonant(languageData.getVocalConsonant());
+        languageJson.setConsonantVocals(languageData.getConsonantVocals());
+        languageJson.setForbiddenCombinations(languageData.getForbiddenCombinations());
+        return languageJson;
     }
 
-    public static LanguageData convert(LanguageJson languageJson, long id, String name, String username, boolean isPublic)
+    public static LanguageData convertToData(LanguageJson languageJson, long id, String name, String username, boolean isPublic)
     {
         return LanguageData.builder()
                 .id(id)
