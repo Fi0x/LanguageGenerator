@@ -5,18 +5,24 @@ import io.fi0x.languagegenerator.logic.dto.LanguageJson;
 import io.fi0x.languagegenerator.service.LanguageService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InvalidObjectException;
+import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -55,5 +61,29 @@ public class FileController
             log.warn("Could not create an InputStream of the uploaded file '{}'", multipartFile.getName(), e);
         }
         return "redirect:/";
+    }
+
+    // TODO: Make this method work correctly
+    @GetMapping("/download")
+    @ResponseBody
+    public ResponseEntity<Resource> downloadLanguageFile(@RequestParam(value = "languageId") long languageId)
+    {
+        //TODO: Move more of this into a service and fill the file with the correct content and name
+        Resource file;
+        try {
+            File actualFile = new File("blaBlub");
+            List<String> content = new ArrayList<>();
+            content.add("Test Line");
+            Files.write(actualFile.toPath(), content , StandardCharsets.UTF_8);
+            file = new UrlResource(actualFile.toURI());
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        //TODO: Add null-check
+        String languageName = "Placeholder";//TODO: Get the actual language name from the table
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + languageName + "\"").body(file);
     }
 }

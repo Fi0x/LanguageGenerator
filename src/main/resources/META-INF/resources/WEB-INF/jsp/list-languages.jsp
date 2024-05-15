@@ -21,13 +21,16 @@
             <tr>
                 <td>${language.name}</td>
                 <td>
-                    <a href="language?languageId=${language.id}" class="btn">Edit</a>
-                </td>
-                <td>
                     <a href="generate?language=${language.id}&amount=10" class="btn">Generate 10</a>
                 </td>
                 <td>
                     <a href="generate?language=${language.id}&amount=100" class="btn">Generate 100</a>
+                </td>
+                <td>
+                    <a href="download?languageId=${language.id}" class="btn">Download</a>
+                </td>
+                <td>
+                    <a href="language?languageId=${language.id}" class="btn">Edit</a>
                 </td>
                 <td>
                     <a href="delete-language?languageId=${language.id}" class="btn-danger">Delete</a>

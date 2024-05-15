@@ -9,7 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.io.InvalidObjectException;
 import java.util.Objects;
@@ -22,7 +25,7 @@ public class LanguageController
 {
     // TODO: Add user accounts that can be created for free and are stored in a local db
 
-    // TODO: Add the possibility to import and export language-files
+    // TODO: Add the possibility to export language-files
 
     private GenerationService generationService;
     private LanguageService languageService;
