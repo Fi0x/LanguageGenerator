@@ -39,7 +39,6 @@ public class LanguageService
 
         languageRepository.save(LanguageConverter.convert(languageData));
 
-        //TODO: Find out why only vocals are loaded and saved correctly
         cRepo.deleteAllByLanguageId(languageData.getId());
         languageData.getConsonants().forEach(letterCombination -> {
             long letterId = getLetterIdOrSaveIfNew(letterCombination);
@@ -158,15 +157,15 @@ public class LanguageService
 
         List<VocalConsonantCombination> vcCom = vcRepo.getAllByLanguageId(languageData.getId());
         List<String> vcLetters = vcCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
-        languageData.setConsonants(vcLetters);
+        languageData.setVocalConsonant(vcLetters);
 
         List<ConsonantVocalCombination> cvCom = cvRepo.getAllByLanguageId(languageData.getId());
         List<String> cvLetters = cvCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
-        languageData.setConsonants(cvLetters);
+        languageData.setConsonantVocals(cvLetters);
 
         List<ForbiddenCombination> fCom = fRepo.getAllByLanguageId(languageData.getId());
         List<String> fLetters = fCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
-        languageData.setConsonants(fLetters);
+        languageData.setForbiddenCombinations(fLetters);
 
         return languageData;
     }

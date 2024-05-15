@@ -110,7 +110,10 @@ public class LanguageController
     {
         log.info("deleteLanguage() called for languageId={}", languageId);
 
-        languageService.deleteLanguage(languageId);
+        if(languageService.deleteLanguage(languageId))
+            log.info("Language with id={} successfully deleted", languageId);
+        else
+            log.warn("Could not delete language with id={}", languageId);
 
         return "redirect:/";
     }
