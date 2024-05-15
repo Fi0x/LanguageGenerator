@@ -11,8 +11,6 @@ public class MainApplication
 {
     public static void main(String[] args) throws Exception
     {
-        //TODO: This might need to be done after initial loading is complete
-        Setup.loadLanguagesFromFiles();
         log.info("Initial loading complete");
 
         SpringApplication.run(MainApplication.class, args);

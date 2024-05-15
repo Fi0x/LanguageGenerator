@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added public languages to all user-lists">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/upload.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added upload page for json files">
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/MainApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/Setup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/Setup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/FileController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -429,7 +427,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715686059520</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Added upload page for json files">
+      <option name="closed" value="true" />
+      <created>1715775299983</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1715775299983</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -447,7 +453,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added language trait for forbidden combinations" />
     <MESSAGE value="Added check for forbidden combinations to randomizer" />
     <MESSAGE value="Added option to select language by index" />
     <MESSAGE value="Added pom launch4j setup for gui-app" />
@@ -472,18 +477,10 @@
     <MESSAGE value="Added delete option for languages" />
     <MESSAGE value="Deleting letter combinations that are no longer valid for a language" />
     <MESSAGE value="Added public languages to all user-lists" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added public languages to all user-lists" />
+    <MESSAGE value="Added upload page for json files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added upload page for json files" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/service/LanguageService.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="io.fi0x.languagegenerator.logic.dto.LanguageData" memberName="minWordLength" />
