@@ -57,7 +57,7 @@ public class Setup
         try
         {
             LanguageJson json = mapper.readValue(languageFileStream, LanguageJson.class);
-            languageService.addLanguage(json, name, true);//TODO: Fix this
+//            languageService.addLanguage(json, name, true);//TODO: Fix this
         } catch (IOException e)
         {
             log.warn("Could not convert an InputStream to a LanguageJson-Object", e);

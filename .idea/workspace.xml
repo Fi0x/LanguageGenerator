@@ -5,19 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added public languages to all user-lists">
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/converter/LanguageConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/dto/LanguageJson.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/FileController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/languages/Gnomsprache.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/languages/Goblinsprache.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/languages/Tieflingsprache.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/languages/Zwergensprache.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/upload.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/Setup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/Setup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/dto/LanguageData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/dto/LanguageData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/service/LanguageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/service/LanguageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/languages/Halblingsprache.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/languages/Halblingsprache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/FileController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +75,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.MainApplication.executor": "Run",
+    "Spring Boot.MainApplication.executor": "Debug",
     "WebServerToolWindowFactoryState": "false",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
@@ -484,6 +475,15 @@
     <option name="LAST_COMMIT_MESSAGE" value="Added public languages to all user-lists" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/service/LanguageService.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="io.fi0x.languagegenerator.logic.dto.LanguageData" memberName="minWordLength" />

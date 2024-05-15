@@ -39,6 +39,7 @@ public class LanguageService
 
         languageRepository.save(LanguageConverter.convert(languageData));
 
+        //TODO: Find out why only vocals are loaded and saved correctly
         cRepo.deleteAllByLanguageId(languageData.getId());
         languageData.getConsonants().forEach(letterCombination -> {
             long letterId = getLetterIdOrSaveIfNew(letterCombination);
@@ -97,7 +98,7 @@ public class LanguageService
 
     public void addLanguage(LanguageJson languageJson, String name, boolean isPublic) throws InvalidObjectException
     {
-        addLanguage(LanguageConverter.convert(languageJson, languageRepository.getHighestId().orElse(0L), name, authenticationService.getAuthenticatedUsername(), isPublic));
+        addLanguage(LanguageConverter.convert(languageJson, languageRepository.getHighestId().orElse(0L) + 1, name, authenticationService.getAuthenticatedUsername(), isPublic));
     }
 
     public List<Language> getUserAndPublicLanguages()
