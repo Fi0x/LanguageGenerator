@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Fixed json file-type for language download">
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="sReplaced default language">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +179,7 @@
       <workItem from="1715614996178" duration="658000" />
       <workItem from="1715674151444" duration="8022000" />
       <workItem from="1715689810002" duration="2738000" />
-      <workItem from="1715840570391" duration="5471000" />
+      <workItem from="1715840570391" duration="9716000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -492,7 +492,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715845163787</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="sReplaced default language">
+      <option name="closed" value="true" />
+      <created>1715848891703</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1715848891703</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -510,7 +518,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Cleanup and partially implemented language addition" />
     <MESSAGE value="Changed language-list to use Language class" />
     <MESSAGE value="Added h2 for languages" />
     <MESSAGE value="Using language id instead of name for references" />
@@ -535,7 +542,8 @@
     <MESSAGE value="Completed file download" />
     <MESSAGE value="Updated spring security config to use db for users" />
     <MESSAGE value="Fixed json file-type for language download" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed json file-type for language download" />
+    <MESSAGE value="sReplaced default language" />
+    <option name="LAST_COMMIT_MESSAGE" value="sReplaced default language" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
