@@ -65,9 +65,9 @@ public class FileController
     {
         LanguageData languageData = languageService.getLanguageData(languageId);
 
-        Resource file;
+        Resource resource;
         try {
-            file = fileService.getLanguageFile(languageData);
+            resource = fileService.getLanguageFile(languageData);
         } catch (IllegalArgumentException e) {
             log.warn("Could not generate language file for download, because languageData or id is null", e);
             throw new RuntimeException(e);
@@ -76,6 +76,6 @@ public class FileController
             throw new RuntimeException(e);
         }
         
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + languageData.getName() + "\"").body(file);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + languageData.getName() + ".json\"").body(resource);
     }
 }

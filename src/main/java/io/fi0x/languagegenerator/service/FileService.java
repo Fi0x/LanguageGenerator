@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 @Slf4j
 @Service
@@ -20,13 +21,12 @@ public class FileService
         if(languageData == null || languageData.getId() == null)
             throw new IllegalArgumentException("LanguageData must not be null");
 
-        File actualFile = new File(languageData.getId() + ".json");
+        File actualFile = Files.createTempFile(languageData.getId().toString(), ".json").toFile();
+        actualFile.deleteOnExit();
         ObjectMapper mapper = new ObjectMapper();
 
         mapper.writeValue(actualFile, LanguageConverter.convertToJson(languageData));
 
         return new UrlResource(actualFile.toURI());
-
-
     }
 }
