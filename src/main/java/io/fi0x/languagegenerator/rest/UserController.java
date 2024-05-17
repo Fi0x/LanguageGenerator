@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController
 {
     //TODO: Make the signup page available when the user is not logged in
+    //TODO: Disable the signup page and login page when the user is logged in
 
     private AuthenticationService authenticationService;
 

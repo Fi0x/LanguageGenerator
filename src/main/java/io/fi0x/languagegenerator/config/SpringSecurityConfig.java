@@ -26,15 +26,17 @@ import javax.sql.DataSource;
 @Configuration
 public class SpringSecurityConfig
 {
-    //TODO: Make sure that only admins can open the database-web-console
-
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
     {
         log.debug("securityFilterChain() bean called");
 
-        http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
+        http.authorizeHttpRequests(auth -> {
+            auth.requestMatchers("/h2-console").hasRole("ADMIN");
+//            auth.requestMatchers("/register").permitAll();
+            auth.anyRequest().authenticated();
+        });
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
         http.formLogin(Customizer.withDefaults());

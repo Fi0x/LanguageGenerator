@@ -14,8 +14,8 @@
         Password: <form:input type="password" path="password"/>
         Repeat password: <form:input type="password" path="matchingPassword"/>
         <input type="submit" class="btn-success">
-<%--        TODO: Add a button to go to the login page instead--%>
     </form:form>
+    <a href="login" class="btn">Login with an existing account</a>
 </div>
 <script src="webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
 <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
