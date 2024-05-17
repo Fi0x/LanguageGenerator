@@ -23,8 +23,6 @@ import java.util.Objects;
 @SessionAttributes({"language", "amount", "words"})
 public class LanguageController
 {
-    // TODO: Add user accounts that can be created for free and are stored in a local db
-
     private GenerationService generationService;
     private LanguageService languageService;
 

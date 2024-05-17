@@ -1,5 +1,6 @@
 package io.fi0x.languagegenerator.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,22 +13,27 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
 
+@Slf4j
 @Configuration
 public class SpringSecurityConfig
 {
+    //TODO: Make sure that only admins can open the database-web-console
+
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
     {
+        log.debug("securityFilterChain() bean called");
+
         http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
@@ -43,6 +49,8 @@ public class SpringSecurityConfig
     @Bean
     public DataSource dataSource()
     {
+        log.debug("dataSources() bean called");
+
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)
@@ -50,12 +58,14 @@ public class SpringSecurityConfig
     }
 
     @Bean
-    public UserDetailsService userDetailsService(DataSource dataSource)
+    public UserDetailsManager userDetailsManager(DataSource dataSource)
     {
+        log.debug("userDetailsManager() bean called");
+
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
 
         createUser(manager, "fi0x", "123", new String[]{"USER", "ADMIN"});
-        createUser(manager, "dummy1", "456", new String[]{"USER"});
+        createUser(manager, "dummy1", "456", "USER");
 
         return manager;
     }
@@ -66,7 +76,7 @@ public class SpringSecurityConfig
         return new BCryptPasswordEncoder();
     }
 
-    private void createUser(JdbcUserDetailsManager userManager, String username, String password, String[] roles)
+    private void createUser(JdbcUserDetailsManager userManager, String username, String password, String... roles)
     {
         userManager.createUser(User.builder().passwordEncoder(input -> passwordEncoder().encode(input)).username(username).password(password).roles(roles).build());
     }

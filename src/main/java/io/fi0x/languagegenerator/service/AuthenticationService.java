@@ -1,29 +1,35 @@
 package io.fi0x.languagegenerator.service;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import io.fi0x.languagegenerator.logic.dto.UserDto;
+import lombok.AllArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class AuthenticationService
 {
+    private UserDetailsManager userDetailsManager;
+    private PasswordEncoder passwordEncoder;
+
     public String getAuthenticatedUsername()
     {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
+    public void registerUser(UserDto userDto) throws DuplicateKeyException
     {
-        http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
-        http.formLogin(Customizer.withDefaults());
+        if(userDetailsManager.userExists(userDto.getUsername()))
+            throw new DuplicateKeyException("A user with that username already exists");
 
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
-
-        return http.build();
+        userDetailsManager.createUser(User.builder()
+                .passwordEncoder(input -> passwordEncoder.encode(input))
+                .username(userDto.getUsername())
+                .password(userDto.getPassword())
+                .roles("USER").build());
     }
 }

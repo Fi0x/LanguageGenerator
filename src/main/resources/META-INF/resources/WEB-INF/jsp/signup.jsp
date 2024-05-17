@@ -7,24 +7,15 @@
     <title>Language Generator</title>
 </head>
 <body>
-<%@include file="common/navigation.jspf" %>
 <div class="container">
-    <h1>Generated words:</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Word</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${words}" var="word">
-            <tr>
-                <td>${word.word}</td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-    <a href="generate" class="btn">Generate new words in this language</a>
+    <h1>Register</h1>
+    <form:form method="post" modelAttribute="userDto" action="/register">
+        Username: <form:input type="text" path="username"/>
+        Password: <form:input type="password" path="password"/>
+        Repeat password: <form:input type="password" path="matchingPassword"/>
+        <input type="submit" class="btn-success">
+<%--        TODO: Add a button to go to the login page instead--%>
+    </form:form>
 </div>
 <script src="webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
 <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
