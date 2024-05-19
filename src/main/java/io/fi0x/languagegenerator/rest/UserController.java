@@ -10,10 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Slf4j
 @Controller
 @AllArgsConstructor
+@SessionAttributes({"registerError"})
 public class UserController
 {
     //TODO: Make the signup page available when the user is not logged in
@@ -41,10 +43,12 @@ public class UserController
             authenticationService.registerUser(userDto);
         } catch (DuplicateKeyException e)
         {
-            //TODO: Show an error that the user already exists
             model.put("userDto", userDto);
+            model.put("registerError", "A user with this name already exists.");
             return "redirect:register";
         }
+
+        model.remove("registerError");
 
         return "redirect:/";
     }
