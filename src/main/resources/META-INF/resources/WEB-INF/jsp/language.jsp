@@ -12,19 +12,43 @@
     <h1>Edit Language Details</h1>
     <form:form method="post" modelAttribute="languageData">
         <form:input type="hidden" path="id"/>
-        Name: <form:input type="text" path="name"/>
         <form:input type="hidden" path="username"/>
-<%--        TODO: make this visible and changeable. Currently produces null values!--%>
-        <form:input type="hidden" path="isPublic" />
-        Min-Word-Length: <form:input type="number" path="minWordLength"/>
-        Max-Word-Length: <form:input type="number" path="maxWordLength"/>
-        <a>Separate individual letter-combinations by ','</a>
-        Possible Vocals: <form:input type="text" path="vocals"/>
-        Possible Consonants: <form:input type="text" path="consonants"/>
-        Possible Vocal-Consonant-Combinations: <form:input type="text" path="vocalConsonant"/>
-        Possible Consonant-Vocal-Combinations: <form:input type="text" path="consonantVocals"/>
-        Forbidden Combinations: <form:input type="text" path="forbiddenCombinations"/>
-        <input type="submit" class="btn-success">
+        <table>
+            <tr>
+                Name: <form:input type="text" path="name"/>
+            </tr>
+            <tr>
+                    <%--        TODO: Fix the initial state of the checkbox to represent the language data--%>
+                Public Language: <form:checkbox path="isPublic" checked="${languageData.isPublic}"/>
+            </tr>
+            <tr>
+                Min-Word-Length: <form:input type="number" path="minWordLength"/>
+            </tr>
+            <tr>
+                Max-Word-Length: <form:input type="number" path="maxWordLength"/>
+            </tr>
+            <tr>
+                <a>Separate individual letter-combinations by ','</a>
+            </tr>
+            <tr>
+                Possible Vocals: <form:input type="text" path="vocals"/>
+            </tr>
+            <tr>
+                Possible Consonants: <form:input type="text" path="consonants"/>
+            </tr>
+            <tr>
+                Possible Vocal-Consonant-Combinations: <form:input type="text" path="vocalConsonant"/>
+            </tr>
+            <tr>
+                Possible Consonant-Vocal-Combinations: <form:input type="text" path="consonantVocals"/>
+            </tr>
+            <tr>
+                Forbidden Combinations: <form:input type="text" path="forbiddenCombinations"/>
+            </tr>
+            <tr>
+                <input type="submit" class="btn-success">
+            </tr>
+        </table>
     </form:form>
 </div>
 <script src="webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
