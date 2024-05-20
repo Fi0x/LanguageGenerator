@@ -1,7 +1,7 @@
-package io.fi0x.languagegenerator.gui.controller;
+package io.fi0x.languagegenerator.client.gui.controller;
 
-import io.fi0x.languagegenerator.logic.FileLoader;
-import io.fi0x.languagegenerator.logic.Randomizer;
+import io.fi0x.languagegenerator.client.logic.FileLoader;
+import io.fi0x.languagegenerator.client.logic.Randomizer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.StringJoiner;
 
 @Slf4j
+@Deprecated
 public class Main implements Initializable
 {
     @FXML
@@ -23,9 +24,9 @@ public class Main implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        languageDropDown.getItems().addAll(FileLoader.getLoadedLanguageNames(false));
+        languageDropDown.getItems().addAll(FileLoader.getLoadedLanguageNames(io.fi0x.languagegenerator.client.Main.languageFolder, false));
         languageDropDown.getSelectionModel().select(FileLoader.getActiveLanguage());
-        languageDropDown.setOnAction(actionEvent -> FileLoader.loadLanguageFile(languageDropDown.getValue()));
+        languageDropDown.setOnAction(actionEvent -> FileLoader.loadLanguageFile(io.fi0x.languagegenerator.client.Main.languageFolder, languageDropDown.getValue()));
     }
 
     @FXML

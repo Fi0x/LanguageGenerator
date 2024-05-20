@@ -7,7 +7,6 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +25,7 @@ public class UserController
 
     private AuthenticationService authenticationService;
 
-    @PreAuthorize("permitAll()")
+//    @PreAuthorize("permitAll()")
     @GetMapping("/register")
     public String createUser(ModelMap model, HttpServletRequest request)
     {
@@ -38,7 +37,7 @@ public class UserController
         return "signup";
     }
 
-    @PreAuthorize("permitAll()")
+//    @PreAuthorize("permitAll()")
     @PostMapping("/register")
     public String registerUser(ModelMap model, HttpServletRequest request, @Valid UserDto userDto)
     {

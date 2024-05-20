@@ -1,4 +1,4 @@
-package io.fi0x.languagegenerator.logic;
+package io.fi0x.languagegenerator.client.logic;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

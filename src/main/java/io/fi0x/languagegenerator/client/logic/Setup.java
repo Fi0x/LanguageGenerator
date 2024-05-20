@@ -1,6 +1,5 @@
-package io.fi0x.languagegenerator.logic;
+package io.fi0x.languagegenerator.client.logic;
 
-import io.fi0x.languagegenerator.Main;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
@@ -9,14 +8,15 @@ import java.nio.file.Files;
 import java.util.List;
 
 @Slf4j
+@Deprecated
 public class Setup
 {
     @Deprecated
-    public static boolean createDefaultFileStructure() throws Exception
+    public static boolean createDefaultFileStructure(File languageFolder) throws Exception
     {
-        if(!Main.languageFolder.exists())
+        if(!languageFolder.exists())
         {
-            if(Main.languageFolder.mkdirs())
+            if(languageFolder.mkdirs())
                 return true;
             else
                 throw new Exception("Could not create the language folder");
@@ -25,12 +25,12 @@ public class Setup
             return false;
     }
     @Deprecated
-    public static boolean createTemplateLanguageFile() throws IOException
+    public static boolean createTemplateLanguageFile(File languageFolder) throws IOException
     {
-        File template = new File(Main.languageFolder.getPath() + File.separator + "Language Template.json");
+        File template = new File(languageFolder.getPath() + File.separator + "Language Template.json");
 
         boolean result = template.createNewFile();
-        InputStream jsonInput = Main.class.getResourceAsStream("/languages/templateLanguage.json");
+        InputStream jsonInput = Setup.class.getResourceAsStream("/languages/templateLanguage.json");
         assert jsonInput != null;
         List<String> content = new BufferedReader(new InputStreamReader(jsonInput, StandardCharsets.UTF_8)).lines().toList();
         Files.write(template.toPath(), content, StandardCharsets.UTF_8);

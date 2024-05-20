@@ -67,7 +67,7 @@ public class SpringSecurityConfig
 
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
 
-        createUser(manager, "fi0x", "123", new String[]{"USER", "ADMIN"});
+        createUser(manager, "fi0x", "123", "USER", "ADMIN");
         createUser(manager, "dummy1", "456", "USER");
 
         return manager;

@@ -1,4 +1,4 @@
-package io.fi0x.languagegenerator.gui;
+package io.fi0x.languagegenerator.client.gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 
 @Slf4j
+@Deprecated
 public class MainWindow extends Application
 {
     @Override

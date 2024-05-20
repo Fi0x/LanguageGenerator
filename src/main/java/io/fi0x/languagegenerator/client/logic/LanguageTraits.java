@@ -1,6 +1,4 @@
-package io.fi0x.languagegenerator.logic;
-
-import io.fi0x.languagegenerator.Main;
+package io.fi0x.languagegenerator.client.logic;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,20 +14,11 @@ public class LanguageTraits
     public static final ArrayList<String> consonantVocals = new ArrayList<>();
     public static final ArrayList<String> forbiddenCombinations = new ArrayList<>();
 
-    public static void loadTemplateLanguage()
+    public static void loadTemplateLanguage(File languageFolder)
     {
-        String fileName = Main.languageFolder.getPath() + File.separator + "Language Template.json";
+        String fileName = languageFolder.getPath() + File.separator + "Language Template.json";
         File languageFile = new File(fileName);
         FileLoader.loadLanguageFile(languageFile);
-    }
-
-    public static void clearCurrentTraits()
-    {
-        vocals.clear();
-        consonants.clear();
-        vocalConsonant.clear();
-        consonantVocals.clear();
-        forbiddenCombinations.clear();
     }
 
     public static void setNameLengths(int minLength, int maxLength)

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.fi0x.languagegenerator.gui.controller.Main">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.fi0x.languagegenerator.client.gui.controller.Main">
     <ComboBox fx:id="languageDropDown" visibleRowCount="5" />
     <Button onMouseClicked="#onGenerateNamesClicked" text="Generate 100 random words" />
     <TextArea fx:id="outputWords" editable="false" minHeight="500.0" minWidth="300.0" prefHeight="500.0" prefWidth="300.0" />
