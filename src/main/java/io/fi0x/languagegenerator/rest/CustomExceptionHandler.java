@@ -18,7 +18,8 @@ public class CustomExceptionHandler
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String handleValidationErrors(MethodArgumentNotValidException error, HttpServletRequest request)
     {
-        log.info("handleValidationErrors() called", error);
+        log.info("handleValidationErrors() called");
+
         String redirect = (String) request.getSession().getAttribute("redirect");
         List<String> errors = error.getBindingResult().getFieldErrors().stream().map(FieldError::getDefaultMessage).toList();
         request.getSession().setAttribute("registerError", errors);
