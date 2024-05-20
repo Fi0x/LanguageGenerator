@@ -2,6 +2,7 @@ package io.fi0x.languagegenerator.rest;
 
 import io.fi0x.languagegenerator.logic.dto.UserDto;
 import io.fi0x.languagegenerator.service.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @Slf4j
 @Controller
 @AllArgsConstructor
-@SessionAttributes({"registerError"})
+@SessionAttributes({"registerError", "redirect"})
 public class UserController
 {
     //TODO: Make the signup page available when the user is not logged in
@@ -24,19 +25,19 @@ public class UserController
     private AuthenticationService authenticationService;
 
     @GetMapping("/register")
-    public String createUser(ModelMap model)
+    public String createUser(ModelMap model, HttpServletRequest request)
     {
         log.info("createUser() called");
 
         model.put("userDto", new UserDto());
+        request.getSession().setAttribute("redirect", "redirect:register");
 
         return "signup";
     }
 
     @PostMapping("/register")
-    public String registerUser(ModelMap model, @Valid UserDto userDto)
+    public String registerUser(ModelMap model, HttpServletRequest request, @Valid UserDto userDto)
     {
-        //TODO: Create a validation exception page that notifies the user that the pw does not match
         log.info("registerUser() called with userDto={}", userDto);
 
         try {
@@ -49,6 +50,7 @@ public class UserController
         }
 
         model.remove("registerError");
+        request.getSession().removeAttribute("redirect");
 
         return "redirect:/";
     }

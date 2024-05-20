@@ -1,4 +1,4 @@
-package io.fi0x.languagegenerator.logic.dto.validation;
+package io.fi0x.languagegenerator.rest.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
