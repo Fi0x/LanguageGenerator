@@ -33,8 +33,9 @@ public class SpringSecurityConfig
         log.debug("securityFilterChain() bean called");
 
         http.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/h2-console").hasRole("ADMIN");
 //            auth.requestMatchers("/register").permitAll();
+            auth.requestMatchers("/register").anonymous();
+//            auth.requestMatchers("/register").authenticated();
             auth.anyRequest().authenticated();
         });
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
