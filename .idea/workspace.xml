@@ -4,57 +4,125 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added inno-setup script&#10;Updated template-language">
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Disabled register page for logged in users">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/gui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/gui/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/gui/controller/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/gui/controller/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/FileLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/logic/FileLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/InputHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/logic/InputHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/LanguageTraits.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/logic/LanguageTraits.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/Randomizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/logic/Randomizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/Setup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/logic/Setup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
+        <option value="Interface" />
+        <option value="AnnotationType" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Fi0x &lt;felpech@aol.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="master" />
+      </list>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2Kk1iKdYz6RaoTLLiBECRadcP5q" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="false" id="Update" />
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/Users/felpe/IdeaProjects/LanguageGenerator/src/main/resources/images&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.MainApplication.executor": "Debug",
+    "WebServerToolWindowFactoryState": "false",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/Users/felpe/IdeaProjects/LanguageGenerator/src/main/resources/META-INF/resources/WEB-INF/jsp",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propCompiler",
+    "spring.configuration.checksum": "3592cce44e1fdfd229b1af4743ec1bd9",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "h2"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\META-INF\resources\WEB-INF\jsp" />
+      <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\languages" />
+      <recent name="C:\dev\repos\learning\LanguageGenerator\src\main\resources\META-INF\resources\WEB-INF\jsp" />
       <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\images" />
       <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\fxml" />
-      <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\css" />
-      <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\languages" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="io.fi0x.languagegenerator.db" />
+      <recent name="io.fi0x.languagegenerator.rest.entities" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.MainApplication">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="io.fi0x.Main" />
       <module name="LanguageGenerator" />
@@ -69,6 +137,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="LanguageGenerator" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="io.fi0x.languagegenerator.MainApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -96,6 +179,25 @@
       <workItem from="1676799686869" duration="12107000" />
       <workItem from="1677237656267" duration="2872000" />
       <workItem from="1699903305637" duration="618000" />
+      <workItem from="1714671229893" duration="78000" />
+      <workItem from="1714671433033" duration="191000" />
+      <workItem from="1714671970807" duration="4380000" />
+      <workItem from="1714753442536" duration="5690000" />
+      <workItem from="1714838500065" duration="6315000" />
+      <workItem from="1715076112913" duration="2024000" />
+      <workItem from="1715079509488" duration="339000" />
+      <workItem from="1715079887822" duration="4175000" />
+      <workItem from="1715089767290" duration="1846000" />
+      <workItem from="1715094912941" duration="420000" />
+      <workItem from="1715502974057" duration="304000" />
+      <workItem from="1715614996178" duration="658000" />
+      <workItem from="1715674151444" duration="8022000" />
+      <workItem from="1715689810002" duration="2738000" />
+      <workItem from="1715840570391" duration="9846000" />
+      <workItem from="1715927300551" duration="13210000" />
+      <workItem from="1716061495556" duration="1259000" />
+      <workItem from="1716115111732" duration="12769000" />
+      <workItem from="1716200680424" duration="12501000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -209,7 +311,270 @@
       <option name="project" value="LOCAL" />
       <updated>1677239908558</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Fixed paths">
+      <created>1714670133838</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1714670133838</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Changed language-list to use Language class">
+      <option name="closed" value="true" />
+      <created>1714982176798</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1714982176798</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Added h2 for languages">
+      <option name="closed" value="true" />
+      <created>1715024904503</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1715024904503</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Using language id instead of name for references">
+      <option name="closed" value="true" />
+      <created>1715073958242</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1715073958242</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Added repositories and updated table-names">
+      <option name="closed" value="true" />
+      <created>1715077538826</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1715077538826</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Removed FileLoader from GenerationService">
+      <option name="closed" value="true" />
+      <created>1715084904265</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1715084904265</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Added default data to fill database with language">
+      <option name="closed" value="true" />
+      <created>1715092733495</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1715092733495</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Fixed first call to add-language throwing error">
+      <option name="closed" value="true" />
+      <created>1715167727400</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1715167727400</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Added default redirect for non-matching urls">
+      <option name="closed" value="true" />
+      <created>1715177374992</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1715177374992</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Fixed css">
+      <option name="closed" value="true" />
+      <created>1715621078944</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1715621078944</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Added more functionality and completed some todos">
+      <option name="closed" value="true" />
+      <created>1715626538722</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1715626538722</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Made isPublic property hidden&#10;&#10;SAVING NEW LETTERS CURRENTLY PRODUCES ERRORS">
+      <option name="closed" value="true" />
+      <created>1715669213345</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1715669213345</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Fixed key violation error">
+      <option name="closed" value="true" />
+      <created>1715676724144</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1715676724144</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Added delete option for languages">
+      <option name="closed" value="true" />
+      <created>1715684057404</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1715684057404</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Deleting letter combinations that are no longer valid for a language">
+      <option name="closed" value="true" />
+      <created>1715684182930</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1715684182930</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Added public languages to all user-lists">
+      <option name="closed" value="true" />
+      <created>1715686059520</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1715686059520</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Added upload page for json files">
+      <option name="closed" value="true" />
+      <created>1715775299983</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1715775299983</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Removed unnecessary setup loading">
+      <option name="closed" value="true" />
+      <created>1715775365607</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1715775365607</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Fixed language loading for editing page">
+      <option name="closed" value="true" />
+      <created>1715776938355</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1715776938355</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Added upload button to language-list page">
+      <option name="closed" value="true" />
+      <created>1715778352923</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1715778352923</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Added download button and endpoint for languages">
+      <option name="closed" value="true" />
+      <created>1715783048414</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1715783048414</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Completed file download">
+      <option name="closed" value="true" />
+      <created>1715790082939</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1715790082939</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Updated spring security config to use db for users">
+      <option name="closed" value="true" />
+      <created>1715792795499</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1715792795499</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Fixed json file-type for language download">
+      <option name="closed" value="true" />
+      <created>1715845163787</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1715845163787</updated>
+    </task>
+    <task id="LOCAL-00042" summary="sReplaced default language">
+      <option name="closed" value="true" />
+      <created>1715848891703</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1715848891703</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Deactivated custom filterChain to use correct spring logout">
+      <option name="closed" value="true" />
+      <created>1715875706018</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1715875706018</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Fixed custom filter chain">
+      <option name="closed" value="true" />
+      <created>1715928849342</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1715928849342</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Added custom user account creation">
+      <option name="closed" value="true" />
+      <created>1715952922363</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1715952922363</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Added checkbox for language isPublic">
+      <option name="closed" value="true" />
+      <created>1716122974127</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1716122974127</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Added error to duplicate user">
+      <option name="closed" value="true" />
+      <created>1716128817577</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1716128817577</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Made redirect work">
+      <option name="closed" value="true" />
+      <created>1716204165355</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1716204165355</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Removed error logging for validation">
+      <option name="closed" value="true" />
+      <created>1716204307408</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1716204307408</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Disabled register page for logged in users">
+      <option name="closed" value="true" />
+      <created>1716220281142</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1716220281142</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,22 +592,43 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Initial commit" />
-    <MESSAGE value="Updated randomizer to create words that are easier to pronounce" />
-    <MESSAGE value="Updated structure" />
-    <MESSAGE value="Created default language file and automated loading of it" />
-    <MESSAGE value="Added fancy menus" />
-    <MESSAGE value="Finished loading of new language files" />
-    <MESSAGE value="Added option to adjust language&#10;&#10;Improved randomizer" />
-    <MESSAGE value="Created folder to store languages and added template file" />
-    <MESSAGE value="Added option to display a list of loaded languages and to switch to another language" />
-    <MESSAGE value="Added language trait for forbidden combinations" />
-    <MESSAGE value="Added check for forbidden combinations to randomizer" />
-    <MESSAGE value="Added option to select language by index" />
-    <MESSAGE value="Added pom launch4j setup for gui-app" />
-    <MESSAGE value="Added gui" />
-    <MESSAGE value="Updated icon" />
-    <MESSAGE value="Added inno-setup script&#10;Updated template-language" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added inno-setup script&#10;Updated template-language" />
+    <MESSAGE value="Fixed css" />
+    <MESSAGE value="Added more functionality and cleaned up" />
+    <MESSAGE value="Added more functionality and completed some todos" />
+    <MESSAGE value="Made isPublic property hidden&#10;&#10;SAVING NEW LETTERS CURRENTLY PRODUCES ERRORS" />
+    <MESSAGE value="Fixed key violation error" />
+    <MESSAGE value="Added delete option for languages" />
+    <MESSAGE value="Deleting letter combinations that are no longer valid for a language" />
+    <MESSAGE value="Added public languages to all user-lists" />
+    <MESSAGE value="Added upload page for json files" />
+    <MESSAGE value="Removed unnecessary setup loading" />
+    <MESSAGE value="Fixed language loading for editing page" />
+    <MESSAGE value="Added upload button to language-list page" />
+    <MESSAGE value="Added download button and endpoint for languages" />
+    <MESSAGE value="Completed file download" />
+    <MESSAGE value="Updated spring security config to use db for users" />
+    <MESSAGE value="Fixed json file-type for language download" />
+    <MESSAGE value="sReplaced default language" />
+    <MESSAGE value="Deactivated custom filterChain to use correct spring logout" />
+    <MESSAGE value="Fixed custom filter chain" />
+    <MESSAGE value="Added custom user account creation" />
+    <MESSAGE value="Added checkbox for language isPublic" />
+    <MESSAGE value="Added error to duplicate user" />
+    <MESSAGE value="Made redirect work" />
+    <MESSAGE value="Removed error logging for validation" />
+    <MESSAGE value="Disabled register page for logged in users" />
+    <option name="LAST_COMMIT_MESSAGE" value="Disabled register page for logged in users" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="io.fi0x.languagegenerator.logic.dto.LanguageData" memberName="minWordLength" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
