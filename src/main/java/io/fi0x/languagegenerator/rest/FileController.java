@@ -11,6 +11,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +30,7 @@ public class FileController
     LanguageService languageService;
     FileService fileService;
 
+    @Transactional
     @GetMapping("/upload")
     public String showUploadPage(ModelMap model)
     {
@@ -37,6 +39,7 @@ public class FileController
         return "upload";
     }
 
+    @Transactional
     @PostMapping("/upload")
     public String uploadLanguage(ModelMap model, @RequestParam("languageFile") MultipartFile multipartFile)
     {
@@ -59,6 +62,7 @@ public class FileController
         return "redirect:/";
     }
 
+    @Transactional
     @GetMapping("/download")
     @ResponseBody
     public ResponseEntity<Resource> downloadLanguageFile(@RequestParam(value = "languageId") long languageId)

@@ -4,6 +4,7 @@ import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.service.GenerationService;
 import io.fi0x.languagegenerator.service.LanguageService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class LanguageController
     private GenerationService generationService;
     private LanguageService languageService;
 
+    @Transactional
     @GetMapping("/generate")
     public String generateWords(ModelMap model, @RequestParam(value = "language", defaultValue = "-1", required = false) long language,
                                 @RequestParam(value = "amount", defaultValue = "-1", required = false) int amount)
@@ -60,6 +62,7 @@ public class LanguageController
         return "list-words";
     }
 
+    @Transactional
     @GetMapping("/*")
     public String redirectWrongUrl()
     {
@@ -68,6 +71,7 @@ public class LanguageController
         return "redirect:/";
     }
 
+    @Transactional
     @GetMapping("/")
     public String listLanguages(ModelMap model)
     {
@@ -78,6 +82,7 @@ public class LanguageController
         return "list-languages";
     }
 
+    @Transactional
     @GetMapping("/language")
     public String editLanguage(ModelMap model, @RequestParam(value = "languageId", defaultValue = "-1", required = false) long languageId)
     {
@@ -88,6 +93,7 @@ public class LanguageController
         return "language";
     }
 
+    @Transactional
     @PostMapping("/language")
     public String addLanguage(ModelMap model, @Valid LanguageData languageData)
     {
@@ -106,6 +112,7 @@ public class LanguageController
         return "redirect:/";
     }
 
+    @Transactional
     @GetMapping("/delete-language")
     public String deleteLanguage(ModelMap model, @RequestParam(value = "languageId") long languageId)
     {
