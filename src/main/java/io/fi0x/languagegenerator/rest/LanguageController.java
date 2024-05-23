@@ -42,6 +42,8 @@ public class LanguageController
         else
             model.put("amount", amount);
 
+        model.put("languageName", languageService.getLanguageData(language).getName());
+
         try
         {
             model.put("words", generationService.generateWords(language, amount));

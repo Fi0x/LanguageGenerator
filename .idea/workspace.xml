@@ -4,21 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Disabled register page for logged in users">
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Made h2 console only available to admins and added button to register page. Whitelisting not working correctly">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/icons/ico.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/icons/icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/gui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/gui/MainWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/gui/controller/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/gui/controller/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/FileLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/logic/FileLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/InputHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/logic/InputHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/LanguageTraits.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/logic/LanguageTraits.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/Randomizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/logic/Randomizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/Setup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/client/logic/Setup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/icons/ico.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/icons/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/list-words.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/list-words.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +72,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Maven.LanguageGenerator [install].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -86,11 +80,11 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.MainApplication.executor": "Debug",
+    "Spring Boot.MainApplication.executor": "Run",
     "WebServerToolWindowFactoryState": "false",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/Users/felpe/IdeaProjects/LanguageGenerator/src/main/resources/META-INF/resources/WEB-INF/jsp",
+    "last_opened_file_path": "C:/dev/repos/learning/LanguageGenerator/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -111,11 +105,15 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\dev\repos\learning\LanguageGenerator\src\main\resources" />
       <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\META-INF\resources\WEB-INF\jsp" />
       <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\languages" />
       <recent name="C:\dev\repos\learning\LanguageGenerator\src\main\resources\META-INF\resources\WEB-INF\jsp" />
       <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\images" />
-      <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\fxml" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\repos\learning\LanguageGenerator\src\main\resources\META-INF\resources\WEB-INF\" />
+      <recent name="C:\dev\repos\learning\LanguageGenerator\src\main\resources\static" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="io.fi0x.languagegenerator.db" />
@@ -148,8 +146,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+        <option value="jdk-17.0.10-temurin-17.0.10-4caba194b151-b3785831" />
       </set>
     </attachedChunks>
   </component>
@@ -198,6 +195,9 @@
       <workItem from="1716061495556" duration="1259000" />
       <workItem from="1716115111732" duration="12769000" />
       <workItem from="1716200680424" duration="12501000" />
+      <workItem from="1716377738740" duration="1278000" />
+      <workItem from="1716447138782" duration="449000" />
+      <workItem from="1716453086903" duration="2442000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>

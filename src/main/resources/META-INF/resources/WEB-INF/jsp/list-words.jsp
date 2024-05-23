@@ -9,7 +9,7 @@
 <body>
 <%@include file="common/navigation.jspf" %>
 <div class="container">
-    <h1>Generated words:</h1>
+    <h1>Generated words with '${languageName}'</h1>
     <table class="table">
         <thead>
         <tr>
