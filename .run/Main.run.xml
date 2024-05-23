@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Main" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="io.fi0x.languagegenerator.client.Main" />
+    <module name="LanguageGenerator" />
+    <option name="PROGRAM_PARAMETERS" value="-d -v" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="io.fi0x.logic.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

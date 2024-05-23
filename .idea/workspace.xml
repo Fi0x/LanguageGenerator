@@ -4,12 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added lang-name to list-words site">
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Disabled open-in-view">
+      <change afterPath="$PROJECT_DIR$/.run/Docker Image.run.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.run/Main.run.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.run/MainApplication.run.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.run/Spring with Docker.run.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql.deactivated" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +55,9 @@
       </list>
     </option>
   </component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -70,6 +76,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Docker.Docker Image.executor": "Run",
     "Maven.LanguageGenerator [install].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
@@ -119,27 +126,12 @@
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.MainApplication">
-    <configuration name="Main" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="io.fi0x.Main" />
-      <module name="LanguageGenerator" />
-      <option name="PROGRAM_PARAMETERS" value="-d -v" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.fi0x.logic.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="LanguageGenerator" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="io.fi0x.languagegenerator.MainApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Compound.Spring with Docker" />
+      <item itemvalue="Docker.Docker Image" />
+      <item itemvalue="Spring Boot.MainApplication" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -195,7 +187,7 @@
       <workItem from="1716200680424" duration="12501000" />
       <workItem from="1716377738740" duration="1278000" />
       <workItem from="1716447138782" duration="449000" />
-      <workItem from="1716453086903" duration="3781000" />
+      <workItem from="1716453086903" duration="8221000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -315,14 +307,6 @@
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
       <updated>1714670133838</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Added h2 for languages">
-      <option name="closed" value="true" />
-      <created>1715024904503</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1715024904503</updated>
     </task>
     <task id="LOCAL-00021" summary="Using language id instead of name for references">
       <option name="closed" value="true" />
@@ -572,7 +556,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716456566940</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Disabled open-in-view">
+      <option name="closed" value="true" />
+      <created>1716473818083</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1716473818083</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -590,7 +582,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added more functionality and cleaned up" />
     <MESSAGE value="Added more functionality and completed some todos" />
     <MESSAGE value="Made isPublic property hidden&#10;&#10;SAVING NEW LETTERS CURRENTLY PRODUCES ERRORS" />
     <MESSAGE value="Fixed key violation error" />
@@ -615,7 +606,8 @@
     <MESSAGE value="Removed error logging for validation" />
     <MESSAGE value="Disabled register page for logged in users" />
     <MESSAGE value="Added lang-name to list-words site" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added lang-name to list-words site" />
+    <MESSAGE value="Disabled open-in-view" />
+    <option name="LAST_COMMIT_MESSAGE" value="Disabled open-in-view" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
