@@ -56,6 +56,5 @@ At the first launch, the database will be completely empty. If you want to add a
 data.sql file in the resources directory. This will create one default language that will be accessible by every user,
 with the owner set to user "fi0x".
 ### Connect to your web-ui
-With the default configuration, the web-ui is reachable on localhost:2345. If you don't change the code, an admin-user
-"fi0x" with the password "123" and a normal user "dummy1" with the password "456" will be created by the launch of the
-application. You can use both of them to log in to the web-ui.
+With the default configuration, the web-ui is reachable on localhost:2345. If you don't change the config, an admin-user
+"fi0x" with the password "123" will be created by the launch of the application. You can use it to log in to the web-ui.

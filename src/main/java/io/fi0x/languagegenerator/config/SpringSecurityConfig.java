@@ -1,6 +1,7 @@
 package io.fi0x.languagegenerator.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,19 @@ import javax.sql.DataSource;
 @Configuration
 public class SpringSecurityConfig
 {
+    @Value("${spring.datasource.url}")
+    private String database;
+    @Value("${spring.datasource.username}")
+    private String dbUsername;
+    @Value("${spring.datasource.password}")
+    private String dbPassword;
+    @Value("${spring.datasource.driver-class-name}")
+    private String dbDriver;
+    @Value("${languagegenerator.username}")
+    private String webUser;
+    @Value("${languagegenerator.password}")
+    private String webPassword;
+
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
@@ -54,10 +68,10 @@ public class SpringSecurityConfig
 
         DataSourceBuilder<?> builder = DataSourceBuilder.create();
 
-        builder.driverClassName("com.mysql.cj.jdbc.Driver");
-        builder.url("jdbc:mysql://localhost:3306/languages");
-        builder.username("dummyUser");
-        builder.password("123");
+        builder.driverClassName(dbDriver);
+        builder.url(database);
+        builder.username(dbUsername);
+        builder.password(dbPassword);
 
         return builder.build();
     }
@@ -69,8 +83,7 @@ public class SpringSecurityConfig
 
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
 
-        createUser(manager, "fi0x", "123", "USER", "ADMIN");
-        createUser(manager, "dummy1", "456", "USER");
+        createUser(manager, webUser, webPassword, "USER", "ADMIN");
 
         return manager;
     }
