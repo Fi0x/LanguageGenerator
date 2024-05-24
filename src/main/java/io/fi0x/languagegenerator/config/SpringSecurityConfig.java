@@ -54,6 +54,15 @@ public class SpringSecurityConfig
     {
         log.debug("dataSources() bean called");
 
+//        DataSourceBuilder<?> builder = DataSourceBuilder.create();
+//
+//        builder.driverClassName("com.mysql.cj.jdbc.Driver");
+//        builder.url("jdbc:mysql://localhost:3306/languages");
+//        builder.username("dummyUser");
+//        builder.password("123");
+//
+//        return builder.build();
+
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)

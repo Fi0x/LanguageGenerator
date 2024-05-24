@@ -2,7 +2,7 @@
   <configuration default="false" name="Docker Image" type="docker-deploy" factoryName="docker-image" server-name="Docker">
     <deployment type="docker-image">
       <settings>
-        <option name="imageTag" value="mysql:8-oracle" />
+        <option name="imageTag" value="mysql:latest" />
         <option name="containerName" value="mysql" />
         <option name="envVars">
           <list>
@@ -16,7 +16,7 @@
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="MYSQL_ROOT_PASSWORD" />
-              <option name="value" value="123" />
+              <option name="value" value="1234" />
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="MYSQL_USER" />
