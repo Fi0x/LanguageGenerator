@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Made h2 console only available to admins and added button to register page. Whitelisting not working correctly">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/icons/ico.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/icons/icon.png" afterDir="false" />
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added check to avoid duplicate user creation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/LanguageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/icons/ico.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/icons/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/list-words.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/list-words.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/dto/UserDto.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +49,9 @@
       </list>
     </option>
   </component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -72,6 +70,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Docker.Docker Image.executor": "Run",
     "Maven.LanguageGenerator [install].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
@@ -84,7 +84,7 @@
     "WebServerToolWindowFactoryState": "false",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/dev/repos/learning/LanguageGenerator/src/main/resources",
+    "last_opened_file_path": "E:/Users/felpe/IdeaProjects/LanguageGenerator/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -99,17 +99,18 @@
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
-      "h2"
+      "h2",
+      "mysql"
     ]
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources" />
       <recent name="C:\dev\repos\learning\LanguageGenerator\src\main\resources" />
       <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\META-INF\resources\WEB-INF\jsp" />
       <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\languages" />
       <recent name="C:\dev\repos\learning\LanguageGenerator\src\main\resources\META-INF\resources\WEB-INF\jsp" />
-      <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\dev\repos\learning\LanguageGenerator\src\main\resources\META-INF\resources\WEB-INF\" />
@@ -121,32 +122,18 @@
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.MainApplication">
-    <configuration name="Main" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="io.fi0x.Main" />
-      <module name="LanguageGenerator" />
-      <option name="PROGRAM_PARAMETERS" value="-d -v" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.fi0x.logic.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="LanguageGenerator" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="io.fi0x.languagegenerator.MainApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Compound.Spring with Docker" />
+      <item itemvalue="Docker.Docker Image" />
+      <item itemvalue="Spring Boot.MainApplication" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-17.0.10-temurin-17.0.10-4caba194b151-b3785831" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -197,7 +184,10 @@
       <workItem from="1716200680424" duration="12501000" />
       <workItem from="1716377738740" duration="1278000" />
       <workItem from="1716447138782" duration="449000" />
-      <workItem from="1716453086903" duration="2442000" />
+      <workItem from="1716453086903" duration="8516000" />
+      <workItem from="1716550216906" duration="7548000" />
+      <workItem from="1716571082737" duration="12275000" />
+      <workItem from="1716617804695" duration="20239000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -317,70 +307,6 @@
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
       <updated>1714670133838</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Changed language-list to use Language class">
-      <option name="closed" value="true" />
-      <created>1714982176798</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1714982176798</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Added h2 for languages">
-      <option name="closed" value="true" />
-      <created>1715024904503</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1715024904503</updated>
-    </task>
-    <task id="LOCAL-00021" summary="Using language id instead of name for references">
-      <option name="closed" value="true" />
-      <created>1715073958242</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1715073958242</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Added repositories and updated table-names">
-      <option name="closed" value="true" />
-      <created>1715077538826</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1715077538826</updated>
-    </task>
-    <task id="LOCAL-00023" summary="Removed FileLoader from GenerationService">
-      <option name="closed" value="true" />
-      <created>1715084904265</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1715084904265</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Added default data to fill database with language">
-      <option name="closed" value="true" />
-      <created>1715092733495</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1715092733495</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Fixed first call to add-language throwing error">
-      <option name="closed" value="true" />
-      <created>1715167727400</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1715167727400</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Added default redirect for non-matching urls">
-      <option name="closed" value="true" />
-      <created>1715177374992</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1715177374992</updated>
     </task>
     <task id="LOCAL-00027" summary="Fixed css">
       <option name="closed" value="true" />
@@ -574,7 +500,71 @@
       <option name="project" value="LOCAL" />
       <updated>1716220281142</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Added lang-name to list-words site">
+      <option name="closed" value="true" />
+      <created>1716456566940</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1716456566940</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Disabled open-in-view">
+      <option name="closed" value="true" />
+      <created>1716473818083</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1716473818083</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Changed configuration to use mysql instead of h2">
+      <option name="closed" value="true" />
+      <created>1716481074310</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1716481074310</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Added readme and fixed launch">
+      <option name="closed" value="true" />
+      <created>1716586250159</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1716586250160</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Completely removed h2 and centralized config">
+      <option name="closed" value="true" />
+      <created>1716587293603</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1716587293603</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Added sql script for db-initialization">
+      <option name="closed" value="true" />
+      <created>1716619367765</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1716619367765</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Adjusted user-dto validation">
+      <option name="closed" value="true" />
+      <created>1716619624672</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1716619624672</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Added check to avoid duplicate user creation">
+      <option name="closed" value="true" />
+      <created>1716652375357</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1716652375357</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -592,14 +582,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed css" />
-    <MESSAGE value="Added more functionality and cleaned up" />
-    <MESSAGE value="Added more functionality and completed some todos" />
-    <MESSAGE value="Made isPublic property hidden&#10;&#10;SAVING NEW LETTERS CURRENTLY PRODUCES ERRORS" />
-    <MESSAGE value="Fixed key violation error" />
-    <MESSAGE value="Added delete option for languages" />
-    <MESSAGE value="Deleting letter combinations that are no longer valid for a language" />
-    <MESSAGE value="Added public languages to all user-lists" />
     <MESSAGE value="Added upload page for json files" />
     <MESSAGE value="Removed unnecessary setup loading" />
     <MESSAGE value="Fixed language loading for editing page" />
@@ -617,7 +599,15 @@
     <MESSAGE value="Made redirect work" />
     <MESSAGE value="Removed error logging for validation" />
     <MESSAGE value="Disabled register page for logged in users" />
-    <option name="LAST_COMMIT_MESSAGE" value="Disabled register page for logged in users" />
+    <MESSAGE value="Added lang-name to list-words site" />
+    <MESSAGE value="Disabled open-in-view" />
+    <MESSAGE value="Changed configuration to use mysql instead of h2" />
+    <MESSAGE value="Added readme and fixed launch" />
+    <MESSAGE value="Completely removed h2 and centralized config" />
+    <MESSAGE value="Added sql script for db-initialization" />
+    <MESSAGE value="Adjusted user-dto validation" />
+    <MESSAGE value="Added check to avoid duplicate user creation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added check to avoid duplicate user creation" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

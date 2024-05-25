@@ -3,6 +3,7 @@ package io.fi0x.languagegenerator.rest;
 import io.fi0x.languagegenerator.logic.dto.UserDto;
 import io.fi0x.languagegenerator.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class UserController
 
     private AuthenticationService authenticationService;
 
-//    @PreAuthorize("permitAll()")
+    //    @PreAuthorize("permitAll()")
     @GetMapping("/register")
     public String createUser(ModelMap model, HttpServletRequest request)
     {
@@ -38,12 +39,14 @@ public class UserController
     }
 
 //    @PreAuthorize("permitAll()")
+    @Transactional
     @PostMapping("/register")
     public String registerUser(ModelMap model, HttpServletRequest request, @Valid UserDto userDto)
     {
         log.info("registerUser() called with userDto={}", userDto);
 
-        try {
+        try
+        {
             authenticationService.registerUser(userDto);
         } catch (DuplicateKeyException e)
         {

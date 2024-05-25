@@ -1,7 +1,7 @@
-insert into "LANG" (ID, NAME, USERNAME, IS_PUBLIC, MIN_WORD_LENGTH, MAX_WORD_LENGTH)
+insert into lang (ID, NAME, USERNAME, IS_PUBLIC, MIN_WORD_LENGTH, MAX_WORD_LENGTH)
 values (0, 'Elven-Language', 'fi0x', true, 2, 12);
 
-insert into "LTTRS" (ID, LETTERS)
+insert into lttrs (ID, LETTERS)
 values (0, 'a'),
        (1, 'i'),
        (2, 'o'),
@@ -69,7 +69,7 @@ values (0, 'a'),
 
        (61, 'kkk');
 
-insert into "CONCOM" (ID, LANGUAGE_ID, LETTER_ID)
+insert into concom (ID, LANGUAGE_ID, LETTER_ID)
 values (0, 0, 23),
        (1, 0, 24),
        (2, 0, 25),
@@ -93,7 +93,7 @@ values (0, 0, 23),
        (20, 0, 43),
        (21, 0, 44);
 
-insert into "VOCCOM" (ID, LANGUAGE_ID, LETTER_ID)
+insert into voccom (ID, LANGUAGE_ID, LETTER_ID)
 values (0, 0, 0),
        (1, 0, 1),
        (2, 0, 2),
@@ -103,7 +103,7 @@ values (0, 0, 0),
        (6, 0, 6),
        (7, 0, 7);
 
-insert into "CONVOCCOM" (ID, LANGUAGE_ID, LETTER_ID)
+insert into convoccom (ID, LANGUAGE_ID, LETTER_ID)
 values (0, 0, 45),
        (1, 0, 46),
        (2, 0, 47),
@@ -121,7 +121,7 @@ values (0, 0, 45),
        (14, 0, 59),
        (15, 0, 60);
 
-insert into "VOCCONCOM" (ID, LANGUAGE_ID, LETTER_ID)
+insert into vocconcom (ID, LANGUAGE_ID, LETTER_ID)
 values (0, 0, 8),
        (1, 0, 9),
        (2, 0, 10),
@@ -138,5 +138,5 @@ values (0, 0, 8),
        (13, 0, 21),
        (14, 0, 22);
 
-insert into "FORBCOM" (ID, LANGUAGE_ID, LETTER_ID)
+insert into forbcom (ID, LANGUAGE_ID, LETTER_ID)
 values (0, 0, 61);

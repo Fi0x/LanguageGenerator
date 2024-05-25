@@ -10,9 +10,10 @@ import lombok.Data;
 public class UserDto
 {
     @NotBlank(message = "Username must not be empty")
+    @Size(max = 50, message = "Username must not be longer than 50 characters")
     private String username;
-    @Size(min = 4, message = "Password must have at least 4 characters")
+    @Size(min = 4, max = 72, message = "Password must have 4 to 72 characters")
     private String password;
-    @Size(min = 4, message = "Password must have at least 4 characters")
+    @Size(min = 4, max = 72, message = "Matching password must have 4 to 72 characters")
     private String matchingPassword;
 }
