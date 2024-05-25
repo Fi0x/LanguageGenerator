@@ -41,9 +41,7 @@ This only needs to be done once before the first launch of the application.
 This only needs to be done once before the first launch of the application, if you keep your database. But if you reset
 or change your database at some point, this step needs to be executed again.
 1. Set up a database in IntelliJ that points to your docker-container
-2. Open the console for that database and type in the following commands:
-   - ``create table users(username VARCHAR(100), password VARCHAR(2048), enabled BOOL)``
-   - ``create table authorities(username VARCHAR(100), authority VARCHAR(50))``
+2. Execute the schema.sql file in the resources directory.
 
 ### Start the application
 Launch the "Main Application" run-configuration. This is the only step that needs to be repeated on every restart of the
