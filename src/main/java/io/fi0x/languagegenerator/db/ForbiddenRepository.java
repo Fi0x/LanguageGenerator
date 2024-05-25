@@ -1,6 +1,5 @@
 package io.fi0x.languagegenerator.db;
 
-import io.fi0x.languagegenerator.db.entities.ConsonantCombination;
 import io.fi0x.languagegenerator.db.entities.ForbiddenCombination;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +15,6 @@ public interface ForbiddenRepository extends JpaRepository<ForbiddenCombination,
     @Transactional
     void deleteAllByLanguageId(Long languageId);
 
-    @Query(value = "SELECT MAX(ID) FROM FORBCOM", nativeQuery = true)
+    @Query(value = "SELECT MAX(ID) FROM forbcom", nativeQuery = true)
     Optional<Long> getHighestId();
 }

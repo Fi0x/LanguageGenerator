@@ -1,6 +1,5 @@
 package io.fi0x.languagegenerator.db;
 
-import io.fi0x.languagegenerator.db.entities.ConsonantCombination;
 import io.fi0x.languagegenerator.db.entities.VocalConsonantCombination;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +15,6 @@ public interface VocalConsonantRepository extends JpaRepository<VocalConsonantCo
     @Transactional
     void deleteAllByLanguageId(Long languageId);
 
-    @Query(value = "SELECT MAX(ID) FROM VOCCONCOM", nativeQuery = true)
+    @Query(value = "SELECT MAX(ID) FROM vocconcom", nativeQuery = true)
     Optional<Long> getHighestId();
 }
