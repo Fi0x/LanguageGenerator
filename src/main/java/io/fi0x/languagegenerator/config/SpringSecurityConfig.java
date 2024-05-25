@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -23,6 +24,7 @@ import javax.sql.DataSource;
 
 @Slf4j
 @Configuration
+@EnableWebSecurity
 public class SpringSecurityConfig
 {
     @Value("${spring.datasource.url}")
@@ -83,7 +85,8 @@ public class SpringSecurityConfig
 
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
 
-        createUser(manager, webUser, webPassword, "USER", "ADMIN");
+        if (!manager.userExists(webUser))
+            createUser(manager, webUser, webPassword, "USER", "ADMIN");
 
         return manager;
     }
