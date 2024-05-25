@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Adjusted user-dto validation">
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added check to avoid duplicate user creation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/rest/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/dto/UserDto.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +84,7 @@
     "WebServerToolWindowFactoryState": "false",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/dev/repos/learning/LanguageGenerator/src/main/resources",
+    "last_opened_file_path": "E:/Users/felpe/IdeaProjects/LanguageGenerator/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -107,11 +106,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources" />
       <recent name="C:\dev\repos\learning\LanguageGenerator\src\main\resources" />
       <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\META-INF\resources\WEB-INF\jsp" />
       <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\languages" />
       <recent name="C:\dev\repos\learning\LanguageGenerator\src\main\resources\META-INF\resources\WEB-INF\jsp" />
-      <recent name="E:\Users\felpe\IdeaProjects\LanguageGenerator\src\main\resources\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\dev\repos\learning\LanguageGenerator\src\main\resources\META-INF\resources\WEB-INF\" />
@@ -188,7 +187,7 @@
       <workItem from="1716453086903" duration="8516000" />
       <workItem from="1716550216906" duration="7548000" />
       <workItem from="1716571082737" duration="12275000" />
-      <workItem from="1716617804695" duration="15367000" />
+      <workItem from="1716617804695" duration="20239000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -308,14 +307,6 @@
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
       <updated>1714670133838</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Added default redirect for non-matching urls">
-      <option name="closed" value="true" />
-      <created>1715177374992</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1715177374992</updated>
     </task>
     <task id="LOCAL-00027" summary="Fixed css">
       <option name="closed" value="true" />
@@ -565,7 +556,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716619624672</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Added check to avoid duplicate user creation">
+      <option name="closed" value="true" />
+      <created>1716652375357</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1716652375357</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -583,7 +582,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added public languages to all user-lists" />
     <MESSAGE value="Added upload page for json files" />
     <MESSAGE value="Removed unnecessary setup loading" />
     <MESSAGE value="Fixed language loading for editing page" />
@@ -608,7 +606,8 @@
     <MESSAGE value="Completely removed h2 and centralized config" />
     <MESSAGE value="Added sql script for db-initialization" />
     <MESSAGE value="Adjusted user-dto validation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adjusted user-dto validation" />
+    <MESSAGE value="Added check to avoid duplicate user creation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added check to avoid duplicate user creation" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
