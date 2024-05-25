@@ -12,6 +12,7 @@
 <body>
 <%@include file="common/navigation.jspf" %>
 <div class="container">
+<%--    TODO: Add username of the current user to the page--%>
     <h1>Loaded languages:</h1>
     <table class="table">
         <thead>

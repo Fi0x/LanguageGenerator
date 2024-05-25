@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Completely removed h2 and centralized config">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/schema.sql" afterDir="false" />
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Added sql script for db-initialization">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/logic/dto/UserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/list-languages.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/list-languages.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,7 +188,7 @@
       <workItem from="1716453086903" duration="8516000" />
       <workItem from="1716550216906" duration="7548000" />
       <workItem from="1716571082737" duration="12275000" />
-      <workItem from="1716617804695" duration="1497000" />
+      <workItem from="1716617804695" duration="1762000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -310,14 +308,6 @@
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
       <updated>1714670133838</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Added default data to fill database with language">
-      <option name="closed" value="true" />
-      <created>1715092733495</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1715092733495</updated>
     </task>
     <task id="LOCAL-00025" summary="Fixed first call to add-language throwing error">
       <option name="closed" value="true" />
@@ -567,7 +557,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716587293603</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="Added sql script for db-initialization">
+      <option name="closed" value="true" />
+      <created>1716619367765</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1716619367765</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -585,7 +583,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added delete option for languages" />
     <MESSAGE value="Deleting letter combinations that are no longer valid for a language" />
     <MESSAGE value="Added public languages to all user-lists" />
     <MESSAGE value="Added upload page for json files" />
@@ -610,7 +607,8 @@
     <MESSAGE value="Changed configuration to use mysql instead of h2" />
     <MESSAGE value="Added readme and fixed launch" />
     <MESSAGE value="Completely removed h2 and centralized config" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completely removed h2 and centralized config" />
+    <MESSAGE value="Added sql script for db-initialization" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added sql script for db-initialization" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
