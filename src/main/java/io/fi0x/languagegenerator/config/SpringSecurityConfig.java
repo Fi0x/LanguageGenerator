@@ -46,8 +46,8 @@ public class SpringSecurityConfig
         log.debug("securityFilterChain() bean called");
 
         http.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/register", "/custom-login", "/WEB-INF/jsp/login.jsp").permitAll();
-//            auth.requestMatchers("/register", "/custom-login").permitAll();
+            auth.requestMatchers("/register", "/custom-login", "/WEB-INF/jsp/login.jsp",
+                    "WEB-INF/jsp/signup.jsp").anonymous();
             auth.anyRequest().authenticated();
         });
 
@@ -55,9 +55,13 @@ public class SpringSecurityConfig
 
         http.formLogin(form -> {
             form.loginPage("/custom-login");
-            form.loginProcessingUrl("/custom-login");
+            form.loginProcessingUrl("/login");
             form.defaultSuccessUrl("/", true);
             form.permitAll();
+        });
+
+        http.logout(logout -> {
+           //TODO: Setup logout page, endpoint and handling
         });
 
         http.csrf(AbstractHttpConfigurer::disable);

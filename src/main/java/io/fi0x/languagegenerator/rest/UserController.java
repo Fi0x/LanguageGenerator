@@ -1,5 +1,6 @@
 package io.fi0x.languagegenerator.rest;
 
+import io.fi0x.languagegenerator.logic.dto.LoginDto;
 import io.fi0x.languagegenerator.logic.dto.UserDto;
 import io.fi0x.languagegenerator.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class UserController
     {
         log.info("showLogin() called");
 
-        model.put("userDto", new UserDto());
+        model.put("loginDto", new LoginDto());
 
         return "login";
     }
