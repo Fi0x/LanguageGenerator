@@ -26,7 +26,16 @@ public class UserController
 
     private AuthenticationService authenticationService;
 
-    //    @PreAuthorize("permitAll()")
+    @GetMapping("/custom-login")
+    public String showLogin(ModelMap model)
+    {
+        log.info("showLogin() called");
+
+        model.put("userDto", new UserDto());
+
+        return "login";
+    }
+
     @GetMapping("/register")
     public String createUser(ModelMap model, HttpServletRequest request)
     {
@@ -38,7 +47,6 @@ public class UserController
         return "signup";
     }
 
-//    @PreAuthorize("permitAll()")
     @Transactional
     @PostMapping("/register")
     public String registerUser(ModelMap model, HttpServletRequest request, @Valid UserDto userDto)

@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -24,7 +23,7 @@ import javax.sql.DataSource;
 
 @Slf4j
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class SpringSecurityConfig
 {
     @Value("${spring.datasource.url}")
@@ -47,14 +46,20 @@ public class SpringSecurityConfig
         log.debug("securityFilterChain() bean called");
 
         http.authorizeHttpRequests(auth -> {
-//            auth.requestMatchers("/register").permitAll();
-            auth.requestMatchers("/register").anonymous();
-//            auth.requestMatchers("/register").authenticated();
+            auth.requestMatchers("/register", "/custom-login", "/WEB-INF/jsp/login.jsp").permitAll();
+//            auth.requestMatchers("/register", "/custom-login").permitAll();
             auth.anyRequest().authenticated();
         });
+
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
-        http.formLogin(Customizer.withDefaults());
+        http.formLogin(form -> {
+            form.loginPage("/custom-login");
+            form.loginProcessingUrl("/custom-login");
+            form.defaultSuccessUrl("/", true);
+            form.permitAll();
+        });
+
         http.httpBasic(Customizer.withDefaults());
 
         http.csrf(AbstractHttpConfigurer::disable);
