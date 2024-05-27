@@ -9,6 +9,7 @@
 <body>
 <div class="container">
     <h1>Login</h1>
+<%--    TODO: Use correct dto to send to spring verification--%>
     <form:form method="post" modelAttribute="userDto" action="/register">
         Username: <form:input type="text" path="username"/>
         Password: <form:input type="password" path="password"/>

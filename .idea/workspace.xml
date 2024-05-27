@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Enabled custom login-page">
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Removed httpBasic and adjusted logging">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/login.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -309,14 +309,6 @@
       <option name="project" value="LOCAL" />
       <updated>1714670133838</updated>
     </task>
-    <task id="LOCAL-00028" summary="Added more functionality and completed some todos">
-      <option name="closed" value="true" />
-      <created>1715626538722</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1715626538722</updated>
-    </task>
     <task id="LOCAL-00029" summary="Made isPublic property hidden&#10;&#10;SAVING NEW LETTERS CURRENTLY PRODUCES ERRORS">
       <option name="closed" value="true" />
       <created>1715669213345</created>
@@ -565,7 +557,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716822110384</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="Removed httpBasic and adjusted logging">
+      <option name="closed" value="true" />
+      <created>1716822389525</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1716822389525</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -583,7 +583,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Removed unnecessary setup loading" />
     <MESSAGE value="Fixed language loading for editing page" />
     <MESSAGE value="Added upload button to language-list page" />
     <MESSAGE value="Added download button and endpoint for languages" />
@@ -608,7 +607,8 @@
     <MESSAGE value="Adjusted user-dto validation" />
     <MESSAGE value="Added check to avoid duplicate user creation" />
     <MESSAGE value="Enabled custom login-page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Enabled custom login-page" />
+    <MESSAGE value="Removed httpBasic and adjusted logging" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed httpBasic and adjusted logging" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
