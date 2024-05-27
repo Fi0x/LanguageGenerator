@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Removed httpBasic and adjusted logging">
+    <list default="true" id="36e5aea8-e0b5-4d14-a63c-11971c1f41fd" name="Changes" comment="Fixed sql query errors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/fi0x/languagegenerator/config/SpringSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/resources/WEB-INF/jsp/login.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +36,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="checkbox-fix" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -81,7 +80,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.MainApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.MainApplication.executor&quot;: &quot;Debug&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -189,6 +188,8 @@
       <workItem from="1716550216906" duration="7548000" />
       <workItem from="1716571082737" duration="12275000" />
       <workItem from="1716617804695" duration="20239000" />
+      <workItem from="1716711551899" duration="6925000" />
+      <workItem from="1716831639923" duration="1364000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1674679581792</created>
@@ -308,6 +309,14 @@
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
       <updated>1714670133838</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Added more functionality and completed some todos">
+      <option name="closed" value="true" />
+      <created>1715626538722</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1715626538722</updated>
     </task>
     <task id="LOCAL-00029" summary="Made isPublic property hidden&#10;&#10;SAVING NEW LETTERS CURRENTLY PRODUCES ERRORS">
       <option name="closed" value="true" />
@@ -549,23 +558,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716652375357</updated>
     </task>
-    <task id="LOCAL-00059" summary="Enabled custom login-page">
+    <task id="LOCAL-00059" summary="Fixed sql query errors">
       <option name="closed" value="true" />
-      <created>1716822110383</created>
+      <created>1716664672083</created>
       <option name="number" value="00059" />
       <option name="presentableId" value="LOCAL-00059" />
       <option name="project" value="LOCAL" />
-      <updated>1716822110384</updated>
+      <updated>1716664672084</updated>
     </task>
-    <task id="LOCAL-00060" summary="Removed httpBasic and adjusted logging">
-      <option name="closed" value="true" />
-      <created>1716822389525</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1716822389525</updated>
-    </task>
-    <option name="localTasksCounter" value="61" />
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -583,6 +584,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Removed unnecessary setup loading" />
     <MESSAGE value="Fixed language loading for editing page" />
     <MESSAGE value="Added upload button to language-list page" />
     <MESSAGE value="Added download button and endpoint for languages" />
@@ -606,9 +608,8 @@
     <MESSAGE value="Added sql script for db-initialization" />
     <MESSAGE value="Adjusted user-dto validation" />
     <MESSAGE value="Added check to avoid duplicate user creation" />
-    <MESSAGE value="Enabled custom login-page" />
-    <MESSAGE value="Removed httpBasic and adjusted logging" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed httpBasic and adjusted logging" />
+    <MESSAGE value="Fixed sql query errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed sql query errors" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
