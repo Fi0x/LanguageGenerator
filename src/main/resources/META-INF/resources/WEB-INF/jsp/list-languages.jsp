@@ -3,10 +3,7 @@
 
 <html>
 <head>
-<%--    TODO: Adjust css to make the website look cooler--%>
     <%@include file="common/head.jspf" %>
-<%--    TODO: Make the favicon work and add it to all pages--%>
-    <link rel="icon" href="images/ico.ico">
 </head>
 <body>
 <%@include file="common/navigation.jspf" %>
