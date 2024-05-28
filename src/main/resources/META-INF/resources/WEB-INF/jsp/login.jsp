@@ -9,7 +9,7 @@
 <body>
 <div class="container">
     <h1>Login</h1>
-<%--    TODO: Use correct dto to send to spring verification--%>
+    <%--@elvariable id="loginDto" type="io.fi0x.languagegenerator.logic.dto.LoginDto"--%>
     <form:form method="post" modelAttribute="loginDto" action="/login">
         Username: <form:input type="text" path="username"/>
         Password: <form:input type="password" path="password"/>
