@@ -9,6 +9,7 @@
 <body>
 <div class="container">
     <h1>Register</h1>
+    <%--@elvariable id="userDto" type="io.fi0x.languagegenerator.logic.dto.UserDto"--%>
     <form:form method="post" modelAttribute="userDto" action="/register">
         Username: <form:input type="text" path="username"/>
         Password: <form:input type="password" path="password"/> <a class="error">${registerError}</a>

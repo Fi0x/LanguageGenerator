@@ -10,6 +10,7 @@
 <%@include file="common/navigation.jspf" %>
 <div class="container">
     <h1>Edit Language Details</h1>
+    <%--@elvariable id="languageData" type="io.fi0x.languagegenerator.logic.dto.LanguageData"--%>
     <form:form method="post" modelAttribute="languageData">
         <form:input type="hidden" path="id"/>
         <form:input type="hidden" path="username"/>
