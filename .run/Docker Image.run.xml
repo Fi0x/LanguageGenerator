@@ -24,7 +24,7 @@
             </DockerEnvVarImpl>
           </list>
         </option>
-        <option name="commandLineOptions" value="--publish 3306:3306" />
+        <option name="commandLineOptions" value="--publish 3306:3306 -v languages-volume:/var/lib/mysql" />
       </settings>
     </deployment>
     <method v="2" />
