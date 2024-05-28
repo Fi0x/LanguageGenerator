@@ -1,5 +1,6 @@
 package io.fi0x.languagegenerator.rest;
 
+import io.fi0x.languagegenerator.logic.dto.LoginDto;
 import io.fi0x.languagegenerator.logic.dto.UserDto;
 import io.fi0x.languagegenerator.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,13 +21,18 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes({"registerError", "redirect"})
 public class UserController
 {
-    //TODO: Make the signup page available when the user is not logged in
-    //TODO: Disable the signup page and login page when the user is logged in
-    //TODO: Customize the spring login page to link the register page
-
     private AuthenticationService authenticationService;
 
-    //    @PreAuthorize("permitAll()")
+    @GetMapping("/custom-login")
+    public String showLogin(ModelMap model)
+    {
+        log.info("showLogin() called");
+
+        model.put("loginDto", new LoginDto());
+
+        return "login";
+    }
+
     @GetMapping("/register")
     public String createUser(ModelMap model, HttpServletRequest request)
     {
@@ -38,7 +44,6 @@ public class UserController
         return "signup";
     }
 
-//    @PreAuthorize("permitAll()")
     @Transactional
     @PostMapping("/register")
     public String registerUser(ModelMap model, HttpServletRequest request, @Valid UserDto userDto)

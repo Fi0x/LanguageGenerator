@@ -7,7 +7,6 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -40,6 +39,16 @@ public class SpringSecurityConfig
     @Value("${languagegenerator.password}")
     private String webPassword;
 
+    private static final String[] PUBLIC_URLS = new String[]{
+            "/webjars/bootstrap/*/css/*",
+            "/webjars/bootstrap/*/js/*",
+            "/webjars/jquery/*/*"
+    };
+    private static final String[] ANONYMOUS_URLS = new String[]{
+            "/register", "/custom-login",
+            "/WEB-INF/jsp/login.jsp", "/WEB-INF/jsp/signup.jsp"
+    };
+
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
@@ -47,15 +56,19 @@ public class SpringSecurityConfig
         log.debug("securityFilterChain() bean called");
 
         http.authorizeHttpRequests(auth -> {
-//            auth.requestMatchers("/register").permitAll();
-            auth.requestMatchers("/register").anonymous();
-//            auth.requestMatchers("/register").authenticated();
+            auth.requestMatchers(PUBLIC_URLS).permitAll();
+            auth.requestMatchers(ANONYMOUS_URLS).anonymous();
             auth.anyRequest().authenticated();
         });
+
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
-        http.formLogin(Customizer.withDefaults());
-        http.httpBasic(Customizer.withDefaults());
+        http.formLogin(form -> {
+            form.loginPage("/custom-login");
+            form.loginProcessingUrl("/login");
+            form.defaultSuccessUrl("/", true);
+            form.permitAll();
+        });
 
         http.csrf(AbstractHttpConfigurer::disable);
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));

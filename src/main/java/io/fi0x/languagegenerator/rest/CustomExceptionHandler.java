@@ -15,10 +15,13 @@ import java.util.List;
 @SessionAttributes({"registerError", "redirect"})
 public class CustomExceptionHandler
 {
+    //TODO: Make a custom error page to replace whitelabel errors
+    //TODO: Handle dto-validation in a nice way
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String handleValidationErrors(MethodArgumentNotValidException error, HttpServletRequest request)
     {
-        log.info("handleValidationErrors() called");
+        log.info("handleValidationErrors() called with error={}, request={}", error, request);
 
         String redirect = (String) request.getSession().getAttribute("redirect");
         List<String> errors = error.getBindingResult().getFieldErrors().stream().map(FieldError::getDefaultMessage).toList();

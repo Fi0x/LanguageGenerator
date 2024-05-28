@@ -3,13 +3,13 @@
 
 <html>
 <head>
-    <link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <title>Language Generator</title>
+    <%@include file="common/head.jspf" %>
 </head>
 <body>
 <%@include file="common/navigation.jspf" %>
 <div class="container">
     <h1>Edit Language Details</h1>
+    <%--@elvariable id="languageData" type="io.fi0x.languagegenerator.logic.dto.LanguageData"--%>
     <form:form method="post" modelAttribute="languageData">
         <form:input type="hidden" path="id"/>
         <form:input type="hidden" path="username"/>
@@ -51,7 +51,6 @@
         </table>
     </form:form>
 </div>
-<script src="webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
-<script src="webjars/jquery/3.6.0/jquery.min.js"></script>
+<%@include file="common/scripts.jspf" %>
 </body>
 </html>

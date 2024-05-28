@@ -1,6 +1,7 @@
 package io.fi0x.languagegenerator.rest;
 
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
+import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.GenerationService;
 import io.fi0x.languagegenerator.service.LanguageService;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,6 +27,7 @@ public class LanguageController
 {
     private GenerationService generationService;
     private LanguageService languageService;
+    private AuthenticationService authenticationService;
 
     @Transactional
     @GetMapping("/generate")
@@ -78,6 +80,7 @@ public class LanguageController
         log.info("listLanguages() called");
 
         model.put("languages", languageService.getUserAndPublicLanguages());
+        model.put("username", authenticationService.getAuthenticatedUsername());
 
         return "list-languages";
     }
