@@ -15,6 +15,9 @@ import java.util.List;
 @SessionAttributes({"registerError", "redirect"})
 public class CustomExceptionHandler
 {
+    //TODO: Make a custom error page to replace whitelabel errors
+    //TODO: Handle dto-validation in a nice way
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String handleValidationErrors(MethodArgumentNotValidException error, HttpServletRequest request)
     {

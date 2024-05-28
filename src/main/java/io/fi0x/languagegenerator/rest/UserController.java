@@ -21,10 +21,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes({"registerError", "redirect"})
 public class UserController
 {
-    //TODO: Make the signup page available when the user is not logged in
-    //TODO: Disable the signup page and login page when the user is logged in
-    //TODO: Customize the spring login page to link the register page
-
     private AuthenticationService authenticationService;
 
     @GetMapping("/custom-login")

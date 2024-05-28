@@ -46,7 +46,7 @@ public class SpringSecurityConfig
     };
     private static final String[] ANONYMOUS_URLS = new String[]{
             "/register", "/custom-login",
-            "/WEB-INF/jsp/login.jsp", "WEB-INF/jsp/signup.jsp"
+            "/WEB-INF/jsp/login.jsp", "/WEB-INF/jsp/signup.jsp"
     };
 
     @Bean
@@ -60,7 +60,6 @@ public class SpringSecurityConfig
             auth.requestMatchers(ANONYMOUS_URLS).anonymous();
             auth.anyRequest().authenticated();
         });
-        //TODO: Make the register page accessible or add the register option to the main-page
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
