@@ -50,6 +50,7 @@ public class SpringSecurityConfig
                     "WEB-INF/jsp/signup.jsp").anonymous();
             auth.anyRequest().authenticated();
         });
+        //TODO: Make the register page accessible or add the register option to the main-page
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
@@ -58,10 +59,6 @@ public class SpringSecurityConfig
             form.loginProcessingUrl("/login");
             form.defaultSuccessUrl("/", true);
             form.permitAll();
-        });
-
-        http.logout(logout -> {
-           //TODO: Setup logout page, endpoint and handling
         });
 
         http.csrf(AbstractHttpConfigurer::disable);
