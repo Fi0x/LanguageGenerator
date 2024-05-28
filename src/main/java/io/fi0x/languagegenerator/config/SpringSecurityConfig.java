@@ -39,6 +39,16 @@ public class SpringSecurityConfig
     @Value("${languagegenerator.password}")
     private String webPassword;
 
+    private static final String[] PUBLIC_URLS = new String[]{
+            "/webjars/bootstrap/*/css/*",
+            "/webjars/bootstrap/*/js/*",
+            "/webjars/jquery/*/*"
+    };
+    private static final String[] ANONYMOUS_URLS = new String[]{
+            "/register", "/custom-login",
+            "/WEB-INF/jsp/login.jsp", "WEB-INF/jsp/signup.jsp"
+    };
+
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
@@ -46,8 +56,8 @@ public class SpringSecurityConfig
         log.debug("securityFilterChain() bean called");
 
         http.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/register", "/custom-login", "/WEB-INF/jsp/login.jsp",
-                    "WEB-INF/jsp/signup.jsp").anonymous();
+            auth.requestMatchers(PUBLIC_URLS).permitAll();
+            auth.requestMatchers(ANONYMOUS_URLS).anonymous();
             auth.anyRequest().authenticated();
         });
         //TODO: Make the register page accessible or add the register option to the main-page
