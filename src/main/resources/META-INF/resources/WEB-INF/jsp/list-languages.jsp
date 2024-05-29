@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<%--TODO: Add this page to permitAll() but only show public languages--%>
+
 <html>
 <head>
     <%@include file="common/head.jspf" %>
@@ -18,6 +20,7 @@
         <tbody>
         <c:forEach items="${languages}" var="language">
             <tr>
+                    <%--TODO: Add the username who created the language--%>
                 <td>${language.name}</td>
                 <td>
                     <a href="generate?language=${language.id}&amount=10" class="btn">Generate 10</a>

@@ -34,9 +34,9 @@ public class UserController
     }
 
     @GetMapping("/register")
-    public String createUser(ModelMap model, HttpServletRequest request)
+    public String showRegister(ModelMap model, HttpServletRequest request)
     {
-        log.info("createUser() called");
+        log.info("showRegister() called");
 
         model.put("userDto", new UserDto());
         request.getSession().setAttribute("redirect", "redirect:register");
