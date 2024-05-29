@@ -8,7 +8,7 @@
 <body>
 <%@include file="common/navigation.jspf" %>
 <div class="container">
-    <h1>Error!</h1>
+    <h1>Error ${errorCode}!</h1>
 <%--    TODO: Add details about the error--%>
     <a href="/" class="btn">Go to welcome-page</a>
 </div>
