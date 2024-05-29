@@ -12,7 +12,7 @@ public class LanguageConverter
         language.setId(languageData.getId());
         language.setName(languageData.getName());
         language.setUsername(languageData.getUsername());
-        language.setIsPublic(languageData.getIsPublic());
+        language.setVisible(languageData.isVisible());
         language.setMinWordLength(languageData.getMinWordLength());
         language.setMaxWordLength(languageData.getMaxWordLength());
         return language;
@@ -31,13 +31,13 @@ public class LanguageConverter
         return languageJson;
     }
 
-    public static LanguageData convertToData(LanguageJson languageJson, long id, String name, String username, boolean isPublic)
+    public static LanguageData convertToData(LanguageJson languageJson, long id, String name, String username, boolean visible)
     {
         return LanguageData.builder()
                 .id(id)
                 .name(name)
                 .username(username)
-                .isPublic(isPublic)
+                .visible(visible)
                 .minWordLength(languageJson.getNameLengths()[0])
                 .maxWordLength(languageJson.getNameLengths()[1])
                 .vocals(languageJson.getVocals())
