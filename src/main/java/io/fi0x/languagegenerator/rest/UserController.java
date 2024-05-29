@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @Slf4j
 @Controller
 @AllArgsConstructor
-@SessionAttributes({"registerError", "redirect"})
+@SessionAttributes({"registerError", "redirect", "userDto"})
 public class UserController
 {
     private AuthenticationService authenticationService;
