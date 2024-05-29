@@ -1,5 +1,7 @@
-<%--    TODO: Adjust css to make the website look cooler--%>
-<link href="webjars/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-<title>Language Generator</title>
-<%--    TODO: Make the favicon work and add it to all pages--%>
-<link rel="icon" href="images/ico.ico">
+<head>
+    <%--    TODO: Adjust css to make the website look cooler--%>
+    <link href="webjars/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <title>Language Generator</title>
+    <%--    TODO: Make the favicon work and add it to all pages--%>
+    <link rel="icon" href="images/ico.ico">
+</head>

@@ -2,9 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<head>
-    <%@include file="common/head.jspf" %>
-</head>
+<%@include file="common/head.jspf" %>
 <body>
 <%@include file="common/navigation.jspf" %>
 <div class="container">
@@ -27,7 +25,7 @@
                 Max-Word-Length: <form:input type="number" path="maxWordLength"/>
             </tr>
             <tr>
-                <a>Separate individual letter-combinations by ','</a>
+                Separate individual letter-combinations by ','
             </tr>
             <tr>
                 Possible Vocals: <form:input type="text" path="vocals"/>
