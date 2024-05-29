@@ -2,12 +2,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<head>
-    <%@include file="common/head.jspf" %>
-</head>
+<%@include file="common/head.jspf" %>
 <body>
 <%@include file="common/navigation.jspf" %>
 <div class="container">
+    <%--@elvariable id="languageName" type="java.lang.String"--%>
     <h1>Generated words with '${languageName}'</h1>
     <table class="table">
         <thead>
@@ -16,6 +15,7 @@
         </tr>
         </thead>
         <tbody>
+        <%--@elvariable id="words" type="java.util.List"--%>
         <c:forEach items="${words}" var="word">
             <tr>
                 <td>${word.word}</td>

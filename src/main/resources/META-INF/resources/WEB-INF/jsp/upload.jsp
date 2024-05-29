@@ -1,9 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
-<head>
-    <%@include file="common/head.jspf" %>
-</head>
+<%@include file="common/head.jspf" %>
 <body>
 <%@include file="common/navigation.jspf" %>
 <div class="container">

@@ -2,15 +2,25 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<head>
-    <%@include file="common/head.jspf" %>
-</head>
+<%@include file="common/head.jspf" %>
 <body>
 <%@include file="common/navigation.jspf" %>
 <div class="container">
     <h1>Error ${errorCode}!</h1>
-<%--    TODO: Add details about the error--%>
-    <a href="/" class="btn">Go to welcome-page</a>
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                ${errorMessage}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/" class="btn">Go to welcome-page</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <%@include file="common/scripts.jspf" %>
 </body>

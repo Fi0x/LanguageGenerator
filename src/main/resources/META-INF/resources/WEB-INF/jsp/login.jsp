@@ -2,9 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<head>
-    <%@include file="common/head.jspf" %>
-</head>
+<%@include file="common/head.jspf" %>
 <body>
 <div class="container">
     <h1>Login</h1>

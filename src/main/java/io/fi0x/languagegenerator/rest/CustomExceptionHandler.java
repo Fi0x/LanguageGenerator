@@ -17,16 +17,16 @@ public class CustomExceptionHandler
 {
     //TODO: Handle dto-validation in a nice way
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public String handleValidationErrors(MethodArgumentNotValidException error, HttpServletRequest request)
-    {
-        log.info("handleValidationErrors() called with error={}, request={}", error, request);
-
-        String redirect = (String) request.getSession().getAttribute("redirect");
-        List<String> errors = error.getBindingResult().getFieldErrors().stream().map(FieldError::getDefaultMessage).toList();
-        request.getSession().setAttribute("registerError", errors);
-
-        return redirect;
-    }
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public String handleValidationErrors(MethodArgumentNotValidException error, HttpServletRequest request)
+//    {
+//        log.info("handleValidationErrors() called with error={}, request={}", error, request);
+//
+//        String redirect = (String) request.getSession().getAttribute("redirect");
+//        List<String> errors = error.getBindingResult().getFieldErrors().stream().map(FieldError::getDefaultMessage).toList();
+//        request.getSession().setAttribute("registerError", errors);
+//
+//        return redirect;
+//    }
 
 }
