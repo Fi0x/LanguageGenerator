@@ -18,8 +18,7 @@
                 Name: <form:input type="text" path="name"/>
             </tr>
             <tr>
-                    <%--        TODO: Fix the initial state of the checkbox to represent the language data--%>
-                Public Language: <form:checkbox path="visible" checked="${languageData.visible}"/>
+                Public Language: <form:checkbox path="visible"/>
             </tr>
             <tr>
                 Min-Word-Length: <form:input type="number" path="minWordLength"/>

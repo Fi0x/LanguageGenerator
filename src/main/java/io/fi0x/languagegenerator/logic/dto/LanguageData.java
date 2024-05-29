@@ -13,7 +13,7 @@ public class LanguageData
     private Long id;
     private String name;
     private String username;
-    private Boolean visible;
+    private boolean visible;
     private int minWordLength;
     private int maxWordLength;
 
@@ -26,7 +26,7 @@ public class LanguageData
     public static LanguageData getFromEntity(Language language)
     {
         return LanguageData.builder().id(language.getId()).name(language.getName()).username(language.getUsername())
-                .minWordLength(language.getMinWordLength()).maxWordLength(language.getMaxWordLength()).build();
+                .minWordLength(language.getMinWordLength()).maxWordLength(language.getMaxWordLength()).visible(language.getVisible()).build();
     }
 
     public boolean invalid()

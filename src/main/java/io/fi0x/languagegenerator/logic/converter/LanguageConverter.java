@@ -12,7 +12,7 @@ public class LanguageConverter
         language.setId(languageData.getId());
         language.setName(languageData.getName());
         language.setUsername(languageData.getUsername());
-        language.setVisible(languageData.getVisible());
+        language.setVisible(languageData.isVisible());
         language.setMinWordLength(languageData.getMinWordLength());
         language.setMaxWordLength(languageData.getMaxWordLength());
         return language;
