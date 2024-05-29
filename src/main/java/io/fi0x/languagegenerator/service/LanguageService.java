@@ -94,15 +94,15 @@ public class LanguageService
         });
     }
 
-    public void addLanguage(LanguageJson languageJson, String name, boolean isPublic) throws InvalidObjectException
+    public void addLanguage(LanguageJson languageJson, String name, boolean visible) throws InvalidObjectException
     {
-        addLanguage(LanguageConverter.convertToData(languageJson, languageRepository.getHighestId().orElse(0L) + 1, name, authenticationService.getAuthenticatedUsername(), isPublic));
+        addLanguage(LanguageConverter.convertToData(languageJson, languageRepository.getHighestId().orElse(0L) + 1, name, authenticationService.getAuthenticatedUsername(), visible));
     }
 
     public List<Language> getUserAndPublicLanguages()
     {
         List<Language> result = languageRepository.getAllByUsername(authenticationService.getAuthenticatedUsername());
-        List<Language> publicLanguages = languageRepository.getAllByIsPublic(true);
+        List<Language> publicLanguages = languageRepository.getAllByVisible(true);
         result.removeAll(publicLanguages);
         result.addAll(publicLanguages);
 

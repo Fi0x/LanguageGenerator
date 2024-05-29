@@ -13,7 +13,7 @@ public class LanguageData
     private Long id;
     private String name;
     private String username;
-    private Boolean isPublic;
+    private Boolean visible;
     private int minWordLength;
     private int maxWordLength;
 
