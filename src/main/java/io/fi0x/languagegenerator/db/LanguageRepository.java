@@ -11,7 +11,7 @@ public interface LanguageRepository extends JpaRepository<Language, Long>
 {
     List<Language> getAllByUsername(String username);
 
-    List<Language> getAllByIsPublic(boolean isPublic);
+    List<Language> getAllByVisible(boolean visible);
 
     @Query(value = "SELECT MAX(ID) FROM lang", nativeQuery = true)
     Optional<Long> getHighestId();
