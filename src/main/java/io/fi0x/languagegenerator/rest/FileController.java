@@ -67,6 +67,7 @@ public class FileController
     @ResponseBody
     public ResponseEntity<Resource> downloadLanguageFile(@RequestParam(value = "languageId") long languageId)
     {
+        //TODO: Make sure user has access to the selected language (owner or public)
         LanguageData languageData = languageService.getLanguageData(languageId);
 
         Resource resource;

@@ -34,6 +34,7 @@ public class LanguageController
     public String generateWords(ModelMap model, @RequestParam(value = "language", defaultValue = "-1", required = false) long language,
                                 @RequestParam(value = "amount", defaultValue = "-1", required = false) int amount)
     {
+        //TODO: Make sure user has access to the selected language (owner or public)
         log.info("generateWords() called with language={}, amount={}", language, amount);
 
         if (language < 0)
@@ -89,6 +90,7 @@ public class LanguageController
     @GetMapping("/language")
     public String editLanguage(ModelMap model, @RequestParam(value = "languageId", defaultValue = "-1", required = false) long languageId)
     {
+        //TODO: Make sure user has access to the selected language (owner)
         log.info("editLanguage() called");
 
         model.put("languageData", languageService.getLanguageData(languageId));
@@ -100,6 +102,7 @@ public class LanguageController
     @PostMapping("/language")
     public String addLanguage(ModelMap model, @Valid LanguageData languageData)
     {
+        //TODO: Make sure user has access to the selected language (owner) if it already exists
         log.info("addLanguage() called");
         log.debug("arguments for addLanguage() call are model={}, languageData={}", model, languageData);
 
@@ -119,6 +122,7 @@ public class LanguageController
     @GetMapping("/delete-language")
     public String deleteLanguage(ModelMap model, @RequestParam(value = "languageId") long languageId)
     {
+        //TODO: Make sure user has access to the selected language (owner)
         log.info("deleteLanguage() called for languageId={}", languageId);
 
         if(languageService.deleteLanguage(languageId))

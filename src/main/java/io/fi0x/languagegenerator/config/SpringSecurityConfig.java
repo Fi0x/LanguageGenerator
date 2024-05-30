@@ -39,17 +39,18 @@ public class SpringSecurityConfig
     @Value("${languagegenerator.password}")
     private String webPassword;
 
-    private static final String[] PRIVATE_URLS = new String[]{
-            "/language", "/WEB-INF/jsp/language.jsp"
-    };
     private static final String[] PUBLIC_URLS = new String[]{
+            "/", "/*", "WEB-INF/jsp/list-languages.jsp",
+            "/error", "WEB-INF/jsp/error.jsp",
+            "/download",
+            "/generate", "WEB-INF/jsp/list-words.jsp",
             "/webjars/bootstrap/*/css/*",
             "/webjars/bootstrap/*/js/*",
             "/webjars/jquery/*/*"
     };
     private static final String[] ANONYMOUS_URLS = new String[]{
-            "/register", "/custom-login",
-            "/WEB-INF/jsp/login.jsp", "/WEB-INF/jsp/signup.jsp"
+            "/register", "/WEB-INF/jsp/signup.jsp",
+            "/custom-login", "/WEB-INF/jsp/login.jsp"
     };
 
     @Bean
@@ -59,10 +60,9 @@ public class SpringSecurityConfig
         log.debug("securityFilterChain() bean called");
 
         http.authorizeHttpRequests(auth -> {
-            auth.requestMatchers(PRIVATE_URLS).authenticated();
             auth.requestMatchers(PUBLIC_URLS).permitAll();
             auth.requestMatchers(ANONYMOUS_URLS).anonymous();
-            auth.anyRequest().permitAll();
+            auth.anyRequest().authenticated();
         });
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
