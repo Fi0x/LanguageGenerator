@@ -1,7 +1,10 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Spring with Docker" type="CompoundRunConfigurationType">
-    <toRun name="Docker Image" type="docker-deploy" />
-    <toRun name="MainApplication" type="SpringBootApplicationConfigurationType" />
-    <method v="2" />
+  <configuration default="false" name="Spring with Docker" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="LanguageGenerator" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="io.fi0x.languagegenerator.MainApplication" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Docker Image" run_configuration_type="docker-deploy" />
+      <option name="Make" enabled="true" />
+    </method>
   </configuration>
 </component>
