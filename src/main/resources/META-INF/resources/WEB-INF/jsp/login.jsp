@@ -4,6 +4,7 @@
 <html>
 <%@include file="common/head.jspf" %>
 <body>
+<%@include file="common/navigation.jspf" %>
 <div class="container">
     <h1>Login</h1>
     <%--@elvariable id="loginDto" type="io.fi0x.languagegenerator.logic.dto.LoginDto"--%>

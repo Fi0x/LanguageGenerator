@@ -39,6 +39,9 @@ public class SpringSecurityConfig
     @Value("${languagegenerator.password}")
     private String webPassword;
 
+    private static final String[] PRIVATE_URLS = new String[]{
+            "/language", "/WEB-INF/jsp/language.jsp"
+    };
     private static final String[] PUBLIC_URLS = new String[]{
             "/webjars/bootstrap/*/css/*",
             "/webjars/bootstrap/*/js/*",
@@ -56,9 +59,10 @@ public class SpringSecurityConfig
         log.debug("securityFilterChain() bean called");
 
         http.authorizeHttpRequests(auth -> {
+            auth.requestMatchers(PRIVATE_URLS).authenticated();
             auth.requestMatchers(PUBLIC_URLS).permitAll();
             auth.requestMatchers(ANONYMOUS_URLS).anonymous();
-            auth.anyRequest().authenticated();
+            auth.anyRequest().permitAll();
         });
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
