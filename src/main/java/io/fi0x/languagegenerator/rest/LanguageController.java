@@ -9,12 +9,14 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.InvalidObjectException;
 import java.util.Objects;
@@ -34,7 +36,6 @@ public class LanguageController
     public String generateWords(ModelMap model, @RequestParam(value = "language", defaultValue = "-1", required = false) long language,
                                 @RequestParam(value = "amount", defaultValue = "-1", required = false) int amount)
     {
-        //TODO: Make sure user has access to the selected language (owner or public)
         log.info("generateWords() called with language={}, amount={}", language, amount);
 
         if (language < 0)
@@ -47,7 +48,15 @@ public class LanguageController
         else
             model.put("amount", amount);
 
-        model.put("languageName", languageService.getLanguageData(language).getName());
+        LanguageData languageData = languageService.getLanguageData(language);
+
+        if(!languageData.getUsername().equals(authenticationService.getAuthenticatedUsername()) && !languageData.isVisible())
+        {
+            log.info("User '{}' tried to generate words with language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), language);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access the selected language");
+        }
+
+        model.put("languageName", languageData.getName());
 
         try
         {
@@ -90,10 +99,17 @@ public class LanguageController
     @GetMapping("/language")
     public String editLanguage(ModelMap model, @RequestParam(value = "languageId", defaultValue = "-1", required = false) long languageId)
     {
-        //TODO: Make sure user has access to the selected language (owner)
         log.info("editLanguage() called");
 
-        model.put("languageData", languageService.getLanguageData(languageId));
+        LanguageData languageData = languageService.getLanguageData(languageId);
+
+        if(!languageData.getUsername().equals(authenticationService.getAuthenticatedUsername()))
+        {
+            log.info("User '{}' tried to edit language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageData.getId());
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to edit the selected language");
+        }
+
+        model.put("languageData", languageData);
 
         return "language";
     }
@@ -102,9 +118,14 @@ public class LanguageController
     @PostMapping("/language")
     public String addLanguage(ModelMap model, @Valid LanguageData languageData)
     {
-        //TODO: Make sure user has access to the selected language (owner) if it already exists
         log.info("addLanguage() called");
         log.debug("arguments for addLanguage() call are model={}, languageData={}", model, languageData);
+
+        if(!languageData.getUsername().equals(authenticationService.getAuthenticatedUsername()))
+        {
+            log.info("User '{}' tried to update language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageData.getId());
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to change the selected language");
+        }
 
         try
         {
@@ -112,7 +133,7 @@ public class LanguageController
         } catch (InvalidObjectException e)
         {
             log.info("Could not save the language because it was not complete.");
-            return "redirect:language";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not save the language, because the language-object was not complete", e);
         }
 
         return "redirect:/";
@@ -122,13 +143,21 @@ public class LanguageController
     @GetMapping("/delete-language")
     public String deleteLanguage(ModelMap model, @RequestParam(value = "languageId") long languageId)
     {
-        //TODO: Make sure user has access to the selected language (owner)
         log.info("deleteLanguage() called for languageId={}", languageId);
+
+        if(!authenticationService.getAuthenticatedUsername().equals(languageService.getLanguageCreator(languageId)))
+        {
+            log.info("User '{}' tried to delete language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageId);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to delete the selected language");
+        }
 
         if(languageService.deleteLanguage(languageId))
             log.info("Language with id={} successfully deleted", languageId);
         else
+        {
             log.warn("Could not delete language with id={}", languageId);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The language you were trying to delete, could not be found");
+        }
 
         return "redirect:/";
     }
