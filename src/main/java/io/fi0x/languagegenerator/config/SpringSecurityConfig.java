@@ -40,10 +40,10 @@ public class SpringSecurityConfig
     private String webPassword;
 
     private static final String[] PUBLIC_URLS = new String[]{
-            "/", "/*", "WEB-INF/jsp/list-languages.jsp",
-            "/error", "WEB-INF/jsp/error.jsp",
+            "/", "/*", "/WEB-INF/jsp/list-languages.jsp",
+            "/error", "/WEB-INF/jsp/error.jsp",
             "/download",
-            "/generate", "WEB-INF/jsp/list-words.jsp",
+            "/generate", "/WEB-INF/jsp/list-words.jsp",
             "/webjars/bootstrap/*/css/*",
             "/webjars/bootstrap/*/js/*",
             "/webjars/jquery/*/*"
