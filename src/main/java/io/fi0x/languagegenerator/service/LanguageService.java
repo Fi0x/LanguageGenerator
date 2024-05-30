@@ -6,6 +6,7 @@ import io.fi0x.languagegenerator.logic.converter.LanguageConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
 import lombok.AllArgsConstructor;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.io.InvalidObjectException;
@@ -28,7 +29,8 @@ public class LanguageService
 
     public void addLanguage(LanguageData languageData) throws InvalidObjectException
     {
-        if (languageData.getId() == null) {
+        if (languageData.getId() == null)
+        {
             Optional<Long> id = languageRepository.getHighestId();
             languageData.setId((id.isPresent() ? id.get() : -1) + 1);
         }
@@ -117,13 +119,17 @@ public class LanguageService
                 .orElseGet(() -> LanguageData.builder().username(authenticationService.getAuthenticatedUsername()).build());
     }
 
+    @Nullable
+    public String getLanguageCreator(long languageId)
+    {
+        Optional<Language> data = languageRepository.findById(languageId);
+        return data.map(Language::getUsername).orElse(null);
+    }
+
     public boolean deleteLanguage(long languageId)
     {
         Optional<Language> languageEntity = languageRepository.findById(languageId);
         if (languageEntity.isEmpty())
-            return false;
-
-        if (!authenticationService.getAuthenticatedUsername().equals(languageEntity.get().getUsername()))
             return false;
 
         languageRepository.deleteById(languageId);
@@ -133,7 +139,8 @@ public class LanguageService
     private long getLetterIdOrSaveIfNew(String letterCombination)
     {
         List<Letter> letters = letterRepository.getAllByLetters(letterCombination);
-        if (letters.isEmpty()) {
+        if (letters.isEmpty())
+        {
             Letter letter = new Letter();
             Optional<Long> id = letterRepository.getHighestId();
             letter.setId((id.isPresent() ? id.get() : 0) + 1);

@@ -40,13 +40,17 @@ public class SpringSecurityConfig
     private String webPassword;
 
     private static final String[] PUBLIC_URLS = new String[]{
+            "/", "/*", "/WEB-INF/jsp/list-languages.jsp",
+            "/error", "/WEB-INF/jsp/error.jsp",
+            "/download",
+            "/generate", "/WEB-INF/jsp/list-words.jsp",
             "/webjars/bootstrap/*/css/*",
             "/webjars/bootstrap/*/js/*",
             "/webjars/jquery/*/*"
     };
     private static final String[] ANONYMOUS_URLS = new String[]{
-            "/register", "/custom-login",
-            "/WEB-INF/jsp/login.jsp", "/WEB-INF/jsp/signup.jsp"
+            "/register", "/WEB-INF/jsp/signup.jsp",
+            "/custom-login", "/WEB-INF/jsp/login.jsp"
     };
 
     @Bean

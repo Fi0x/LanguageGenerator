@@ -7,20 +7,7 @@
 <%@include file="common/navigation.jspf" %>
 <div class="container">
     <h1>Error ${errorCode}!</h1>
-    <table>
-        <tbody>
-        <tr>
-            <td>
-                ${errorMessage}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <a href="/" class="btn">Go to welcome-page</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    ${errorMessage}
 </div>
 <%@include file="common/scripts.jspf" %>
 </body>
