@@ -2,6 +2,7 @@ package io.fi0x.languagegenerator.logic.dto;
 
 import io.fi0x.languagegenerator.db.entities.Language;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -24,12 +25,18 @@ public class TestLanguageData
     private static final List<String> CONSONANT_VOCALS = new ArrayList<>();
     private static final List<String> FORBIDDEN_COMBINATIONS = new ArrayList<>();
 
-    static {
+    static void fillLists() {
         VOCALS.add("a");
         CONSONANTS.add("b");
         VOCAL_CONSONANT.add("ab");
         CONSONANT_VOCALS.add("ba");
         FORBIDDEN_COMBINATIONS.add("c");
+    }
+
+    @BeforeEach
+    void setup()
+    {
+        fillLists();
     }
 
     @Test
@@ -111,6 +118,21 @@ public class TestLanguageData
         data = getData();
         data.setMaxWordLength(0);
         Assertions.assertTrue(data.invalid());
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_invalid_false_someEmpty()
+    {
+        LanguageData data = getData();
+        data.getVocals().clear();
+        Assertions.assertFalse(data.invalid());
+
+        data.getConsonants().clear();
+        Assertions.assertFalse(data.invalid());
+
+        data.getVocalConsonant().clear();
+        Assertions.assertFalse(data.invalid());
     }
 
     private LanguageData getData()
