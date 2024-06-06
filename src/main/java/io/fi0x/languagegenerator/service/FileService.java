@@ -3,7 +3,6 @@ package io.fi0x.languagegenerator.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.fi0x.languagegenerator.logic.converter.LanguageConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-@Slf4j
 @Service
 public class FileService
 {
