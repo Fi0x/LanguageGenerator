@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class AuthenticationService
 {
-    private UserDetailsManager userDetailsManager;
-    private PasswordEncoder passwordEncoder;
+    private final UserDetailsManager userDetailsManager;
+    private final PasswordEncoder passwordEncoder;
 
     public String getAuthenticatedUsername()
     {

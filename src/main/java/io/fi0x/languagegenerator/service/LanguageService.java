@@ -17,15 +17,15 @@ import java.util.Optional;
 @AllArgsConstructor
 public class LanguageService
 {
-    private AuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
 
-    private LanguageRepository languageRepository;
-    private LetterRepository letterRepository;
-    private ConsonantRepository cRepo;
-    private ConsonantVocalRepository cvRepo;
-    private VocalRepository vRepo;
-    private VocalConsonantRepository vcRepo;
-    private ForbiddenRepository fRepo;
+    private final LanguageRepository languageRepository;
+    private final LetterRepository letterRepository;
+    private final ConsonantRepository cRepo;
+    private final ConsonantVocalRepository cvRepo;
+    private final VocalRepository vRepo;
+    private final VocalConsonantRepository vcRepo;
+    private final ForbiddenRepository fRepo;
 
     public void addLanguage(LanguageData languageData) throws InvalidObjectException
     {
