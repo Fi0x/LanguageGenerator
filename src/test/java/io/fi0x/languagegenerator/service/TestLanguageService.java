@@ -2,6 +2,7 @@ package io.fi0x.languagegenerator.service;
 
 import io.fi0x.languagegenerator.db.*;
 import io.fi0x.languagegenerator.db.entities.Language;
+import io.fi0x.languagegenerator.db.entities.Letter;
 import io.fi0x.languagegenerator.logic.converter.LanguageConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -21,16 +23,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.*;
 
-// TODO: Complete tests
 @RunWith(SpringRunner.class)
 public class TestLanguageService
 {
     private static final Long HIGHEST_ID = 3L;
+    private static final Long NEXT_FREE_ID = 4L;
     private static final String USERNAME = "Klaus Detlef";
     private static final String LANGUAGE_NAME = "Geheimsprache";
+    private static final String EXISTING_LETTERS = "kkk";
 
     @Mock
     private AuthenticationService authenticationService;
@@ -58,9 +60,24 @@ public class TestLanguageService
         MockitoAnnotations.openMocks(this);
 
         doReturn(Optional.of(HIGHEST_ID)).when(languageRepository).getHighestId();
+        doNothing().when(languageRepository).deleteById(anyLong());
         doReturn(USERNAME).when(authenticationService).getAuthenticatedUsername();
+        Letter letter = new Letter();
+        letter.setId(354L);
+        doReturn(List.of(letter)).when(letterRepository).getAllByLetters(eq(EXISTING_LETTERS));
         doReturn(getLanguageList(2,0)).when(languageRepository).getAllByUsername(eq(USERNAME));
         doReturn(getLanguageList(3, 2)).when(languageRepository).getAllByVisible(eq(true));
+        doReturn(Optional.of(LanguageConverter.convertToEntity(getLanguageData()))).when(languageRepository).findById(HIGHEST_ID);
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_addLanguage_invalid()
+    {
+        LanguageData languageData = getLanguageData();
+        languageData.setConsonantVocals(new ArrayList<>());
+
+        Assertions.assertThrows(InvalidObjectException.class, () -> service.addLanguage(languageData));
     }
 
     @Test
@@ -68,6 +85,7 @@ public class TestLanguageService
     void test_addLanguage_success()
     {
         LanguageData languageData = getLanguageData();
+        fillLanguageData(languageData);
 
         Assertions.assertDoesNotThrow(() -> service.addLanguage(languageData));
     }
@@ -77,8 +95,13 @@ public class TestLanguageService
     void test_addLanguage_json()
     {
         LanguageJson languageJson = new LanguageJson();
+        MockedStatic<LanguageConverter> staticMock = mockStatic(LanguageConverter.class);
+        staticMock.when(() -> LanguageConverter.convertToData(eq(languageJson), eq(NEXT_FREE_ID), eq(LANGUAGE_NAME), eq(USERNAME), eq(false)))
+                .thenReturn(LanguageData.builder().id(NEXT_FREE_ID).build());
 
         Assertions.assertThrows(InvalidObjectException.class, () -> service.addLanguage(languageJson, LANGUAGE_NAME, false));
+
+        staticMock.close();
     }
 
     @Test
@@ -92,17 +115,27 @@ public class TestLanguageService
     @Tag("UnitTest")
     void test_getLanguageData()
     {
+        Assertions.assertEquals(LanguageData.builder().username(USERNAME).build(), service.getLanguageData(NEXT_FREE_ID));
 
-        Assertions.assertEquals(LanguageData.builder().username(USERNAME).build(), service.getLanguageData(HIGHEST_ID));
+        LanguageData expectedData = getLanguageData();
+        expectedData.setConsonantVocals(new ArrayList<>());
+        Assertions.assertEquals(expectedData, service.getLanguageData(HIGHEST_ID));
     }
 
     @Test
     @Tag("UnitTest")
     void test_getLanguageCreator()
     {
-        doReturn(Optional.of(LanguageConverter.convertToEntity(getLanguageData()))).when(languageRepository).findById(HIGHEST_ID);
-
         Assertions.assertEquals(USERNAME, service.getLanguageCreator(HIGHEST_ID));
+        Assertions.assertNull(service.getLanguageCreator(NEXT_FREE_ID));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_deleteLanguage()
+    {
+        Assertions.assertFalse(service.deleteLanguage(NEXT_FREE_ID));
+        Assertions.assertTrue(service.deleteLanguage(HIGHEST_ID));
     }
 
     private LanguageData getLanguageData()
@@ -117,6 +150,14 @@ public class TestLanguageService
                 .forbiddenCombinations(new ArrayList<>())
                 .minWordLength(2)
                 .maxWordLength(2).build();
+    }
+    private void fillLanguageData(LanguageData data)
+    {
+        data.setVocals(Arrays.asList("a", "aa"));
+        data.setConsonants(Arrays.asList("a", "aa"));
+        data.setVocalConsonant(Arrays.asList("a", "aa"));
+        data.setConsonantVocals(Arrays.asList("a", "aa", EXISTING_LETTERS));
+        data.setForbiddenCombinations(Arrays.asList("b", "bb"));
     }
     private List<Language> getLanguageList(int size, int startId)
     {

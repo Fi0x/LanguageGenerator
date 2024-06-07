@@ -9,5 +9,5 @@ import org.junit.platform.suite.api.Suite;
 @IncludeTags("UnitTest")
 public class UnitTests
 {
-    //TODO: Add unit-tests for controller and services
+    //TODO: Add unit-tests for controllers
 }
