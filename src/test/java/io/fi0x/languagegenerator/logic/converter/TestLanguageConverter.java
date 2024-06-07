@@ -25,7 +25,6 @@ public class TestLanguageConverter
     private static final List<String> CONSONANT_VOCALS = new ArrayList<>();
     private static final List<String> FORBIDDEN_COMBINATIONS = new ArrayList<>();
 
-
     @Test
     @Tag("UnitTest")
     void test_convertToEntity()

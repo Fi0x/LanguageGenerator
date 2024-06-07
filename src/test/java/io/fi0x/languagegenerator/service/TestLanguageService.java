@@ -1,12 +1,10 @@
 package io.fi0x.languagegenerator.service;
 
 import io.fi0x.languagegenerator.db.*;
-import io.fi0x.languagegenerator.db.entities.*;
+import io.fi0x.languagegenerator.db.entities.Language;
 import io.fi0x.languagegenerator.logic.converter.LanguageConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
-import io.fi0x.languagegenerator.logic.dto.Word;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -15,18 +13,18 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.InvalidObjectException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.eq;
 
+// TODO: Complete tests
 @RunWith(SpringRunner.class)
 public class TestLanguageService
 {
@@ -79,9 +77,6 @@ public class TestLanguageService
     void test_addLanguage_json()
     {
         LanguageJson languageJson = new LanguageJson();
-        mockStatic(LanguageConverter.class)
-                .when(() -> LanguageConverter.convertToData(eq(languageJson), eq(HIGHEST_ID + 1), eq(LANGUAGE_NAME), eq(USERNAME), eq(false)))
-                .thenReturn(LanguageData.builder().id(HIGHEST_ID + 1).build());
 
         Assertions.assertThrows(InvalidObjectException.class, () -> service.addLanguage(languageJson, LANGUAGE_NAME, false));
     }

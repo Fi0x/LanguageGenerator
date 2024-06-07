@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.Authentication;
@@ -47,11 +48,14 @@ public class TestAuthenticationService
     @Tag("UnitTest")
     void test_getAuthenticatedUsername_success()
     {
-        mockStatic(SecurityContextHolder.class).when(SecurityContextHolder::getContext).thenReturn(securityContext);
+        MockedStatic<SecurityContextHolder> staticMock = mockStatic(SecurityContextHolder.class);
+        staticMock.when(SecurityContextHolder::getContext).thenReturn(securityContext);
         doReturn(authentication).when(securityContext).getAuthentication();
         doReturn(USERNAME).when(authentication).getName();
 
         Assertions.assertEquals(USERNAME, service.getAuthenticatedUsername());
+
+        staticMock.close();
     }
 
     @Test

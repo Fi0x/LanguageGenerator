@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
 import org.springframework.core.io.UrlResource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -47,9 +48,12 @@ public class TestFileService
     {
         File file = new File(LANGUAGE_ID + FILE_SUFFIX);
         Path path = file.toPath();
-        mockStatic(Files.class).when(() -> Files.createTempFile(String.valueOf(LANGUAGE_ID), FILE_SUFFIX)).thenReturn(path);
+        MockedStatic<Files> staticMock = mockStatic(Files.class);
+        staticMock.when(() -> Files.createTempFile(String.valueOf(LANGUAGE_ID), FILE_SUFFIX)).thenReturn(path);
         UrlResource expectedResult = new UrlResource(file.toURI());
 
         Assertions.assertEquals(expectedResult, service.getLanguageFile(LanguageData.builder().id(LANGUAGE_ID).build()));
+
+        staticMock.close();
     }
 }
