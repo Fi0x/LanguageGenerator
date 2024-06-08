@@ -83,7 +83,7 @@ public class TestFileController
         File realFile = ResourceUtils.getFile("classpath:testLanguageValid.json");
         InputStream content = new FileInputStream(realFile);
         MockMultipartFile file = new MockMultipartFile("languageFile", "filename.txt", "application/json", content);
-        doThrow(new InvalidObjectException("Because I can")).when(languageService).addLanguage(any(), anyString(), eq(false));
+        doThrow(InvalidObjectException.class).when(languageService).addLanguage(any(), anyString(), eq(false));
 
         mvc.perform(MockMvcRequestBuilders.multipart(UPLOAD_URL).file(file))
                 .andExpect(status().is(HttpStatus.BAD_REQUEST.value()))
@@ -135,7 +135,7 @@ public class TestFileController
         LanguageData languageData = getLanguageData();
         doReturn(languageData).when(languageService).getLanguageData(eq(LANGUAGE_ID));
         doReturn(USERNAME).when(authenticationService).getAuthenticatedUsername();
-        doThrow(new IllegalArgumentException()).when(fileService).getLanguageFile(eq(languageData));
+        doThrow(IllegalArgumentException.class).when(fileService).getLanguageFile(eq(languageData));
 
         mvc.perform(get(DOWNLOAD_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
                 .andExpect(status().is(HttpStatus.NOT_FOUND.value()));
@@ -148,7 +148,7 @@ public class TestFileController
         LanguageData languageData = getLanguageData();
         doReturn(languageData).when(languageService).getLanguageData(eq(LANGUAGE_ID));
         doReturn(USERNAME).when(authenticationService).getAuthenticatedUsername();
-        doThrow(new IOException()).when(fileService).getLanguageFile(eq(languageData));
+        doThrow(IOException.class).when(fileService).getLanguageFile(eq(languageData));
 
         mvc.perform(get(DOWNLOAD_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
                 .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));

@@ -144,7 +144,7 @@ public class TestLanguageController
     @Tag("UnitTest")
     void test_generateWords_noLanguage() throws Exception
     {
-        doThrow(new EntityNotFoundException()).when(generationService).generateWords(eq(LANGUAGE_ID), eq(WORD_AMOUNT));
+        doThrow(EntityNotFoundException.class).when(generationService).generateWords(eq(LANGUAGE_ID), eq(WORD_AMOUNT));
 
         mvc.perform(get(GENERATE_URL).param("language", String.valueOf(LANGUAGE_ID)).param("amount", String.valueOf(WORD_AMOUNT)))
                 .andExpect(status().is(HttpStatus.FOUND.value()))
@@ -158,7 +158,7 @@ public class TestLanguageController
     @Tag("UnitTest")
     void test_generateWords_invalidLanguage() throws Exception
     {
-        doThrow(new InvalidObjectException("Constraints are invalid for the language")).when(generationService).generateWords(eq(LANGUAGE_ID), eq(WORD_AMOUNT));
+        doThrow(InvalidObjectException.class).when(generationService).generateWords(eq(LANGUAGE_ID), eq(WORD_AMOUNT));
 
         mvc.perform(get(GENERATE_URL).param("language", String.valueOf(LANGUAGE_ID)).param("amount", String.valueOf(WORD_AMOUNT)))
                 .andExpect(status().is(HttpStatus.FOUND.value()))
