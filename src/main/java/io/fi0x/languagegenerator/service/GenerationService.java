@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class GenerationService
 {
-    LanguageRepository languageRepository;
-    LetterRepository letterRepository;
-    ConsonantRepository cRepository;
-    ConsonantVocalRepository cvRepository;
-    VocalRepository vRepository;
-    VocalConsonantRepository vcRepository;
-    ForbiddenRepository fRepository;
+    private final LanguageRepository languageRepository;
+    private final LetterRepository letterRepository;
+    private final ConsonantRepository cRepository;
+    private final ConsonantVocalRepository cvRepository;
+    private final VocalRepository vRepository;
+    private final VocalConsonantRepository vcRepository;
+    private final ForbiddenRepository fRepository;
 
     public List<Word> generateWords(long languageId, int count) throws EntityNotFoundException, InvalidObjectException
     {
@@ -67,7 +67,8 @@ public class GenerationService
             name.append(getNewRandom(language, name.toString(), selectedList));
         }
 
-        name.setCharAt(0, String.valueOf(name.charAt(0)).toUpperCase(Locale.ROOT).charAt(0));
+        if(!name.isEmpty())
+            name.setCharAt(0, String.valueOf(name.charAt(0)).toUpperCase(Locale.ROOT).charAt(0));
         return new Word(language.getId(), name.toString());
     }
 
