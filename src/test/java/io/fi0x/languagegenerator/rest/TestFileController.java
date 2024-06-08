@@ -1,7 +1,6 @@
-package io.fi0x.languagegenerator.rest.validation;
+package io.fi0x.languagegenerator.rest;
 
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
-import io.fi0x.languagegenerator.rest.FileController;
 import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.FileService;
 import io.fi0x.languagegenerator.service.LanguageService;
