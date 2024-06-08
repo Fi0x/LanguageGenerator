@@ -17,6 +17,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = LanguageController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
@@ -214,18 +217,37 @@ public class TestLanguageController
                 .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
     }
 
-    //TODO: Get this test working and add variants
-//    @Test
-//    @Tag("UnitTest")
-//    void test_addLanguage_success() throws Exception
-//    {
-//        ObjectMapper mapper = new ObjectMapper();
-//        String content = mapper.writeValueAsString(getLanguageData());
-//
-//        mvc.perform(post(LANGUAGE_URL).contentType(MediaType.APPLICATION_JSON).content(content))
-//                .andExpect(status().is(HttpStatus.OK.value()))
-//                .andExpect(redirectedUrl("/"));
-//    }
+    @Test
+    @Tag("UnitTest")
+    void test_addLanguage_success() throws Exception
+    {
+        doNothing().when(languageService).addLanguage(any());
+
+        mvc.perform(post(LANGUAGE_URL).formFields(getLanguageDataFields()))
+                .andExpect(status().is(HttpStatus.FOUND.value()))
+                .andExpect(redirectedUrl("/"));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_addLanguage_forbidden() throws Exception
+    {
+        MultiValueMap<String, String> dataFields = getLanguageDataFields();
+        dataFields.put("username", List.of("Wrong User"));
+
+        mvc.perform(post(LANGUAGE_URL).formFields(dataFields))
+                .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_addLanguage_saveFailed() throws Exception
+    {
+        doThrow(InvalidObjectException.class).when(languageService).addLanguage(any());
+
+        mvc.perform(post(LANGUAGE_URL).formFields(getLanguageDataFields()))
+                .andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+    }
 
     @Test
     @Tag("UnitTest")
@@ -284,5 +306,16 @@ public class TestLanguageController
             languages.add(language);
         }
         return languages;
+    }
+
+    private MultiValueMap<String, String> getLanguageDataFields()
+    {
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("name", LANGUAGE_NAME);
+        map.add("visible", "false");
+        map.add("minWordLength", "1");
+        map.add("maxWordLength", "2");
+        map.add("username", USERNAME);
+        return map;
     }
 }
