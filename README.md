@@ -1,24 +1,13 @@
 # Initial Setup
-## Runnable java-client
+## Runnable java-client - No longer developed
 The java client is the original program that runs locally on your computer. It uses its own folder in your APPDATA
 path to save individual language-files in a .json format. These files are compatible with the web-version of this tool.
 The client however does not support a visual option like the web-ui to modify or add languages. This can only be done,
 by changing the .json files directly.
 
 ### Build the client
-There are 2 options on how to build the java-client:
-1. An exe file, that requires an installed jre
-2. Installable exe that brings its jre with it
-#### 1) Create the exe
-To create the exe that will only work with an installed jre, you don't need any preparation and can start immediately
-with these steps:
-1. Clone the repo
-2. Execute the maven install command
-3. Your exe should be created in the target folder
-#### 2) Create the installable exe
-To create the installer that brings its own jre, you first need to follow the steps above. After that, continue below:
-1. Copy the bin, conf and lib folders from your jre into target/jre/jre (yes, there are 2 jre folders stacked)
-2. Execute the setup.iss script to create the installer
+The client version is no longer developed. If you want to compile it, use the code from
+[v0.0.1](https://github.com/Fi0x/LanguageGenerator/tree/0.0.1)
 
 ## Spring-Boot version
 The spring-boot-version of this tool is the newer one with added functionality. It provides a web-ui that can be
