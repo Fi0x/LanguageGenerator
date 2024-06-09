@@ -2,9 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<%@include file="common/head.jspf" %>
+<%@include file="../common/head.jspf" %>
 <body>
-<%@include file="common/navigation.jspf" %>
+<%@include file="../common/navigation.jspf" %>
 <div class="container">
     <h1>Edit Language Details</h1>
     <%--@elvariable id="languageData" type="io.fi0x.languagegenerator.logic.dto.LanguageData"--%>
@@ -48,6 +48,6 @@
         </table>
     </form:form>
 </div>
-<%@include file="common/scripts.jspf" %>
+<%@include file="../common/scripts.jspf" %>
 </body>
 </html>

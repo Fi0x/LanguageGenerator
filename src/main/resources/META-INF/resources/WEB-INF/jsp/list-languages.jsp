@@ -2,9 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<%@include file="common/head.jspf" %>
+<%@include file="../common/head.jspf" %>
 <body>
-<%@include file="common/navigation.jspf" %>
+<%@include file="../common/navigation.jspf" %>
 <div class="container">
     <%--@elvariable id="username" type="java.lang.String"--%>
     <h1>Loaded languages for user ${username}:</h1>
@@ -52,6 +52,6 @@
     <a href="language" class="btn-success">Create new Language</a>
     <a href="upload" class="btn-success">Upload language.json file</a>
 </div>
-<%@include file="common/scripts.jspf" %>
+<%@include file="../common/scripts.jspf" %>
 </body>
 </html>

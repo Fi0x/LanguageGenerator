@@ -2,9 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<%@include file="common/head.jspf" %>
+<%@include file="../common/head.jspf" %>
 <body>
-<%@include file="common/navigation.jspf" %>
+<%@include file="../common/navigation.jspf" %>
 <div class="container">
     <h1>Login</h1>
     <%--@elvariable id="loginDto" type="io.fi0x.languagegenerator.logic.dto.LoginDto"--%>
@@ -37,6 +37,6 @@
     </form:form>
     <a href="register" class="btn">Register a new account</a>
 </div>
-<%@include file="common/scripts.jspf" %>
+<%@include file="../common/scripts.jspf" %>
 </body>
 </html>
