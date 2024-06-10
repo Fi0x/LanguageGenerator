@@ -1,5 +1,26 @@
 /*TODO: Adjust css*/
+.btn{
+    color: #000000;
+    background-color: #b2b2b2;
+    border-color: #b2b2b2;
+    border-radius: 5px;
+    padding: 5px;
+}
+.btn:hover {
+    color: #ffffff;
+    background-color: #5e5e5e;
+}
+
 .btn-success {
-    color: blueviolet;
-    background-color: cyan;
+    color: #ffffff;
+    background-color: #308600;
+    border-color: #308600;
+    border-radius: 5px;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.btn-success:hover {
+    color: #000000;
+    background-color: #b8f693;
 }
