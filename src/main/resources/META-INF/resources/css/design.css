@@ -1,4 +1,12 @@
 /*TODO: Adjust css*/
+body {
+    color: #bebebe;
+    background-color: #51545e;
+    margin: 10px;
+    font-family: "Segoe UI", sans-serif;
+    text-align: center;
+    box-sizing: border-box;
+}
 .btn{
     color: #000000;
     background-color: #b2b2b2;
