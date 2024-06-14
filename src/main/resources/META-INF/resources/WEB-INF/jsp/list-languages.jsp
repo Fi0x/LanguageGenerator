@@ -49,8 +49,6 @@
         </c:forEach>
         </tbody>
     </table>
-    <a href="language" class="btn-success">Create new Language</a>
-    <a href="upload" class="btn-success">Upload language.json file</a>
 </div>
 <%@include file="../common/scripts.jspf" %>
 </body>
