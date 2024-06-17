@@ -1,36 +1,48 @@
 /*TODO: Adjust css*/
+:root {
+    --custom-background-color: #51545e;
+    --custom-white: rgba(255, 255, 255, 0.88);
+    --custom-black: rgba(0, 0, 0, 0.88);
+    --dark-accent: rgba(98, 98, 98, 0.88);
+    --light-accent: rgba(213, 213, 213, 0.88);
+    --custom-green: #308600;
+    --custom-light-green: #b8f693;
+}
+
 body {
-    color: #bebebe;
-    background-color: #51545e;
+    color: var(--custom-white);
+    background-color: var(--custom-background-color);
     margin: 10px;
     font-family: "Segoe UI", sans-serif;
     text-align: center;
     box-sizing: border-box;
 }
-.btn{
-    color: #000000;
-    background-color: #b2b2b2;
-    border-color: #b2b2b2;
+
+.btn {
+    color: var(--custom-black);
+    background-color: var(--light-accent);
+    border-color: var(--light-accent);
     border-radius: 5px;
     padding: 5px;
 }
+
 .btn:hover {
-    color: #ffffff;
-    background-color: #5e5e5e;
+    color: var(--custom-white);
+    background-color: var(--dark-accent);
 }
 
 .btn-success {
-    color: #ffffff;
-    background-color: #308600;
-    border-color: #308600;
+    color: var(--custom-white);
+    background-color: var(--custom-green);
+    border-color: var(--custom-green);
     border-radius: 5px;
     padding: 5px;
     text-decoration: none;
 }
 
 .btn-success:hover {
-    color: #000000;
-    background-color: #b8f693;
+    color: var(--custom-black);
+    background-color: var(--custom-light-green);
 }
 
 .home-image {
@@ -40,14 +52,29 @@ body {
 }
 
 .navbar {
-    background-color: rgba(0, 0, 0, 0.16);
+    background-color: var(--dark-accent);
 }
 
 .nav-link {
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--custom-white);
     border-radius: 5px;
     margin: 5px;
 }
+
 .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.21);
+    color: var(--custom-black);
+    background-color: var(--light-accent);
+}
+
+.table > :not(caption) > * > * {
+    color: var(--custom-white);
+    background-color: transparent;
+}
+tr {
+    border-bottom-width: 1px;
+    border-color: var(--light-accent);
+}
+
+table {
+    background-color: var(--dark-accent);
 }
