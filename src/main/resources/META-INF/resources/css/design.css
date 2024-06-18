@@ -7,6 +7,10 @@
     --light-accent: rgba(213, 213, 213, 0.88);
     --custom-green: #308600;
     --custom-light-green: #b8f693;
+    --custom-red: #9b0000;
+    --custom-light-red: #e50000;
+    --custom-yellow: #cba000;
+    --custom-light-yellow: #e0bf47;
 }
 
 body {
@@ -45,6 +49,31 @@ body {
     background-color: var(--custom-light-green);
 }
 
+.btn-danger {
+    color: var(--custom-white);
+    background-color: var(--custom-red);
+    border-color: var(--custom-red);
+    border-radius: 5px;
+    padding: 5px;
+    text-decoration: none;
+}
+.btn-danger:hover {
+    color: var(--custom-black);
+    background-color: var(--custom-light-red);
+}
+
+.btn-edit {
+    color: var(--custom-black);
+    background-color: var(--custom-yellow);
+    border-color: var(--custom-yellow);
+    border-radius: 5px;
+    padding: 5px;
+    text-decoration: none;
+}
+.btn-edit:hover {
+    background-color: var(--custom-light-yellow);
+}
+
 .home-image {
     max-width: 100%;
     max-height: 100%;
@@ -70,7 +99,7 @@ body {
     color: var(--custom-white);
     background-color: transparent;
 }
-tr {
+.underlined-row {
     border-bottom-width: 1px;
     border-color: var(--light-accent);
 }
