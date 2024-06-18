@@ -28,6 +28,7 @@ public class UserController
     {
         log.info("showLogin() called");
 
+        model.put("username", authenticationService.getAuthenticatedUsername());
         model.put("loginDto", new LoginDto());
 
         return "login";
