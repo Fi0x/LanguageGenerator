@@ -16,7 +16,11 @@ public class LanguageData
     private boolean visible;
     private int minWordLength;
     private int maxWordLength;
+    // TODO: Add special character options (required chars before and after, min and max amount of special characters in words)
+    // TODO: Add option to customize the order in which combination-lists are used
 
+    // TODO: Change lists to weighted ones
+    // TODO: Add lists for beginning, end, special-characters
     private List<String> vocals;
     private List<String> consonants;
     private List<String> vocalConsonant;
@@ -31,12 +35,12 @@ public class LanguageData
 
     public boolean invalid()
     {
-        if(id == null || name == null || username == null)
+        if (id == null || name == null || username == null)
             return true;
-        if(vocals == null || consonants == null || vocalConsonant == null || consonantVocals == null)
+        if (vocals == null || consonants == null || vocalConsonant == null || consonantVocals == null)
             return true;
 
-        if(name.isBlank() || username.isBlank() || minWordLength <= 0 || maxWordLength <= 0)
+        if (name.isBlank() || username.isBlank() || minWordLength <= 0 || maxWordLength <= 0)
             return true;
         return vocals.isEmpty() && consonants.isEmpty() && vocalConsonant.isEmpty() && consonantVocals.isEmpty();
     }
