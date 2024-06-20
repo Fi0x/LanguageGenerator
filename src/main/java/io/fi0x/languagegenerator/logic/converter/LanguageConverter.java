@@ -28,6 +28,9 @@ public class LanguageConverter
         languageJson.setVocalConsonant(languageData.getVocalConsonant());
         languageJson.setConsonantVocals(languageData.getConsonantVocals());
         languageJson.setForbiddenCombinations(languageData.getForbiddenCombinations());
+        languageJson.setSpecialCharacters(languageData.getSpecialCharacters());
+        languageJson.setStartingCombinations(languageData.getStartingCombinations());
+        languageJson.setEndingCombinations(languageData.getEndingCombinations());
         return languageJson;
     }
 
@@ -45,6 +48,9 @@ public class LanguageConverter
                 .vocalConsonant(languageJson.getVocalConsonant())
                 .consonantVocals(languageJson.getConsonantVocals())
                 .forbiddenCombinations(languageJson.getForbiddenCombinations())
+                .specialCharacters(languageJson.getSpecialCharacters())
+                .startingCombinations(languageJson.getStartingCombinations())
+                .endingCombinations(languageJson.getEndingCombinations())
                 .build();
     }
 }

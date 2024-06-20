@@ -10,7 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.InvalidObjectException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,6 +28,7 @@ public class GenerationService
     private final VocalRepository vRepository;
     private final VocalConsonantRepository vcRepository;
     private final ForbiddenRepository fRepository;
+    //TODO: Include the 3 new lists from LanguageData with new repositories
 
     public List<Word> generateWords(long languageId, int count) throws EntityNotFoundException, InvalidObjectException
     {

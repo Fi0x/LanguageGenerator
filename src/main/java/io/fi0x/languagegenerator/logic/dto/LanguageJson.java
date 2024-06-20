@@ -13,4 +13,8 @@ public class LanguageJson
     private List<String> vocalConsonant;
     private List<String> consonantVocals;
     private List<String> forbiddenCombinations;
+    //TODO: Make sure these lists are all implemented correctly
+    private List<String> specialCharacters;
+    private List<String> startingCombinations;
+    private List<String> endingCombinations;
 }
