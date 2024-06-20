@@ -2,9 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<%@include file="common/head.jspf" %>
+<%@include file="../common/head.jspf" %>
 <body>
-<%@include file="common/navigation.jspf" %>
+<%@include file="../common/navigation.jspf" %>
 <div class="container">
     <%--@elvariable id="languageName" type="java.lang.String"--%>
     <h1>Generated words with '${languageName}'</h1>
@@ -25,6 +25,6 @@
     </table>
     <a href="generate" class="btn">Generate new words in this language</a>
 </div>
-<%@include file="common/scripts.jspf" %>
+<%@include file="../common/scripts.jspf" %>
 </body>
 </html>

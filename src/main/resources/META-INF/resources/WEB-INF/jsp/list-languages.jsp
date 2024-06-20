@@ -2,15 +2,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<%@include file="common/head.jspf" %>
+<%@include file="../common/head.jspf" %>
 <body>
-<%@include file="common/navigation.jspf" %>
+<%@include file="../common/navigation.jspf" %>
 <div class="container">
     <%--@elvariable id="username" type="java.lang.String"--%>
     <h1>Loaded languages for user ${username}:</h1>
     <table class="table">
         <thead>
-        <tr>
+        <tr class="underlined-row">
             <th>Language</th>
             <th colspan="2">Generate words</th>
             <th>Creator</th>
@@ -21,7 +21,7 @@
         <tbody>
         <%--@elvariable id="languages" type="java.util.List"--%>
         <c:forEach items="${languages}" var="language">
-            <tr>
+            <tr class="underlined-row">
                 <td>
                         ${language.name}
                 </td>
@@ -39,7 +39,7 @@
                 </td>
                 <c:if test="${language.username == username}">
                     <td>
-                        <a href="language?languageId=${language.id}" class="btn">Edit</a>
+                        <a href="language?languageId=${language.id}" class="btn-edit">Edit</a>
                     </td>
                     <td>
                         <a href="delete-language?languageId=${language.id}" class="btn-danger">Delete</a>
@@ -49,9 +49,7 @@
         </c:forEach>
         </tbody>
     </table>
-    <a href="language" class="btn-success">Create new Language</a>
-    <a href="upload" class="btn-success">Upload language.json file</a>
 </div>
-<%@include file="common/scripts.jspf" %>
+<%@include file="../common/scripts.jspf" %>
 </body>
 </html>

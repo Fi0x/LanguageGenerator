@@ -2,9 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<%@include file="common/head.jspf" %>
+<%@include file="../common/head.jspf" %>
 <body>
-<%@include file="common/navigation.jspf" %>
+<%@include file="../common/navigation.jspf" %>
 <div class="container">
     <h1>Edit Language Details</h1>
     <%--@elvariable id="languageData" type="io.fi0x.languagegenerator.logic.dto.LanguageData"--%>
@@ -12,42 +12,55 @@
         <form:input type="hidden" path="id"/>
         <form:input type="hidden" path="username"/>
         <table>
+            <tbody>
             <tr>
-                Name: <form:input type="text" path="name"/>
+                <td>Name:</td>
+                <td><form:input type="text" path="name"/></td>
             </tr>
             <tr>
-                Public Language: <form:checkbox path="visible"/>
+                <td>Public Language:</td>
+                <td><form:checkbox path="visible"/></td>
             </tr>
             <tr>
-                Min-Word-Length: <form:input type="number" path="minWordLength"/>
+                <td>Min-Word-Length:</td>
+                <td><form:input type="number" path="minWordLength"/></td>
             </tr>
             <tr>
-                Max-Word-Length: <form:input type="number" path="maxWordLength"/>
+                <td>Max-Word-Length:</td>
+                <td><form:input type="number" path="maxWordLength"/></td>
             </tr>
             <tr>
-                Separate individual letter-combinations by ','
+                <td>Separate individual letter-combinations by ','</td>
             </tr>
             <tr>
-                Possible Vocals: <form:input type="text" path="vocals"/>
+                <td>Possible Vocals:</td>
+                <td><form:input type="text" path="vocals"/></td>
             </tr>
             <tr>
-                Possible Consonants: <form:input type="text" path="consonants"/>
+                <td>Possible Consonants:</td>
+                <td><form:input type="text" path="consonants"/></td>
             </tr>
             <tr>
-                Possible Vocal-Consonant-Combinations: <form:input type="text" path="vocalConsonant"/>
+                <td>Possible Vocal-Consonant-Combinations:</td>
+                <td><form:input type="text" path="vocalConsonant"/></td>
             </tr>
             <tr>
-                Possible Consonant-Vocal-Combinations: <form:input type="text" path="consonantVocals"/>
+                <td>Possible Consonant-Vocal-Combinations:</td>
+                <td><form:input type="text" path="consonantVocals"/></td>
             </tr>
             <tr>
-                Forbidden Combinations: <form:input type="text" path="forbiddenCombinations"/>
+                <td>Forbidden Combinations:</td>
+                <td><form:input type="text" path="forbiddenCombinations"/></td>
             </tr>
             <tr>
-                <input type="submit" class="btn-success">
+                <td>
+                    <input type="submit" class="btn-success" value="Save">
+                </td>
             </tr>
+            </tbody>
         </table>
     </form:form>
 </div>
-<%@include file="common/scripts.jspf" %>
+<%@include file="../common/scripts.jspf" %>
 </body>
 </html>
