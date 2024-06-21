@@ -16,7 +16,6 @@ public class LanguageData
     private boolean visible;
     private int minWordLength;
     private int maxWordLength;
-    //TODO: Make sure these 4 values are added where needed and used
     private int charsBeforeSpecial;
     private int charsAfterSpecial;
     private int minSpecialChars;
@@ -37,7 +36,9 @@ public class LanguageData
     public static LanguageData getFromEntity(Language language)
     {
         return LanguageData.builder().id(language.getId()).name(language.getName()).username(language.getUsername())
-                .minWordLength(language.getMinWordLength()).maxWordLength(language.getMaxWordLength()).visible(language.getVisible()).build();
+                .minWordLength(language.getMinWordLength()).maxWordLength(language.getMaxWordLength())
+                .charsBeforeSpecial(language.getCharsBeforeSpecial()).charsAfterSpecial(language.getCharsAfterSpecial())
+                .minSpecialChars(language.getMinSpecialChars()).maxSpecialChars(language.getMaxSpecialChars()).visible(language.getVisible()).build();
     }
 
     public boolean invalid()

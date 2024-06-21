@@ -57,6 +57,22 @@
                 <td><form:input type="text" path="specialCharacters"/></td>
             </tr>
             <tr>
+                <td>Min Characters before special Chars:</td>
+                <td><form:input type="number" path="charsBeforeSpecial"/></td>
+            </tr>
+            <tr>
+                <td>Max Characters before special Chars:</td>
+                <td><form:input type="number" path="charsAfterSpecial"/></td>
+            </tr>
+            <tr>
+                <td>Min-Amount of special Chars per word:</td>
+                <td><form:input type="number" path="minSpecialChars"/></td>
+            </tr>
+            <tr>
+                <td>Max-Amount of special chars per word:</td>
+                <td><form:input type="number" path="maxSpecialChars"/></td>
+            </tr>
+            <tr>
                 <td>Word Beginnings:</td>
                 <td><form:input type="text" path="startingCombinations"/></td>
             </tr>
