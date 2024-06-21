@@ -16,7 +16,12 @@ public class LanguageData
     private boolean visible;
     private int minWordLength;
     private int maxWordLength;
-    // TODO: Add special character options (required chars before and after, min and max amount of special characters in words)
+    //TODO: Make sure these 4 values are added where needed and used
+    private int charsBeforeSpecial;
+    private int charsAfterSpecial;
+    private int minSpecialChars;
+    private int maxSpecialChars;
+
     // TODO: Add option to customize the order in which combination-lists are used
 
     // TODO: Change lists to weighted ones

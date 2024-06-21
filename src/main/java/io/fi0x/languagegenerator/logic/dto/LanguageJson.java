@@ -8,6 +8,7 @@ import java.util.List;
 public class LanguageJson
 {
     private int[] nameLengths;
+    private int[] specialCharacterLengths;
     private List<String> vocals;
     private List<String> consonants;
     private List<String> vocalConsonant;

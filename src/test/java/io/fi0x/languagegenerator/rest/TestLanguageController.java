@@ -315,6 +315,10 @@ public class TestLanguageController
         map.add("visible", "false");
         map.add("minWordLength", "1");
         map.add("maxWordLength", "2");
+        map.add("charsBeforeSpecial", "2");
+        map.add("charsAfterSpecial", "2");
+        map.add("minSpecialChars", "0");
+        map.add("maxSpecialChars", "1");
         map.add("username", USERNAME);
         return map;
     }

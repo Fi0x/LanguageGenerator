@@ -1,5 +1,5 @@
-insert into lang (ID, NAME, USERNAME, IS_PUBLIC, MIN_WORD_LENGTH, MAX_WORD_LENGTH)
-values (0, 'Elven-Language', 'fi0x', true, 2, 12);
+insert into lang (ID, NAME, USERNAME, IS_PUBLIC, MIN_WORD_LENGTH, MAX_WORD_LENGTH, CHARS_BEFORE_SPECIAL, CHARS_AFTER_SPECIAL, MIN_SPECIAL_CHARS, MAX_SPECIAL_CHARS)
+values (0, 'Elven-Language', 'fi0x', true, 2, 12, 0, 0, 0, 0);
 
 insert into lttrs (ID, LETTERS)
 values (0, 'a'),
