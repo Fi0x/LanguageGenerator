@@ -7,7 +7,6 @@
 <%@include file="../common/navigation.jspf" %>
 <div class="container">
     <h1>Edit Language Details</h1>
-<%--    TODO: Update fields to contain new 3 lists--%>
     <%--@elvariable id="languageData" type="io.fi0x.languagegenerator.logic.dto.LanguageData"--%>
     <form:form method="post" modelAttribute="languageData">
         <form:input type="hidden" path="id"/>
@@ -52,6 +51,18 @@
             <tr>
                 <td>Forbidden Combinations:</td>
                 <td><form:input type="text" path="forbiddenCombinations"/></td>
+            </tr>
+            <tr>
+                <td>Special Character Combinations:</td>
+                <td><form:input type="text" path="specialCharacters"/></td>
+            </tr>
+            <tr>
+                <td>Word Beginnings:</td>
+                <td><form:input type="text" path="startingCombinations"/></td>
+            </tr>
+            <tr>
+                <td>Word Endings:</td>
+                <td><form:input type="text" path="endingCombinations"/></td>
             </tr>
             <tr>
                 <td>

@@ -60,6 +60,7 @@ public class GenerationService
         return generatedWords;
     }
 
+    //TODO: Include 3 new lists to generation
     private Word generateWord(LanguageData language)
     {
         int desiredLength = (int) (Math.random() * (language.getMaxWordLength() - language.getMinWordLength()) + language.getMinWordLength());
