@@ -48,7 +48,7 @@ public class GenerationService
         language.setStartingCombinations(getLetters(staRepository.getAllByLanguageId(languageId).stream().map(StartingCombinations::getLetterId).collect(Collectors.toList())));
         language.setEndingCombinations(getLetters(endRepository.getAllByLanguageId(languageId).stream().map(EndingCombinations::getLetterId).collect(Collectors.toList())));
 
-        if(language.invalid())
+        if (language.invalid())
             throw new InvalidObjectException("Can't generate words with the settings of language: " + languageId);
 
         ArrayList<Word> generatedWords = new ArrayList<>();
@@ -60,12 +60,19 @@ public class GenerationService
         return generatedWords;
     }
 
-    //TODO: Include 3 new lists to generation
+    //TODO: Include special characters in generation
     private Word generateWord(LanguageData language)
     {
-        int desiredLength = (int) (Math.random() * (language.getMaxWordLength() - language.getMinWordLength()) + language.getMinWordLength());
-
         StringBuilder name = new StringBuilder();
+        List<String> forbiddenCombinations = language.getForbiddenCombinations();
+
+        name.append(getBeginning(language));
+        String ending = getNewRandom(forbiddenCombinations, name.toString(), language.getEndingCombinations(), "");
+
+        int desiredLength = (int) (Math.random() * (language.getMaxWordLength() - language.getMinWordLength()) + language.getMinWordLength());
+        desiredLength -= ending.length();
+
+        //TODO: Make this nicer and more modifiable
         for (int i = (int) (Math.random() * 4); name.length() < desiredLength && i < desiredLength + 4; i++) {
             List<String> selectedList;
             switch (i % 4) {
@@ -74,15 +81,22 @@ public class GenerationService
                 case 2 -> selectedList = language.getVocalConsonant();
                 default -> selectedList = language.getVocals();
             }
-            name.append(getNewRandom(language, name.toString(), selectedList));
+            name.append(getNewRandom(forbiddenCombinations, name.toString(), selectedList, ending));
         }
 
-        if(!name.isEmpty())
+        name.append(ending);
+
+        if (!name.isEmpty())
             name.setCharAt(0, String.valueOf(name.charAt(0)).toUpperCase(Locale.ROOT).charAt(0));
         return new Word(language.getId(), name.toString());
     }
 
-    private String getNewRandom(LanguageData languageData, String previousLetters, List<String> newPossibilities)
+    private String getBeginning(LanguageData languageData)
+    {
+        return getNewRandom(languageData.getForbiddenCombinations(), "", languageData.getStartingCombinations(), "");
+    }
+
+    private String getNewRandom(List<String> forbiddenCombinations, String previousLetters, List<String> newPossibilities, String ending)
     {
         int tries = 0;
         int randomIdx = (int) (Math.random() * newPossibilities.size());
@@ -90,7 +104,7 @@ public class GenerationService
         while (tries < newPossibilities.size()) {
             String nextPossiblePart = newPossibilities.get((randomIdx + tries) % newPossibilities.size());
 
-            if (isAllowed(languageData, previousLetters, nextPossiblePart))
+            if (isAllowed(forbiddenCombinations, previousLetters, nextPossiblePart, ending))
                 return nextPossiblePart;
 
             tries++;
@@ -98,9 +112,9 @@ public class GenerationService
         return "";
     }
 
-    private boolean isAllowed(LanguageData languageData, String originalPart, String newPart)
+    private boolean isAllowed(List<String> forbiddenCombinations, String originalPart, String newPart, String ending)
     {
-        return languageData.getForbiddenCombinations().stream().noneMatch((" " + originalPart + newPart)::contains);
+        return forbiddenCombinations.stream().noneMatch((" " + originalPart + newPart + ending)::contains);
     }
 
     private List<String> getLetters(List<Long> letterIds)
