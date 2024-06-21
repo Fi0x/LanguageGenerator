@@ -7,6 +7,7 @@
 <%@include file="../common/navigation.jspf" %>
 <div class="container">
     <h1>Edit Language Details</h1>
+<%--    TODO: Update fields to contain new 3 lists--%>
     <%--@elvariable id="languageData" type="io.fi0x.languagegenerator.logic.dto.LanguageData"--%>
     <form:form method="post" modelAttribute="languageData">
         <form:input type="hidden" path="id"/>

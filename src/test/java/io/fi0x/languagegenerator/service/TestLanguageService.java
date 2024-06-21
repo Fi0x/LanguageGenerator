@@ -50,6 +50,12 @@ public class TestLanguageService
     private VocalConsonantRepository vcRepo;
     @Mock
     private ForbiddenRepository fRepo;
+    @Mock
+    private SpecialCharacterRepository speRepo;
+    @Mock
+    private StartingRepository staRepo;
+    @Mock
+    private EndingRepository endRepo;
 
     @InjectMocks
     private LanguageService service;
@@ -148,6 +154,9 @@ public class TestLanguageService
                 .vocalConsonant(new ArrayList<>())
                 .consonantVocals(Arrays.asList("a", "aa"))
                 .forbiddenCombinations(new ArrayList<>())
+                .specialCharacters(new ArrayList<>())
+                .startingCombinations(new ArrayList<>())
+                .endingCombinations(new ArrayList<>())
                 .minWordLength(2)
                 .maxWordLength(2).build();
     }

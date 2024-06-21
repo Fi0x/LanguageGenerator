@@ -28,7 +28,9 @@ public class GenerationService
     private final VocalRepository vRepository;
     private final VocalConsonantRepository vcRepository;
     private final ForbiddenRepository fRepository;
-    //TODO: Include the 3 new lists from LanguageData with new repositories
+    private final SpecialCharacterRepository speRepository;
+    private final StartingRepository staRepository;
+    private final EndingRepository endRepository;
 
     public List<Word> generateWords(long languageId, int count) throws EntityNotFoundException, InvalidObjectException
     {
@@ -42,6 +44,9 @@ public class GenerationService
         language.setVocals(getLetters(vRepository.getAllByLanguageId(languageId).stream().map(VocalCombination::getLetterId).collect(Collectors.toList())));
         language.setVocalConsonant(getLetters(vcRepository.getAllByLanguageId(languageId).stream().map(VocalConsonantCombination::getLetterId).collect(Collectors.toList())));
         language.setForbiddenCombinations(getLetters(fRepository.getAllByLanguageId(languageId).stream().map(ForbiddenCombination::getLetterId).collect(Collectors.toList())));
+        language.setSpecialCharacters(getLetters(speRepository.getAllByLanguageId(languageId).stream().map(SpecialCharacterCombinations::getLetterId).collect(Collectors.toList())));
+        language.setStartingCombinations(getLetters(staRepository.getAllByLanguageId(languageId).stream().map(StartingCombinations::getLetterId).collect(Collectors.toList())));
+        language.setEndingCombinations(getLetters(endRepository.getAllByLanguageId(languageId).stream().map(EndingCombinations::getLetterId).collect(Collectors.toList())));
 
         if(language.invalid())
             throw new InvalidObjectException("Can't generate words with the settings of language: " + languageId);

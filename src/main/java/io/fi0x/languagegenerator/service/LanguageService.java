@@ -26,7 +26,9 @@ public class LanguageService
     private final VocalRepository vRepo;
     private final VocalConsonantRepository vcRepo;
     private final ForbiddenRepository fRepo;
-    //TODO: Include the 3 new lists from LanguageData with new repositories
+    private final SpecialCharacterRepository speRepo;
+    private final StartingRepository staRepo;
+    private final EndingRepository endRepo;
 
     public void addLanguage(LanguageData languageData) throws InvalidObjectException
     {
@@ -94,6 +96,39 @@ public class LanguageService
             combination.setLanguageId(languageData.getId());
             combination.setLetterId(letterId);
             fRepo.save(combination);
+        });
+
+        speRepo.deleteAllByLanguageId(languageData.getId());
+        languageData.getSpecialCharacters().forEach(letterCombination -> {
+            long letterId = getLetterIdOrSaveIfNew(letterCombination);
+            SpecialCharacterCombinations combination = new SpecialCharacterCombinations();
+            Optional<Long> id = speRepo.getHighestId();
+            combination.setId((id.isPresent() ? id.get() : 0) + 1);
+            combination.setLanguageId(languageData.getId());
+            combination.setLetterId(letterId);
+            speRepo.save(combination);
+        });
+
+        staRepo.deleteAllByLanguageId(languageData.getId());
+        languageData.getStartingCombinations().forEach(letterCombination -> {
+            long letterId = getLetterIdOrSaveIfNew(letterCombination);
+            StartingCombinations combination = new StartingCombinations();
+            Optional<Long> id = staRepo.getHighestId();
+            combination.setId((id.isPresent() ? id.get() : 0) + 1);
+            combination.setLanguageId(languageData.getId());
+            combination.setLetterId(letterId);
+            staRepo.save(combination);
+        });
+
+        endRepo.deleteAllByLanguageId(languageData.getId());
+        languageData.getEndingCombinations().forEach(letterCombination -> {
+            long letterId = getLetterIdOrSaveIfNew(letterCombination);
+            EndingCombinations combination = new EndingCombinations();
+            Optional<Long> id = endRepo.getHighestId();
+            combination.setId((id.isPresent() ? id.get() : 0) + 1);
+            combination.setLanguageId(languageData.getId());
+            combination.setLetterId(letterId);
+            endRepo.save(combination);
         });
     }
 
@@ -173,6 +208,18 @@ public class LanguageService
         List<ForbiddenCombination> fCom = fRepo.getAllByLanguageId(languageData.getId());
         List<String> fLetters = fCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
         languageData.setForbiddenCombinations(fLetters);
+
+        List<SpecialCharacterCombinations> speCom = speRepo.getAllByLanguageId(languageData.getId());
+        List<String> speLetters = speCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        languageData.setSpecialCharacters(speLetters);
+
+        List<StartingCombinations> staCom = staRepo.getAllByLanguageId(languageData.getId());
+        List<String> staLetters = staCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        languageData.setStartingCombinations(staLetters);
+
+        List<EndingCombinations> endCom = endRepo.getAllByLanguageId(languageData.getId());
+        List<String> endLetters = endCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        languageData.setEndingCombinations(endLetters);
 
         return languageData;
     }

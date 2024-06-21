@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.eq;
 
 @RunWith(SpringRunner.class)
 public class TestGenerationService
@@ -48,6 +49,12 @@ public class TestGenerationService
     private VocalConsonantRepository vcRepository;
     @Mock
     private ForbiddenRepository fRepository;
+    @Mock
+    private SpecialCharacterRepository speRepository;
+    @Mock
+    private StartingRepository staRepository;
+    @Mock
+    private EndingRepository endRepository;
 
     @InjectMocks
     private GenerationService service;
