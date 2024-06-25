@@ -20,6 +20,7 @@ public class LanguageData
     private int charsAfterSpecial;
     private int minSpecialChars;
     private int maxSpecialChars;
+    //TODO: Add a variable chance for special characters
 
     // TODO: Add option to customize the order in which combination-lists are used
 
