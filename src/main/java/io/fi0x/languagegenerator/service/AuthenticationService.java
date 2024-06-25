@@ -27,7 +27,7 @@ public class AuthenticationService
             throw new DuplicateKeyException("A user with that username already exists");
 
         userDetailsManager.createUser(User.builder()
-                .passwordEncoder(input -> passwordEncoder.encode(input))
+                .passwordEncoder(passwordEncoder::encode)
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
                 .roles("USER").build());

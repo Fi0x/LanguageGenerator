@@ -141,7 +141,7 @@ public class LanguageController
 
     @Transactional
     @GetMapping("/delete-language")
-    public String deleteLanguage(ModelMap model, @RequestParam(value = "languageId") long languageId)
+    public String deleteLanguage(@RequestParam(value = "languageId") long languageId)
     {
         log.info("deleteLanguage() called for languageId={}", languageId);
 
