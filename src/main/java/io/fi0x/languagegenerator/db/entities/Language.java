@@ -22,4 +22,5 @@ public class Language
     private int charsAfterSpecial;
     private int minSpecialChars;
     private int maxSpecialChars;
+    private Float specialCharacterChance;
 }

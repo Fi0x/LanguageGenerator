@@ -44,7 +44,13 @@
                 <td><form:input type="number" path="maxSpecialChars"/></td>
             </tr>
             <tr>
-                <td colspan="4">Separate individual letter-combinations by ','</td>
+                <td colspan="2"></td>
+                <td>Chance for special characters:</td>
+                <td><form:input type="number" path="specialCharacterChance"/></td>
+            </tr>
+            <tr>
+                <th colspan="4">Letter combinations, separated by ','.</th>
+<%--                TODO: Add explanation about the generation process order. Maybe on new about page--%>
             </tr>
             <tr>
                 <td>Possible Vocals:</td>

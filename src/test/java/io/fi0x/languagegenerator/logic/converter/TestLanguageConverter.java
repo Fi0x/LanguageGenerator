@@ -23,6 +23,7 @@ public class TestLanguageConverter
     private static final int CHARS_AFTER_SPECIAL = 2;
     private static final int MIN_SPECIAL_CHARS = 0;
     private static final int MAX_SPECIAL_CHARS = 1;
+    private static final Float SPECIAL_CHAR_CHANCE = 1F;
     private static final List<String> VOCALS = new ArrayList<>();
     private static final List<String> CONSONANTS = new ArrayList<>();
     private static final List<String> VOCAL_CONSONANT = new ArrayList<>();
@@ -54,8 +55,9 @@ public class TestLanguageConverter
     {
         return LanguageData.builder().id(ID).name(NAME).username(USERNAME).visible(VISIBLE).minWordLength(MIN_WORD_LENGTH)
                 .maxWordLength(MAX_WORD_LENGTH).charsBeforeSpecial(CHARS_BEFORE_SPECIAL).charsAfterSpecial(CHARS_AFTER_SPECIAL)
-                .minSpecialChars(MIN_SPECIAL_CHARS).maxSpecialChars(MAX_SPECIAL_CHARS).vocals(VOCALS).consonants(CONSONANTS)
-                .vocalConsonant(VOCAL_CONSONANT).consonantVocals(CONSONANT_VOCALS).forbiddenCombinations(FORBIDDEN_COMBINATIONS).build();
+                .minSpecialChars(MIN_SPECIAL_CHARS).maxSpecialChars(MAX_SPECIAL_CHARS).specialCharacterChance(SPECIAL_CHAR_CHANCE)
+                .vocals(VOCALS).consonants(CONSONANTS).vocalConsonant(VOCAL_CONSONANT).consonantVocals(CONSONANT_VOCALS)
+                .forbiddenCombinations(FORBIDDEN_COMBINATIONS).build();
     }
 
     private Language getExpectedLang()
@@ -71,6 +73,7 @@ public class TestLanguageConverter
         language.setCharsAfterSpecial(CHARS_AFTER_SPECIAL);
         language.setMinSpecialChars(MIN_SPECIAL_CHARS);
         language.setMaxSpecialChars(MAX_SPECIAL_CHARS);
+        language.setSpecialCharacterChance(SPECIAL_CHAR_CHANCE);
         return language;
     }
     private LanguageJson getJson()
@@ -78,6 +81,7 @@ public class TestLanguageConverter
         LanguageJson json = new LanguageJson();
         json.setNameLengths(new int[]{MIN_WORD_LENGTH, MAX_WORD_LENGTH});
         json.setSpecialCharacterLengths(new int[]{CHARS_BEFORE_SPECIAL, CHARS_AFTER_SPECIAL, MIN_SPECIAL_CHARS, MAX_SPECIAL_CHARS});
+        json.setSpecialCharacterChance(SPECIAL_CHAR_CHANCE);
         json.setVocals(VOCALS);
         json.setConsonants(CONSONANTS);
         json.setVocalConsonant(VOCAL_CONSONANT);

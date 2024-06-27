@@ -20,9 +20,7 @@ public class LanguageData
     private int charsAfterSpecial;
     private int minSpecialChars;
     private int maxSpecialChars;
-    //TODO: Add a variable chance for special characters
-
-    // TODO: Add option to customize the order in which combination-lists are used
+    private Float specialCharacterChance;
 
     // TODO: Change lists to weighted ones
     private List<String> vocals;
@@ -39,7 +37,8 @@ public class LanguageData
         return LanguageData.builder().id(language.getId()).name(language.getName()).username(language.getUsername())
                 .minWordLength(language.getMinWordLength()).maxWordLength(language.getMaxWordLength())
                 .charsBeforeSpecial(language.getCharsBeforeSpecial()).charsAfterSpecial(language.getCharsAfterSpecial())
-                .minSpecialChars(language.getMinSpecialChars()).maxSpecialChars(language.getMaxSpecialChars()).visible(language.getVisible()).build();
+                .minSpecialChars(language.getMinSpecialChars()).maxSpecialChars(language.getMaxSpecialChars())
+                .specialCharacterChance(language.getSpecialCharacterChance()).visible(language.getVisible()).build();
     }
 
     public boolean invalid()

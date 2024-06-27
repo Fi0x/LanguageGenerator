@@ -19,6 +19,7 @@ public class LanguageConverter
         language.setCharsAfterSpecial(languageData.getCharsAfterSpecial());
         language.setMinSpecialChars(languageData.getMinSpecialChars());
         language.setMaxSpecialChars(languageData.getMaxSpecialChars());
+        language.setSpecialCharacterChance(languageData.getSpecialCharacterChance());
 
         return language;
 
@@ -30,6 +31,7 @@ public class LanguageConverter
         languageJson.setNameLengths(new int[]{languageData.getMinWordLength(), languageData.getMaxWordLength()});
         languageJson.setSpecialCharacterLengths(new int[]{languageData.getCharsBeforeSpecial(), languageData.getCharsAfterSpecial(),
                 languageData.getMinSpecialChars(), languageData.getMaxSpecialChars()});
+        languageJson.setSpecialCharacterChance(languageData.getSpecialCharacterChance());
         languageJson.setVocals(languageData.getVocals());
         languageJson.setConsonants(languageData.getConsonants());
         languageJson.setVocalConsonant(languageData.getVocalConsonant());
@@ -54,6 +56,7 @@ public class LanguageConverter
                 .charsAfterSpecial(languageJson.getSpecialCharacterLengths()[1])
                 .minSpecialChars(languageJson.getSpecialCharacterLengths()[2])
                 .maxSpecialChars(languageJson.getSpecialCharacterLengths()[3])
+                .specialCharacterChance(languageJson.getSpecialCharacterChance())
                 .vocals(languageJson.getVocals())
                 .consonants(languageJson.getConsonants())
                 .vocalConsonant(languageJson.getVocalConsonant())
