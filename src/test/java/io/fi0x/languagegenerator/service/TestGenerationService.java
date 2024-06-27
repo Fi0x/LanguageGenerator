@@ -32,6 +32,7 @@ public class TestGenerationService
     private static final boolean VISIBLE = false;
     private static final int MIN_WORD_LENGTH = 2;
     private static final int MAX_WORD_LENGTH = 2;
+    private static final Double SPECIAL_CHARACTER_CHANCE = 1D;
     private static final String DEFAULT_LETTER = "a";
     private static final Long DEFAULT_LETTER_ID = 4L;
 
@@ -137,6 +138,7 @@ public class TestGenerationService
         language.setVisible(VISIBLE);
         language.setMaxWordLength(MIN_WORD_LENGTH);
         language.setMaxWordLength(MAX_WORD_LENGTH);
+        language.setSpecialCharacterChance(SPECIAL_CHARACTER_CHANCE);
         return Optional.of(language);
     }
 
