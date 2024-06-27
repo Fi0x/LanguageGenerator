@@ -52,7 +52,7 @@ public class TestFileService
         staticMock.when(() -> Files.createTempFile(String.valueOf(LANGUAGE_ID), FILE_SUFFIX)).thenReturn(path);
         UrlResource expectedResult = new UrlResource(file.toURI());
 
-        Assertions.assertEquals(expectedResult, service.getLanguageFile(LanguageData.builder().id(LANGUAGE_ID).specialCharacterChance(1F).build()));
+        Assertions.assertEquals(expectedResult, service.getLanguageFile(LanguageData.builder().id(LANGUAGE_ID).specialCharacterChance(1D).build()));
 
         staticMock.close();
     }

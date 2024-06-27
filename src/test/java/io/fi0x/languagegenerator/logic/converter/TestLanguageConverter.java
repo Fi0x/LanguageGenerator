@@ -23,7 +23,7 @@ public class TestLanguageConverter
     private static final int CHARS_AFTER_SPECIAL = 2;
     private static final int MIN_SPECIAL_CHARS = 0;
     private static final int MAX_SPECIAL_CHARS = 1;
-    private static final Float SPECIAL_CHAR_CHANCE = 1F;
+    private static final Double SPECIAL_CHAR_CHANCE = 1D;
     private static final List<String> VOCALS = new ArrayList<>();
     private static final List<String> CONSONANTS = new ArrayList<>();
     private static final List<String> VOCAL_CONSONANT = new ArrayList<>();

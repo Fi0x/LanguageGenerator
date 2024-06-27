@@ -9,7 +9,7 @@ public class LanguageJson
 {
     private int[] nameLengths;
     private int[] specialCharacterLengths;
-    private float specialCharacterChance;
+    private double specialCharacterChance;
     private List<String> vocals;
     private List<String> consonants;
     private List<String> vocalConsonant;

@@ -60,7 +60,6 @@ public class GenerationService
         return generatedWords;
     }
 
-    //TODO: Include special characters in generation
     private Word generateWord(LanguageData language)
     {
         StringBuilder name = new StringBuilder();
@@ -72,7 +71,6 @@ public class GenerationService
         int desiredLength = (int) (Math.random() * (language.getMaxWordLength() - language.getMinWordLength()) + language.getMinWordLength());
         desiredLength -= ending.length();
 
-        //TODO: Make this nicer and more modifiable
         for (int i = (int) (Math.random() * 4); name.length() < desiredLength && i < desiredLength + 4; i++) {
             List<String> selectedList;
             switch (i % 4) {
@@ -88,7 +86,7 @@ public class GenerationService
 
         if (!name.isEmpty())
             name.setCharAt(0, String.valueOf(name.charAt(0)).toUpperCase(Locale.ROOT).charAt(0));
-        return new Word(language.getId(), name.toString());
+        return new Word(language.getId(), addSpecialCharacters(name.toString(), language));
     }
 
     private String getBeginning(LanguageData languageData)
@@ -124,5 +122,36 @@ public class GenerationService
         letterIds.forEach(letterId -> letterRepository.findById(letterId).ifPresent(value -> letterList.add(value.getLetters())));
 
         return letterList;
+    }
+
+    // TODO: Test if this method works as expected
+    private String addSpecialCharacters(String currentWord, LanguageData languageData)
+    {
+        if(currentWord.length() >= languageData.getMaxWordLength())
+            return currentWord;
+        if(Math.random() < languageData.getSpecialCharacterChance())
+            return currentWord;
+
+        int lastSpecialCharIdx = 0;
+        while (currentWord.length() < languageData.getMaxWordLength())
+        {
+            int nextSpecialCharIdx = lastSpecialCharIdx;
+            if(lastSpecialCharIdx == 0)
+                nextSpecialCharIdx = languageData.getCharsBeforeSpecial() - 1;
+            nextSpecialCharIdx += (int) (Math.random() * (currentWord.length() - nextSpecialCharIdx - languageData.getCharsAfterSpecial() + 1));
+            if(nextSpecialCharIdx == lastSpecialCharIdx)
+                break;
+
+            StringBuilder start = new StringBuilder(currentWord.substring(0, nextSpecialCharIdx));
+            String end = currentWord.substring(nextSpecialCharIdx);
+
+            start.append(getNewRandom(languageData.getForbiddenCombinations(), start.toString(), languageData.getSpecialCharacters(), end));
+            start.append(end);
+            currentWord = start.toString();
+
+            lastSpecialCharIdx = nextSpecialCharIdx;
+        }
+
+        return currentWord;
     }
 }

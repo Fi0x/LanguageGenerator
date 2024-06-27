@@ -20,7 +20,7 @@ public class LanguageData
     private int charsAfterSpecial;
     private int minSpecialChars;
     private int maxSpecialChars;
-    private Float specialCharacterChance;
+    private Double specialCharacterChance;
 
     // TODO: Change lists to weighted ones
     private List<String> vocals;
