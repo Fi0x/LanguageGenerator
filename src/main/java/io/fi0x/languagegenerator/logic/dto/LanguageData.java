@@ -22,7 +22,6 @@ public class LanguageData
     private int maxSpecialChars;
     private Double specialCharacterChance;
 
-    // TODO: Change lists to weighted ones
     private List<String> vocals;
     private List<String> consonants;
     private List<String> vocalConsonant;

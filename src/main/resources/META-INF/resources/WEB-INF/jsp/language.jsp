@@ -49,8 +49,7 @@
                 <td><form:input type="number" path="specialCharacterChance"/></td>
             </tr>
             <tr>
-                <th colspan="4">Letter combinations, separated by ','.</th>
-<%--                TODO: Add explanation about the generation process order. Maybe on new about page--%>
+                <th colspan="4">Letter combinations*, separated by ','.</th>
             </tr>
             <tr>
                 <td>Possible Vocals:</td>
@@ -84,6 +83,20 @@
             </tbody>
         </table>
     </form:form>
+
+    <a>* Not all, but at least 1 allowed letter combination needs to contain entries.<br>
+        Special characters, forbidden, starting and ending combinations can be empty.<br>
+        The combinations are used to build words in the following order:
+        consonant-vocal > consonant > vocal-consonant > vocal.
+        This order loops until the correct word-length is created.<br>
+        While looping, the forbidden combinations are constantly checked, to avoid any entries in there.<br>
+        If a combination list does not contain enough entries to avoid a forbidden combination,
+        the next combination list will be used instead.<br>
+        If entries are present in the starting combinations, those will be used before looping through the other combinations.<br>
+        If ending combinations exist, those will be added to the end of each created word,
+        but they will not exceed the maximum word length for the language.<br>
+        Special characters will be added after the word is completed and has not used the maximum word length for this language.<br>
+    </a>
 </div>
 <%@include file="../common/scripts.jspf" %>
 </body>
