@@ -124,12 +124,12 @@ public class GenerationService
         return letterList;
     }
 
-    // TODO: Test if this method works as expected
+    // TODO: Test if this method works as expected and add unit tests for it
     private String addSpecialCharacters(String currentWord, LanguageData languageData)
     {
         if(currentWord.length() >= languageData.getMaxWordLength())
             return currentWord;
-        if(Math.random() < languageData.getSpecialCharacterChance())
+        if(Math.random() >= languageData.getSpecialCharacterChance())
             return currentWord;
 
         int lastSpecialCharIdx = 0;
@@ -139,7 +139,7 @@ public class GenerationService
             if(lastSpecialCharIdx == 0)
                 nextSpecialCharIdx = languageData.getCharsBeforeSpecial() - 1;
             nextSpecialCharIdx += (int) (Math.random() * (currentWord.length() - nextSpecialCharIdx - languageData.getCharsAfterSpecial() + 1));
-            if(nextSpecialCharIdx == lastSpecialCharIdx)
+            if(nextSpecialCharIdx <= lastSpecialCharIdx)
                 break;
 
             StringBuilder start = new StringBuilder(currentWord.substring(0, nextSpecialCharIdx));

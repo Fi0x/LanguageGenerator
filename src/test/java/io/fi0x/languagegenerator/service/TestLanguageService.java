@@ -91,7 +91,7 @@ public class TestLanguageService
     void test_addLanguage_success()
     {
         LanguageData languageData = getLanguageData();
-        fillLanguageData(languageData);
+        fillLanguageData(languageData, true);
 
         Assertions.assertDoesNotThrow(() -> service.addLanguage(languageData));
     }
@@ -160,13 +160,19 @@ public class TestLanguageService
                 .minWordLength(2)
                 .maxWordLength(2).build();
     }
-    private void fillLanguageData(LanguageData data)
+    private void fillLanguageData(LanguageData data, boolean random)
     {
         data.setVocals(Arrays.asList("a", "aa"));
         data.setConsonants(Arrays.asList("a", "aa"));
         data.setVocalConsonant(Arrays.asList("a", "aa"));
         data.setConsonantVocals(Arrays.asList("a", "aa", EXISTING_LETTERS));
         data.setForbiddenCombinations(Arrays.asList("b", "bb"));
+        if(random)
+        {
+            data.setSpecialCharacters(List.of("'"));
+            data.setStartingCombinations(List.of("c"));
+            data.setEndingCombinations(List.of("d"));
+        }
     }
     private List<Language> getLanguageList(int size, int startId)
     {
