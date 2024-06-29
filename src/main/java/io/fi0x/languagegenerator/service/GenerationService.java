@@ -52,7 +52,8 @@ public class GenerationService
             throw new InvalidObjectException("Can't generate words with the settings of language: " + languageId);
 
         ArrayList<Word> generatedWords = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++)
+        {
             Word word = generateWord(language);
             generatedWords.add(word);
         }
@@ -71,9 +72,11 @@ public class GenerationService
         int desiredLength = (int) (Math.random() * (language.getMaxWordLength() - language.getMinWordLength()) + language.getMinWordLength());
         desiredLength -= ending.length();
 
-        for (int i = (int) (Math.random() * 4); name.length() < desiredLength && i < desiredLength + 4; i++) {
+        for (int i = (int) (Math.random() * 4); name.length() < desiredLength && i < desiredLength + 4; i++)
+        {
             List<String> selectedList;
-            switch (i % 4) {
+            switch (i % 4)
+            {
                 case 0 -> selectedList = language.getConsonantVocals();
                 case 1 -> selectedList = language.getConsonants();
                 case 2 -> selectedList = language.getVocalConsonant();
@@ -99,7 +102,8 @@ public class GenerationService
         int tries = 0;
         int randomIdx = (int) (Math.random() * newPossibilities.size());
 
-        while (tries < newPossibilities.size()) {
+        while (tries < newPossibilities.size())
+        {
             String nextPossiblePart = newPossibilities.get((randomIdx + tries) % newPossibilities.size());
 
             if (isAllowed(forbiddenCombinations, previousLetters, nextPossiblePart, ending))
@@ -124,22 +128,21 @@ public class GenerationService
         return letterList;
     }
 
-    // TODO: Test if this method works as expected and add unit tests for it
     private String addSpecialCharacters(String currentWord, LanguageData languageData)
     {
-        if(currentWord.length() >= languageData.getMaxWordLength())
+        if (currentWord.length() >= languageData.getMaxWordLength())
             return currentWord;
-        if(Math.random() >= languageData.getSpecialCharacterChance())
+        if (Math.random() >= languageData.getSpecialCharacterChance() && languageData.getMaxSpecialChars() <= 0)
             return currentWord;
 
         int lastSpecialCharIdx = 0;
-        while (currentWord.length() < languageData.getMaxWordLength())
+        for (int specCharCount = 0; currentWord.length() < languageData.getMaxWordLength() && specCharCount < languageData.getMaxSpecialChars(); specCharCount++)
         {
             int nextSpecialCharIdx = lastSpecialCharIdx;
-            if(lastSpecialCharIdx == 0)
+            if (lastSpecialCharIdx == 0)
                 nextSpecialCharIdx = languageData.getCharsBeforeSpecial() - 1;
             nextSpecialCharIdx += (int) (Math.random() * (currentWord.length() - nextSpecialCharIdx - languageData.getCharsAfterSpecial() + 1));
-            if(nextSpecialCharIdx <= lastSpecialCharIdx)
+            if (nextSpecialCharIdx <= lastSpecialCharIdx)
                 break;
 
             StringBuilder start = new StringBuilder(currentWord.substring(0, nextSpecialCharIdx));
