@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,6 +33,14 @@ public class TestErrorController
     void test_showUploadPage() throws Exception
     {
         mvc.perform(get(ERROR_URL)).andExpect(status().isOk())
+                .andExpect(forwardedUrl("/WEB-INF/jsp/error.jsp"));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_postCall() throws Exception
+    {
+        mvc.perform(post(ERROR_URL)).andExpect(status().isOk())
                 .andExpect(forwardedUrl("/WEB-INF/jsp/error.jsp"));
     }
 }

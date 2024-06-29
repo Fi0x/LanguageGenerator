@@ -52,6 +52,8 @@ public class TestFileController
     void setup()
     {
         MockitoAnnotations.openMocks(this);
+
+        doReturn(true).when(fileService).isFileValid(any());
     }
 
     @Test
@@ -70,11 +72,24 @@ public class TestFileController
         InputStream content = new FileInputStream(realFile);
         MockMultipartFile file = new MockMultipartFile("languageFile", "filename.txt", "application/json", content);
         doNothing().when(languageService).addLanguage(any(), anyString(), eq(false));
-        doReturn(true).when(fileService).isFileValid(any());
 
         mvc.perform(MockMvcRequestBuilders.multipart(UPLOAD_URL).file(file))
                 .andExpect(status().is(HttpStatus.FOUND.value()))
                 .andExpect(redirectedUrl("/"));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_uploadLanguage_fileError() throws Exception
+    {
+        File realFile = ResourceUtils.getFile("classpath:testLanguageValid.json");
+        InputStream content = new FileInputStream(realFile);
+        MockMultipartFile file = new MockMultipartFile("languageFile", "filename.txt", "application/json", content);
+        doReturn(false).when(fileService).isFileValid(any());
+
+        mvc.perform(MockMvcRequestBuilders.multipart(UPLOAD_URL).file(file))
+                .andExpect(status().is(HttpStatus.BAD_REQUEST.value()))
+                .andExpect(forwardedUrl(null));
     }
 
     @Test

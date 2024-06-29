@@ -35,6 +35,12 @@ public class TestGenerationService
     private static final Double SPECIAL_CHARACTER_CHANCE = 1D;
     private static final String DEFAULT_LETTER = "a";
     private static final Long DEFAULT_LETTER_ID = 4L;
+    private static final String BEGINNING_LETTER = "b";
+    private static final Long BEGINNING_LETTER_ID = 8L;
+    private static final String SPECIAL_LETTER = "'";
+    private static final Long SPECIAL_LETTER_ID = 16L;
+    private static final String END_LETTER = "c";
+    private static final Long END_LETTER_ID = 32L;
 
     @Mock
     private LanguageRepository languageRepository;
@@ -78,7 +84,7 @@ public class TestGenerationService
         doReturn(getVocalConsonantCombinations()).when(vcRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
         doReturn(getDefaultLetter()).when(letterRepository).findById(eq(DEFAULT_LETTER_ID));
 
-        Assertions.assertEquals(getWordList(), service.generateWords(VALID_LANGUAGE_ID, 4));
+        Assertions.assertEquals(getNormalWordList(), service.generateWords(VALID_LANGUAGE_ID, 4));
     }
 
     @Test
@@ -109,13 +115,47 @@ public class TestGenerationService
         Assertions.assertEquals(getEmptyWordList(),  service.generateWords(VALID_LANGUAGE_ID, 4));
     }
 
-    private List<Word> getWordList()
+    @Test
+    @Tag("UnitTest")
+    void test_generateWords_BeginningAndEnd()
+    {
+        //TODO: Complete these tests
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_generateWords_SpecialCharacters()
+    {
+        //TODO: Complete these tests
+    }
+
+    private List<Word> getNormalWordList()
     {
         List<Word> words = new ArrayList<>();
         words.add(new Word(VALID_LANGUAGE_ID, "Aa"));
         words.add(new Word(VALID_LANGUAGE_ID, "Aa"));
         words.add(new Word(VALID_LANGUAGE_ID, "Aa"));
         words.add(new Word(VALID_LANGUAGE_ID, "Aa"));
+        return words;
+    }
+
+    private List<Word> getBeginningEndWordList()
+    {
+        List<Word> words = new ArrayList<>();
+        words.add(new Word(VALID_LANGUAGE_ID, "Baac"));
+        words.add(new Word(VALID_LANGUAGE_ID, "Baac"));
+        words.add(new Word(VALID_LANGUAGE_ID, "Baac"));
+        words.add(new Word(VALID_LANGUAGE_ID, "Baac"));
+        return words;
+    }
+
+    private List<Word> getSpecialWordList()
+    {
+        List<Word> words = new ArrayList<>();
+        words.add(new Word(VALID_LANGUAGE_ID, "A'a"));
+        words.add(new Word(VALID_LANGUAGE_ID, "A'a"));
+        words.add(new Word(VALID_LANGUAGE_ID, "A'a"));
+        words.add(new Word(VALID_LANGUAGE_ID, "A'a"));
         return words;
     }
 
