@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -36,7 +35,7 @@ public class FileController
 
     @Transactional
     @GetMapping("/upload")
-    public String showUploadPage(ModelMap model)
+    public String showUploadPage()
     {
         log.info("showUploadPage() called");
 
@@ -45,23 +44,33 @@ public class FileController
 
     @Transactional
     @PostMapping("/upload")
-    public String uploadLanguage(ModelMap model, @RequestParam("languageFile") MultipartFile multipartFile)
+    public String uploadLanguage(@RequestParam("languageFile") MultipartFile multipartFile)
     {
         log.info("uploadLanguage() called");
 
-        try {
+        try
+        {
             InputStream is = multipartFile.getInputStream();
             ObjectMapper mapper = new ObjectMapper();
             LanguageJson languageJson = mapper.readValue(is, LanguageJson.class);
-            languageService.addLanguage(
-                    languageJson,
-                    Objects.requireNonNullElse(multipartFile.getOriginalFilename(), "New Language").split("\\.")[0],
-                    false);
+            if (fileService.isFileValid(languageJson))
+            {
+                languageService.addLanguage(
+                        languageJson,
+                        Objects.requireNonNullElse(multipartFile.getOriginalFilename(), "New Language").split("\\.")[0],
+                        false);
+            } else
+            {
+                log.warn("LanguageJson was malformed.");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The provided language-file does not contain all of the required values");
+            }
 
-        } catch (InvalidObjectException e) {
+        } catch (InvalidObjectException e)
+        {
             log.warn("Could not save the language because it was not complete.");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Language was not saved, because the language-object was not complete", e);
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             log.warn("Could not create an InputStream of the uploaded file '{}'", multipartFile.getName(), e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong when uploading the file", e);
         }
@@ -75,19 +84,22 @@ public class FileController
     {
         LanguageData languageData = languageService.getLanguageData(languageId);
 
-        if(!languageData.getUsername().equals(authenticationService.getAuthenticatedUsername()))
+        if (!languageData.getUsername().equals(authenticationService.getAuthenticatedUsername()))
         {
             log.info("User '{}' tried to download language with id={}, but does not have access to it", authenticationService.getAuthenticatedUsername(), languageId);
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User is not allowed to download the selected language");
         }
 
         Resource resource;
-        try {
+        try
+        {
             resource = fileService.getLanguageFile(languageData);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e)
+        {
             log.warn("Could not generate language file for download, because languageData or id is null", e);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "A language with id=" + languageId + " could not be found", e);
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             log.warn("Could not write language with id={} to internal file, or file could not get converted to resource", languageData.getId(), e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not write selected language to a downloadable file", e);
         }

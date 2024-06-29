@@ -18,4 +18,9 @@ public class Language
     private Boolean visible;
     private int minWordLength = 3;
     private int maxWordLength = 10;
+    private int charsBeforeSpecial;
+    private int charsAfterSpecial;
+    private int minSpecialChars;
+    private int maxSpecialChars;
+    private Double specialCharacterChance;
 }

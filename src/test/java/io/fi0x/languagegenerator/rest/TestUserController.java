@@ -2,10 +2,7 @@ package io.fi0x.languagegenerator.rest;
 
 import io.fi0x.languagegenerator.logic.dto.LoginDto;
 import io.fi0x.languagegenerator.logic.dto.UserDto;
-import io.fi0x.languagegenerator.logic.dto.Word;
 import io.fi0x.languagegenerator.service.AuthenticationService;
-import io.fi0x.languagegenerator.service.GenerationService;
-import io.fi0x.languagegenerator.service.LanguageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -19,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-
-import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

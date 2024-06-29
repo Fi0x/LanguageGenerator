@@ -2,6 +2,10 @@
   "nameLengths": [
     2, 15
   ],
+  "specialCharacterLengths": [
+    0, 0, 0, 0
+  ],
+  "specialCharacterChance": 0.0,
   "vocals": [
     "a",
     "aa",
@@ -257,5 +261,8 @@
     " ii",
     " oo",
     " uu"
-  ]
+  ],
+  "specialCharacters": [],
+  "startingCombinations": [],
+  "endingCombinations": []
 }

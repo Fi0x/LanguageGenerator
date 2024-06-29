@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.eq;
 
 @RunWith(SpringRunner.class)
 public class TestGenerationService
@@ -29,10 +30,15 @@ public class TestGenerationService
     private static final String NAME = "Language Name";
     private static final String USERNAME = "Karl Heinz";
     private static final boolean VISIBLE = false;
-    private static final int MIN_WORD_LENGTH = 2;
-    private static final int MAX_WORD_LENGTH = 2;
+    private static final int NORMAL_WORD_LENGTH = 2;
+    private static final int BEGINNING_END_WORD_LENGTH = 4;
+    private static final Double SPECIAL_CHARACTER_CHANCE = 1D;
     private static final String DEFAULT_LETTER = "a";
     private static final Long DEFAULT_LETTER_ID = 4L;
+    private static final String BEGINNING_LETTER = "b";
+    private static final Long BEGINNING_LETTER_ID = 8L;
+    private static final String END_LETTER = "c";
+    private static final Long END_LETTER_ID = 32L;
 
     @Mock
     private LanguageRepository languageRepository;
@@ -48,6 +54,12 @@ public class TestGenerationService
     private VocalConsonantRepository vcRepository;
     @Mock
     private ForbiddenRepository fRepository;
+    @Mock
+    private SpecialCharacterRepository speRepository;
+    @Mock
+    private StartingRepository staRepository;
+    @Mock
+    private EndingRepository endRepository;
 
     @InjectMocks
     private GenerationService service;
@@ -57,7 +69,7 @@ public class TestGenerationService
     {
         MockitoAnnotations.openMocks(this);
 
-        doReturn(getLanguage()).when(languageRepository).findById(eq(VALID_LANGUAGE_ID));
+        doReturn(getLanguage(NORMAL_WORD_LENGTH)).when(languageRepository).findById(eq(VALID_LANGUAGE_ID));
     }
 
     @Test
@@ -70,7 +82,7 @@ public class TestGenerationService
         doReturn(getVocalConsonantCombinations()).when(vcRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
         doReturn(getDefaultLetter()).when(letterRepository).findById(eq(DEFAULT_LETTER_ID));
 
-        Assertions.assertEquals(getWordList(), service.generateWords(VALID_LANGUAGE_ID, 4));
+        Assertions.assertEquals(getNormalWordList(), service.generateWords(VALID_LANGUAGE_ID, 4));
     }
 
     @Test
@@ -101,13 +113,41 @@ public class TestGenerationService
         Assertions.assertEquals(getEmptyWordList(),  service.generateWords(VALID_LANGUAGE_ID, 4));
     }
 
-    private List<Word> getWordList()
+    @Test
+    @Tag("UnitTest")
+    void test_generateWords_BeginningAndEnd() throws InvalidObjectException
+    {
+        doReturn(getConsonantCombinations()).when(cRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
+        doReturn(getVocalCombinations()).when(vRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
+        doReturn(getConsonantVocalCombinations()).when(cvRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
+        doReturn(getVocalConsonantCombinations()).when(vcRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
+        doReturn(getBeginningCombinations()).when(staRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
+        doReturn(getEndCombinations()).when(endRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
+        doReturn(getDefaultLetter()).when(letterRepository).findById(eq(DEFAULT_LETTER_ID));
+        doReturn(getBeginningLetter()).when(letterRepository).findById(eq(BEGINNING_LETTER_ID));
+        doReturn(getEndLetter()).when(letterRepository).findById(eq(END_LETTER_ID));
+        doReturn(getLanguage(BEGINNING_END_WORD_LENGTH)).when(languageRepository).findById(eq(VALID_LANGUAGE_ID));
+
+        Assertions.assertEquals(getBeginningEndWordList(), service.generateWords(VALID_LANGUAGE_ID, 4));
+    }
+
+    private List<Word> getNormalWordList()
     {
         List<Word> words = new ArrayList<>();
         words.add(new Word(VALID_LANGUAGE_ID, "Aa"));
         words.add(new Word(VALID_LANGUAGE_ID, "Aa"));
         words.add(new Word(VALID_LANGUAGE_ID, "Aa"));
         words.add(new Word(VALID_LANGUAGE_ID, "Aa"));
+        return words;
+    }
+
+    private List<Word> getBeginningEndWordList()
+    {
+        List<Word> words = new ArrayList<>();
+        words.add(new Word(VALID_LANGUAGE_ID, "Baac"));
+        words.add(new Word(VALID_LANGUAGE_ID, "Baac"));
+        words.add(new Word(VALID_LANGUAGE_ID, "Baac"));
+        words.add(new Word(VALID_LANGUAGE_ID, "Baac"));
         return words;
     }
 
@@ -121,15 +161,16 @@ public class TestGenerationService
         return words;
     }
 
-    private Optional<Language> getLanguage()
+    private Optional<Language> getLanguage(int wordLength)
     {
         Language language = new Language();
         language.setId(VALID_LANGUAGE_ID);
         language.setName(NAME);
         language.setUsername(USERNAME);
         language.setVisible(VISIBLE);
-        language.setMaxWordLength(MIN_WORD_LENGTH);
-        language.setMaxWordLength(MAX_WORD_LENGTH);
+        language.setMinWordLength(wordLength);
+        language.setMaxWordLength(wordLength);
+        language.setSpecialCharacterChance(SPECIAL_CHARACTER_CHANCE);
         return Optional.of(language);
     }
 
@@ -178,10 +219,42 @@ public class TestGenerationService
         return result;
     }
 
+    private List<StartingCombinations> getBeginningCombinations()
+    {
+        List<StartingCombinations> result = new ArrayList<>();
+        StartingCombinations combination = new StartingCombinations();
+        combination.setLetterId(BEGINNING_LETTER_ID);
+        result.add(combination);
+        return result;
+    }
+
+    private List<EndingCombinations> getEndCombinations()
+    {
+        List<EndingCombinations> result = new ArrayList<>();
+        EndingCombinations combination = new EndingCombinations();
+        combination.setLetterId(END_LETTER_ID);
+        result.add(combination);
+        return result;
+    }
+
     private Optional<Letter> getDefaultLetter()
     {
         Letter letter = new Letter();
         letter.setLetters(DEFAULT_LETTER);
+        return Optional.of(letter);
+    }
+
+    private Optional<Letter> getBeginningLetter()
+    {
+        Letter letter = new Letter();
+        letter.setLetters(BEGINNING_LETTER);
+        return Optional.of(letter);
+    }
+
+    private Optional<Letter> getEndLetter()
+    {
+        Letter letter = new Letter();
+        letter.setLetters(END_LETTER);
         return Optional.of(letter);
     }
 }

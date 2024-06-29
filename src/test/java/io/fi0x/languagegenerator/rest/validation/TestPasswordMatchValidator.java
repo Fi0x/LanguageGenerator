@@ -12,7 +12,7 @@ public class TestPasswordMatchValidator
     private static final String PASSWORD_MATCH = "very secure";
     private static final String PASSWORD_NO_MATCH = "not so secure";
 
-    private PasswordMatchValidator validator = new PasswordMatchValidator();
+    private final PasswordMatchValidator validator = new PasswordMatchValidator();
 
     @Test
     @Tag("UnitTest")
