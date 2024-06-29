@@ -70,6 +70,7 @@ public class TestFileController
         InputStream content = new FileInputStream(realFile);
         MockMultipartFile file = new MockMultipartFile("languageFile", "filename.txt", "application/json", content);
         doNothing().when(languageService).addLanguage(any(), anyString(), eq(false));
+        doReturn(true).when(fileService).isFileValid(any());
 
         mvc.perform(MockMvcRequestBuilders.multipart(UPLOAD_URL).file(file))
                 .andExpect(status().is(HttpStatus.FOUND.value()))

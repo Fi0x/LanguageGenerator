@@ -1,5 +1,5 @@
-insert into lang (ID, NAME, USERNAME, IS_PUBLIC, MIN_WORD_LENGTH, MAX_WORD_LENGTH, CHARS_BEFORE_SPECIAL, CHARS_AFTER_SPECIAL, MIN_SPECIAL_CHARS, MAX_SPECIAL_CHARS)
-values (0, 'Elven-Language', 'fi0x', true, 2, 12, 0, 0, 0, 0);
+insert into lang (ID, NAME, USERNAME, VISIBLE, MIN_WORD_LENGTH, MAX_WORD_LENGTH, CHARS_BEFORE_SPECIAL, CHARS_AFTER_SPECIAL, MIN_SPECIAL_CHARS, MAX_SPECIAL_CHARS, SPECIAL_CHARACTER_CHANCE)
+values (0, 'Elven-Language', 'fi0x', true, 2, 12, 0, 0, 0, 0, 1);
 
 insert into lttrs (ID, LETTERS)
 values (0, 'a'),
@@ -67,7 +67,9 @@ values (0, 'a'),
        (59, 'ya'),
        (60, 'yo'),
 
-       (61, 'kkk');
+       (61, 'kkk'),
+
+       (62, '`');
 
 insert into concom (ID, LANGUAGE_ID, LETTER_ID)
 values (0, 0, 23),
@@ -140,3 +142,6 @@ values (0, 0, 8),
 
 insert into forbcom (ID, LANGUAGE_ID, LETTER_ID)
 values (0, 0, 61);
+
+insert into spechachom (ID, LANGUAGE_ID, LETTER_ID)
+values (0, 0, 62);
