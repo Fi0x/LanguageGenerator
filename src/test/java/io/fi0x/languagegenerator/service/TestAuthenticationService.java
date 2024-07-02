@@ -62,8 +62,8 @@ public class TestAuthenticationService
     @Tag("UnitTest")
     void test_registerUser_success()
     {
-        when(userDetailsManager.userExists(any())).thenReturn(false);
-        when(passwordEncoder.encode(any())).thenReturn("!@#QWE234retfvg");
+        doReturn(false).when(userDetailsManager).userExists(any());
+        doReturn("!@#QWE234retfvg").when(passwordEncoder).encode(any());
 
         Assertions.assertDoesNotThrow(() -> service.registerUser(getUserDto()));
     }
@@ -72,7 +72,7 @@ public class TestAuthenticationService
     @Tag("UnitTest")
     void test_registerUser_error()
     {
-        when(userDetailsManager.userExists(any())).thenReturn(true);
+        doReturn(true).when(userDetailsManager).userExists(any());
 
         Assertions.assertThrows(DuplicateKeyException.class, () -> service.registerUser(getUserDto()));
     }
