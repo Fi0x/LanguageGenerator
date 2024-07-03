@@ -1,13 +1,18 @@
 # Initial Setup
-## Runnable java-client - No longer developed
-The java client is the original program that runs locally on your computer. It uses its own folder in your APPDATA
-path to save individual language-files in a .json format. These files are compatible with the web-version of this tool.
-The client however does not support a visual option like the web-ui to modify or add languages. This can only be done,
-by changing the .json files directly.
+[//]: # (TODO: Update Readme: order and correct information)
+## Create version for raspi
+### Jar
+1. Use `mvn clean install` to generate corret jar-file in target folder
 
-### Build the client
-The client version is no longer developed. If you want to compile it, use the code from
-[v0.0.1](https://github.com/Fi0x/LanguageGenerator/tree/0.0.1)
+### Docker
+1. Generate the jar file
+2. Use `docker build --tag=language-generator:latest .` to generate the runnable docker-file
+3. Use `docker run -p8573:2345 language-generator:latest` to start the application in a docker container
+
+### Docker database
+**The docker database needs to be running before the application can be started**
+1. Create a command that does the same as the `Docker Image` run configuration in IntelliJ
+2. Run the command to start the database in a docker-container
 
 ## Spring-Boot version
 The spring-boot-version of this tool is the newer one with added functionality. It provides a web-ui that can be
@@ -45,3 +50,13 @@ with the owner set to user "fi0x".
 ### Connect to your web-ui
 With the default configuration, the web-ui is reachable on localhost:2345. If you don't change the config, an admin-user
 "fi0x" with the password "123" will be created by the launch of the application. You can use it to log in to the web-ui.
+
+## Runnable java-client - No longer developed
+The java client is the original program that runs locally on your computer. It uses its own folder in your APPDATA
+path to save individual language-files in a .json format. These files are compatible with the web-version of this tool.
+The client however does not support a visual option like the web-ui to modify or add languages. This can only be done,
+by changing the .json files directly.
+
+### Build the client
+The client version is no longer developed. If you want to compile it, use the code from
+[v-1.0.1](https://github.com/Fi0x/LanguageGenerator/tree/0.0.1)
