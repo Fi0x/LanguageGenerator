@@ -2,7 +2,7 @@
 [//]: # (TODO: Update Readme: order and correct information)
 ## Create version for raspi
 ### Jar
-1. Use `mvn clean install` to generate corret jar-file in target folder
+1. Use `mvn clean install` to generate correct jar-file in target folder
 
 ### Docker
 1. Generate the jar file
@@ -11,8 +11,19 @@
 
 ### Docker database
 **The docker database needs to be running before the application can be started**
-1. Create a command that does the same as the `Docker Image` run configuration in IntelliJ
-2. Run the command to start the database in a docker-container
+- Run this command to start the docker-container for the database: `docker run --name mysql --env MYSQL_DATABASE=languages --env MYSQL_PASSWORD=122 --env MYSQL_ROOT_PASSWORD=1234 --env MYSQL_USER=dummyUser --publish 3306:3306 --restart unless-stopped -v languages-volume:/var/lib/mysql mysql:latest`
+  - Container name: `mysql`
+  - Environment variables: *If you change any of them, make sure to adjust your `application.properties` file accordingly before compiling your jar*
+    - MYSQL_DATABASE=languages
+    - MYSQL_PASSWORD=123
+    - MYSQL_ROOT_PASSWORD=1234
+    - MYSQL_USER=dummyUser
+  - Run options:
+    - --publish 3306:3306
+    - -v languages-volume:/var/lib/mysql
+  - Image-id: `mysql:latest`
+- Run the command to start the database in a docker-container
+  - If you already have done this previously, you can use `docker start` instead
 
 ## Spring-Boot version
 The spring-boot-version of this tool is the newer one with added functionality. It provides a web-ui that can be
@@ -60,3 +71,14 @@ by changing the .json files directly.
 ### Build the client
 The client version is no longer developed. If you want to compile it, use the code from
 [v-1.0.1](https://github.com/Fi0x/LanguageGenerator/tree/0.0.1)
+
+## RaspberryPi setup
+- Install docker `sudo apt install docker`
+- Add user to docker-group `sudo usermod -a -G docker ${USER}`
+- Add docker to autostart `sudo systemctl enable docker`
+- Run docker-command to start mysql container
+- Run `schema.sql` to initialize the database
+- In the jar-directory, create a `config` folder
+- Copy the `application.properties` into the `config` folder
+- Adjust the settings for the database in the `applications.properties` file
+- Run the jar-file (not the one with dependencies, just the regular one)
