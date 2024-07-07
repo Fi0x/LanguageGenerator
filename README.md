@@ -82,3 +82,4 @@ The client version is no longer developed. If you want to compile it, use the co
 - Copy the `application.properties` into the `config` folder
 - Adjust the settings for the database in the `applications.properties` file
 - Run the jar-file (not the one with dependencies, just the regular one)
+- !!! Instead of the jar-file, you can also use mvn clean package to generate a war file, this might be working better
