@@ -6,7 +6,7 @@
 <%@include file="../common/navigation.jspf" %>
 <div class="container">
     <h1>Upload a language-file</h1>
-    <form method="post" enctype="multipart/form-data" action="/upload">
+    <form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/upload">
         <table>
             <tr>
                 <td>File to upload:</td>

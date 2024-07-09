@@ -71,7 +71,7 @@ public class TestLanguageService
         Letter letter = new Letter();
         letter.setId(354L);
         doReturn(List.of(letter)).when(letterRepository).getAllByLetters(eq(EXISTING_LETTERS));
-        doReturn(getLanguageList(2,0)).when(languageRepository).getAllByUsername(eq(USERNAME));
+        doReturn(getLanguageList(2, 0)).when(languageRepository).getAllByUsername(eq(USERNAME));
         doReturn(getLanguageList(3, 2)).when(languageRepository).getAllByVisible(eq(true));
         doReturn(Optional.of(LanguageConverter.convertToEntity(getLanguageData()))).when(languageRepository).findById(HIGHEST_ID);
     }
@@ -91,7 +91,7 @@ public class TestLanguageService
     void test_addLanguage_success()
     {
         LanguageData languageData = getLanguageData();
-        fillLanguageData(languageData, true);
+        fillLanguageData(languageData);
 
         Assertions.assertDoesNotThrow(() -> service.addLanguage(languageData));
     }
@@ -160,25 +160,23 @@ public class TestLanguageService
                 .minWordLength(2)
                 .maxWordLength(2).build();
     }
-    private void fillLanguageData(LanguageData data, boolean random)
+
+    private void fillLanguageData(LanguageData data)
     {
         data.setVocals(Arrays.asList("a", "aa"));
         data.setConsonants(Arrays.asList("a", "aa"));
         data.setVocalConsonant(Arrays.asList("a", "aa"));
         data.setConsonantVocals(Arrays.asList("a", "aa", EXISTING_LETTERS));
         data.setForbiddenCombinations(Arrays.asList("b", "bb"));
-        if(random)
-        {
-            data.setSpecialCharacters(List.of("'"));
-            data.setStartingCombinations(List.of("c"));
-            data.setEndingCombinations(List.of("d"));
-        }
+        data.setSpecialCharacters(List.of("'"));
+        data.setStartingCombinations(List.of("c"));
+        data.setEndingCombinations(List.of("d"));
     }
+
     private List<Language> getLanguageList(int size, int startId)
     {
         List<Language> result = new ArrayList<>();
-        for(int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             Language language = new Language();
             language.setId((long) startId + i);
             result.add(language);
