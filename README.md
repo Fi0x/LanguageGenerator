@@ -6,6 +6,29 @@ that define the language.
 This tool is not yet meant to serve as a dictionary. This means, that words can only be generated, but not linked to
 any meaning. What you do with the generated words, is up to you.
 
+## Usage
+The tool has two versions: a web-server and a standalone client.
+
+### Web-server
+The web-server can be used, by cloning this repository and building it with the specific settings you require. You also
+need to have a database, that can store and provide the necessary information for the web-server. More details, on how
+to build and set up your web-server, can be found [here](#initial-setup).
+
+### Standalone-Client (no longer developed)
+To use the client, you can either [build it yourself](#build-and-use-the-client) or download the finished build from the
+[github-releases](https://github.com/Fi0x/LanguageGenerator/releases/tag/0.0.1). The client version is no longer
+developed, so keep in mind, that some features might only be available in the web-server-version. It can also happen,
+that some language-files are not compatible between web- and client-versions.
+
+## Build and use the web-server
+### Build the .war-file
+1. Update the `src/main/resources/application.properties`-file, according to your needs
+2. Use `mvn clean package` to generate the .war-file that can be executed on the server
+
+## Build and use the client
+The client version is no longer developed and its code was removed from the master-branch. If you want to compile or
+adapt it, use the code from [v-1.0.1](https://github.com/Fi0x/LanguageGenerator/tree/0.0.1).
+
 # Initial Setup
 [//]: # (TODO: Update Readme: order and correct information)
 ## Create version for raspi
@@ -76,9 +99,6 @@ path to save individual language-files in a .json format. These files are compat
 The client however does not support a visual option like the web-ui to modify or add languages. This can only be done,
 by changing the .json files directly.
 
-### Build the client
-The client version is no longer developed. If you want to compile it, use the code from
-[v-1.0.1](https://github.com/Fi0x/LanguageGenerator/tree/0.0.1)
 
 ## RaspberryPi setup
 - Install docker `sudo apt install docker`
