@@ -6,19 +6,9 @@ that define the language.
 This tool is not yet meant to serve as a dictionary. This means, that words can only be generated, but not linked to
 any meaning. What you do with the generated words, is up to you.
 
-## Usage
-The tool has two versions: a web-server and a standalone client.
+For further information, visit the [wiki](https://github.com/Fi0x/LanguageGenerator/wiki) of this repository.
 
-### Web-server
-The web-server can be used, by cloning this repository and building it with the specific settings you require. You also
-need to have a database, that can store and provide the necessary information for the web-server. More details, on how
-to build and set up your web-server, can be found [here](#initial-setup).
-
-### Standalone-Client (no longer developed)
-To use the client, you can either [build it yourself](#build-and-use-the-client) or download the finished build from the
-[github-releases](https://github.com/Fi0x/LanguageGenerator/releases/tag/0.0.1). The client version is no longer
-developed, so keep in mind, that some features might only be available in the web-server-version. It can also happen,
-that some language-files are not compatible between web- and client-versions.
+[//]: # (TODO: Move all following information to the wiki)
 
 ## Build and use the web-server
 ### Build the .war-file
@@ -30,7 +20,6 @@ The client version is no longer developed and its code was removed from the mast
 adapt it, use the code from [v-1.0.1](https://github.com/Fi0x/LanguageGenerator/tree/0.0.1).
 
 # Initial Setup
-[//]: # (TODO: Update Readme: order and correct information)
 ## Create version for raspi
 ### Jar
 1. Use `mvn clean install` to generate correct jar-file in target folder
@@ -98,16 +87,3 @@ The java client is the original program that runs locally on your computer. It u
 path to save individual language-files in a .json format. These files are compatible with the web-version of this tool.
 The client however does not support a visual option like the web-ui to modify or add languages. This can only be done,
 by changing the .json files directly.
-
-
-## RaspberryPi setup
-- Install docker `sudo apt install docker`
-- Add user to docker-group `sudo usermod -a -G docker ${USER}`
-- Add docker to autostart `sudo systemctl enable docker`
-- Run docker-command to start mysql container
-- Run `schema.sql` to initialize the database
-- In the jar-directory, create a `config` folder
-- Copy the `application.properties` into the `config` folder
-- Adjust the settings for the database in the `applications.properties` file
-- Run the jar-file (not the one with dependencies, just the regular one)
-- !!! Instead of the jar-file, you can also use mvn clean package to generate a war file, this might be working better
