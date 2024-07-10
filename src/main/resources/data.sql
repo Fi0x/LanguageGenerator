@@ -143,5 +143,5 @@ values (0, 0, 8),
 insert into forbcom (ID, LANGUAGE_ID, LETTER_ID)
 values (0, 0, 61);
 
-insert into spechachom (ID, LANGUAGE_ID, LETTER_ID)
+insert into spechacom (ID, LANGUAGE_ID, LETTER_ID)
 values (0, 0, 62);
