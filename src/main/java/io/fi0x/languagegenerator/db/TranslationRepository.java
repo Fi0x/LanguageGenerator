@@ -13,5 +13,9 @@ public interface TranslationRepository extends JpaRepository<Translation, Transl
 
     List<Translation> getAllByLanguageIdAndWordNumber(Long languageId, Long wordNumber);
 
+    List<Translation> getAllByLanguageIdAndWordNumberAndTranslatedLanguageId(Long languageId, Long wordNumber, Long translatedLanguageId);
+
+    Translation getByLanguageIdAndWordNumberAndTranslatedLanguageIdAndTranslatedWordNumber(Long languageId, Long wordNumber, Long translatedLanguageId, Long translatedWordNumber);
+
     List<Translation> getAllByTranslatedLanguageIdAndTranslatedWordNumber(Long translatedLanguageId, Long translatedWordNumber);
 }

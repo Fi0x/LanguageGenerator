@@ -16,6 +16,8 @@ public interface WordRepository extends JpaRepository<Word, Word.WordId>
 
     Word getByLanguageIdAndLetters(Long languageId, String letters);
 
+    Word getByLanguageIdAndWordNumber(Long languageId, Long wordNumber);
+
     @Transactional
     void deleteAllByLanguageId(Long languageId);
 
