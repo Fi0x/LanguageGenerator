@@ -80,11 +80,11 @@ public class TestTranslationService
     void test_getTranslations_manyResults()
     {
         doReturn(getFirstWordEntity()).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
-        doReturn(getMultipleTranslations(false)).when(translationRepository).getAllByLanguageIdAndWordNumber(eq(LANGUAGE_ID1), eq(WORD_NUMBER11));
+        doReturn(getTranslations(false)).when(translationRepository).getAllByLanguageIdAndWordNumber(eq(LANGUAGE_ID1), eq(WORD_NUMBER11));
         doReturn(getInvertedTranslation(false)).when(translationRepository).getAllByTranslatedLanguageIdAndTranslatedWordNumber(eq(LANGUAGE_ID1), eq(WORD_NUMBER11));
         setupWordReturns();
 
-        List<Word> expectedResult = getMultipleAndInvertedWords(false);
+        List<Word> expectedResult = getAllWords(false);
         List<Word> actualResult = service.getTranslations(getFirstWordDto());
         expectedResult.sort(this::wordCompare);
         actualResult.sort(this::wordCompare);
@@ -116,11 +116,11 @@ public class TestTranslationService
     void test_getTranslations_targetLanguage_multipleResults()
     {
         doReturn(getFirstWordEntity()).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
-        doReturn(getMultipleTranslations(true)).when(translationRepository).getAllByLanguageIdAndWordNumberAndTranslatedLanguageId(eq(LANGUAGE_ID1), eq(WORD_NUMBER11), eq(LANGUAGE_ID3));
+        doReturn(getTranslations(true)).when(translationRepository).getAllByLanguageIdAndWordNumberAndTranslatedLanguageId(eq(LANGUAGE_ID1), eq(WORD_NUMBER11), eq(LANGUAGE_ID3));
         doReturn(getInvertedTranslation(true)).when(translationRepository).getAllByTranslatedLanguageIdAndTranslatedWordNumberAndLanguageId(eq(LANGUAGE_ID1), eq(WORD_NUMBER11), eq(LANGUAGE_ID3));
         setupWordReturns();
 
-        List<Word> expectedResult = getMultipleAndInvertedWords(true);
+        List<Word> expectedResult = getAllWords(true);
         List<Word> actualResult = service.getTranslations(getFirstWordDto(), LANGUAGE_ID3);
         expectedResult.sort(this::wordCompare);
         actualResult.sort(this::wordCompare);
@@ -181,14 +181,23 @@ public class TestTranslationService
     @Tag("UnitTest")
     void text_saveWords_withDtoList()
     {
-        //TODO: Implement and add edge-cases
+        Assertions.assertDoesNotThrow(() -> service.saveWords(getAllWordDtoList()));
+        verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
+        verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD21));
+        verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD22));
+        verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD23));
+        verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID3), eq(WORD31));
+        verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID3), eq(WORD32));
     }
 
     @Test
     @Tag("UnitTest")
     void text_saveWords_withStrings()
     {
-        //TODO: Implement and add edge-cases
+        Assertions.assertDoesNotThrow(() -> service.saveWords(LANGUAGE_ID2, getSecondLanguageStrings()));
+        verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD21));
+        verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD22));
+        verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD23));
     }
 
     @Test
@@ -223,7 +232,7 @@ public class TestTranslationService
         return getWord(LANGUAGE_ID1, WORD_NUMBER11, WORD11);
     }
 
-    private List<Translation> getMultipleTranslations(boolean justLanguage3)
+    private List<Translation> getTranslations(boolean justLanguage3)
     {
         List<Translation> results = new ArrayList<>();
         if (!justLanguage3) {
@@ -253,7 +262,7 @@ public class TestTranslationService
         return translation;
     }
 
-    private List<Word> getMultipleAndInvertedWords(boolean justLanguage3)
+    private List<Word> getAllWords(boolean justLanguage3)
     {
         List<Word> wordList = new ArrayList<>();
         if (!justLanguage3) {
@@ -263,6 +272,27 @@ public class TestTranslationService
         }
         wordList.add(getWord(LANGUAGE_ID3, WORD_NUMBER31, WORD31));
         wordList.add(getWord(LANGUAGE_ID3, WORD_NUMBER32, WORD32));
+        return wordList;
+    }
+
+    private List<WordDto> getAllWordDtoList()
+    {
+        List<WordDto> dtoList = new ArrayList<>();
+        dtoList.add(new WordDto(LANGUAGE_ID1, WORD11));
+        dtoList.add(new WordDto(LANGUAGE_ID2, WORD21));
+        dtoList.add(new WordDto(LANGUAGE_ID2, WORD22));
+        dtoList.add(new WordDto(LANGUAGE_ID2, WORD23));
+        dtoList.add(new WordDto(LANGUAGE_ID3, WORD31));
+        dtoList.add(new WordDto(LANGUAGE_ID3, WORD32));
+        return dtoList;
+    }
+
+    private List<String> getSecondLanguageStrings()
+    {
+        List<String> wordList = new ArrayList<>();
+        wordList.add(WORD21);
+        wordList.add(WORD22);
+        wordList.add(WORD23);
         return wordList;
     }
 
