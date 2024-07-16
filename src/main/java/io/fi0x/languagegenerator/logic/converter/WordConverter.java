@@ -2,8 +2,8 @@ package io.fi0x.languagegenerator.logic.converter;
 
 import io.fi0x.languagegenerator.db.entities.Translation;
 import io.fi0x.languagegenerator.db.entities.Word;
+import io.fi0x.languagegenerator.logic.dto.WordDto;
 
-//TODO: Add tests
 public class WordConverter
 {
     public static Translation convertToTranslation(Word word1, Word word2)
@@ -16,8 +16,8 @@ public class WordConverter
         return translation;
     }
 
-    public static io.fi0x.languagegenerator.logic.dto.Word convertToDto(Long languageId, String letters)
+    public static WordDto convertToDto(Long languageId, String letters)
     {
-        return new io.fi0x.languagegenerator.logic.dto.Word(languageId, letters);
+        return new WordDto(languageId, letters);
     }
 }

@@ -5,6 +5,7 @@ import io.fi0x.languagegenerator.db.WordRepository;
 import io.fi0x.languagegenerator.db.entities.Translation;
 import io.fi0x.languagegenerator.db.entities.Word;
 import io.fi0x.languagegenerator.logic.converter.WordConverter;
+import io.fi0x.languagegenerator.logic.dto.WordDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
@@ -20,35 +21,39 @@ import java.util.Optional;
 @AllArgsConstructor
 public class TranslationService
 {
-    // TODO: Add tests for this class
-
     private final WordRepository wordRepo;
     private final TranslationRepository translationRepo;
 
-    public List<Word> getTranslations(io.fi0x.languagegenerator.logic.dto.Word originalWord)
+    public List<Word> getTranslations(WordDto originalWord)
     {
         Word word = getWord(originalWord);
         if (word == null)
             return Collections.emptyList();
 
         List<Translation> translations = translationRepo.getAllByLanguageIdAndWordNumber(word.getLanguageId(), word.getWordNumber());
+        List<Translation> invertedTranslations = translationRepo.getAllByTranslatedLanguageIdAndTranslatedWordNumber(word.getLanguageId(), word.getWordNumber());
+        invertedTranslations.forEach(Translation::swap);
+        translations.addAll(invertedTranslations);
         return getTranslatedWords(translations);
     }
 
-    public List<Word> getTranslations(io.fi0x.languagegenerator.logic.dto.Word originalWord, Long desiredLanguageId)
+    public List<Word> getTranslations(WordDto originalWord, Long desiredLanguageId)
     {
         Word word = getWord(originalWord);
         if (word == null)
             return Collections.emptyList();
 
         List<Translation> translations = translationRepo.getAllByLanguageIdAndWordNumberAndTranslatedLanguageId(word.getLanguageId(), word.getWordNumber(), desiredLanguageId);
+        List<Translation> invertedTranslations = translationRepo.getAllByTranslatedLanguageIdAndTranslatedWordNumberAndLanguageId(word.getLanguageId(), word.getWordNumber(), desiredLanguageId);
+        invertedTranslations.forEach(Translation::swap);
+        translations.addAll(invertedTranslations);
         return getTranslatedWords(translations);
     }
 
-    public void linkWords(io.fi0x.languagegenerator.logic.dto.Word first, io.fi0x.languagegenerator.logic.dto.Word second)
+    public void linkWords(WordDto firstDto, WordDto secondDto)
     {
-        Word firstWord = saveOrGetWord(first);
-        Word secondWord = saveOrGetWord(second);
+        Word firstWord = saveOrGetWord(firstDto);
+        Word secondWord = saveOrGetWord(secondDto);
         if (isNotLinked(firstWord, secondWord) && isNotLinked(secondWord, firstWord))
         {
             Translation translation = WordConverter.convertToTranslation(firstWord, secondWord);
@@ -56,7 +61,7 @@ public class TranslationService
         }
     }
 
-    public void saveWords(List<io.fi0x.languagegenerator.logic.dto.Word> words)
+    public void saveWords(List<WordDto> words)
     {
         words.forEach(this::saveOrGetWord);
     }
@@ -66,7 +71,7 @@ public class TranslationService
         words.forEach(wordLetters -> saveOrGetWord(WordConverter.convertToDto(languageId, wordLetters)));
     }
 
-    public Word saveOrGetWord(io.fi0x.languagegenerator.logic.dto.Word word)
+    public Word saveOrGetWord(WordDto word)
     {
         Word result = getWord(word);
         if (result == null) {
@@ -92,7 +97,7 @@ public class TranslationService
         return word.getWordNumber();
     }
 
-    private Word getWord(io.fi0x.languagegenerator.logic.dto.Word word)
+    private Word getWord(WordDto word)
     {
         return wordRepo.getByLanguageIdAndLetters(word.getLanguageId(), word.getWord());
     }

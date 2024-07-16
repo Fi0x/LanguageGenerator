@@ -24,6 +24,17 @@ public class Translation
     @Id
     private Long translatedWordNumber;
 
+    //TODO: Write test for this method
+    public void swap()
+    {
+        Long tmp = languageId;
+        languageId = translatedLanguageId;
+        translatedLanguageId = tmp;
+        tmp = wordNumber;
+        wordNumber = translatedWordNumber;
+        translatedWordNumber = tmp;
+    }
+
     @AllArgsConstructor
     public class TranslationId implements Serializable
     {

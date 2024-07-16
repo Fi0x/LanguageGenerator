@@ -1,5 +1,6 @@
 package io.fi0x.languagegenerator.logic.dto;
 
+import io.fi0x.languagegenerator.db.entities.Word;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,15 +8,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Word
+public class WordDto
 {
     private Long languageId;
     private String word;
 
-    //TODO: Add tests for this method
-    public io.fi0x.languagegenerator.db.entities.Word toEntity()
+    public Word toEntity()
     {
-        io.fi0x.languagegenerator.db.entities.Word entity = new io.fi0x.languagegenerator.db.entities.Word();
+        Word entity = new Word();
         entity.setLanguageId(languageId);
         entity.setLetters(this.word);
         return entity;

@@ -3,7 +3,7 @@ package io.fi0x.languagegenerator.service;
 import io.fi0x.languagegenerator.db.*;
 import io.fi0x.languagegenerator.db.entities.*;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
-import io.fi0x.languagegenerator.logic.dto.Word;
+import io.fi0x.languagegenerator.logic.dto.WordDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class GenerationService
     private final StartingRepository staRepository;
     private final EndingRepository endRepository;
 
-    public List<Word> generateWords(long languageId, int count) throws EntityNotFoundException, InvalidObjectException
+    public List<WordDto> generateWords(long languageId, int count) throws EntityNotFoundException, InvalidObjectException
     {
         Optional<Language> result = languageRepository.findById(languageId);
         if (result.isEmpty())
@@ -51,17 +51,17 @@ public class GenerationService
         if (language.invalid())
             throw new InvalidObjectException("Can't generate words with the settings of language: " + languageId);
 
-        ArrayList<Word> generatedWords = new ArrayList<>();
+        ArrayList<WordDto> generatedWords = new ArrayList<>();
         for (int i = 0; i < count; i++)
         {
-            Word word = generateWord(language);
+            WordDto word = generateWord(language);
             generatedWords.add(word);
         }
 
         return generatedWords;
     }
 
-    private Word generateWord(LanguageData language)
+    private WordDto generateWord(LanguageData language)
     {
         StringBuilder name = new StringBuilder();
         List<String> forbiddenCombinations = language.getForbiddenCombinations();
@@ -89,7 +89,7 @@ public class GenerationService
 
         if (!name.isEmpty())
             name.setCharAt(0, String.valueOf(name.charAt(0)).toUpperCase(Locale.ROOT).charAt(0));
-        return new Word(language.getId(), addSpecialCharacters(name.toString(), language));
+        return new WordDto(language.getId(), addSpecialCharacters(name.toString(), language));
     }
 
     private String getBeginning(LanguageData languageData)

@@ -9,11 +9,11 @@ public interface TranslationRepository extends JpaRepository<Translation, Transl
 {
     List<Translation> getAllByLanguageId(Long languageId);
 
-    List<Translation> getAllByTranslatedLanguageId(Long languageId);
-
     List<Translation> getAllByLanguageIdAndWordNumber(Long languageId, Long wordNumber);
 
     List<Translation> getAllByLanguageIdAndWordNumberAndTranslatedLanguageId(Long languageId, Long wordNumber, Long translatedLanguageId);
+
+    List<Translation> getAllByTranslatedLanguageIdAndTranslatedWordNumberAndLanguageId(Long translatedLanguageId, Long translatedWordNumber, Long languageId);
 
     Translation getByLanguageIdAndWordNumberAndTranslatedLanguageIdAndTranslatedWordNumber(Long languageId, Long wordNumber, Long translatedLanguageId, Long translatedWordNumber);
 

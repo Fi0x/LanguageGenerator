@@ -2,7 +2,7 @@ package io.fi0x.languagegenerator.service;
 
 import io.fi0x.languagegenerator.db.*;
 import io.fi0x.languagegenerator.db.entities.*;
-import io.fi0x.languagegenerator.logic.dto.Word;
+import io.fi0x.languagegenerator.logic.dto.WordDto;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -131,33 +131,33 @@ public class TestGenerationService
         Assertions.assertEquals(getBeginningEndWordList(), service.generateWords(VALID_LANGUAGE_ID, 4));
     }
 
-    private List<Word> getNormalWordList()
+    private List<WordDto> getNormalWordList()
     {
-        List<Word> words = new ArrayList<>();
-        words.add(new Word(VALID_LANGUAGE_ID, "Aa"));
-        words.add(new Word(VALID_LANGUAGE_ID, "Aa"));
-        words.add(new Word(VALID_LANGUAGE_ID, "Aa"));
-        words.add(new Word(VALID_LANGUAGE_ID, "Aa"));
+        List<WordDto> words = new ArrayList<>();
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa"));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa"));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa"));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa"));
         return words;
     }
 
-    private List<Word> getBeginningEndWordList()
+    private List<WordDto> getBeginningEndWordList()
     {
-        List<Word> words = new ArrayList<>();
-        words.add(new Word(VALID_LANGUAGE_ID, "Baac"));
-        words.add(new Word(VALID_LANGUAGE_ID, "Baac"));
-        words.add(new Word(VALID_LANGUAGE_ID, "Baac"));
-        words.add(new Word(VALID_LANGUAGE_ID, "Baac"));
+        List<WordDto> words = new ArrayList<>();
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac"));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac"));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac"));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac"));
         return words;
     }
 
-    private List<Word> getEmptyWordList()
+    private List<WordDto> getEmptyWordList()
     {
-        List<Word> words = new ArrayList<>();
-        words.add(new Word(VALID_LANGUAGE_ID, ""));
-        words.add(new Word(VALID_LANGUAGE_ID, ""));
-        words.add(new Word(VALID_LANGUAGE_ID, ""));
-        words.add(new Word(VALID_LANGUAGE_ID, ""));
+        List<WordDto> words = new ArrayList<>();
+        words.add(new WordDto(VALID_LANGUAGE_ID, ""));
+        words.add(new WordDto(VALID_LANGUAGE_ID, ""));
+        words.add(new WordDto(VALID_LANGUAGE_ID, ""));
+        words.add(new WordDto(VALID_LANGUAGE_ID, ""));
         return words;
     }
 
