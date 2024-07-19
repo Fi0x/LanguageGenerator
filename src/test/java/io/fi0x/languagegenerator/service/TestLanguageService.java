@@ -33,6 +33,7 @@ public class TestLanguageService
     private static final String USERNAME = "Klaus Detlef";
     private static final String LANGUAGE_NAME = "Geheimsprache";
     private static final String EXISTING_LETTERS = "kkk";
+    private static final Long RANDOM_ID = 17L;
 
     @Mock
     private AuthenticationService authenticationService;
@@ -92,6 +93,25 @@ public class TestLanguageService
     {
         LanguageData languageData = getLanguageData();
         fillLanguageData(languageData);
+
+        Assertions.assertDoesNotThrow(() -> service.addLanguage(languageData));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_addLanguage_successWithExistingIds()
+    {
+        LanguageData languageData = getLanguageData();
+        fillLanguageData(languageData);
+        doReturn(Optional.of(RANDOM_ID)).when(languageRepository).getHighestId();
+        doReturn(Optional.of(RANDOM_ID)).when(cRepo).getHighestId();
+        doReturn(Optional.of(RANDOM_ID)).when(vRepo).getHighestId();
+        doReturn(Optional.of(RANDOM_ID)).when(vcRepo).getHighestId();
+        doReturn(Optional.of(RANDOM_ID)).when(cvRepo).getHighestId();
+        doReturn(Optional.of(RANDOM_ID)).when(fRepo).getHighestId();
+        doReturn(Optional.of(RANDOM_ID)).when(speRepo).getHighestId();
+        doReturn(Optional.of(RANDOM_ID)).when(staRepo).getHighestId();
+        doReturn(Optional.of(RANDOM_ID)).when(endRepo).getHighestId();
 
         Assertions.assertDoesNotThrow(() -> service.addLanguage(languageData));
     }

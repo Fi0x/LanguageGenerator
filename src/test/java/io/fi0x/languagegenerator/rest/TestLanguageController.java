@@ -2,7 +2,7 @@ package io.fi0x.languagegenerator.rest;
 
 import io.fi0x.languagegenerator.db.entities.Language;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
-import io.fi0x.languagegenerator.logic.dto.Word;
+import io.fi0x.languagegenerator.logic.dto.WordDto;
 import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.GenerationService;
 import io.fi0x.languagegenerator.service.LanguageService;
@@ -66,7 +66,7 @@ public class TestLanguageController
     @Tag("UnitTest")
     void test_generateWords_success() throws Exception
     {
-        List<Word> wordList = getWordList();
+        List<WordDto> wordList = getWordList();
         doReturn(wordList).when(generationService).generateWords(eq(LANGUAGE_ID), eq(WORD_AMOUNT));
 
         mvc.perform(get(GENERATE_URL).param("language", String.valueOf(LANGUAGE_ID)).param("amount", String.valueOf(WORD_AMOUNT)))
@@ -82,7 +82,7 @@ public class TestLanguageController
     @Tag("UnitTest")
     void test_generateWords_success_noAmount() throws Exception
     {
-        List<Word> wordList = getWordList();
+        List<WordDto> wordList = getWordList();
         doReturn(wordList).when(generationService).generateWords(eq(LANGUAGE_ID), eq(10));
 
         mvc.perform(get(GENERATE_URL).param("language", String.valueOf(LANGUAGE_ID)))
@@ -98,7 +98,7 @@ public class TestLanguageController
     @Tag("UnitTest")
     void test_generateWords_success_noLanguage() throws Exception
     {
-        List<Word> wordList = getWordList();
+        List<WordDto> wordList = getWordList();
         doReturn(wordList).when(generationService).generateWords(eq(0L), eq(WORD_AMOUNT));
         doReturn(getLanguageData()).when(languageService).getLanguageData(eq(0L));
 
@@ -115,7 +115,7 @@ public class TestLanguageController
     @Tag("UnitTest")
     void test_generateWords_success_wrongUser() throws Exception
     {
-        List<Word> wordList = getWordList();
+        List<WordDto> wordList = getWordList();
         doReturn(wordList).when(generationService).generateWords(eq(LANGUAGE_ID), eq(WORD_AMOUNT));
         LanguageData languageData = getLanguageData();
         languageData.setUsername("Wrong User");
@@ -287,12 +287,12 @@ public class TestLanguageController
         return LanguageData.builder().username(USERNAME).name(LANGUAGE_NAME).visible(false).build();
     }
 
-    private List<Word> getWordList()
+    private List<WordDto> getWordList()
     {
-        List<Word> list = new ArrayList<>();
-        list.add(new Word(LANGUAGE_ID, "sdfalökjh"));
-        list.add(new Word(LANGUAGE_ID, "sghffghjghjjgh"));
-        list.add(new Word(LANGUAGE_ID, "d   dfg  dsf sdf"));
+        List<WordDto> list = new ArrayList<>();
+        list.add(new WordDto(LANGUAGE_ID, "sdfalökjh"));
+        list.add(new WordDto(LANGUAGE_ID, "sghffghjghjjgh"));
+        list.add(new WordDto(LANGUAGE_ID, "d   dfg  dsf sdf"));
         return list;
     }
 
