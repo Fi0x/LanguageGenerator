@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -42,5 +43,20 @@ public class Translation
         private Long wordNumber;
         private Long translatedLanguageId;
         private Long translatedWordNumber;
+
+        @Override
+        public boolean equals(Object o)
+        {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            TranslationId that = (TranslationId) o;
+            return Objects.equals(languageId, that.languageId) && Objects.equals(wordNumber, that.wordNumber) && Objects.equals(translatedLanguageId, that.translatedLanguageId) && Objects.equals(translatedWordNumber, that.translatedWordNumber);
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return Objects.hash(languageId, wordNumber, translatedLanguageId, translatedWordNumber);
+        }
     }
 }

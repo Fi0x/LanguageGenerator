@@ -130,6 +130,8 @@ public class GenerationService
 
     private String addSpecialCharacters(String currentWord, LanguageData languageData)
     {
+        if(languageData.getSpecialCharacterChance() == null)
+            return currentWord;
         if (currentWord.length() >= languageData.getMaxWordLength())
             return currentWord;
         if (Math.random() >= languageData.getSpecialCharacterChance() && languageData.getMaxSpecialChars() <= 0)

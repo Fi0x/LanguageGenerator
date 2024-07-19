@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -27,5 +28,20 @@ public class Word
     {
         public Long languageId;
         public Long wordNumber;
+
+        @Override
+        public boolean equals(Object o)
+        {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            WordId wordId = (WordId) o;
+            return Objects.equals(languageId, wordId.languageId) && Objects.equals(wordNumber, wordId.wordNumber);
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return Objects.hash(languageId, wordNumber);
+        }
     }
 }
