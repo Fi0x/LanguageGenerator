@@ -26,9 +26,11 @@
                         ${language.name}
                 </td>
                 <td>
+<%--                    TODO: Rename to 'Generate new words' and increase amount to 50--%>
                     <a href="generate?language=${language.id}&amount=10" class="btn">Generate 10</a>
                 </td>
                 <td>
+<%--                    TODO: Replace with link to dictionary of this language--%>
                     <a href="generate?language=${language.id}&amount=100" class="btn">Generate 100</a>
                 </td>
                 <td>

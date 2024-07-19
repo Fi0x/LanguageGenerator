@@ -16,9 +16,17 @@
         </thead>
         <tbody>
         <%--@elvariable id="words" type="java.util.List"--%>
-        <c:forEach items="${words}" var="word">
+        <c:forEach items="${words}" var="singleWord">
             <tr>
-                <td>${word.word}</td>
+                <td>
+                        ${singleWord.word}
+                </td>
+                <td>
+                        <%--                    TODO: Add button to show translation page for this word--%>
+                </td>
+                <td>
+                        <%--                    TODO: Add a button, to save the word to the dictionary--%>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
