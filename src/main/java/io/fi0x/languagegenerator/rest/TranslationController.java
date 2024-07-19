@@ -20,11 +20,11 @@ public class TranslationController
 
     @Transactional
     @PostMapping("word")
-    public String saveWord(ModelMap model, HttpServletRequest request, @Valid WordDto word)
+    public String saveWord(ModelMap model, HttpServletRequest request, @Valid WordDto singleWord)
     {
-        log.info("saveWord() called for word={}", word);
+        log.info("saveWord() called for word={}", singleWord);
 
-        translationService.saveOrGetWord(word);
+        translationService.saveOrGetWord(singleWord);
 
         return "redirect:" + request.getHeader("Referer");
     }

@@ -16,17 +16,20 @@
         </thead>
         <tbody>
         <%--@elvariable id="words" type="java.util.List"--%>
-        <c:forEach items="${words}" var="singleWord">
+        <c:forEach items="${words}" var="singleWord" varStatus="status">
             <tr>
-                <td>
-                        ${singleWord.word}
-                </td>
-                <td>
-                        <%--                    TODO: Add button to show translation page for this word--%>
-                </td>
-                <td>
-                        <%--                    TODO: Add a button, to save the word to the dictionary--%>
-                </td>
+                <form:form method="post" action="word" modelAttribute="singleWord">
+                    <form:input type="hidden" path="languageId"/>
+                    <td>
+                        <form:input type="text" path="word"/>
+                    </td>
+                    <td>
+                            <%--                    TODO: Add button to show translation page for this word--%>
+                    </td>
+                    <td>
+                        <input type="submit" class="btn-success" value="Save">
+                    </td>
+                </form:form>
             </tr>
         </c:forEach>
         </tbody>
