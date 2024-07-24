@@ -26,7 +26,7 @@
                         </label>
                     </td>
                     <td>
-                            <%--TODO: Add button to show translation page for this word--%>
+                            <%--TODO: Add button to show translation page for this word (Should also save the word before showing the page, if it is not yet saved)--%>
                     </td>
                     <td>
                         <input type="submit" class="btn-success" value="Save">

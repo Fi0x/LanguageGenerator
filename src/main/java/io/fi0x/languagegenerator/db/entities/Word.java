@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -23,8 +22,7 @@ public class Word
 
     private String letters;
 
-    @AllArgsConstructor
-    public class WordId implements Serializable
+    public static class WordId implements Serializable
     {
         public Long languageId;
         public Long wordNumber;

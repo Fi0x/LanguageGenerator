@@ -30,7 +30,7 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
     @PostMapping("/error")
     public String showPostError(ModelMap model, HttpServletRequest request)
     {
-        log.info("showError() called");
+        log.info("showPostError() called");
 
         model.put("errorCode", request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE));
         model.put("errorMessage", request.getAttribute(RequestDispatcher.ERROR_MESSAGE));

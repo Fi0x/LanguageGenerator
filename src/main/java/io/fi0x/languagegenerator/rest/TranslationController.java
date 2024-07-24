@@ -40,6 +40,6 @@ public class TranslationController
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save translations in this language");
         }
 
-        return "redirect:" + request.getHeader("Referer");
+        return "list-words";
     }
 }

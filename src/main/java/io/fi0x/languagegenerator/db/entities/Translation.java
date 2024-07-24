@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -36,8 +35,7 @@ public class Translation
         translatedWordNumber = tmp;
     }
 
-    @AllArgsConstructor
-    public class TranslationId implements Serializable
+    public static class TranslationId implements Serializable
     {
         private Long languageId;
         private Long wordNumber;
