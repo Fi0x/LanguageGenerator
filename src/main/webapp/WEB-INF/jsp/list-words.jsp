@@ -30,6 +30,8 @@
                     </td>
                     <td>
                         <input type="submit" class="btn-success" value="Save">
+<%--                        TODO: Show visual indicator, if save was successful--%>
+<%--                        TODO: Only enable this button, if word does not already exist in db--%>
                     </td>
                 </form:form>
             </tr>

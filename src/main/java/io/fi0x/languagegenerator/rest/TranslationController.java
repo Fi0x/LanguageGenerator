@@ -4,7 +4,6 @@ import io.fi0x.languagegenerator.logic.dto.WordDto;
 import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.LanguageService;
 import io.fi0x.languagegenerator.service.TranslationService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,7 @@ public class TranslationController
 
     @Transactional
     @PostMapping("word")
-    public String saveWord(HttpServletRequest request, @RequestParam(value = "languageId") long languageId, @RequestParam(value = "word") String word)
+    public String saveWord(@RequestParam(value = "languageId") long languageId, @RequestParam(value = "word") String word)
     {
         log.info("saveWord() called for word={} with languageId={}", word, languageId);
 
@@ -39,6 +38,8 @@ public class TranslationController
             log.info("User '{}' tried to save word '{}' in a language, owned by '{}', which is not allowed", currentUser, word, languageCreator);
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save translations in this language");
         }
+
+        //TODO: Update word-attribute in model, if it was changed manually
 
         return "list-words";
     }
