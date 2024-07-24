@@ -18,13 +18,15 @@
         <%--@elvariable id="words" type="java.util.List"--%>
         <c:forEach items="${words}" var="singleWord" varStatus="status">
             <tr>
-                <form:form method="post" action="word" modelAttribute="singleWord">
-                    <form:input type="hidden" path="languageId"/>
+                <form:form method="post" action="word">
+                    <input type="hidden" name="languageId" value="${singleWord.languageId}"/>
                     <td>
-                        <form:input type="text" path="word"/>
+                        <label>
+                            <input type="text" name="word" value="${singleWord.word}"/>
+                        </label>
                     </td>
                     <td>
-                            <%--                    TODO: Add button to show translation page for this word--%>
+                            <%--TODO: Add button to show translation page for this word--%>
                     </td>
                     <td>
                         <input type="submit" class="btn-success" value="Save">
