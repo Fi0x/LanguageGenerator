@@ -19,6 +19,7 @@
         <c:forEach items="${words}" var="singleWord" varStatus="status">
             <tr>
                 <form:form method="post" action="word">
+                    <input type="hidden" name="listIndex" value="${singleWord.listIndex}" />
                     <input type="hidden" name="languageId" value="${singleWord.languageId}"/>
                     <td>
                         <label>

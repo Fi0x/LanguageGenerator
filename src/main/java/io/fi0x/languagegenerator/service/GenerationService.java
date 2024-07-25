@@ -55,6 +55,7 @@ public class GenerationService
         for (int i = 0; i < count; i++)
         {
             WordDto word = generateWord(language);
+            word.setListIndex(i);
             generatedWords.add(word);
         }
 
