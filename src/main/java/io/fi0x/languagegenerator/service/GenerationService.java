@@ -31,6 +31,7 @@ public class GenerationService
     private final SpecialCharacterRepository speRepository;
     private final StartingRepository staRepository;
     private final EndingRepository endRepository;
+    private final WordRepository wordRepo;
 
     public List<WordDto> generateWords(long languageId, int count) throws EntityNotFoundException, InvalidObjectException
     {
@@ -56,6 +57,7 @@ public class GenerationService
         {
             WordDto word = generateWord(language);
             word.setListIndex(i);
+            word.setSavedInDb(wordRepo.getByLanguageIdAndLetters(languageId, word.getWord()).isPresent());
             generatedWords.add(word);
         }
 

@@ -11,7 +11,7 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Word</th>
+            <th colspan="3">Word</th>
         </tr>
         </thead>
         <tbody>
@@ -19,20 +19,29 @@
         <c:forEach items="${words}" var="singleWord" varStatus="status">
             <tr>
                 <form:form method="post" action="word">
-                    <input type="hidden" name="listIndex" value="${singleWord.listIndex}" />
+                    <input type="hidden" name="listIndex" value="${singleWord.listIndex}"/>
                     <input type="hidden" name="languageId" value="${singleWord.languageId}"/>
                     <td>
                         <label>
-                            <input type="text" name="word" value="${singleWord.word}"/>
+<%--                            <input onchange="updateSaveState(singleWord, word.value)" type="text" name="word" value="${singleWord.word}"/>--%>
+                            <input onchange="${singleWord.savedInDb = false}" type="text" name="word" value="${singleWord.word}"/>
                         </label>
                     </td>
                     <td>
                             <%--TODO: Add button to show translation page for this word (Should also save the word before showing the page, if it is not yet saved)--%>
                     </td>
                     <td>
-                        <input type="submit" class="btn-success" value="Save">
-<%--                        TODO: Show visual indicator, if save was successful--%>
-<%--                        TODO: Only enable this button, if word does not already exist in db--%>
+                        <c:choose>
+<%--                            TODO: Also show the save-button, when the word was changed--%>
+                            <c:when test="${singleWord.savedInDb}">
+                                <label>Saved</label>
+                            </c:when>
+                            <c:otherwise>
+                                <input type="submit" class="btn-success" value="Save"/>
+                            </c:otherwise>
+                        </c:choose>
+                            <%--                        TODO: Show visual indicator, if save was successful--%>
+                            <%--                        TODO: Only enable this button, if word does not already exist in db--%>
                     </td>
                 </form:form>
             </tr>
@@ -42,5 +51,12 @@
     <a href="generate" class="btn">Generate new words in this language</a>
 </div>
 <%@include file="../common/scripts.jspf" %>
+<script>
+    function updateSaveState(wordDto, text) {
+        console.log(text)
+        if(wordDto.word !== text)
+            wordDto.savedInDb = false;
+    }
+</script>
 </body>
 </html>

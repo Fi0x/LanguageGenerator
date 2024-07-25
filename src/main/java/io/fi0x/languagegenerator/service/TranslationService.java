@@ -9,6 +9,7 @@ import io.fi0x.languagegenerator.logic.dto.WordDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class TranslationService
         Word result = getWord(word);
         if (result == null) {
             Long id = saveOrOverwriteWord(word.toEntity());
+            word.setSavedInDb(true);
 
             result = new Word();
             result.setLanguageId(word.getLanguageId());
@@ -97,9 +99,10 @@ public class TranslationService
         return word.getWordNumber();
     }
 
+    @Nullable
     private Word getWord(WordDto word)
     {
-        return wordRepo.getByLanguageIdAndLetters(word.getLanguageId(), word.getWord());
+        return wordRepo.getByLanguageIdAndLetters(word.getLanguageId(), word.getWord()).orElse(null);
     }
 
     private List<Word> getTranslatedWords(List<Translation> translations)

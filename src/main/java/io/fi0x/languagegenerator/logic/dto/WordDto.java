@@ -13,6 +13,7 @@ public class WordDto
     private Long languageId;
     private String word;
     private Integer listIndex;
+    private Boolean savedInDb;
 
     public WordDto(Long languageId, String word)
     {
