@@ -134,30 +134,30 @@ public class TestGenerationService
     private List<WordDto> getNormalWordList()
     {
         List<WordDto> words = new ArrayList<>();
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa"));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa"));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa"));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa"));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa", 0));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa", 1));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa", 2));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa", 3));
         return words;
     }
 
     private List<WordDto> getBeginningEndWordList()
     {
         List<WordDto> words = new ArrayList<>();
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac"));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac"));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac"));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac"));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac", 0));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac", 1));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac", 2));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac", 3));
         return words;
     }
 
     private List<WordDto> getEmptyWordList()
     {
         List<WordDto> words = new ArrayList<>();
-        words.add(new WordDto(VALID_LANGUAGE_ID, ""));
-        words.add(new WordDto(VALID_LANGUAGE_ID, ""));
-        words.add(new WordDto(VALID_LANGUAGE_ID, ""));
-        words.add(new WordDto(VALID_LANGUAGE_ID, ""));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "", 0));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "", 1));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "", 2));
+        words.add(new WordDto(VALID_LANGUAGE_ID, "", 3));
         return words;
     }
 
