@@ -60,6 +60,8 @@ public class TestGenerationService
     private StartingRepository staRepository;
     @Mock
     private EndingRepository endRepository;
+    @Mock
+    private WordRepository wordRepository;
 
     @InjectMocks
     private GenerationService service;

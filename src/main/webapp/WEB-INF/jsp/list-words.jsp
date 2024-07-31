@@ -30,19 +30,21 @@
                     <td>
                             <%--TODO: Add button to show translation page for this word (Should also save the word before showing the page, if it is not yet saved)--%>
                     </td>
-                    <td>
-                        <c:choose>
-<%--                            TODO: Also show the save-button, when the word was changed--%>
-                            <c:when test="${singleWord.savedInDb}">
-                                <label>Saved</label>
-                            </c:when>
-                            <c:otherwise>
-                                <input type="submit" class="btn-success" value="Save"/>
-                            </c:otherwise>
-                        </c:choose>
-                            <%--                        TODO: Show visual indicator, if save was successful--%>
-                            <%--                        TODO: Only enable this button, if word does not already exist in db--%>
-                    </td>
+                    <c:if test="${languageCreator == username}">
+                        <td>
+                            <c:choose>
+                                <%--                            TODO: Also show the save-button, when the word was changed--%>
+                                <c:when test="${singleWord.savedInDb}">
+                                    <label>Saved</label>
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="submit" class="btn-success" value="Save"/>
+                                </c:otherwise>
+                            </c:choose>
+                                <%--                        TODO: Show visual indicator, if save was successful--%>
+                                <%--                        TODO: Only enable this button, if word does not already exist in db--%>
+                        </td>
+                    </c:if>
                 </form:form>
             </tr>
         </c:forEach>
@@ -51,12 +53,5 @@
     <a href="generate" class="btn">Generate new words in this language</a>
 </div>
 <%@include file="../common/scripts.jspf" %>
-<script>
-    function updateSaveState(wordDto, text) {
-        console.log(text)
-        if(wordDto.word !== text)
-            wordDto.savedInDb = false;
-    }
-</script>
 </body>
 </html>

@@ -24,7 +24,7 @@ import java.util.Objects;
 @Slf4j
 @Controller
 @AllArgsConstructor
-@SessionAttributes({"amount", "language", "languageName", "username", "words"})
+@SessionAttributes({"amount", "language", "languageCreator", "languageName", "username", "words"})
 public class LanguageController
 {
     private GenerationService generationService;
@@ -50,13 +50,16 @@ public class LanguageController
 
         LanguageData languageData = languageService.getLanguageData(language);
 
-        if(!languageData.getUsername().equals(authenticationService.getAuthenticatedUsername()) && !languageData.isVisible())
+        String currentUser = authenticationService.getAuthenticatedUsername();
+        if(!languageData.getUsername().equals(currentUser) && !languageData.isVisible())
         {
-            log.info("User '{}' tried to generate words with language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), language);
+            log.info("User '{}' tried to generate words with language {}, to which he has no access to", currentUser, language);
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access the selected language");
         }
 
+        model.put("username", currentUser);
         model.put("languageName", languageData.getName());
+        model.put("languageCreator", languageData.getUsername());
 
         try
         {
