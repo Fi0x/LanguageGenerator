@@ -4,6 +4,7 @@ import io.fi0x.languagegenerator.db.TranslationRepository;
 import io.fi0x.languagegenerator.db.WordRepository;
 import io.fi0x.languagegenerator.db.entities.Translation;
 import io.fi0x.languagegenerator.db.entities.Word;
+import io.fi0x.languagegenerator.logic.Parallelization;
 import io.fi0x.languagegenerator.logic.converter.WordConverter;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
 import lombok.AllArgsConstructor;
@@ -12,10 +13,8 @@ import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Service
@@ -31,11 +30,10 @@ public class TranslationService
         if (word == null)
             return Collections.emptyList();
 
-        List<Translation> translations = translationRepo.getAllByLanguageIdAndWordNumber(word.getLanguageId(), word.getWordNumber());
-        List<Translation> invertedTranslations = translationRepo.getAllByTranslatedLanguageIdAndTranslatedWordNumber(word.getLanguageId(), word.getWordNumber());
-        invertedTranslations.forEach(Translation::swap);
-        translations.addAll(invertedTranslations);
-        return getTranslatedWords(translations);
+        CompletableFuture<List<Translation>> normalTranslationFuture = Parallelization.runAndGetFuture(translationRepo.getAllByLanguageIdAndWordNumber(word.getLanguageId(), word.getWordNumber()));
+        CompletableFuture<List<Translation>> invertedTranslationFuture = Parallelization.runAndGetFuture(translationRepo.getAllByTranslatedLanguageIdAndTranslatedWordNumber(word.getLanguageId(), word.getWordNumber()));
+
+        return getWordsFromFutures(normalTranslationFuture, invertedTranslationFuture);
     }
 
     public List<Word> getTranslations(WordDto originalWord, Long desiredLanguageId)
@@ -44,19 +42,33 @@ public class TranslationService
         if (word == null)
             return Collections.emptyList();
 
-        List<Translation> translations = translationRepo.getAllByLanguageIdAndWordNumberAndTranslatedLanguageId(word.getLanguageId(), word.getWordNumber(), desiredLanguageId);
-        List<Translation> invertedTranslations = translationRepo.getAllByTranslatedLanguageIdAndTranslatedWordNumberAndLanguageId(word.getLanguageId(), word.getWordNumber(), desiredLanguageId);
-        invertedTranslations.forEach(Translation::swap);
-        translations.addAll(invertedTranslations);
-        return getTranslatedWords(translations);
+        CompletableFuture<List<Translation>> normalTranslationFuture = Parallelization.runAndGetFuture(translationRepo.getAllByLanguageIdAndWordNumberAndTranslatedLanguageId(word.getLanguageId(), word.getWordNumber(), desiredLanguageId));
+        CompletableFuture<List<Translation>> invertedTranslationFuture = Parallelization.runAndGetFuture(translationRepo.getAllByTranslatedLanguageIdAndTranslatedWordNumberAndLanguageId(word.getLanguageId(), word.getWordNumber(), desiredLanguageId));
+
+        return getWordsFromFutures(normalTranslationFuture, invertedTranslationFuture);
+    }
+
+    private List<Word> getWordsFromFutures(CompletableFuture<List<Translation>> normalTranslationFuture, CompletableFuture<List<Translation>> invertedTranslationFuture)
+    {
+        CompletableFuture.allOf(normalTranslationFuture, invertedTranslationFuture).join();
+
+        List<Translation> translations = Collections.emptyList();
+        List<Translation> invertedTranslations = Collections.emptyList();
+        try {
+            translations = Objects.requireNonNullElse(Parallelization.getWithoutExecutionException(normalTranslationFuture), Collections.emptyList());
+            invertedTranslations = Objects.requireNonNullElse(Parallelization.getWithoutExecutionException(invertedTranslationFuture), Collections.emptyList());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        return getTranslatedWords(translations, invertedTranslations);
     }
 
     public void linkWords(WordDto firstDto, WordDto secondDto)
     {
         Word firstWord = saveOrGetWord(firstDto);
         Word secondWord = saveOrGetWord(secondDto);
-        if (isNotLinked(firstWord, secondWord) && isNotLinked(secondWord, firstWord))
-        {
+        if (isNotLinked(firstWord, secondWord) && isNotLinked(secondWord, firstWord)) {
             Translation translation = WordConverter.convertToTranslation(firstWord, secondWord);
             translationRepo.save(translation);
         }
@@ -105,12 +117,21 @@ public class TranslationService
         return wordRepo.getByLanguageIdAndLetters(word.getLanguageId(), word.getWord()).orElse(null);
     }
 
-    private List<Word> getTranslatedWords(List<Translation> translations)
+    private List<Word> getTranslatedWords(List<Translation> translations, List<Translation> invertedTranslations)
     {
+        invertedTranslations.forEach(Translation::swap);
+        translations.addAll(invertedTranslations);
+
         List<Word> translatedWords = new ArrayList<>();
-        translations.forEach(translation -> {
-            Word translatedWord = wordRepo.getByLanguageIdAndWordNumber(translation.getTranslatedLanguageId(), translation.getTranslatedWordNumber());
-            if (translatedWord != null)
+        List<CompletableFuture<Word>> wordFutures = new ArrayList<>();
+
+        translations.forEach(translation -> wordFutures.add(Parallelization.runAndGetFuture(wordRepo.getByLanguageIdAndWordNumber(translation.getTranslatedLanguageId(), translation.getTranslatedWordNumber()))));
+
+        wordFutures.forEach(CompletableFuture::join);
+
+        wordFutures.forEach(future -> {
+            Word translatedWord = Parallelization.getWithoutException(future);
+            if(translatedWord != null)
                 translatedWords.add(translatedWord);
         });
 
