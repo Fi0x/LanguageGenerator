@@ -2,17 +2,20 @@ package io.fi0x.languagegenerator.service;
 
 import io.fi0x.languagegenerator.db.*;
 import io.fi0x.languagegenerator.db.entities.*;
+import io.fi0x.languagegenerator.logic.Parallelization;
 import io.fi0x.languagegenerator.logic.converter.LanguageConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.io.InvalidObjectException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class LanguageService
@@ -32,8 +35,7 @@ public class LanguageService
 
     public void addLanguage(LanguageData languageData) throws InvalidObjectException
     {
-        if (languageData.getId() == null)
-        {
+        if (languageData.getId() == null) {
             Optional<Long> id = languageRepository.getHighestId();
             languageData.setId((id.isPresent() ? id.get() : -1) + 1);
         }
@@ -139,12 +141,26 @@ public class LanguageService
 
     public List<Language> getUserAndPublicLanguages()
     {
-        List<Language> result = languageRepository.getAllByUsername(authenticationService.getAuthenticatedUsername());
-        List<Language> publicLanguages = languageRepository.getAllByVisible(true);
-        result.removeAll(publicLanguages);
-        result.addAll(publicLanguages);
+        CompletableFuture<List<Language>> userLanguages = Parallelization.runAndGetFuture(languageRepository.getAllByUsername(authenticationService.getAuthenticatedUsername()));
+        CompletableFuture<List<Language>> publicLanguages = Parallelization.runAndGetFuture(languageRepository.getAllByVisible(true));
 
-        return result;
+        List<Language> resultUser = Collections.emptyList();
+        List<Language> resultPublic = Collections.emptyList();
+
+        CompletableFuture.allOf(userLanguages, publicLanguages).join();
+        try {
+            resultUser = Objects.requireNonNullElse(Parallelization.getWithoutExecutionException(userLanguages), Collections.emptyList());
+            resultPublic = Objects.requireNonNullElse(Parallelization.getWithoutExecutionException(publicLanguages), Collections.emptyList());
+        } catch (InterruptedException e) {
+            log.debug("Thread was interrupted, while completing future");
+            Thread.currentThread().interrupt();
+        }
+
+        resultUser.removeAll(resultPublic);
+        resultUser.addAll(resultPublic);
+        resultUser.sort(Comparator.comparing(Language::getName));
+
+        return resultUser;
     }
 
     public LanguageData getLanguageData(long languageId)
@@ -175,8 +191,7 @@ public class LanguageService
     private long getLetterIdOrSaveIfNew(String letterCombination)
     {
         List<Letter> letters = letterRepository.getAllByLetters(letterCombination);
-        if (letters.isEmpty())
-        {
+        if (letters.isEmpty()) {
             Letter letter = new Letter();
             Optional<Long> id = letterRepository.getHighestId();
             letter.setId((id.isPresent() ? id.get() : 0) + 1);
@@ -189,37 +204,49 @@ public class LanguageService
 
     private LanguageData addLettersToLanguage(LanguageData languageData)
     {
-        List<VocalCombination> vCom = vRepo.getAllByLanguageId(languageData.getId());
-        List<String> vLetters = vCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
-        languageData.setVocals(vLetters);
+        CompletableFuture<List<String>> vLettersFuture = Parallelization.runAndGetFuture(() -> {
+            List<VocalCombination> vCom = vRepo.getAllByLanguageId(languageData.getId());
+            return vCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        });
+        CompletableFuture<List<String>> cLettersFuture = Parallelization.runAndGetFuture(() -> {
+                List<ConsonantCombination> cCom = cRepo.getAllByLanguageId(languageData.getId());
+                return cCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        });
+        CompletableFuture<List<String>> vcLettersFuture = Parallelization.runAndGetFuture(() -> {
+            List<VocalConsonantCombination> vcCom = vcRepo.getAllByLanguageId(languageData.getId());
+            return vcCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        });
+        CompletableFuture<List<String>> cvLettersFuture = Parallelization.runAndGetFuture(() -> {
+            List<ConsonantVocalCombination> cvCom = cvRepo.getAllByLanguageId(languageData.getId());
+            return cvCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        });
+        CompletableFuture<List<String>> fLettersFuture = Parallelization.runAndGetFuture(() -> {
+            List<ForbiddenCombination> fCom = fRepo.getAllByLanguageId(languageData.getId());
+            return fCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        });
+        CompletableFuture<List<String>> speLettersFuture = Parallelization.runAndGetFuture(() -> {
+            List<SpecialCharacterCombinations> speCom = speRepo.getAllByLanguageId(languageData.getId());
+            return speCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        });
+        CompletableFuture<List<String>> staLettersFuture = Parallelization.runAndGetFuture(() -> {
+            List<StartingCombinations> staCom = staRepo.getAllByLanguageId(languageData.getId());
+            return staCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        });
+        CompletableFuture<List<String>> endLettersFuture = Parallelization.runAndGetFuture(() -> {
+            List<EndingCombinations> endCom = endRepo.getAllByLanguageId(languageData.getId());
+            return endCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
+        });
 
-        List<ConsonantCombination> cCom = cRepo.getAllByLanguageId(languageData.getId());
-        List<String> cLetters = cCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
-        languageData.setConsonants(cLetters);
+        CompletableFuture.allOf(vLettersFuture, cLettersFuture, vcLettersFuture, cvLettersFuture, fLettersFuture, speLettersFuture, staLettersFuture, endLettersFuture).join();
 
-        List<VocalConsonantCombination> vcCom = vcRepo.getAllByLanguageId(languageData.getId());
-        List<String> vcLetters = vcCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
-        languageData.setVocalConsonant(vcLetters);
-
-        List<ConsonantVocalCombination> cvCom = cvRepo.getAllByLanguageId(languageData.getId());
-        List<String> cvLetters = cvCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
-        languageData.setConsonantVocals(cvLetters);
-
-        List<ForbiddenCombination> fCom = fRepo.getAllByLanguageId(languageData.getId());
-        List<String> fLetters = fCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
-        languageData.setForbiddenCombinations(fLetters);
-
-        List<SpecialCharacterCombinations> speCom = speRepo.getAllByLanguageId(languageData.getId());
-        List<String> speLetters = speCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
-        languageData.setSpecialCharacters(speLetters);
-
-        List<StartingCombinations> staCom = staRepo.getAllByLanguageId(languageData.getId());
-        List<String> staLetters = staCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
-        languageData.setStartingCombinations(staLetters);
-
-        List<EndingCombinations> endCom = endRepo.getAllByLanguageId(languageData.getId());
-        List<String> endLetters = endCom.stream().map(com -> letterRepository.getReferenceById(com.getLetterId()).getLetters()).toList();
-        languageData.setEndingCombinations(endLetters);
+        languageData.setVocals(Parallelization.getWithoutException(vLettersFuture));
+        languageData.setConsonants(Parallelization.getWithoutException(cLettersFuture));
+        languageData.setVocalConsonant(Parallelization.getWithoutException(vcLettersFuture));
+        languageData.setConsonantVocals(Parallelization.getWithoutException(cvLettersFuture));
+        languageData.setForbiddenCombinations(Parallelization.getWithoutException(fLettersFuture));
+        languageData.setSpecialCharacters(Parallelization.getWithoutException(speLettersFuture));
+        languageData.setStartingCombinations(Parallelization.getWithoutException(staLettersFuture));
+        languageData.setEndingCombinations(Parallelization.getWithoutException(endLettersFuture));
 
         return languageData;
     }
