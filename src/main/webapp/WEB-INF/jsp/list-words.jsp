@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+<%@ page import="io.fi0x.languagegenerator.logic.dto.WordDto" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
@@ -23,8 +25,8 @@
                     <input type="hidden" name="languageId" value="${singleWord.languageId}"/>
                     <td>
                         <label>
-<%--                            <input onchange="updateSaveState(singleWord, word.value)" type="text" name="word" value="${singleWord.word}"/>--%>
-                            <input onchange="${singleWord.savedInDb = false}" type="text" name="word" value="${singleWord.word}"/>
+                            <input onchange="updateSaveState(${singleWord.word}, word.value, ${singleWord.savedInDb}, ${singleWord.listIndex})"
+                                   type="text" name="word" value="${singleWord.word}"/>
                         </label>
                     </td>
                     <td>
@@ -32,15 +34,13 @@
                     </td>
                     <c:if test="${languageCreator == username}">
                         <td>
-                            <c:choose>
                                 <%--                            TODO: Also show the save-button, when the word was changed--%>
-                                <c:when test="${singleWord.savedInDb}">
-                                    <label>Saved</label>
-                                </c:when>
-                                <c:otherwise>
-                                    <input type="submit" class="btn-success" value="Save"/>
-                                </c:otherwise>
-                            </c:choose>
+                            <label id="savedLabel${singleWord.listIndex}"
+                                   style="visibility: ${singleWord.savedInDb ? "visible" : "hidden"}">Saved</label>
+                            <input id="saveButton${singleWord.listIndex}"
+                                   style="visibility: ${singleWord.savedInDb ? "hidden" : "visible"}" type="submit"
+                                   class="btn-success" value="Save"/>
+
                                 <%--                        TODO: Show visual indicator, if save was successful--%>
                                 <%--                        TODO: Only enable this button, if word does not already exist in db--%>
                         </td>
@@ -53,5 +53,20 @@
     <a href="generate" class="btn">Generate new words in this language</a>
 </div>
 <%@include file="../common/scripts.jspf" %>
+<%--<script src="../js/customScripts.js"></script>--%>
+<script>
+    function updateSaveState(originalWord, text, isAlreadySaved, listIndex) {
+        console.log("Reached js code")
+        console.log("Original word looks like: " + originalWord);
+        console.log("New text looks like: " + text);
+        console.log("Is already saved: " + isAlreadySaved);
+        console.log("list index: " + listIndex);
+
+        if (originalWord !== text || !isAlreadySaved) {
+            document.getElementById("savedLabel" + listIndex).style.visibility = 'hidden';
+            document.getElementById("saveButton" + listIndex).style.visibility = 'visible';
+        }
+    }
+</script>
 </body>
 </html>
