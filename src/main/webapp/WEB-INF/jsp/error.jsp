@@ -6,7 +6,7 @@
 <body>
 <%@include file="../common/navigation.jspf" %>
 <div class="container">
-    <h1>Error ${errorCode}!</h1>
+    <h1>Error ${errorCode}</h1>
     ${errorMessage}
 </div>
 <%@include file="../common/scripts.jspf" %>

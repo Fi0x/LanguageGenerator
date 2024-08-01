@@ -26,10 +26,11 @@
                         ${language.name}
                 </td>
                 <td>
-                    <a href="generate?language=${language.id}&amount=10" class="btn">Generate 10</a>
+                    <a href="generate?language=${language.id}&amount=50" class="btn">Generate new words</a>
                 </td>
                 <td>
-                    <a href="generate?language=${language.id}&amount=100" class="btn">Generate 100</a>
+<%--                    TODO: Replace with link to dictionary of this language--%>
+                    <a href="generate?language=${language.id}&amount=2" class="btn">Dictionary</a>
                 </td>
                 <td>
                         ${language.username}

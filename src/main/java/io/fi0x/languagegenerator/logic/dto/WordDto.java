@@ -12,6 +12,14 @@ public class WordDto
 {
     private Long languageId;
     private String word;
+    private Integer listIndex;
+    private Boolean savedInDb;
+
+    public WordDto(Long languageId, String word)
+    {
+        this.languageId = languageId;
+        this.word = word;
+    }
 
     public Word toEntity()
     {

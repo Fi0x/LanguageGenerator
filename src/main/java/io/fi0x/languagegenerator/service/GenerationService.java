@@ -31,6 +31,7 @@ public class GenerationService
     private final SpecialCharacterRepository speRepository;
     private final StartingRepository staRepository;
     private final EndingRepository endRepository;
+    private final WordRepository wordRepo;
 
     public List<WordDto> generateWords(long languageId, int count) throws EntityNotFoundException, InvalidObjectException
     {
@@ -55,6 +56,8 @@ public class GenerationService
         for (int i = 0; i < count; i++)
         {
             WordDto word = generateWord(language);
+            word.setListIndex(i);
+            word.setSavedInDb(wordRepo.getByLanguageIdAndLetters(languageId, word.getWord()).isPresent());
             generatedWords.add(word);
         }
 
@@ -130,6 +133,8 @@ public class GenerationService
 
     private String addSpecialCharacters(String currentWord, LanguageData languageData)
     {
+        if(languageData.getSpecialCharacterChance() == null)
+            return currentWord;
         if (currentWord.length() >= languageData.getMaxWordLength())
             return currentWord;
         if (Math.random() >= languageData.getSpecialCharacterChance() && languageData.getMaxSpecialChars() <= 0)

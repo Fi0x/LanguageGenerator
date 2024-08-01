@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -60,7 +61,7 @@ public class TestTranslationService
     @Tag("UnitTest")
     void test_getTranslations_unknownWord()
     {
-        doReturn(null).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
+        doReturn(Optional.empty()).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
 
         Assertions.assertEquals(Collections.emptyList(), service.getTranslations(getFirstWordDto()));
     }
@@ -69,7 +70,7 @@ public class TestTranslationService
     @Tag("UnitTest")
     void test_getTranslations_noTranslation()
     {
-        doReturn(getFirstWordEntity()).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
+        doReturn(Optional.of(getFirstWordEntity())).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
         doReturn(Collections.emptyList()).when(translationRepository).getAllByLanguageIdAndWordNumber(eq(LANGUAGE_ID1), eq(WORD_NUMBER11));
 
         Assertions.assertEquals(Collections.emptyList(), service.getTranslations(getFirstWordDto()));
@@ -79,7 +80,7 @@ public class TestTranslationService
     @Tag("UnitTest")
     void test_getTranslations_manyResults()
     {
-        doReturn(getFirstWordEntity()).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
+        doReturn(Optional.of(getFirstWordEntity())).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
         doReturn(getTranslations(false)).when(translationRepository).getAllByLanguageIdAndWordNumber(eq(LANGUAGE_ID1), eq(WORD_NUMBER11));
         doReturn(getInvertedTranslation(false)).when(translationRepository).getAllByTranslatedLanguageIdAndTranslatedWordNumber(eq(LANGUAGE_ID1), eq(WORD_NUMBER11));
         setupWordReturns();
@@ -96,7 +97,7 @@ public class TestTranslationService
     @Tag("UnitTest")
     void test_getTranslations_targetLanguage_unknownWord()
     {
-        doReturn(null).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
+        doReturn(Optional.empty()).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
 
         Assertions.assertEquals(Collections.emptyList(), service.getTranslations(getFirstWordDto(), LANGUAGE_ID3));
     }
@@ -105,7 +106,7 @@ public class TestTranslationService
     @Tag("UnitTest")
     void test_getTranslations_targetLanguage_noTranslation()
     {
-        doReturn(getFirstWordEntity()).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
+        doReturn(Optional.of(getFirstWordEntity())).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
         doReturn(Collections.emptyList()).when(translationRepository).getAllByLanguageIdAndWordNumberAndTranslatedLanguageId(eq(LANGUAGE_ID1), eq(WORD_NUMBER11), eq(LANGUAGE_ID3));
 
         Assertions.assertEquals(Collections.emptyList(), service.getTranslations(getFirstWordDto(), LANGUAGE_ID3));
@@ -115,7 +116,7 @@ public class TestTranslationService
     @Tag("UnitTest")
     void test_getTranslations_targetLanguage_multipleResults()
     {
-        doReturn(getFirstWordEntity()).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
+        doReturn(Optional.of(getFirstWordEntity())).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
         doReturn(getTranslations(true)).when(translationRepository).getAllByLanguageIdAndWordNumberAndTranslatedLanguageId(eq(LANGUAGE_ID1), eq(WORD_NUMBER11), eq(LANGUAGE_ID3));
         doReturn(getInvertedTranslation(true)).when(translationRepository).getAllByTranslatedLanguageIdAndTranslatedWordNumberAndLanguageId(eq(LANGUAGE_ID1), eq(WORD_NUMBER11), eq(LANGUAGE_ID3));
         setupWordReturns();
@@ -141,8 +142,8 @@ public class TestTranslationService
     @Tag("UnitTest")
     void test_linkWords_alreadyLinked()
     {
-        doReturn(getWord(LANGUAGE_ID1, WORD_NUMBER11, WORD11)).when(wordRepository).getByLanguageIdAndLetters(LANGUAGE_ID1, WORD11);
-        doReturn(getWord(LANGUAGE_ID2, WORD_NUMBER21, WORD21)).when(wordRepository).getByLanguageIdAndLetters(LANGUAGE_ID2, WORD21);
+        doReturn(Optional.of(getWord(LANGUAGE_ID1, WORD_NUMBER11, WORD11))).when(wordRepository).getByLanguageIdAndLetters(LANGUAGE_ID1, WORD11);
+        doReturn(Optional.of(getWord(LANGUAGE_ID2, WORD_NUMBER21, WORD21))).when(wordRepository).getByLanguageIdAndLetters(LANGUAGE_ID2, WORD21);
         WordDto word1 = getFirstWordDto();
         WordDto word2 = getSecondWordDto();
 
@@ -165,8 +166,8 @@ public class TestTranslationService
     @Tag("UnitTest")
     void text_linkWords_success()
     {
-        doReturn(getWord(LANGUAGE_ID1, WORD_NUMBER11, WORD11)).when(wordRepository).getByLanguageIdAndLetters(LANGUAGE_ID1, WORD11);
-        doReturn(getWord(LANGUAGE_ID2, WORD_NUMBER21, WORD21)).when(wordRepository).getByLanguageIdAndLetters(LANGUAGE_ID2, WORD21);
+        doReturn(Optional.of(getWord(LANGUAGE_ID1, WORD_NUMBER11, WORD11))).when(wordRepository).getByLanguageIdAndLetters(LANGUAGE_ID1, WORD11);
+        doReturn(Optional.of(getWord(LANGUAGE_ID2, WORD_NUMBER21, WORD21))).when(wordRepository).getByLanguageIdAndLetters(LANGUAGE_ID2, WORD21);
         WordDto word1 = getFirstWordDto();
         WordDto word2 = getSecondWordDto();
 
