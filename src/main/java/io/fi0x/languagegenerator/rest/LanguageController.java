@@ -117,7 +117,7 @@ public class LanguageController
             languageService.addLanguage(languageData);
         } catch (InvalidObjectException e) {
             log.info("Could not save the language because it was not complete.");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not save the language.\n" + e.getLocalizedMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ("Could not save the language.\n" + e.getLocalizedMessage()).replace("\n", "<br />"));
         } catch (IllegalAccessException e) {
             log.info("User '{}' tried to update language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageData.getId());
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());

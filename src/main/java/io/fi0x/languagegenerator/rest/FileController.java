@@ -1,6 +1,7 @@
 package io.fi0x.languagegenerator.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
 import io.fi0x.languagegenerator.service.FileService;
@@ -62,6 +63,9 @@ public class FileController
         } catch (InvalidObjectException e) {
             log.warn("Could not save the language because it was not complete.");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Language was not saved, because the language-object was not complete", e);
+        } catch (MismatchedInputException e) {
+            log.warn("Could not save the language, because the input could not be mapped to the LanguageJson object", e);
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Could not read the file correctly", e);
         } catch (IOException e) {
             log.warn("Could not create an InputStream of the uploaded file '{}'", multipartFile.getName(), e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong when uploading the file", e);

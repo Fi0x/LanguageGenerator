@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @AllArgsConstructor
-@SessionAttributes({"words", "username"})
+@SessionAttributes({"amount", "language", "languageCreator", "languageName", "username", "words"})
 public class TranslationController
 {
     private AuthenticationService authenticationService;
