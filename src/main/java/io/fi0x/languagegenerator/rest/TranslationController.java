@@ -1,6 +1,5 @@
 package io.fi0x.languagegenerator.rest;
 
-import io.fi0x.languagegenerator.db.entities.Word;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
 import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.LanguageService;
@@ -25,8 +24,6 @@ import java.util.List;
 @SessionAttributes({"words", "username"})
 public class TranslationController
 {
-
-    //TODO: Move all verifications to services
     private AuthenticationService authenticationService;
     private LanguageService languageService;
     private TranslationService translationService;
@@ -38,17 +35,14 @@ public class TranslationController
         log.info("saveWord() called for word={} with listIndex={}", word, listIndex);
 
         Object object = model.get("words");
-        if(object instanceof List<?> someList && someList.size() > listIndex && someList.get(listIndex) instanceof WordDto wordDto)
-        {
+        if (object instanceof List<?> someList && someList.size() > listIndex && someList.get(listIndex) instanceof WordDto wordDto) {
             wordDto.setWord(word);
 
             String languageCreator = languageService.getLanguageCreator(wordDto.getLanguageId());
-            String currentUser = authenticationService.getAuthenticatedUsername();
-
-            if (languageCreator != null && languageCreator.equals(currentUser))
-                translationService.saveOrGetWord(wordDto);
-            else {
-                log.info("User '{}' tried to save word '{}' in a language, owned by '{}', which is not allowed", currentUser, word, languageCreator);
+            try {
+                translationService.saveOrGetWord(wordDto, languageCreator);
+            } catch (IllegalAccessException e) {
+                log.info("User '{}' tried to save word '{}' in a language, owned by '{}', which is not allowed", authenticationService.getAuthenticatedUsername(), word, languageCreator);
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save translations in this language");
             }
         }
@@ -62,27 +56,17 @@ public class TranslationController
     {
         log.info("showWord() called for word={} in language={}", word, languageId);
 
-        String languageCreator = languageService.getLanguageCreator(languageId);
-        String currentUser = authenticationService.getAuthenticatedUsername();
-
         WordDto wordDto = new WordDto(languageId, word);
 
-        Word wordEntity = translationService.getSavedWord(wordDto);
-        if(wordEntity == null)
-        {
-            if(languageCreator == null || !languageCreator.equals(currentUser))
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "To see translations for this word, it needs to be saved in the database, but you are not authorized to do so.");
-
-            wordEntity = translationService.saveOrGetWord(wordDto);
+        try {
+            model.put("word", translationService.saveOrGetWord(wordDto, languageService.getLanguageCreator(languageId)));
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "To see translations for this word, it needs to be saved in the database, but you are not authorized to do so.");
         }
 
-        model.put("username", currentUser);
-        model.put("word", wordEntity);
+        model.put("username", authenticationService.getAuthenticatedUsername());
         model.put("originalLanguageData", languageService.getLanguageData(languageId));
-
-        List<WordDto> translations = languageService.addLanguageNameToWords(translationService.getTranslations(wordDto));
-
-        model.put("translations", translations);
+        model.put("translations", languageService.addLanguageNameToWords(translationService.getTranslations(wordDto)));
 
         return "word";
     }

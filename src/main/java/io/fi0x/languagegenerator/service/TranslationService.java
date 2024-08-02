@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -61,8 +62,7 @@ public class TranslationService
 
         Word firstWord = saveOrGetWord(firstDto);
         Word secondWord = saveOrGetWord(secondDto);
-        if (isNotLinked(firstWord, secondWord) && isNotLinked(secondWord, firstWord))
-        {
+        if (isNotLinked(firstWord, secondWord) && isNotLinked(secondWord, firstWord)) {
             Translation translation = WordConverter.convertToTranslation(firstWord, secondWord);
             translationRepo.save(translation);
         }
@@ -82,26 +82,40 @@ public class TranslationService
         words.forEach(wordLetters -> saveOrGetWord(new WordDto(languageId, wordLetters)));
     }
 
-    public Word saveOrGetWord(WordDto word)
+    //TODO: Add tests for this method
+    public Word saveOrGetWord(WordDto wordDto, String languageCreator) throws IllegalAccessException
     {
-        log.trace("saveOrGetWord() called with wordDto={}", word);
+        Word result = getSavedWord(wordDto);
+        if(result != null)
+            return result;
 
-        Word result = getSavedWord(word);
-        if (result == null) {
-            Long id = saveOrOverwriteWord(word.toEntity());
-            word.setSavedInDb(true);
+        if(languageCreator == null || !languageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+            throw new IllegalAccessException();
 
-            result = new Word();
-            result.setLanguageId(word.getLanguageId());
-            result.setWordNumber(id);
-            result.setLetters(word.getWord());
-        }
+        Long id = saveOrOverwriteWord(wordDto.toEntity());
+        wordDto.setSavedInDb(true);
+
+        result = new Word();
+        result.setLanguageId(wordDto.getLanguageId());
+        result.setWordNumber(id);
+        result.setLetters(wordDto.getWord());
 
         return result;
     }
 
+    private Word saveOrGetWord(WordDto word)
+    {
+        log.trace("saveOrGetWord() called with wordDto={}", word);
+
+        try {
+            return saveOrGetWord(word, SecurityContextHolder.getContext().getAuthentication().getName());
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Nullable
-    public Word getSavedWord(WordDto word)
+    private Word getSavedWord(WordDto word)
     {
         log.trace("getSavedWord() called with wordDto={}", word);
 

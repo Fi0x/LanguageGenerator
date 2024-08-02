@@ -13,8 +13,6 @@ import java.io.IOException;
 @Component
 public class LoggingFilter implements Filter
 {
-
-    //TODO: Move all verifications to services
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException
     {

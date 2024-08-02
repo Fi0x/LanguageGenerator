@@ -65,6 +65,9 @@ public class FileController
         } catch (IOException e) {
             log.warn("Could not create an InputStream of the uploaded file '{}'", multipartFile.getName(), e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong when uploading the file", e);
+        } catch (IllegalAccessException e) {
+            log.warn("Could not add or edit a language, because the original creator does not have the same name as the current user");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
         }
         return "redirect:/";
     }
