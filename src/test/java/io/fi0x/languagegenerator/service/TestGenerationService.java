@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.eq;
 
@@ -76,7 +77,7 @@ public class TestGenerationService
 
     @Test
     @Tag("UnitTest")
-    void test_generateWords_success() throws InvalidObjectException
+    void test_generateWords_success() throws InvalidObjectException, IllegalAccessException
     {
         doReturn(getConsonantCombinations()).when(cRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
         doReturn(getVocalCombinations()).when(vRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
@@ -84,26 +85,26 @@ public class TestGenerationService
         doReturn(getVocalConsonantCombinations()).when(vcRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
         doReturn(getDefaultLetter()).when(letterRepository).findById(eq(DEFAULT_LETTER_ID));
 
-        Assertions.assertEquals(getNormalWordList(), service.generateWords(VALID_LANGUAGE_ID, 4));
+        Assertions.assertEquals(getNormalWordList(), service.generateWords(any(), 4));
     }
 
     @Test
     @Tag("UnitTest")
     void test_generateWords_noLanguage()
     {
-        Assertions.assertThrows(EntityNotFoundException.class, () -> service.generateWords(INVALID_LANGUAGE_ID, 4));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> service.generateWords(any(), 4));
     }
 
     @Test
     @Tag("UnitTest")
     void test_generateWords_invalidLanguage()
     {
-        Assertions.assertThrows(InvalidObjectException.class, () -> service.generateWords(VALID_LANGUAGE_ID, 4));
+        Assertions.assertThrows(InvalidObjectException.class, () -> service.generateWords(any(), 4));
     }
 
     @Test
     @Tag("UnitTest")
-    void test_generateWords_allForbidden() throws InvalidObjectException
+    void test_generateWords_allForbidden() throws InvalidObjectException, IllegalAccessException
     {
         doReturn(getConsonantCombinations()).when(cRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
         doReturn(getVocalCombinations()).when(vRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
@@ -112,12 +113,12 @@ public class TestGenerationService
         doReturn(getDefaultLetter()).when(letterRepository).findById(eq(DEFAULT_LETTER_ID));
         doReturn(getForbiddenCombinations()).when(fRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
 
-        Assertions.assertEquals(getEmptyWordList(),  service.generateWords(VALID_LANGUAGE_ID, 4));
+        Assertions.assertEquals(getEmptyWordList(),  service.generateWords(any(), 4));
     }
 
     @Test
     @Tag("UnitTest")
-    void test_generateWords_BeginningAndEnd() throws InvalidObjectException
+    void test_generateWords_BeginningAndEnd() throws InvalidObjectException, IllegalAccessException
     {
         doReturn(getConsonantCombinations()).when(cRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
         doReturn(getVocalCombinations()).when(vRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
@@ -130,7 +131,7 @@ public class TestGenerationService
         doReturn(getEndLetter()).when(letterRepository).findById(eq(END_LETTER_ID));
         doReturn(getLanguage(BEGINNING_END_WORD_LENGTH)).when(languageRepository).findById(eq(VALID_LANGUAGE_ID));
 
-        Assertions.assertEquals(getBeginningEndWordList(), service.generateWords(VALID_LANGUAGE_ID, 4));
+        Assertions.assertEquals(getBeginningEndWordList(), service.generateWords(any(), 4));
     }
 
     private List<WordDto> getNormalWordList()

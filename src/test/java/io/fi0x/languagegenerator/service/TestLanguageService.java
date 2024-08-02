@@ -161,8 +161,8 @@ public class TestLanguageService
     @Tag("UnitTest")
     void test_deleteLanguage()
     {
-        Assertions.assertFalse(service.deleteLanguage(NEXT_FREE_ID));
-        Assertions.assertTrue(service.deleteLanguage(HIGHEST_ID));
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteLanguage(NEXT_FREE_ID, USERNAME));
+        Assertions.assertDoesNotThrow(() -> service.deleteLanguage(HIGHEST_ID, USERNAME));
     }
 
     private LanguageData getLanguageData()

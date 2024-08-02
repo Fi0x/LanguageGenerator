@@ -67,7 +67,7 @@ public class TestLanguageController
     void test_generateWords_success() throws Exception
     {
         List<WordDto> wordList = getWordList();
-        doReturn(wordList).when(generationService).generateWords(eq(LANGUAGE_ID), eq(WORD_AMOUNT));
+        doReturn(wordList).when(generationService).generateWords(eq(getLanguageData()), eq(WORD_AMOUNT));
 
         mvc.perform(get(GENERATE_URL).param("language", String.valueOf(LANGUAGE_ID)).param("amount", String.valueOf(WORD_AMOUNT)))
                 .andExpect(status().is(HttpStatus.OK.value()))
@@ -83,7 +83,7 @@ public class TestLanguageController
     void test_generateWords_success_noAmount() throws Exception
     {
         List<WordDto> wordList = getWordList();
-        doReturn(wordList).when(generationService).generateWords(eq(LANGUAGE_ID), eq(10));
+        doReturn(wordList).when(generationService).generateWords(eq(getLanguageData()), eq(10));
 
         mvc.perform(get(GENERATE_URL).param("language", String.valueOf(LANGUAGE_ID)))
                 .andExpect(status().is(HttpStatus.OK.value()))
@@ -99,7 +99,7 @@ public class TestLanguageController
     void test_generateWords_success_noLanguage() throws Exception
     {
         List<WordDto> wordList = getWordList();
-        doReturn(wordList).when(generationService).generateWords(eq(0L), eq(WORD_AMOUNT));
+        doReturn(wordList).when(generationService).generateWords(any(), eq(WORD_AMOUNT));
         doReturn(getLanguageData()).when(languageService).getLanguageData(eq(0L));
 
         mvc.perform(get(GENERATE_URL).param("amount", String.valueOf(WORD_AMOUNT)))
@@ -116,7 +116,7 @@ public class TestLanguageController
     void test_generateWords_success_wrongUser() throws Exception
     {
         List<WordDto> wordList = getWordList();
-        doReturn(wordList).when(generationService).generateWords(eq(LANGUAGE_ID), eq(WORD_AMOUNT));
+        doReturn(wordList).when(generationService).generateWords(eq(getLanguageData()), eq(WORD_AMOUNT));
         LanguageData languageData = getLanguageData();
         languageData.setUsername("Wrong User");
         languageData.setVisible(true);
@@ -147,7 +147,7 @@ public class TestLanguageController
     @Tag("UnitTest")
     void test_generateWords_noLanguage() throws Exception
     {
-        doThrow(EntityNotFoundException.class).when(generationService).generateWords(eq(LANGUAGE_ID), eq(WORD_AMOUNT));
+        doThrow(EntityNotFoundException.class).when(generationService).generateWords(eq(getLanguageData()), eq(WORD_AMOUNT));
 
         mvc.perform(get(GENERATE_URL).param("language", String.valueOf(LANGUAGE_ID)).param("amount", String.valueOf(WORD_AMOUNT)))
                 .andExpect(status().is(HttpStatus.FOUND.value()))
@@ -161,7 +161,7 @@ public class TestLanguageController
     @Tag("UnitTest")
     void test_generateWords_invalidLanguage() throws Exception
     {
-        doThrow(InvalidObjectException.class).when(generationService).generateWords(eq(LANGUAGE_ID), eq(WORD_AMOUNT));
+        doThrow(InvalidObjectException.class).when(generationService).generateWords(eq(getLanguageData()), eq(WORD_AMOUNT));
 
         mvc.perform(get(GENERATE_URL).param("language", String.valueOf(LANGUAGE_ID)).param("amount", String.valueOf(WORD_AMOUNT)))
                 .andExpect(status().is(HttpStatus.FOUND.value()))
@@ -254,7 +254,7 @@ public class TestLanguageController
     void test_deleteLanguage_success() throws Exception
     {
         doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
-        doReturn(true).when(languageService).deleteLanguage(eq(LANGUAGE_ID));
+        doNothing().when(languageService).deleteLanguage(eq(LANGUAGE_ID), eq(USERNAME));
 
         mvc.perform(get(DELETE_LANGUAGE_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
                 .andExpect(status().is(HttpStatus.FOUND.value()))
@@ -276,7 +276,7 @@ public class TestLanguageController
     void test_deleteLanguage_notFound() throws Exception
     {
         doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
-        doReturn(false).when(languageService).deleteLanguage(eq(LANGUAGE_ID));
+        doReturn(false).when(languageService).deleteLanguage(eq(LANGUAGE_ID), eq(USERNAME));
 
         mvc.perform(get(DELETE_LANGUAGE_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
                 .andExpect(status().is(HttpStatus.NOT_FOUND.value()));
