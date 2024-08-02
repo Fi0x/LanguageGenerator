@@ -37,8 +37,7 @@ public class LanguageService
     {
         log.trace("addLanguage() called with languageData={}", languageData);
 
-        if (languageData.getId() == null)
-        {
+        if (languageData.getId() == null) {
             Optional<Long> id = languageRepository.getHighestId();
             languageData.setId((id.isPresent() ? id.get() : -1) + 1);
         }
@@ -137,11 +136,14 @@ public class LanguageService
         });
     }
 
-    public void addLanguage(LanguageJson languageJson, String name, boolean visible) throws InvalidObjectException
+    public void addLanguage(LanguageJson languageJson, String name, boolean visible) throws InvalidObjectException, IllegalArgumentException
     {
         log.trace("addLanguage() called with name={}, visibility={} and languageJson={}", name, visible, languageJson);
 
-        addLanguage(LanguageConverter.convertToData(languageJson, languageRepository.getHighestId().orElse(0L) + 1, name, authenticationService.getAuthenticatedUsername(), visible));
+        if (isFileValid(languageJson))
+            addLanguage(LanguageConverter.convertToData(languageJson, languageRepository.getHighestId().orElse(0L) + 1, name, authenticationService.getAuthenticatedUsername(), visible));
+        else
+            throw new IllegalArgumentException();
     }
 
     public List<Language> getUserAndPublicLanguages()
@@ -161,9 +163,7 @@ public class LanguageService
         log.trace("addLanguageNameToWords() called for words={}", words);
 
         List<WordDto> results = words.stream().map(word -> new WordDto(word.getLanguageId(), word.getLetters())).toList();
-        results.forEach(wordDto -> {
-            wordDto.setLanguageName(getLanguageData(wordDto.getLanguageId()).getName());
-        });
+        results.forEach(wordDto -> wordDto.setLanguageName(getLanguageData(wordDto.getLanguageId()).getName()));
 
         return results;
     }
@@ -202,8 +202,7 @@ public class LanguageService
     private long getLetterIdOrSaveIfNew(String letterCombination)
     {
         List<Letter> letters = letterRepository.getAllByLetters(letterCombination);
-        if (letters.isEmpty())
-        {
+        if (letters.isEmpty()) {
             Letter letter = new Letter();
             Optional<Long> id = letterRepository.getHighestId();
             letter.setId((id.isPresent() ? id.get() : 0) + 1);
@@ -249,5 +248,15 @@ public class LanguageService
         languageData.setEndingCombinations(endLetters);
 
         return languageData;
+    }
+
+    private boolean isFileValid(LanguageJson languageJson)
+    {
+        if (languageJson == null || languageJson.getNameLengths() == null || languageJson.getSpecialCharacterLengths() == null
+                || languageJson.getSpecialCharacterChance() < 0 || languageJson.getSpecialCharacterChance() > 1) {
+            return false;
+        }
+
+        return languageJson.getNameLengths().length == 2 && languageJson.getSpecialCharacterLengths().length == 4;
     }
 }

@@ -25,6 +25,8 @@ import java.util.List;
 @SessionAttributes({"words", "username"})
 public class TranslationController
 {
+
+    //TODO: Move all verifications to services
     private AuthenticationService authenticationService;
     private LanguageService languageService;
     private TranslationService translationService;

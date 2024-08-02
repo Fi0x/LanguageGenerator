@@ -31,6 +31,8 @@ public class LanguageController
     private LanguageService languageService;
     private AuthenticationService authenticationService;
 
+    //TODO: Move all verifications to services
+
     @Transactional
     @GetMapping("/generate")
     public String generateWords(ModelMap model, @RequestParam(value = "language", defaultValue = "-1", required = false) long language,

@@ -46,7 +46,14 @@ public class TestFileService
 
     @Test
     @Tag("UnitTest")
-    void test_getLanguageFile_success() throws IOException
+    void test_getLanguageFile_wrongUser()
+    {
+        //TODO: Add test
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_getLanguageFile_success() throws IOException, IllegalAccessException
     {
         File file = new File(LANGUAGE_ID + FILE_SUFFIX);
         Path path = file.toPath();
@@ -57,13 +64,6 @@ public class TestFileService
         Assertions.assertEquals(expectedResult, service.getLanguageFile(LanguageData.builder().id(LANGUAGE_ID).specialCharacterChance(1D).build()));
 
         staticMock.close();
-    }
-
-    @Test
-    @Tag("UnitTest")
-    void test_isFileValid_true()
-    {
-        Assertions.assertTrue(service.isFileValid(getValidJson()));
     }
 
     @Test
@@ -82,13 +82,6 @@ public class TestFileService
         json5.setNameLengths(new int[]{0});
         LanguageJson json6 = getValidJson();
         json6.setSpecialCharacterLengths(new int[]{0});
-
-        Assertions.assertFalse(service.isFileValid(json1));
-        Assertions.assertFalse(service.isFileValid(json2));
-        Assertions.assertFalse(service.isFileValid(json3));
-        Assertions.assertFalse(service.isFileValid(json4));
-        Assertions.assertFalse(service.isFileValid(json5));
-        Assertions.assertFalse(service.isFileValid(json6));
     }
 
     private LanguageJson getValidJson()

@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes({"registerError", "redirect", "userDto", "username"})
 public class UserController
 {
+
+    //TODO: Move all verifications to services
     private AuthenticationService authenticationService;
 
     @GetMapping("/custom-login")

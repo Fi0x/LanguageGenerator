@@ -126,6 +126,7 @@ public class TestLanguageService
                 .thenReturn(LanguageData.builder().id(NEXT_FREE_ID).build());
 
         Assertions.assertThrows(InvalidObjectException.class, () -> service.addLanguage(languageJson, LANGUAGE_NAME, false));
+        //TODO: Also test invalid json
 
         staticMock.close();
     }
