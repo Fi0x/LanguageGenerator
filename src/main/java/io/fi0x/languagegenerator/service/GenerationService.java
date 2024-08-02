@@ -57,8 +57,7 @@ public class GenerationService
         language.setStartingCombinations(getLetters(staRepository.getAllByLanguageId(languageData.getId()).stream().map(StartingCombinations::getLetterId).collect(Collectors.toList())));
         language.setEndingCombinations(getLetters(endRepository.getAllByLanguageId(languageData.getId()).stream().map(EndingCombinations::getLetterId).collect(Collectors.toList())));
 
-        if (language.invalid())
-            throw new InvalidObjectException("Can't generate words with the settings of language: " + languageData.getId());
+        language.validate();
 
         ArrayList<WordDto> generatedWords = new ArrayList<>();
         for (int i = 0; i < count; i++) {
@@ -137,8 +136,6 @@ public class GenerationService
 
     private String addSpecialCharacters(String currentWord, LanguageData languageData)
     {
-        if (languageData.getSpecialCharacterChance() == null)
-            return currentWord;
         if (currentWord.length() >= languageData.getMaxWordLength())
             return currentWord;
         if (Math.random() >= languageData.getSpecialCharacterChance() && languageData.getMaxSpecialChars() <= 0)

@@ -45,8 +45,7 @@ public class LanguageService
             languageData.setId((id.isPresent() ? id.get() : -1) + 1);
         }
 
-        if (languageData.invalid())
-            throw new InvalidObjectException("Can't save language with the provided settings");
+        languageData.validate();
 
         languageRepository.save(LanguageConverter.convertToEntity(languageData));
 

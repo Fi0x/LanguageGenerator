@@ -25,7 +25,7 @@ public class FileService
             throw new IllegalArgumentException("LanguageData must not be null");
 
         String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-        if(!currentUser.equals(languageData.getUsername()))
+        if(!currentUser.equals(languageData.getUsername()) && !languageData.isVisible())
         {
             log.info("User '{}' tried to get language file with languageId={}, but does not have access to it", currentUser, languageData.getId());
             throw new IllegalAccessException("User is not allowed to download the selected language");

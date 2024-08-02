@@ -4,6 +4,7 @@ import io.fi0x.languagegenerator.db.entities.Language;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.InvalidObjectException;
 import java.util.List;
 
 @Data
@@ -20,7 +21,7 @@ public class LanguageData
     private int charsAfterSpecial;
     private int minSpecialChars;
     private int maxSpecialChars;
-    private Double specialCharacterChance;
+    private double specialCharacterChance;
 
     private List<String> vocals;
     private List<String> consonants;
@@ -40,6 +41,8 @@ public class LanguageData
                 .specialCharacterChance(language.getSpecialCharacterChance()).visible(language.getVisible()).build();
     }
 
+    //TODO: Remove
+    @Deprecated
     public boolean invalid()
     {
         if (id == null || name == null || username == null)
@@ -50,5 +53,35 @@ public class LanguageData
         if (name.isBlank() || username.isBlank() || minWordLength <= 0 || maxWordLength <= 0)
             return true;
         return vocals.isEmpty() && consonants.isEmpty() && vocalConsonant.isEmpty() && consonantVocals.isEmpty();
+    }
+
+    public void validate() throws InvalidObjectException
+    {
+        String errors = "The following errors occured:";
+        boolean errorFound = false;
+
+        if (id == null || name == null || username == null || name.isBlank() || username.isBlank()) {
+            errors += "\nAn internal field was null or empty";
+            errorFound = true;
+        }
+        if (vocals == null || consonants == null || vocalConsonant == null || consonantVocals == null) {
+            errors += "\nA character-list was null";
+            errorFound = true;
+        } else if (vocals.isEmpty() && consonants.isEmpty() && vocalConsonant.isEmpty() && consonantVocals.isEmpty()) {
+            errors += "\nAt least one character-list must not be empty";
+            errorFound = true;
+        }
+
+        if (minWordLength <= 0) {
+            errors += "\nThe min-word-length must be greater than 0";
+            errorFound = true;
+        }
+        if (maxWordLength < minWordLength) {
+            errors += "\nThe max-word-length must be at least as high as the min-word-length";
+            errorFound = true;
+        }
+
+        if(errorFound)
+            throw new InvalidObjectException(errors);
     }
 }

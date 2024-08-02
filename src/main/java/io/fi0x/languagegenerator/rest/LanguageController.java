@@ -59,7 +59,7 @@ public class LanguageController
             log.warn("Could not find a language with id={}", language);
             return "redirect:/";
         } catch (InvalidObjectException e) {
-            log.warn("The constraints for the language with id={} are not valid to generate a word", language);
+            log.warn("The constraints for the language with id={} are not valid to generate a word\n" + e.getLocalizedMessage(), language);
             return "redirect:/";
         } catch (IllegalAccessException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
@@ -117,7 +117,7 @@ public class LanguageController
             languageService.addLanguage(languageData);
         } catch (InvalidObjectException e) {
             log.info("Could not save the language because it was not complete.");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not save the language, because the language-object was not complete", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not save the language.\n" + e.getLocalizedMessage());
         } catch (IllegalAccessException e) {
             log.info("User '{}' tried to update language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageData.getId());
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
