@@ -2,7 +2,6 @@ package io.fi0x.languagegenerator.logic.converter;
 
 import io.fi0x.languagegenerator.db.entities.Translation;
 import io.fi0x.languagegenerator.db.entities.Word;
-import io.fi0x.languagegenerator.logic.dto.WordDto;
 
 public class WordConverter
 {
@@ -14,10 +13,5 @@ public class WordConverter
         translation.setTranslatedLanguageId(word2.getLanguageId());
         translation.setTranslatedWordNumber(word2.getWordNumber());
         return translation;
-    }
-
-    public static WordDto convertToDto(Long languageId, String letters)
-    {
-        return new WordDto(languageId, letters);
     }
 }

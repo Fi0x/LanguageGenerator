@@ -27,7 +27,9 @@ public class TranslationService
 
     public List<Word> getTranslations(WordDto originalWord)
     {
-        Word word = getWord(originalWord);
+        log.trace("getTranslations() called with wordDto={}", originalWord);
+
+        Word word = getSavedWord(originalWord);
         if (word == null)
             return Collections.emptyList();
 
@@ -40,7 +42,9 @@ public class TranslationService
 
     public List<Word> getTranslations(WordDto originalWord, Long desiredLanguageId)
     {
-        Word word = getWord(originalWord);
+        log.trace("getTranslations() called with wordDto={} and languageId={}", originalWord, desiredLanguageId);
+
+        Word word = getSavedWord(originalWord);
         if (word == null)
             return Collections.emptyList();
 
@@ -69,12 +73,12 @@ public class TranslationService
 
     public void saveWords(Long languageId, List<String> words)
     {
-        words.forEach(wordLetters -> saveOrGetWord(WordConverter.convertToDto(languageId, wordLetters)));
+        words.forEach(wordLetters -> saveOrGetWord(new WordDto(languageId, wordLetters)));
     }
 
     public Word saveOrGetWord(WordDto word)
     {
-        Word result = getWord(word);
+        Word result = getSavedWord(word);
         if (result == null) {
             Long id = saveOrOverwriteWord(word.toEntity());
             word.setSavedInDb(true);
@@ -88,6 +92,12 @@ public class TranslationService
         return result;
     }
 
+    @Nullable
+    public Word getSavedWord(WordDto word)
+    {
+        return wordRepo.getByLanguageIdAndLetters(word.getLanguageId(), word.getWord()).orElse(null);
+    }
+
     private Long saveOrOverwriteWord(Word word) throws IllegalIdentifierException
     {
         if (word.getWordNumber() == null) {
@@ -97,12 +107,6 @@ public class TranslationService
 
         wordRepo.save(word);
         return word.getWordNumber();
-    }
-
-    @Nullable
-    private Word getWord(WordDto word)
-    {
-        return wordRepo.getByLanguageIdAndLetters(word.getLanguageId(), word.getWord()).orElse(null);
     }
 
     private List<Word> getTranslatedWords(List<Translation> translations)

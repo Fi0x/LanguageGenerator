@@ -136,30 +136,30 @@ public class TestGenerationService
     private List<WordDto> getNormalWordList()
     {
         List<WordDto> words = new ArrayList<>();
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa", 0, false));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa", 1, false));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa", 2, false));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Aa", 3, false));
+        words.add(new WordDto(VALID_LANGUAGE_ID, NAME, "Aa", 0, false));
+        words.add(new WordDto(VALID_LANGUAGE_ID, NAME, "Aa", 1, false));
+        words.add(new WordDto(VALID_LANGUAGE_ID, NAME, "Aa", 2, false));
+        words.add(new WordDto(VALID_LANGUAGE_ID, NAME, "Aa", 3, false));
         return words;
     }
 
     private List<WordDto> getBeginningEndWordList()
     {
         List<WordDto> words = new ArrayList<>();
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac", 0, false));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac", 1, false));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac", 2, false));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "Baac", 3, false));
+        words.add(new WordDto(VALID_LANGUAGE_ID, NAME, "Baac", 0, false));
+        words.add(new WordDto(VALID_LANGUAGE_ID, NAME, "Baac", 1, false));
+        words.add(new WordDto(VALID_LANGUAGE_ID, NAME, "Baac", 2, false));
+        words.add(new WordDto(VALID_LANGUAGE_ID, NAME, "Baac", 3, false));
         return words;
     }
 
     private List<WordDto> getEmptyWordList()
     {
         List<WordDto> words = new ArrayList<>();
-        words.add(new WordDto(VALID_LANGUAGE_ID, "", 0, false));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "", 1, false));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "", 2, false));
-        words.add(new WordDto(VALID_LANGUAGE_ID, "", 3, false));
+        words.add(new WordDto(VALID_LANGUAGE_ID, NAME, "", 0, false));
+        words.add(new WordDto(VALID_LANGUAGE_ID, NAME, "", 1, false));
+        words.add(new WordDto(VALID_LANGUAGE_ID, NAME, "", 2, false));
+        words.add(new WordDto(VALID_LANGUAGE_ID, NAME, "", 3, false));
         return words;
     }
 

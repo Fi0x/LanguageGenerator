@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class WordDto
 {
     private Long languageId;
+    private String languageName;
     private String word;
     private Integer listIndex;
     private Boolean savedInDb;

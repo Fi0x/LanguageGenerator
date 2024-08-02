@@ -29,7 +29,7 @@
                         </label>
                     </td>
                     <td>
-                            <%--TODO: Add button to show translation page for this word (Should also save the word before showing the page, if it is not yet saved)--%>
+                        <a href="word?languageId=${singleWord.languageId}&word=${singleWord.word}" class="btn">Translations</a>
                     </td>
                     <c:if test="${languageCreator == username}">
                         <td>

@@ -5,6 +5,7 @@ import io.fi0x.languagegenerator.db.entities.*;
 import io.fi0x.languagegenerator.logic.converter.LanguageConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
+import io.fi0x.languagegenerator.logic.dto.WordDto;
 import lombok.AllArgsConstructor;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -145,6 +146,16 @@ public class LanguageService
         result.addAll(publicLanguages);
 
         return result;
+    }
+
+    public List<WordDto> addLanguageNameToWords(List<Word> words)
+    {
+        List<WordDto> results = words.stream().map(word -> new WordDto(word.getLanguageId(), word.getLetters())).toList();
+        results.forEach(wordDto -> {
+            wordDto.setLanguageName(getLanguageData(wordDto.getLanguageId()).getName());
+        });
+
+        return results;
     }
 
     public LanguageData getLanguageData(long languageId)
