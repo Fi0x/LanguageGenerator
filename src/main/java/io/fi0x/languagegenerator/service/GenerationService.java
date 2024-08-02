@@ -35,6 +35,8 @@ public class GenerationService
 
     public List<WordDto> generateWords(long languageId, int count) throws EntityNotFoundException, InvalidObjectException
     {
+        log.trace("generateWords() called for languageId={} with amount={}", languageId, count);
+
         Optional<Language> result = languageRepository.findById(languageId);
         if (result.isEmpty())
             throw new EntityNotFoundException("Could not find language with id=" + languageId);

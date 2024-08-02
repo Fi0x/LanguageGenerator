@@ -2,6 +2,7 @@ package io.fi0x.languagegenerator.service;
 
 import io.fi0x.languagegenerator.logic.dto.UserDto;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -9,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class AuthenticationService
@@ -18,11 +20,13 @@ public class AuthenticationService
 
     public String getAuthenticatedUsername()
     {
+        log.trace("getAuthenticatedUsername() called");
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     public void registerUser(UserDto userDto) throws DuplicateKeyException
     {
+        log.trace("registerUser() called with userDto={}", userDto);
         if(userDetailsManager.userExists(userDto.getUsername()))
             throw new DuplicateKeyException("A user with that username already exists");
 

@@ -57,6 +57,8 @@ public class TranslationService
 
     public void linkWords(WordDto firstDto, WordDto secondDto)
     {
+        log.trace("linkWords() called with wordDtos={} and {}", firstDto, secondDto);
+
         Word firstWord = saveOrGetWord(firstDto);
         Word secondWord = saveOrGetWord(secondDto);
         if (isNotLinked(firstWord, secondWord) && isNotLinked(secondWord, firstWord))
@@ -68,16 +70,22 @@ public class TranslationService
 
     public void saveWords(List<WordDto> words)
     {
+        log.trace("saveWords() called with wordDtos={}", words);
+
         words.forEach(this::saveOrGetWord);
     }
 
     public void saveWords(Long languageId, List<String> words)
     {
+        log.trace("saveWords() called with languageId={} and words={}", languageId, words);
+
         words.forEach(wordLetters -> saveOrGetWord(new WordDto(languageId, wordLetters)));
     }
 
     public Word saveOrGetWord(WordDto word)
     {
+        log.trace("saveOrGetWord() called with wordDto={}", word);
+
         Word result = getSavedWord(word);
         if (result == null) {
             Long id = saveOrOverwriteWord(word.toEntity());
@@ -95,6 +103,8 @@ public class TranslationService
     @Nullable
     public Word getSavedWord(WordDto word)
     {
+        log.trace("getSavedWord() called with wordDto={}", word);
+
         return wordRepo.getByLanguageIdAndLetters(word.getLanguageId(), word.getWord()).orElse(null);
     }
 

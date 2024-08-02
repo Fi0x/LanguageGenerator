@@ -7,6 +7,7 @@ import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.io.InvalidObjectException;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class LanguageService
@@ -33,6 +35,8 @@ public class LanguageService
 
     public void addLanguage(LanguageData languageData) throws InvalidObjectException
     {
+        log.trace("addLanguage() called with languageData={}", languageData);
+
         if (languageData.getId() == null)
         {
             Optional<Long> id = languageRepository.getHighestId();
@@ -135,11 +139,15 @@ public class LanguageService
 
     public void addLanguage(LanguageJson languageJson, String name, boolean visible) throws InvalidObjectException
     {
+        log.trace("addLanguage() called with name={}, visibility={} and languageJson={}", name, visible, languageJson);
+
         addLanguage(LanguageConverter.convertToData(languageJson, languageRepository.getHighestId().orElse(0L) + 1, name, authenticationService.getAuthenticatedUsername(), visible));
     }
 
     public List<Language> getUserAndPublicLanguages()
     {
+        log.trace("getUserAndPublicLanguages() called");
+
         List<Language> result = languageRepository.getAllByUsername(authenticationService.getAuthenticatedUsername());
         List<Language> publicLanguages = languageRepository.getAllByVisible(true);
         result.removeAll(publicLanguages);
@@ -150,6 +158,8 @@ public class LanguageService
 
     public List<WordDto> addLanguageNameToWords(List<Word> words)
     {
+        log.trace("addLanguageNameToWords() called for words={}", words);
+
         List<WordDto> results = words.stream().map(word -> new WordDto(word.getLanguageId(), word.getLetters())).toList();
         results.forEach(wordDto -> {
             wordDto.setLanguageName(getLanguageData(wordDto.getLanguageId()).getName());
@@ -160,6 +170,8 @@ public class LanguageService
 
     public LanguageData getLanguageData(long languageId)
     {
+        log.trace("getLanguageData() called for languageId={}", languageId);
+
         Optional<Language> languageEntity = languageRepository.findById(languageId);
 
         return languageEntity.map(language -> addLettersToLanguage(LanguageData.getFromEntity(language)))
@@ -169,12 +181,16 @@ public class LanguageService
     @Nullable
     public String getLanguageCreator(long languageId)
     {
+        log.trace("getLangaugeCreator() called for languageId={}", languageId);
+
         Optional<Language> data = languageRepository.findById(languageId);
         return data.map(Language::getUsername).orElse(null);
     }
 
     public boolean deleteLanguage(long languageId)
     {
+        log.trace("deleteLanguage() called for languageId={}", languageId);
+
         Optional<Language> languageEntity = languageRepository.findById(languageId);
         if (languageEntity.isEmpty())
             return false;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.fi0x.languagegenerator.logic.converter.LanguageConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+@Slf4j
 @Service
 public class FileService
 {
     public Resource getLanguageFile(LanguageData languageData) throws IllegalArgumentException, IOException
     {
+        log.trace("getLanguageFile() called for languageData={}", languageData);
         if (languageData == null || languageData.getId() == null)
             throw new IllegalArgumentException("LanguageData must not be null");
 
@@ -31,6 +34,7 @@ public class FileService
 
     public boolean isFileValid(LanguageJson languageJson)
     {
+        log.trace("isFileValid() called for languageJson={}", languageJson);
         if (languageJson.getNameLengths() == null || languageJson.getSpecialCharacterLengths() == null
                 || languageJson.getSpecialCharacterChance() < 0 || languageJson.getSpecialCharacterChance() > 1)
         {
