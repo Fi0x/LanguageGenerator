@@ -30,7 +30,6 @@ public class TestFileService
 
     MockedStatic<SecurityContextHolder> staticSecurityMoc;
 
-    //TODO: Add test to complete coverage
     @Mock
     private Authentication authentication;
     @Mock
