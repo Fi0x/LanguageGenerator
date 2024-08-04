@@ -6,6 +6,7 @@ import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class GenerationService
     private final EndingRepository endRepository;
     private final WordRepository wordRepo;
 
-    public List<WordDto> generateWords(LanguageData languageData, int count) throws EntityNotFoundException, InvalidObjectException, IllegalAccessException
+    public List<WordDto> generateWords(@NonNull LanguageData languageData, int count) throws EntityNotFoundException, InvalidObjectException, IllegalAccessException
     {
         log.trace("generateWords() called for language={} with amount={}", languageData, count);
 

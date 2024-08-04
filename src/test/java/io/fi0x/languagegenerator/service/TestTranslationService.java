@@ -12,7 +12,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -40,11 +44,18 @@ public class TestTranslationService
     private static final String WORD23 = "hello";
     private static final String WORD31 = "blue";
     private static final String WORD32 = "huh";
+    private static final String USERNAME = "Dietmar";
+    private MockedStatic<SecurityContextHolder> staticMock;
 
     @Mock
     private WordRepository wordRepository;
     @Mock
     private TranslationRepository translationRepository;
+
+    @Mock
+    private Authentication authentication;
+    @Mock
+    private SecurityContext securityContext;
 
     @InjectMocks
     private TranslationService service;
@@ -142,6 +153,8 @@ public class TestTranslationService
     @Tag("UnitTest")
     void test_linkWords_alreadyLinked()
     {
+        setupAuthentication();
+
         doReturn(Optional.of(getWord(LANGUAGE_ID1, WORD_NUMBER11, WORD11))).when(wordRepository).getByLanguageIdAndLetters(LANGUAGE_ID1, WORD11);
         doReturn(Optional.of(getWord(LANGUAGE_ID2, WORD_NUMBER21, WORD21))).when(wordRepository).getByLanguageIdAndLetters(LANGUAGE_ID2, WORD21);
         WordDto word1 = getFirstWordDto();
@@ -160,12 +173,16 @@ public class TestTranslationService
         Assertions.assertDoesNotThrow(() -> service.linkWords(word1, word2));
 
         verify(translationRepository, never()).save(any());
+
+        staticMock.close();
     }
 
     @Test
     @Tag("UnitTest")
     void text_linkWords_success()
     {
+        setupAuthentication();
+
         doReturn(Optional.of(getWord(LANGUAGE_ID1, WORD_NUMBER11, WORD11))).when(wordRepository).getByLanguageIdAndLetters(LANGUAGE_ID1, WORD11);
         doReturn(Optional.of(getWord(LANGUAGE_ID2, WORD_NUMBER21, WORD21))).when(wordRepository).getByLanguageIdAndLetters(LANGUAGE_ID2, WORD21);
         WordDto word1 = getFirstWordDto();
@@ -176,12 +193,16 @@ public class TestTranslationService
         Assertions.assertDoesNotThrow(() -> service.linkWords(word1, word2));
 
         verify(translationRepository, times(1)).save(any());
+
+        staticMock.close();
     }
 
     @Test
     @Tag("UnitTest")
     void text_saveWords_withDtoList()
     {
+        setupAuthentication();
+
         Assertions.assertDoesNotThrow(() -> service.saveWords(getAllWordDtoList()));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD21));
@@ -189,23 +210,30 @@ public class TestTranslationService
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD23));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID3), eq(WORD31));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID3), eq(WORD32));
+
+        staticMock.close();
     }
 
     @Test
     @Tag("UnitTest")
     void text_saveWords_withStrings()
     {
+        setupAuthentication();
+
         Assertions.assertDoesNotThrow(() -> service.saveWords(LANGUAGE_ID2, getSecondLanguageStrings()));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD21));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD22));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD23));
+
+        staticMock.close();
     }
 
-    @Test
-    @Tag("UnitTest")
-    void text_saveOrGetWord()
+    private void setupAuthentication()
     {
-        //TODO: Implement and add edge-cases
+        staticMock = mockStatic(SecurityContextHolder.class);
+        staticMock.when(SecurityContextHolder::getContext).thenReturn(securityContext);
+        doReturn(authentication).when(securityContext).getAuthentication();
+        doReturn(USERNAME).when(authentication).getName();
     }
 
     private void setupWordReturns()
@@ -236,7 +264,8 @@ public class TestTranslationService
     private List<Translation> getTranslations(boolean justLanguage3)
     {
         List<Translation> results = new ArrayList<>();
-        if (!justLanguage3) {
+        if (!justLanguage3)
+        {
             results.add(getTranslation(LANGUAGE_ID1, WORD_NUMBER11, LANGUAGE_ID2, WORD_NUMBER21));
             results.add(getTranslation(LANGUAGE_ID1, WORD_NUMBER11, LANGUAGE_ID2, WORD_NUMBER22));
         }
@@ -266,7 +295,8 @@ public class TestTranslationService
     private List<Word> getAllWords(boolean justLanguage3)
     {
         List<Word> wordList = new ArrayList<>();
-        if (!justLanguage3) {
+        if (!justLanguage3)
+        {
             wordList.add(getWord(LANGUAGE_ID2, WORD_NUMBER21, WORD21));
             wordList.add(getWord(LANGUAGE_ID2, WORD_NUMBER22, WORD22));
             wordList.add(getWord(LANGUAGE_ID2, WORD_NUMBER23, WORD23));

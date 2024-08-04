@@ -2,16 +2,18 @@ package io.fi0x.languagegenerator.service;
 
 import io.fi0x.languagegenerator.db.*;
 import io.fi0x.languagegenerator.db.entities.*;
+import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
 import jakarta.persistence.EntityNotFoundException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.InvalidObjectException;
@@ -19,9 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 public class TestGenerationService
@@ -40,6 +40,8 @@ public class TestGenerationService
     private static final Long BEGINNING_LETTER_ID = 8L;
     private static final String END_LETTER = "c";
     private static final Long END_LETTER_ID = 32L;
+
+    private MockedStatic<SecurityContextHolder> staticMock;
 
     @Mock
     private LanguageRepository languageRepository;
@@ -64,6 +66,11 @@ public class TestGenerationService
     @Mock
     private WordRepository wordRepository;
 
+    @Mock
+    private Authentication authentication;
+    @Mock
+    private SecurityContext securityContext;
+
     @InjectMocks
     private GenerationService service;
 
@@ -72,7 +79,18 @@ public class TestGenerationService
     {
         MockitoAnnotations.openMocks(this);
 
+        staticMock = mockStatic(SecurityContextHolder.class);
+        staticMock.when(SecurityContextHolder::getContext).thenReturn(securityContext);
+        doReturn(authentication).when(securityContext).getAuthentication();
+        doReturn(USERNAME).when(authentication).getName();
+
         doReturn(getLanguage(NORMAL_WORD_LENGTH)).when(languageRepository).findById(eq(VALID_LANGUAGE_ID));
+    }
+
+    @AfterEach
+    void teardown()
+    {
+        staticMock.close();
     }
 
     @Test
@@ -85,21 +103,24 @@ public class TestGenerationService
         doReturn(getVocalConsonantCombinations()).when(vcRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
         doReturn(getDefaultLetter()).when(letterRepository).findById(eq(DEFAULT_LETTER_ID));
 
-        Assertions.assertEquals(getNormalWordList(), service.generateWords(any(), 4));
+        Assertions.assertEquals(getNormalWordList(), service.generateWords(getLanguageData(), 4));
     }
 
     @Test
     @Tag("UnitTest")
     void test_generateWords_noLanguage()
     {
-        Assertions.assertThrows(EntityNotFoundException.class, () -> service.generateWords(any(), 4));
+        LanguageData data = getLanguageData();
+        data.setId(INVALID_LANGUAGE_ID);
+
+        Assertions.assertThrows(EntityNotFoundException.class, () -> service.generateWords(data, 4));
     }
 
     @Test
     @Tag("UnitTest")
     void test_generateWords_invalidLanguage()
     {
-        Assertions.assertThrows(InvalidObjectException.class, () -> service.generateWords(any(), 4));
+        Assertions.assertThrows(InvalidObjectException.class, () -> service.generateWords(getLanguageData(), 4));
     }
 
     @Test
@@ -113,7 +134,7 @@ public class TestGenerationService
         doReturn(getDefaultLetter()).when(letterRepository).findById(eq(DEFAULT_LETTER_ID));
         doReturn(getForbiddenCombinations()).when(fRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
 
-        Assertions.assertEquals(getEmptyWordList(),  service.generateWords(any(), 4));
+        Assertions.assertEquals(getEmptyWordList(),  service.generateWords(getLanguageData(), 4));
     }
 
     @Test
@@ -131,7 +152,7 @@ public class TestGenerationService
         doReturn(getEndLetter()).when(letterRepository).findById(eq(END_LETTER_ID));
         doReturn(getLanguage(BEGINNING_END_WORD_LENGTH)).when(languageRepository).findById(eq(VALID_LANGUAGE_ID));
 
-        Assertions.assertEquals(getBeginningEndWordList(), service.generateWords(any(), 4));
+        Assertions.assertEquals(getBeginningEndWordList(), service.generateWords(getLanguageData(), 4));
     }
 
     private List<WordDto> getNormalWordList()
@@ -175,6 +196,11 @@ public class TestGenerationService
         language.setMaxWordLength(wordLength);
         language.setSpecialCharacterChance(SPECIAL_CHARACTER_CHANCE);
         return Optional.of(language);
+    }
+
+    private LanguageData getLanguageData()
+    {
+        return LanguageData.builder().username(USERNAME).id(VALID_LANGUAGE_ID).build();
     }
 
     private List<ConsonantCombination> getConsonantCombinations()

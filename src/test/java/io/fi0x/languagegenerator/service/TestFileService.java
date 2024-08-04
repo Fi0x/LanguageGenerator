@@ -8,9 +8,13 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
 import org.springframework.core.io.UrlResource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
@@ -19,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mockStatic;
 
 @RunWith(SpringRunner.class)
@@ -26,6 +31,12 @@ public class TestFileService
 {
     private static final Long LANGUAGE_ID = 923487L;
     private static final String FILE_SUFFIX = ".json";
+    private static final String USERNAME = "Olaf";
+
+    @Mock
+    private Authentication authentication;
+    @Mock
+    private SecurityContext securityContext;
 
     @InjectMocks
     private FileService service;
@@ -59,11 +70,17 @@ public class TestFileService
         Path path = file.toPath();
         MockedStatic<Files> staticMock = mockStatic(Files.class);
         staticMock.when(() -> Files.createTempFile(String.valueOf(LANGUAGE_ID), FILE_SUFFIX)).thenReturn(path);
+
+        MockedStatic<SecurityContextHolder> staticMock2 = mockStatic(SecurityContextHolder.class);
+        staticMock2.when(SecurityContextHolder::getContext).thenReturn(securityContext);
+        doReturn(authentication).when(securityContext).getAuthentication();
+        doReturn(USERNAME).when(authentication).getName();
         UrlResource expectedResult = new UrlResource(file.toURI());
 
-        Assertions.assertEquals(expectedResult, service.getLanguageFile(LanguageData.builder().id(LANGUAGE_ID).specialCharacterChance(1D).build()));
+        Assertions.assertEquals(expectedResult, service.getLanguageFile(LanguageData.builder().id(LANGUAGE_ID).specialCharacterChance(1D).username(USERNAME).build()));
 
         staticMock.close();
+        staticMock2.close();
     }
 
     @Test

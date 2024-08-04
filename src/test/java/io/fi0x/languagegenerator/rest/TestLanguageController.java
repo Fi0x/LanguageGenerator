@@ -42,6 +42,7 @@ public class TestLanguageController
     private static final int WORD_AMOUNT = 13;
     private static final String LANGUAGE_NAME = "Klingon";
     private static final Long FORBIDDEN_LANGUAGE = 498L;
+    private static final Double SPECIAL_CHANCE = 0.0;
 
     @MockBean
     private GenerationService generationService;
@@ -116,10 +117,10 @@ public class TestLanguageController
     void test_generateWords_success_wrongUser() throws Exception
     {
         List<WordDto> wordList = getWordList();
-        doReturn(wordList).when(generationService).generateWords(eq(getLanguageData()), eq(WORD_AMOUNT));
         LanguageData languageData = getLanguageData();
         languageData.setUsername("Wrong User");
         languageData.setVisible(true);
+        doReturn(wordList).when(generationService).generateWords(eq(languageData), eq(WORD_AMOUNT));
         doReturn(languageData).when(languageService).getLanguageData(eq(LANGUAGE_ID));
 
         mvc.perform(get(GENERATE_URL).param("language", String.valueOf(LANGUAGE_ID)).param("amount", String.valueOf(WORD_AMOUNT)))
@@ -138,6 +139,7 @@ public class TestLanguageController
         LanguageData languageData = getLanguageData();
         languageData.setUsername("Wrong User");
         doReturn(languageData).when(languageService).getLanguageData(eq(FORBIDDEN_LANGUAGE));
+        doThrow(IllegalAccessException.class).when(generationService).generateWords(eq(languageData), eq(WORD_AMOUNT));
 
         mvc.perform(get(GENERATE_URL).param("language", String.valueOf(FORBIDDEN_LANGUAGE)).param("amount", String.valueOf(WORD_AMOUNT)))
                 .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
@@ -233,7 +235,7 @@ public class TestLanguageController
     void test_addLanguage_forbidden() throws Exception
     {
         MultiValueMap<String, String> dataFields = getLanguageDataFields();
-        dataFields.put("username", List.of("Wrong User"));
+        doThrow(IllegalAccessException.class).when(languageService).addLanguage(any());
 
         mvc.perform(post(LANGUAGE_URL).formFields(dataFields))
                 .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
@@ -265,6 +267,7 @@ public class TestLanguageController
     @Tag("UnitTest")
     void test_deleteLanguage_forbidden() throws Exception
     {
+        doThrow(IllegalAccessException.class).when(languageService).deleteLanguage(eq(LANGUAGE_ID), eq("Wrong User"));
         doReturn("Wrong User").when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
 
         mvc.perform(get(DELETE_LANGUAGE_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
@@ -276,7 +279,7 @@ public class TestLanguageController
     void test_deleteLanguage_notFound() throws Exception
     {
         doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
-        doReturn(false).when(languageService).deleteLanguage(eq(LANGUAGE_ID), eq(USERNAME));
+        doThrow(EntityNotFoundException.class).when(languageService).deleteLanguage(eq(LANGUAGE_ID), eq(USERNAME));
 
         mvc.perform(get(DELETE_LANGUAGE_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
                 .andExpect(status().is(HttpStatus.NOT_FOUND.value()));
@@ -284,7 +287,7 @@ public class TestLanguageController
 
     private LanguageData getLanguageData()
     {
-        return LanguageData.builder().username(USERNAME).name(LANGUAGE_NAME).visible(false).build();
+        return LanguageData.builder().username(USERNAME).name(LANGUAGE_NAME).specialCharacterChance(SPECIAL_CHANCE).visible(false).build();
     }
 
     private List<WordDto> getWordList()
@@ -319,6 +322,7 @@ public class TestLanguageController
         map.add("charsAfterSpecial", "2");
         map.add("minSpecialChars", "0");
         map.add("maxSpecialChars", "1");
+        map.add("specialCharacterChance", "0");
         map.add("username", USERNAME);
         return map;
     }

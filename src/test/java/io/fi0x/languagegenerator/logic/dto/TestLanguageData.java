@@ -19,6 +19,7 @@ public class TestLanguageData
     private static final boolean VISIBLE = true;
     private static final int MIN_WORD_LENGTH = 6;
     private static final int MAX_WORD_LENGTH = 23;
+    private static final Double SPECIAL_CHANCE = 0.0;
     private static final List<String> VOCALS = new ArrayList<>();
     private static final List<String> CONSONANTS = new ArrayList<>();
     private static final List<String> VOCAL_CONSONANT = new ArrayList<>();
@@ -150,6 +151,7 @@ public class TestLanguageData
         language.setVisible(VISIBLE);
         language.setMinWordLength(MIN_WORD_LENGTH);
         language.setMaxWordLength(MAX_WORD_LENGTH);
+        language.setSpecialCharacterChance(SPECIAL_CHANCE);
         return language;
     }
 }

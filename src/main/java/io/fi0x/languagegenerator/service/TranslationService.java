@@ -82,7 +82,6 @@ public class TranslationService
         words.forEach(wordLetters -> saveOrGetWord(new WordDto(languageId, wordLetters)));
     }
 
-    //TODO: Add tests for this method
     public Word saveOrGetWord(WordDto wordDto, String languageCreator) throws IllegalAccessException
     {
         Word result = getSavedWord(wordDto);
