@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,8 @@ public class TestLanguageData
     private static final List<String> CONSONANT_VOCALS = new ArrayList<>();
     private static final List<String> FORBIDDEN_COMBINATIONS = new ArrayList<>();
 
-    static void fillLists() {
+    static void fillLists()
+    {
         VOCALS.add("a");
         CONSONANTS.add("b");
         VOCAL_CONSONANT.add("ab");
@@ -52,12 +54,97 @@ public class TestLanguageData
         assertThat(LanguageData.getFromEntity(getLang())).usingRecursiveComparison().isEqualTo(expected);
     }
 
+    @Test
+    @Tag("UnitTest")
+    void test_validate_success() throws InvalidObjectException
+    {
+        LanguageData data = getData();
+
+        org.junit.jupiter.api.Assertions.assertDoesNotThrow(data::validate);
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_validate_null()
+    {
+        LanguageData data = getData();
+        data.setId(null);
+        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+
+        data = getData();
+        data.setName(null);
+        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+
+        data = getData();
+        data.setUsername(null);
+        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+
+        data = getData();
+        data.setVocals(null);
+        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+
+        data = getData();
+        data.setConsonants(null);
+        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+
+        data = getData();
+        data.setVocalConsonant(null);
+        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+
+        data = getData();
+        data.setConsonantVocals(null);
+        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_validate_empty()
+    {
+        LanguageData data = getData();
+        data.setName("");
+        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+
+        data = getData();
+        data.setUsername("");
+        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+
+        data = getData();
+        data.setVocals(new ArrayList<>());
+        data.setConsonants(new ArrayList<>());
+        data.setVocalConsonant(new ArrayList<>());
+        data.setConsonantVocals(new ArrayList<>());
+        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+
+        data.getConsonantVocals().add("a");
+        org.junit.jupiter.api.Assertions.assertDoesNotThrow(data::validate);
+
+        data.getVocalConsonant().add("a");
+        org.junit.jupiter.api.Assertions.assertDoesNotThrow(data::validate);
+
+        data.getConsonants().add("a");
+        org.junit.jupiter.api.Assertions.assertDoesNotThrow(data::validate);
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_validate_wrongLengths()
+    {
+        LanguageData data = getData();
+        data.setMinWordLength(0);
+        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+
+        data = getData();
+        data.setMaxWordLength(MIN_WORD_LENGTH - 1);
+        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+    }
+
     private LanguageData getData()
     {
         return LanguageData.builder().id(ID).name(NAME).username(USERNAME).visible(VISIBLE).minWordLength(MIN_WORD_LENGTH)
                 .maxWordLength(MAX_WORD_LENGTH).vocals(VOCALS).consonants(CONSONANTS).vocalConsonant(VOCAL_CONSONANT)
                 .consonantVocals(CONSONANT_VOCALS).forbiddenCombinations(FORBIDDEN_COMBINATIONS).build();
     }
+
     private Language getLang()
     {
         Language language = new Language();

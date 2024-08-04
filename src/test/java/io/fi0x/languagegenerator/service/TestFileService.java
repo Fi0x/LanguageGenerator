@@ -33,6 +33,7 @@ public class TestFileService
     private static final String FILE_SUFFIX = ".json";
     private static final String USERNAME = "Olaf";
 
+    //TODO: Add test to complete coverage
     @Mock
     private Authentication authentication;
     @Mock
