@@ -183,7 +183,7 @@ public class LanguageService
     @Nullable
     public String getLanguageCreator(long languageId)
     {
-        log.trace("getLangaugeCreator() called for languageId={}", languageId);
+        log.trace("getLanguageCreator() called for languageId={}", languageId);
 
         Optional<Language> data = languageRepository.findById(languageId);
         return data.map(Language::getUsername).orElse(null);

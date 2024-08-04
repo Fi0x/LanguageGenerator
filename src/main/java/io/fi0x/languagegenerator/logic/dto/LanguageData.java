@@ -43,7 +43,7 @@ public class LanguageData
 
     public void validate() throws InvalidObjectException
     {
-        String errors = "The following errors occured:";
+        String errors = "The following errors occurred:";
         boolean errorFound = false;
 
         if (id == null || name == null || username == null || name.isBlank() || username.isBlank()) {

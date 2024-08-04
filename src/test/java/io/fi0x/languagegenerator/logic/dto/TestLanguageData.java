@@ -56,7 +56,7 @@ public class TestLanguageData
 
     @Test
     @Tag("UnitTest")
-    void test_validate_success() throws InvalidObjectException
+    void test_validate_success()
     {
         LanguageData data = getData();
 

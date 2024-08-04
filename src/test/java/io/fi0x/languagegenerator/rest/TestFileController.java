@@ -103,7 +103,6 @@ public class TestFileController
                 .andExpect(forwardedUrl(null));
     }
 
-    //TODO: Add tests to increase coverage
     @Test
     @Tag("UnitTest")
     void test_uploadLanguage_500() throws Exception
@@ -112,6 +111,20 @@ public class TestFileController
 
         mvc.perform(MockMvcRequestBuilders.multipart(UPLOAD_URL).file(file))
                 .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()))
+                .andExpect(forwardedUrl(null));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_uploadLanguage_unauthorized() throws Exception
+    {
+        File realFile = ResourceUtils.getFile("classpath:testLanguageValid.json");
+        InputStream content = new FileInputStream(realFile);
+        MockMultipartFile file = new MockMultipartFile("languageFile", "filename.txt", "application/json", content);
+        doThrow(IllegalAccessException.class).when(languageService).addLanguage(any(), anyString(), eq(false));
+
+        mvc.perform(MockMvcRequestBuilders.multipart(UPLOAD_URL).file(file))
+                .andExpect(status().is(HttpStatus.FORBIDDEN.value()))
                 .andExpect(forwardedUrl(null));
     }
 
@@ -172,6 +185,7 @@ public class TestFileController
     {
         return LanguageData.builder().username(USERNAME).name(LANGUAGE_NAME).build();
     }
+
     private Resource getFileResource() throws MalformedURLException, FileNotFoundException
     {
         File file = ResourceUtils.getFile("classpath:emptyFile.json");

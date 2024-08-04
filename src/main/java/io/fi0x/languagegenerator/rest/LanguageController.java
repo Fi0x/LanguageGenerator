@@ -59,7 +59,7 @@ public class LanguageController
             log.warn("Could not find a language with id={}", language);
             return "redirect:/";
         } catch (InvalidObjectException e) {
-            log.warn("The constraints for the language with id={} are not valid to generate a word\n" + e.getLocalizedMessage(), language);
+            log.warn("The constraints for the language with id={} are not valid to generate a word\n{}", language, e.getLocalizedMessage());
             return "redirect:/";
         } catch (IllegalAccessException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
