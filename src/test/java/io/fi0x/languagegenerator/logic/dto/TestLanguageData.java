@@ -1,7 +1,6 @@
 package io.fi0x.languagegenerator.logic.dto;
 
 import io.fi0x.languagegenerator.db.entities.Language;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -51,89 +50,6 @@ public class TestLanguageData
         expected.setConsonantVocals(null);
         expected.setForbiddenCombinations(null);
         assertThat(LanguageData.getFromEntity(getLang())).usingRecursiveComparison().isEqualTo(expected);
-    }
-
-    @Test
-    @Tag("UnitTest")
-    void test_invalid_false()
-    {
-        LanguageData data = getData();
-        Assertions.assertFalse(data.invalid());
-    }
-    @Test
-    @Tag("UnitTest")
-    void test_invalid_true_null()
-    {
-        LanguageData data = getData();
-        data.setId(null);
-        Assertions.assertTrue(data.invalid());
-
-        data = getData();
-        data.setName(null);
-        Assertions.assertTrue(data.invalid());
-
-        data = getData();
-        data.setUsername(null);
-        Assertions.assertTrue(data.invalid());
-
-        data = getData();
-        data.setVocals(null);
-        Assertions.assertTrue(data.invalid());
-
-        data = getData();
-        data.setConsonants(null);
-        Assertions.assertTrue(data.invalid());
-
-        data = getData();
-        data.setVocalConsonant(null);
-        Assertions.assertTrue(data.invalid());
-
-        data = getData();
-        data.setConsonantVocals(null);
-        Assertions.assertTrue(data.invalid());
-    }
-
-    @Test
-    @Tag("UnitTest")
-    void test_invalid_true_empty()
-    {
-        LanguageData data = getData();
-        data.getVocals().clear();
-        data.getConsonants().clear();
-        data.getVocalConsonant().clear();
-        data.getConsonantVocals().clear();
-        Assertions.assertTrue(data.invalid());
-
-        data = getData();
-        data.setName("");
-        Assertions.assertTrue(data.invalid());
-
-        data = getData();
-        data.setUsername("");
-        Assertions.assertTrue(data.invalid());
-
-        data = getData();
-        data.setMinWordLength(0);
-        Assertions.assertTrue(data.invalid());
-
-        data = getData();
-        data.setMaxWordLength(0);
-        Assertions.assertTrue(data.invalid());
-    }
-
-    @Test
-    @Tag("UnitTest")
-    void test_invalid_false_someEmpty()
-    {
-        LanguageData data = getData();
-        data.getVocals().clear();
-        Assertions.assertFalse(data.invalid());
-
-        data.getConsonants().clear();
-        Assertions.assertFalse(data.invalid());
-
-        data.getVocalConsonant().clear();
-        Assertions.assertFalse(data.invalid());
     }
 
     private LanguageData getData()

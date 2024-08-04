@@ -41,20 +41,6 @@ public class LanguageData
                 .specialCharacterChance(language.getSpecialCharacterChance()).visible(language.getVisible()).build();
     }
 
-    //TODO: Remove
-    @Deprecated
-    public boolean invalid()
-    {
-        if (id == null || name == null || username == null)
-            return true;
-        if (vocals == null || consonants == null || vocalConsonant == null || consonantVocals == null)
-            return true;
-
-        if (name.isBlank() || username.isBlank() || minWordLength <= 0 || maxWordLength <= 0)
-            return true;
-        return vocals.isEmpty() && consonants.isEmpty() && vocalConsonant.isEmpty() && consonantVocals.isEmpty();
-    }
-
     public void validate() throws InvalidObjectException
     {
         String errors = "The following errors occured:";

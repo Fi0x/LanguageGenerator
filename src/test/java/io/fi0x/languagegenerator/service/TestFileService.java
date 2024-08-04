@@ -57,13 +57,6 @@ public class TestFileService
 
     @Test
     @Tag("UnitTest")
-    void test_getLanguageFile_wrongUser()
-    {
-        //TODO: Add test
-    }
-
-    @Test
-    @Tag("UnitTest")
     void test_getLanguageFile_success() throws IOException, IllegalAccessException
     {
         File file = new File(LANGUAGE_ID + FILE_SUFFIX);
