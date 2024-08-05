@@ -26,8 +26,6 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringRunner.class)
 public class TestGenerationService
 {
-    //TODO: Add tests to increase coverage
-
     private static final Long VALID_LANGUAGE_ID = 13245L;
     private static final Long INVALID_LANGUAGE_ID = 132L;
     private static final String NAME = "Language Name";
@@ -110,6 +108,20 @@ public class TestGenerationService
 
     @Test
     @Tag("UnitTest")
+    void test_generateWords_unauthorized()
+    {
+        LanguageData data = getLanguageData();
+        data.setUsername("Wrong user");
+
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.generateWords(data, 4));
+
+        data.setVisible(true);
+        data.setId(INVALID_LANGUAGE_ID);
+        Assertions.assertThrows(EntityNotFoundException.class, () -> service.generateWords(data, 4));
+    }
+
+    @Test
+    @Tag("UnitTest")
     void test_generateWords_noLanguage()
     {
         LanguageData data = getLanguageData();
@@ -136,7 +148,7 @@ public class TestGenerationService
         doReturn(getDefaultLetter()).when(letterRepository).findById(eq(DEFAULT_LETTER_ID));
         doReturn(getForbiddenCombinations()).when(fRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
 
-        Assertions.assertEquals(getEmptyWordList(),  service.generateWords(getLanguageData(), 4));
+        Assertions.assertEquals(getEmptyWordList(), service.generateWords(getLanguageData(), 4));
     }
 
     @Test
