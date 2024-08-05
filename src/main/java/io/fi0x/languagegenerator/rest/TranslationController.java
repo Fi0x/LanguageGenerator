@@ -1,5 +1,7 @@
 package io.fi0x.languagegenerator.rest;
 
+import io.fi0x.languagegenerator.db.entities.Word;
+import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
 import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.LanguageService;
@@ -21,7 +23,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @AllArgsConstructor
-@SessionAttributes({"amount", "language", "languageCreator", "languageName", "username", "words"})
+@SessionAttributes({"amount", "language", "languageCreator", "languageName", "username", "savedWords", "words"})
 public class TranslationController
 {
     private AuthenticationService authenticationService;
@@ -29,7 +31,7 @@ public class TranslationController
     private TranslationService translationService;
 
     @Transactional
-    @PostMapping("word")
+    @PostMapping("/word")
     public String saveWord(ModelMap model, @RequestParam("listIndex") Integer listIndex, @RequestParam(value = "word") String word)
     {
         log.info("saveWord() called for word={} with listIndex={}", word, listIndex);
@@ -51,7 +53,7 @@ public class TranslationController
     }
 
     @Transactional
-    @GetMapping("word")
+    @GetMapping("/word")
     public String showWord(ModelMap model, @RequestParam("languageId") long languageId, @RequestParam("word") String word)
     {
         log.info("showWord() called for word={} in language={}", word, languageId);
@@ -69,5 +71,50 @@ public class TranslationController
         model.put("translations", languageService.addLanguageNameToWords(translationService.getTranslations(wordDto)));
 
         return "word";
+    }
+
+    @Transactional
+    @GetMapping("/delete-word")
+    public String deleteWord(ModelMap model, @RequestParam("languageId") long languageId, @RequestParam("wordNumber") long wordNumber)
+    {
+        log.info("deleteWord() called with languageId={} nad wordNumber={}", languageId, wordNumber);
+
+        Word word = new Word();
+        word.setLanguageId(languageId);
+        word.setWordNumber(wordNumber);
+
+        try {
+            translationService.deleteWord(word, languageService.getLanguageCreator(languageId));
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User is not allowed to delete any saved words of this language");
+        }
+
+        //TODO: remove the deleted word from the UI
+        return "dictionary";
+    }
+
+    @Transactional
+    @GetMapping("/dictionary")
+    public String showDictionary(ModelMap model, @RequestParam("languageId") long languageId)
+    {
+        log.info("showDictionary() called for languageId={}", languageId);
+
+        LanguageData languageData = languageService.getLanguageData(languageId);
+        model.put("languageName", languageData.getName());
+        model.put("languageCreator", languageData.getUsername());
+        model.put("savedWords", translationService.getAllWords(languageId));
+        model.put("username", authenticationService.getAuthenticatedUsername());
+
+        return "dictionary";
+    }
+
+    @Transactional
+    @GetMapping("/delete-translation")
+    public String deleteTranslation(ModelMap model, @RequestParam("languageId1") long languageId1, @RequestParam("wordNumber1") long wordNumber1, @RequestParam("languageId2") long languageId2, @RequestParam("wordNumber2") long wordNumber2)
+    {
+        log.info("deleteTranslation() called for languageId={}, wordNumber={} and languageId={}, wordNumber={}", languageId1, wordNumber1, languageId2, wordNumber2);
+
+        //TODO: Implement
+        return "redirect:/";
     }
 }

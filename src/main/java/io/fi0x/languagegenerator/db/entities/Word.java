@@ -22,6 +22,14 @@ public class Word
 
     private String letters;
 
+    public WordId getCombinedId()
+    {
+        WordId id = new WordId();
+        id.languageId = this.languageId;
+        id.wordNumber = this.wordNumber;
+        return id;
+    }
+
     public static class WordId implements Serializable
     {
         public Long languageId;

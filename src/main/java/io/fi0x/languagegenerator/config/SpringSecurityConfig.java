@@ -48,7 +48,9 @@ public class SpringSecurityConfig
             "/webjars/bootstrap/*/js/*",
             "/webjars/jquery/*/*",
             "/css/design.css",
-            "/images/*"
+            "/images/*",
+            "/dictionary", "/WEB-INF/jsp/dictionary.jsp",
+            "/word", "/WEB-INF/jsp/word.jsp"
     };
     private static final String[] ANONYMOUS_URLS = new String[]{
             "/register", "/WEB-INF/jsp/signup.jsp",

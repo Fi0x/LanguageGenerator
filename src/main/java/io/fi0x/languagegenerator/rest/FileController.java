@@ -82,6 +82,8 @@ public class FileController
     @ResponseBody
     public ResponseEntity<Resource> downloadLanguageFile(@RequestParam(value = "languageId") long languageId)
     {
+        log.info("downloadLanguageFile() called for languageId={}", languageId);
+
         LanguageData languageData = languageService.getLanguageData(languageId);
 
         Resource resource;

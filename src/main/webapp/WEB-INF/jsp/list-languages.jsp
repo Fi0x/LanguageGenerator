@@ -30,7 +30,7 @@
                 </td>
                 <td>
 <%--                    TODO: Replace with link to dictionary of this language--%>
-                    <a href="generate?language=${language.id}&amount=2" class="btn">Dictionary</a>
+                    <a href="dictionary?languageId=${language.id}" class="btn">Dictionary</a>
                 </td>
                 <td>
                         ${language.username}

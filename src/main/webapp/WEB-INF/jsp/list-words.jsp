@@ -39,6 +39,7 @@
                                    style="visibility: ${singleWord.savedInDb ? "hidden" : "visible"}" type="submit"
                                    class="btn-success" value="Save"/>
                         </td>
+                        <%--TODO: Add a button to remove the word from the saved words table--%>
                     </c:if>
                 </form:form>
             </tr>

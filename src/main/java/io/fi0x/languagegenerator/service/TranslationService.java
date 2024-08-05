@@ -56,6 +56,13 @@ public class TranslationService
         return getTranslatedWords(translations);
     }
 
+    public void deleteTranslation(long firstLanguage, long firstWordNumber, long secondLanguage, long secondWordNumber)
+    {
+        log.trace("deleteTranslation() called with language={} / word={} and language={} / word={}", firstLanguage, firstWordNumber, secondLanguage, secondWordNumber);
+
+        //TODO: Implement
+    }
+
     public void linkWords(WordDto firstDto, WordDto secondDto)
     {
         log.trace("linkWords() called with wordDtos={} and {}", firstDto, secondDto);
@@ -84,6 +91,8 @@ public class TranslationService
 
     public Word saveOrGetWord(WordDto wordDto, String languageCreator) throws IllegalAccessException
     {
+        log.trace("saveOrGetWord() called with wordDto={} and languageCreator={}", wordDto, languageCreator);
+
         Word result = getSavedWord(wordDto);
         if(result != null)
             return result;
@@ -100,6 +109,23 @@ public class TranslationService
         result.setLetters(wordDto.getWord());
 
         return result;
+    }
+
+    public void deleteWord(Word word, String languageCreator) throws IllegalAccessException
+    {
+        log.trace("deleteWord() called with word={} and languageCreator={}", word, languageCreator);
+
+        if(languageCreator == null || !languageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+            throw new IllegalAccessException();
+
+        wordRepo.deleteById(word.getCombinedId());
+    }
+
+    public List<Word> getAllWords(long languageId)
+    {
+        log.trace("getAllWords() called with languageId={}", languageId);
+
+        return wordRepo.getAllByLanguageId(languageId);
     }
 
     private Word saveOrGetWord(WordDto word)
