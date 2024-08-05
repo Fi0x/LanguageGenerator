@@ -29,7 +29,6 @@
                     <a href="generate?language=${language.id}&amount=50" class="btn">Generate new words</a>
                 </td>
                 <td>
-<%--                    TODO: Replace with link to dictionary of this language--%>
                     <a href="dictionary?languageId=${language.id}" class="btn">Dictionary</a>
                 </td>
                 <td>
