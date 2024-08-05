@@ -266,7 +266,7 @@ public class TestTranslationService
     {
         setupAuthentication();
 
-        Assertions.assertDoesNotThrow(() -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11), USERNAME));
+        Assertions.assertDoesNotThrow(() -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11)));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
 
         staticMock.close();
@@ -280,7 +280,7 @@ public class TestTranslationService
 
         doReturn(Optional.of(new Word())).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
 
-        Assertions.assertDoesNotThrow(() -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11), USERNAME));
+        Assertions.assertDoesNotThrow(() -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11)));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
 
         staticMock.close();
@@ -292,7 +292,7 @@ public class TestTranslationService
     {
         setupAuthentication();
 
-        Assertions.assertThrows(IllegalAccessException.class, () -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11), null));
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11)));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
 
         staticMock.close();
@@ -304,7 +304,7 @@ public class TestTranslationService
     {
         setupAuthentication();
 
-        Assertions.assertThrows(IllegalAccessException.class, () -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11), "Wrong user"));
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11)));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
 
         staticMock.close();

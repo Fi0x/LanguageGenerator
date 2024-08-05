@@ -256,7 +256,7 @@ public class TestLanguageController
     void test_deleteLanguage_success() throws Exception
     {
         doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
-        doNothing().when(languageService).deleteLanguage(eq(LANGUAGE_ID), eq(USERNAME));
+        doNothing().when(languageService).deleteLanguage(eq(LANGUAGE_ID));
 
         mvc.perform(get(DELETE_LANGUAGE_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
                 .andExpect(status().is(HttpStatus.FOUND.value()))
@@ -267,7 +267,7 @@ public class TestLanguageController
     @Tag("UnitTest")
     void test_deleteLanguage_forbidden() throws Exception
     {
-        doThrow(IllegalAccessException.class).when(languageService).deleteLanguage(eq(LANGUAGE_ID), eq("Wrong User"));
+        doThrow(IllegalAccessException.class).when(languageService).deleteLanguage(eq(LANGUAGE_ID));
         doReturn("Wrong User").when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
 
         mvc.perform(get(DELETE_LANGUAGE_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
@@ -279,7 +279,7 @@ public class TestLanguageController
     void test_deleteLanguage_notFound() throws Exception
     {
         doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
-        doThrow(EntityNotFoundException.class).when(languageService).deleteLanguage(eq(LANGUAGE_ID), eq(USERNAME));
+        doThrow(EntityNotFoundException.class).when(languageService).deleteLanguage(eq(LANGUAGE_ID));
 
         mvc.perform(get(DELETE_LANGUAGE_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
                 .andExpect(status().is(HttpStatus.NOT_FOUND.value()));

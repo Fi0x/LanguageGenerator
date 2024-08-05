@@ -189,10 +189,11 @@ public class LanguageService
         return data.map(Language::getUsername).orElse(null);
     }
 
-    public void deleteLanguage(long languageId, String languageCreator) throws EntityNotFoundException, IllegalAccessException
+    public void deleteLanguage(long languageId) throws EntityNotFoundException, IllegalAccessException
     {
         log.trace("deleteLanguage() called for languageId={}", languageId);
 
+        String languageCreator = getLanguageCreator(languageId);
         if(languageCreator == null || !languageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
             throw new IllegalAccessException("You are not allowed to delete the selected language");
 

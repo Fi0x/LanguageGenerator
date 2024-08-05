@@ -34,6 +34,16 @@ public class Translation
         translatedWordNumber = tmp;
     }
 
+    public TranslationId getCombinedId()
+    {
+        TranslationId id = new TranslationId();
+        id.languageId = this.languageId;
+        id.wordNumber = this.wordNumber;
+        id.translatedLanguageId = this.translatedLanguageId;
+        id.translatedWordNumber = this.translatedWordNumber;
+        return id;
+    }
+
     public static class TranslationId implements Serializable
     {
         private Long languageId;

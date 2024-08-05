@@ -133,7 +133,7 @@ public class LanguageController
         log.info("deleteLanguage() called for languageId={}", languageId);
 
         try {
-            languageService.deleteLanguage(languageId, languageService.getLanguageCreator(languageId));
+            languageService.deleteLanguage(languageId);
         } catch (EntityNotFoundException e) {
             log.warn("Could not delete language with id={}", languageId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());

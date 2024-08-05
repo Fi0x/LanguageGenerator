@@ -70,7 +70,7 @@ public class TestTranslationController
     void test_saveWord_unauthorized() throws Exception
     {
         doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
-        doThrow(IllegalAccessException.class).when(translationService).saveOrGetWord(any(), eq(USERNAME));
+        doThrow(IllegalAccessException.class).when(translationService).saveOrGetWord(any());
 
         mvc.perform(post(WORD_URL).param("listIndex", "1").param("word", WORD).sessionAttr("words", getWords(2)))
                 .andExpect(status().is(HttpStatus.FORBIDDEN.value()))
@@ -107,7 +107,7 @@ public class TestTranslationController
     void test_showWord_success() throws Exception
     {
         doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
-        doReturn(new Word()).when(translationService).saveOrGetWord(any(), eq(USERNAME));
+        doReturn(new Word()).when(translationService).saveOrGetWord(any());
         doReturn(USERNAME).when(authenticationService).getAuthenticatedUsername();
         doReturn(LanguageData.builder().build()).when(languageService).getLanguageData(eq(LANGUAGE_ID));
         doReturn(Collections.emptyList()).when(languageService).addLanguageNameToWords(any());
@@ -127,7 +127,7 @@ public class TestTranslationController
     void test_showWord_unauthorized() throws Exception
     {
         doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
-        doThrow(IllegalAccessException.class).when(translationService).saveOrGetWord(any(), eq(USERNAME));
+        doThrow(IllegalAccessException.class).when(translationService).saveOrGetWord(any());
 
         mvc.perform(get(WORD_URL).param("languageId", String.valueOf(LANGUAGE_ID)).param("word", WORD))
                 .andExpect(status().is(HttpStatus.FORBIDDEN.value()))

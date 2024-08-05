@@ -40,11 +40,10 @@ public class TranslationController
         if (object instanceof List<?> someList && someList.size() > listIndex && someList.get(listIndex) instanceof WordDto wordDto) {
             wordDto.setWord(word);
 
-            String languageCreator = languageService.getLanguageCreator(wordDto.getLanguageId());
             try {
-                translationService.saveOrGetWord(wordDto, languageCreator);
+                translationService.saveOrGetWord(wordDto);
             } catch (IllegalAccessException e) {
-                log.info("User '{}' tried to save word '{}' in a language, owned by '{}', which is not allowed", authenticationService.getAuthenticatedUsername(), word, languageCreator);
+                log.info("User '{}' tried to save word '{}' in a language, which is not allowed", authenticationService.getAuthenticatedUsername(), word);
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save translations in this language");
             }
         }
@@ -61,7 +60,7 @@ public class TranslationController
         WordDto wordDto = new WordDto(languageId, word);
 
         try {
-            model.put("word", translationService.saveOrGetWord(wordDto, languageService.getLanguageCreator(languageId)));
+            model.put("word", translationService.saveOrGetWord(wordDto));
         } catch (IllegalAccessException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "To see translations for this word, it needs to be saved in the database, but you are not authorized to do so.");
         }
@@ -84,7 +83,7 @@ public class TranslationController
         word.setWordNumber(wordNumber);
 
         try {
-            translationService.deleteWord(word, languageService.getLanguageCreator(languageId));
+            translationService.deleteWord(word);
         } catch (IllegalAccessException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User is not allowed to delete any saved words of this language");
         }
@@ -114,7 +113,12 @@ public class TranslationController
     {
         log.info("deleteTranslation() called for languageId={}, wordNumber={} and languageId={}, wordNumber={}", languageId1, wordNumber1, languageId2, wordNumber2);
 
-        //TODO: Implement
+        try {
+            translationService.deleteTranslation(languageId1, wordNumber1, languageId2, wordNumber2);
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to delete this translation. You need to own both languages in order to do so.");
+        }
+
         return "redirect:/";
     }
 }

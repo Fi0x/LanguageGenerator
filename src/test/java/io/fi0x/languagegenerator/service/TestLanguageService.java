@@ -28,6 +28,8 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
+//TODO: Fix failing tests and check coverage
+
 @RunWith(SpringRunner.class)
 public class TestLanguageService
 {
@@ -226,15 +228,15 @@ public class TestLanguageService
     @Tag("UnitTest")
     void test_deleteLanguage_success()
     {
-        Assertions.assertDoesNotThrow(() -> service.deleteLanguage(HIGHEST_ID, USERNAME));
+        Assertions.assertDoesNotThrow(() -> service.deleteLanguage(HIGHEST_ID));
     }
 
     @Test
     @Tag("UnitTest")
     void test_deleteLanguage_unauthorized()
     {
-        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteLanguage(NEXT_FREE_ID, null));
-        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteLanguage(NEXT_FREE_ID, "Someone else"));
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteLanguage(NEXT_FREE_ID));
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteLanguage(NEXT_FREE_ID));
     }
 
     @Test
@@ -242,7 +244,7 @@ public class TestLanguageService
     void test_deleteLanguage_notFound()
     {
         doReturn(Optional.empty()).when(languageRepository).findById(eq(NEXT_FREE_ID));
-        Assertions.assertThrows(EntityNotFoundException.class, () -> service.deleteLanguage(NEXT_FREE_ID, USERNAME));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> service.deleteLanguage(NEXT_FREE_ID));
     }
 
     private LanguageData getLanguageData()
