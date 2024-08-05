@@ -29,8 +29,6 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringRunner.class)
 public class TestTranslationService
 {
-    //TODO: Add tests to increase coverage
-
     private static final Long LANGUAGE_ID1 = 132452343L;
     private static final Long LANGUAGE_ID2 = 1324523433L;
     private static final Long LANGUAGE_ID3 = 1112333L;
@@ -127,6 +125,25 @@ public class TestTranslationService
 
     @Test
     @Tag("UnitTest")
+    void test_getTranslations_targetLanguage_emptyWord()
+    {
+        doReturn(Optional.of(getFirstWordEntity())).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
+        doReturn(getTranslations(true)).when(translationRepository).getAllByLanguageIdAndWordNumberAndTranslatedLanguageId(eq(LANGUAGE_ID1), eq(WORD_NUMBER11), eq(LANGUAGE_ID3));
+        doReturn(getInvertedTranslation(true)).when(translationRepository).getAllByTranslatedLanguageIdAndTranslatedWordNumberAndLanguageId(eq(LANGUAGE_ID1), eq(WORD_NUMBER11), eq(LANGUAGE_ID3));
+        setupWordReturns();
+        doReturn(null).when(wordRepository).getByLanguageIdAndWordNumber(eq(LANGUAGE_ID3), eq(WORD_NUMBER31));
+
+        List<Word> expectedResult = getAllWords(true);
+        List<Word> actualResult = service.getTranslations(getFirstWordDto(), LANGUAGE_ID3);
+        expectedResult.sort(this::wordCompare);
+        expectedResult.remove(0);
+        actualResult.sort(this::wordCompare);
+
+        Assertions.assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    @Tag("UnitTest")
     void test_getTranslations_targetLanguage_multipleResults()
     {
         doReturn(Optional.of(getFirstWordEntity())).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
@@ -181,7 +198,7 @@ public class TestTranslationService
 
     @Test
     @Tag("UnitTest")
-    void text_linkWords_success()
+    void test_linkWords_success()
     {
         setupAuthentication();
 
@@ -201,7 +218,7 @@ public class TestTranslationService
 
     @Test
     @Tag("UnitTest")
-    void text_saveWords_withDtoList()
+    void test_saveWords_withDtoList()
     {
         setupAuthentication();
 
@@ -218,7 +235,7 @@ public class TestTranslationService
 
     @Test
     @Tag("UnitTest")
-    void text_saveWords_withStrings()
+    void test_saveWords_withStrings()
     {
         setupAuthentication();
 
@@ -226,6 +243,69 @@ public class TestTranslationService
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD21));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD22));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID2), eq(WORD23));
+
+        staticMock.close();
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_saveWords_unauthorized()
+    {
+        setupAuthentication();
+        doReturn(null).when(authentication).getName();
+
+        Assertions.assertThrows(RuntimeException.class, () -> service.saveWords(LANGUAGE_ID2, getSecondLanguageStrings()));
+        verify(wordRepository, never()).getHighestId(anyLong());
+
+        staticMock.close();
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_saveOrGetWord_success()
+    {
+        setupAuthentication();
+
+        Assertions.assertDoesNotThrow(() -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11), USERNAME));
+        verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
+
+        staticMock.close();
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_saveOrGetWord_alreadyExists()
+    {
+        setupAuthentication();
+
+        doReturn(Optional.of(new Word())).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
+
+        Assertions.assertDoesNotThrow(() -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11), USERNAME));
+        verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
+
+        staticMock.close();
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_saveOrGetWord_noCreator()
+    {
+        setupAuthentication();
+
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11), null));
+        verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
+
+        staticMock.close();
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_saveOrGetWord_unauthorized()
+    {
+        setupAuthentication();
+
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11), "Wrong user"));
+        verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
 
         staticMock.close();
     }
@@ -266,8 +346,7 @@ public class TestTranslationService
     private List<Translation> getTranslations(boolean justLanguage3)
     {
         List<Translation> results = new ArrayList<>();
-        if (!justLanguage3)
-        {
+        if (!justLanguage3) {
             results.add(getTranslation(LANGUAGE_ID1, WORD_NUMBER11, LANGUAGE_ID2, WORD_NUMBER21));
             results.add(getTranslation(LANGUAGE_ID1, WORD_NUMBER11, LANGUAGE_ID2, WORD_NUMBER22));
         }
@@ -297,8 +376,7 @@ public class TestTranslationService
     private List<Word> getAllWords(boolean justLanguage3)
     {
         List<Word> wordList = new ArrayList<>();
-        if (!justLanguage3)
-        {
+        if (!justLanguage3) {
             wordList.add(getWord(LANGUAGE_ID2, WORD_NUMBER21, WORD21));
             wordList.add(getWord(LANGUAGE_ID2, WORD_NUMBER22, WORD22));
             wordList.add(getWord(LANGUAGE_ID2, WORD_NUMBER23, WORD23));
