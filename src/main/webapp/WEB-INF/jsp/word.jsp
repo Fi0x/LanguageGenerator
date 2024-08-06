@@ -25,8 +25,7 @@
                 </td>
                 <td>
                     <c:if test="${username == originalLanguageData.username}">
-                        <a href="delete-translation?languageId1=${singleTranslation.languageId}&wordNumber1=${singleTranslation.word}&languageId2=${singleTranslation.}&wordNumber2="></a>
-                        <%--TODO: Show a button to delete the translation--%>
+                        <a href="delete-translation?languageId1=${singleTranslation.languageId}&wordNumber1=${singleTranslation.wordNumber}&languageId2=${word.languageId}&wordNumber2=${word.wordNumber}"></a>
                     </c:if>
                 </td>
             </tr>

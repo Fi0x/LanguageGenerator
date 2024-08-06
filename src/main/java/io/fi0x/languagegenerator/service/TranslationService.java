@@ -119,10 +119,11 @@ public class TranslationService
 
         Long id = saveOrOverwriteWord(wordDto.toEntity());
         wordDto.setSavedInDb(true);
+        wordDto.setWordNumber(id);
 
         result = new Word();
         result.setLanguageId(wordDto.getLanguageId());
-        result.setWordNumber(id);
+        result.setWordNumber(wordDto.getWordNumber());
         result.setLetters(wordDto.getWord());
 
         return result;
