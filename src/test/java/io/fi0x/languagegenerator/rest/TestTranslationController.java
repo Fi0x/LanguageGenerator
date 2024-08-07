@@ -33,6 +33,7 @@ public class TestTranslationController
 {
     private static final String WORD_URL = "/word";
     private static final String WORD = "bla";
+    private static final Long WORD_NUMBER = 3L;
     private static final long LANGUAGE_ID = 3;
     private static final String LANGUAGE_NAME = "Test language";
     private static final boolean SAVED = false;
@@ -146,6 +147,6 @@ public class TestTranslationController
     }
     private WordDto getValidWord(int listIdx)
     {
-        return new WordDto(LANGUAGE_ID, LANGUAGE_NAME, WORD, listIdx, SAVED);
+        return new WordDto(LANGUAGE_ID, LANGUAGE_NAME, WORD_NUMBER, WORD, listIdx, SAVED);
     }
 }

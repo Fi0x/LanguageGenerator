@@ -21,6 +21,7 @@ public class WordConverter
         WordDto wordDto = new WordDto();
         wordDto.setLanguageId(word.getLanguageId());
         wordDto.setWordNumber(word.getWordNumber());
+        wordDto.setWord(word.getLetters());
         return wordDto;
     }
 }

@@ -3,6 +3,7 @@ package io.fi0x.languagegenerator.service;
 import io.fi0x.languagegenerator.db.*;
 import io.fi0x.languagegenerator.db.entities.*;
 import io.fi0x.languagegenerator.logic.converter.LanguageConverter;
+import io.fi0x.languagegenerator.logic.converter.WordConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
@@ -164,7 +165,7 @@ public class LanguageService
     {
         log.trace("addLanguageNameToWords() called for words={}", words);
 
-        List<WordDto> results = words.stream().map(word -> new WordDto(word.getLanguageId(), word.getLetters())).toList();
+        List<WordDto> results = words.stream().map(WordConverter::convertToDto).toList();
         results.forEach(wordDto -> wordDto.setLanguageName(getLanguageData(wordDto.getLanguageId()).getName()));
 
         return results;

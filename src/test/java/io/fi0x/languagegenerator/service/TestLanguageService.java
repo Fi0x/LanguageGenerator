@@ -8,7 +8,6 @@ import io.fi0x.languagegenerator.logic.converter.LanguageConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -194,7 +193,7 @@ public class TestLanguageService
         word.setLetters(EXISTING_LETTERS);
         words.add(word);
         List<WordDto> wordDtos = new ArrayList<>();
-        wordDtos.add(new WordDto(LANGUAGE_ID, LANGUAGE_NAME, EXISTING_LETTERS, null, null));
+        wordDtos.add(new WordDto(LANGUAGE_ID, LANGUAGE_NAME, null, EXISTING_LETTERS, null, null));
 
         Language language = new Language();
         language.setName(LANGUAGE_NAME);
@@ -244,7 +243,7 @@ public class TestLanguageService
     void test_deleteLanguage_notFound()
     {
         doReturn(Optional.empty()).when(languageRepository).findById(eq(NEXT_FREE_ID));
-        Assertions.assertThrows(EntityNotFoundException.class, () -> service.deleteLanguage(NEXT_FREE_ID));
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteLanguage(NEXT_FREE_ID));
     }
 
     private LanguageData getLanguageData()

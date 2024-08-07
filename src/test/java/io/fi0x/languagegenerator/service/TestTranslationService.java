@@ -1,9 +1,13 @@
 package io.fi0x.languagegenerator.service;
 
+import io.fi0x.languagegenerator.db.LanguageRepository;
 import io.fi0x.languagegenerator.db.TranslationRepository;
 import io.fi0x.languagegenerator.db.WordRepository;
+import io.fi0x.languagegenerator.db.entities.Language;
 import io.fi0x.languagegenerator.db.entities.Translation;
 import io.fi0x.languagegenerator.db.entities.Word;
+import io.fi0x.languagegenerator.logic.converter.LanguageConverter;
+import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,10 +23,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.mockito.Mockito.*;
 
@@ -51,6 +52,8 @@ public class TestTranslationService
     private WordRepository wordRepository;
     @Mock
     private TranslationRepository translationRepository;
+    @Mock
+    private LanguageRepository languageRepository;
 
     @Mock
     private Authentication authentication;
@@ -163,9 +166,13 @@ public class TestTranslationService
     @Tag("UnitTest")
     void test_linkWords_null()
     {
+        setupAuthentication();
+
         Assertions.assertThrows(NullPointerException.class, () -> service.linkWords(null, null));
         Assertions.assertThrows(NullPointerException.class, () -> service.linkWords(getFirstWordDto(), null));
         Assertions.assertThrows(NullPointerException.class, () -> service.linkWords(null, getFirstWordDto()));
+
+        staticMock.close();
     }
 
     @Test
@@ -254,7 +261,7 @@ public class TestTranslationService
         setupAuthentication();
         doReturn(null).when(authentication).getName();
 
-        Assertions.assertThrows(RuntimeException.class, () -> service.saveWords(LANGUAGE_ID2, getSecondLanguageStrings()));
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.saveWords(LANGUAGE_ID2, getSecondLanguageStrings()));
         verify(wordRepository, never()).getHighestId(anyLong());
 
         staticMock.close();
@@ -291,6 +298,9 @@ public class TestTranslationService
     void test_saveOrGetWord_noCreator()
     {
         setupAuthentication();
+        Language language = getLanguage();
+        language.setUsername(null);
+        doReturn(Optional.of(language)).when(languageRepository).findById(any());
 
         Assertions.assertThrows(IllegalAccessException.class, () -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11)));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
@@ -303,6 +313,9 @@ public class TestTranslationService
     void test_saveOrGetWord_unauthorized()
     {
         setupAuthentication();
+        Language language = getLanguage();
+        language.setUsername("Wrong person");
+        doReturn(Optional.of(language)).when(languageRepository).findById(any());
 
         Assertions.assertThrows(IllegalAccessException.class, () -> service.saveOrGetWord(new WordDto(LANGUAGE_ID1, WORD11)));
         verify(wordRepository, times(1)).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
@@ -316,6 +329,8 @@ public class TestTranslationService
         staticMock.when(SecurityContextHolder::getContext).thenReturn(securityContext);
         doReturn(authentication).when(securityContext).getAuthentication();
         doReturn(USERNAME).when(authentication).getName();
+
+        doReturn(Optional.of(getLanguage())).when(languageRepository).findById(any());
     }
 
     private void setupWordReturns()
@@ -422,5 +437,24 @@ public class TestTranslationService
         if (langComp == 0)
             return first.getWordNumber().compareTo(second.getWordNumber());
         return langComp;
+    }
+
+
+    private Language getLanguage()
+    {
+        return LanguageConverter.convertToEntity(
+                LanguageData.builder()
+                .name("Some name")
+                .username(USERNAME)
+                .vocals(new ArrayList<>())
+                .consonants(new ArrayList<>())
+                .vocalConsonant(new ArrayList<>())
+                .consonantVocals(Arrays.asList("a", "aa"))
+                .forbiddenCombinations(new ArrayList<>())
+                .specialCharacters(new ArrayList<>())
+                .startingCombinations(new ArrayList<>())
+                .endingCombinations(new ArrayList<>())
+                .minWordLength(2)
+                .maxWordLength(2).build());
     }
 }

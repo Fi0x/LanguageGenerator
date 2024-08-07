@@ -66,7 +66,7 @@ public class TranslationService
         String firstLanguageCreator = getLanguageCreator(firstLanguage);
         String secondLanguageCreator = getLanguageCreator(secondLanguage);
 
-        if(firstLanguageCreator == null || !firstLanguageCreator.equals(secondLanguageCreator) || !secondLanguageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+        if (firstLanguageCreator == null || !firstLanguageCreator.equals(secondLanguageCreator) || !secondLanguageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
             throw new IllegalAccessException();
 
         Translation translation = new Translation();
@@ -79,7 +79,7 @@ public class TranslationService
         translationRepo.deleteById(translation.getCombinedId());
     }
 
-    public void linkWords(WordDto firstDto, WordDto secondDto)
+    public void linkWords(WordDto firstDto, WordDto secondDto) throws IllegalAccessException
     {
         log.trace("linkWords() called with wordDtos={} and {}", firstDto, secondDto);
 
@@ -91,18 +91,20 @@ public class TranslationService
         }
     }
 
-    public void saveWords(List<WordDto> words)
+    public void saveWords(List<WordDto> words) throws IllegalAccessException
     {
         log.trace("saveWords() called with wordDtos={}", words);
 
-        words.forEach(this::saveOrGetWordInternal);
+        for (WordDto word : words)
+            saveOrGetWordInternal(word);
     }
 
-    public void saveWords(Long languageId, List<String> words)
+    public void saveWords(Long languageId, List<String> words) throws IllegalAccessException
     {
         log.trace("saveWords() called with languageId={} and words={}", languageId, words);
 
-        words.forEach(wordLetters -> saveOrGetWordInternal(new WordDto(languageId, wordLetters)));
+        for (String word : words)
+            saveOrGetWord(new WordDto(languageId, word));
     }
 
     public Word saveOrGetWord(WordDto wordDto) throws IllegalAccessException
@@ -110,23 +112,18 @@ public class TranslationService
         log.trace("saveOrGetWord() called with wordDto={}", wordDto);
 
         Word result = getSavedWord(wordDto);
-        if(result != null)
+        if (result != null)
             return result;
 
         String languageCreator = getLanguageCreator(wordDto.getLanguageId());
-        if(languageCreator == null || !languageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+        if (languageCreator == null || !languageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
             throw new IllegalAccessException();
 
         Long id = saveOrOverwriteWord(wordDto.toEntity());
         wordDto.setSavedInDb(true);
         wordDto.setWordNumber(id);
 
-        result = new Word();
-        result.setLanguageId(wordDto.getLanguageId());
-        result.setWordNumber(wordDto.getWordNumber());
-        result.setLetters(wordDto.getWord());
-
-        return result;
+        return wordDto.toEntity();
     }
 
     public void deleteWord(Word word) throws IllegalAccessException
@@ -134,7 +131,7 @@ public class TranslationService
         log.trace("deleteWord() called with word={}", word);
 
         String languageCreator = getLanguageCreator(word.getLanguageId());
-        if(languageCreator == null || !languageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+        if (languageCreator == null || !languageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
             throw new IllegalAccessException();
 
         wordRepo.deleteById(word.getCombinedId());
@@ -147,15 +144,11 @@ public class TranslationService
         return wordRepo.getAllByLanguageId(languageId);
     }
 
-    private Word saveOrGetWordInternal(WordDto word)
+    private Word saveOrGetWordInternal(WordDto word) throws IllegalAccessException
     {
         log.trace("saveOrGetWord() called with wordDto={}", word);
 
-        try {
-            return saveOrGetWord(word);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        return saveOrGetWord(word);
     }
 
     @Nullable
