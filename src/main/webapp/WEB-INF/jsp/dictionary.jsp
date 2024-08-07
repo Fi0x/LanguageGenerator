@@ -7,6 +7,8 @@
 <%@include file="../common/navigation.jspf" %>
 <div class="container">
     <h1>Dictionary for '${languageName}'</h1>
+<%--TODO: Add a search function--%>
+<%--TODO: Add a button and text field to add a new custom word--%>
     <table class="table">
         <thead>
         <tr>

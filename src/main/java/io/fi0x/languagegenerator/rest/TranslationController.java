@@ -74,7 +74,7 @@ public class TranslationController
 
     @Transactional
     @GetMapping("/delete-word")
-    public String deleteWord(ModelMap model, @RequestParam("languageId") long languageId, @RequestParam("wordNumber") long wordNumber)
+    public String deleteWord(@RequestParam("languageId") long languageId, @RequestParam("wordNumber") long wordNumber)
     {
         log.info("deleteWord() called with languageId={} nad wordNumber={}", languageId, wordNumber);
 
@@ -108,8 +108,25 @@ public class TranslationController
     }
 
     @Transactional
+    @PostMapping("/translation")
+    public String saveTranslation(@RequestParam("languageId") Integer language1, @RequestParam("word") String word1, @RequestParam("translationLanguageId") Integer language2, @RequestParam(value = "translationWord") String word2)
+    {
+        log.info("saveTranslation() called for languageId={}, word={}, language2={} and word2={}", language1, word1, language2, word2);
+
+        //TODO: Verify this method works correctly
+        try {
+            translationService.linkWords(new WordDto(language1.longValue(), word1), new WordDto(language2.longValue(), word2));
+        } catch (IllegalAccessException e) {
+            log.info("User '{}' tried to save word '{}' in a language, which is not allowed", authenticationService.getAuthenticatedUsername(), word1);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save translations in this language");
+        }
+
+        return "list-words";
+    }
+
+    @Transactional
     @GetMapping("/delete-translation")
-    public String deleteTranslation(ModelMap model, @RequestParam("languageId1") long languageId1, @RequestParam("wordNumber1") long wordNumber1, @RequestParam("languageId2") long languageId2, @RequestParam("wordNumber2") long wordNumber2)
+    public String deleteTranslation(@RequestParam("languageId1") long languageId1, @RequestParam("wordNumber1") long wordNumber1, @RequestParam("languageId2") long languageId2, @RequestParam("wordNumber2") long wordNumber2)
     {
         log.info("deleteTranslation() called for languageId={}, wordNumber={} and languageId={}, wordNumber={}", languageId1, wordNumber1, languageId2, wordNumber2);
 

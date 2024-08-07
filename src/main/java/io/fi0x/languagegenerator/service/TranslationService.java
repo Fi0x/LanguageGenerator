@@ -83,8 +83,8 @@ public class TranslationService
     {
         log.trace("linkWords() called with wordDtos={} and {}", firstDto, secondDto);
 
-        Word firstWord = saveOrGetWordInternal(firstDto);
-        Word secondWord = saveOrGetWordInternal(secondDto);
+        Word firstWord = saveOrGetWord(firstDto);
+        Word secondWord = saveOrGetWord(secondDto);
         if (isNotLinked(firstWord, secondWord) && isNotLinked(secondWord, firstWord)) {
             Translation translation = WordConverter.convertToTranslation(firstWord, secondWord);
             translationRepo.save(translation);
@@ -96,7 +96,7 @@ public class TranslationService
         log.trace("saveWords() called with wordDtos={}", words);
 
         for (WordDto word : words)
-            saveOrGetWordInternal(word);
+            saveOrGetWord(word);
     }
 
     public void saveWords(Long languageId, List<String> words) throws IllegalAccessException
@@ -142,13 +142,6 @@ public class TranslationService
         log.trace("getAllWords() called with languageId={}", languageId);
 
         return wordRepo.getAllByLanguageId(languageId);
-    }
-
-    private Word saveOrGetWordInternal(WordDto word) throws IllegalAccessException
-    {
-        log.trace("saveOrGetWord() called with wordDto={}", word);
-
-        return saveOrGetWord(word);
     }
 
     @Nullable
