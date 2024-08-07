@@ -42,8 +42,9 @@
             </label>
             <input type="submit" class="btn-success" value="Add Translation"/>
         </form:form>
-        <%--TODO: Add a button and text-fields, to add a new translation (one text field could also be a drop-down of existing languages)--%>
-        <%--TODO: Only show this option, if the user is the owner of the original word's language--%>
+        <c:if test="${username == originalLanguageData.username}">
+            <%--TODO: Add a button and text-fields, to add a new translation (one text field could also be a drop-down of existing languages)--%>
+        </c:if>
         </tbody>
     </table>
 </div>

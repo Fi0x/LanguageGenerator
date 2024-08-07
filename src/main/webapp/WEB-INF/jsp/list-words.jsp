@@ -33,13 +33,14 @@
                     </td>
                     <c:if test="${languageCreator == username}">
                         <td>
-                            <label id="savedLabel${singleWord.listIndex}"
-                                   style="visibility: ${singleWord.savedInDb ? "visible" : "hidden"}">Saved</label>
                             <input id="saveButton${singleWord.listIndex}"
                                    style="visibility: ${singleWord.savedInDb ? "hidden" : "visible"}" type="submit"
                                    class="btn-success" value="Save"/>
+
+                            <a href="delete-word?languageId=${singleWord.languageId}&wordNumber=${singleWord.wordNumber}"
+                               id="deleteButton${singleWord.listIndex}"
+                               style="visibility: ${singleWord.savedInDb ? "visible" : "hidden"}" class="btn-danger">Delete</a>
                         </td>
-                        <%--TODO: Add a button to remove the word from the saved words table--%>
                     </c:if>
                 </form:form>
             </tr>
@@ -52,7 +53,7 @@
 <script>
     function updateSaveState(originalWord, text, isAlreadySaved, listIndex) {
         if (originalWord !== text || !isAlreadySaved) {
-            document.getElementById("savedLabel" + listIndex).style.visibility = 'hidden';
+            document.getElementById("deleteButton" + listIndex).style.visibility = 'hidden';
             document.getElementById("saveButton" + listIndex).style.visibility = 'visible';
         }
     }

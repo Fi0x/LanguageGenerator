@@ -89,6 +89,7 @@ public class TranslationController
         }
 
         //TODO: remove the deleted word from the UI
+        //TODO: Return to the correct page (where the call came from)
         return "dictionary";
     }
 
