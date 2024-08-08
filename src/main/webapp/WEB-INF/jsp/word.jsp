@@ -11,7 +11,7 @@
         <tr>
             <th>Word</th>
             <th>Language</th>
-            <th>Options</th>
+            <th colspan="2">Options</th>
         </tr>
         </thead>
         <tbody>
@@ -21,20 +21,34 @@
                     <label>${singleTranslation.word}</label>
                 </td>
                 <td>
-                    <label>${singleTranslation.languageName}</label>
+                    <a href="dictionary?languageId=${singleTranslation.languageId}" class="btn-hidden-light">${singleTranslation.languageName}</a>
+                </td>
+                <td>
+                    <a href="word?languageId=${singleTranslation.languageId}&word=${singleTranslation.word}" class="btn">Translations</a>
                 </td>
                 <td>
                     <c:if test="${username == originalLanguageData.username}">
-                        <a href="delete-translation?languageId1=${singleTranslation.languageId}&wordNumber1=${singleTranslation.wordNumber}&languageId2=${word.languageId}&wordNumber2=${word.wordNumber}">Delete
-                            Translation</a>
+                        <a href="delete-translation?languageId1=${singleTranslation.languageId}&wordNumber1=${singleTranslation.wordNumber}&languageId2=${word.languageId}&wordNumber2=${word.wordNumber}"
+                           class="btn-danger">Delete Translation</a>
                     </c:if>
                 </td>
             </tr>
         </c:forEach>
-        <form:form method="post" action="">
+        </tbody>
+    </table>
+    <c:if test="${username == originalLanguageData.username && languages.size() > 1}">
+        <form:form method="post" action="translation">
+            <input type="hidden" name="languageId" value="${originalLanguageData.id}">
+            <input type="hidden" name="word" value="${word.letters}">
+            <%--TODO: Fix css (Adjust all input types as well)--%>
             <label>
-                    <%--TODO: Make this into a drop-down and pre-fill it with existing languages and their names--%>
-                <input type="number" name="translationLanguageId"/>
+                <select name="translationLanguageId" class="selection">
+                    <c:forEach items="${languages}" var="selectableLanguage">
+                        <c:if test="${selectableLanguage.id != originalLanguageData.id}">
+                            <option value="${selectableLanguage.id}">${selectableLanguage.name}</option>
+                        </c:if>
+                    </c:forEach>
+                </select>
             </label>
             <label>
                     <%--TODO: When the user types, provide reccommendations of existing words from the selected language--%>
@@ -42,11 +56,7 @@
             </label>
             <input type="submit" class="btn-success" value="Add Translation"/>
         </form:form>
-        <c:if test="${username == originalLanguageData.username}">
-            <%--TODO: Add a button and text-fields, to add a new translation (one text field could also be a drop-down of existing languages)--%>
-        </c:if>
-        </tbody>
-    </table>
+    </c:if>
 </div>
 <%@include file="../common/scripts.jspf" %>
 </body>

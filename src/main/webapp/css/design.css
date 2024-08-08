@@ -76,6 +76,21 @@ body {
     background-color: var(--custom-light-yellow);
 }
 
+.btn-hidden-light {
+    color: var(--custom-white);
+    background-color: transparent;
+    text-decoration: none;
+    border-color: transparent;
+    border-radius: 5px;
+    padding: 5px;
+    border-width: 0;
+}
+.btn-hidden-light:hover {
+    color: var(--custom-black);
+    background-color: var(--light-accent);
+    text-decoration: none;
+}
+
 .home-image {
     max-width: 100%;
     max-height: 100%;
@@ -122,6 +137,12 @@ td {
 
 .header-row {
     background-color: rgba(255, 255, 255, 0.13);
+}
+
+.selection {
+    color: var(--custom-black);
+    background-color: var(--custom-white);
+    padding: 2px;
 }
 
 table {

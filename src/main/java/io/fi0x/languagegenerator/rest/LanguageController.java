@@ -24,7 +24,7 @@ import java.util.Objects;
 @Slf4j
 @Controller
 @AllArgsConstructor
-@SessionAttributes({"amount", "language", "languageCreator", "languageName", "username", "words"})
+@SessionAttributes({"amount", "language", "languages", "languageCreator", "languageName", "username", "words"})
 public class LanguageController
 {
     private GenerationService generationService;

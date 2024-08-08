@@ -39,9 +39,7 @@ public class TranslationService
 
         List<Translation> translations = translationRepo.getAllByLanguageIdAndWordNumber(word.getLanguageId(), word.getWordNumber());
         List<Translation> invertedTranslations = translationRepo.getAllByTranslatedLanguageIdAndTranslatedWordNumber(word.getLanguageId(), word.getWordNumber());
-        invertedTranslations.forEach(Translation::swap);
-        translations.addAll(invertedTranslations);
-        return getTranslatedWords(translations);
+        return getTranslatedWords(translations, invertedTranslations);
     }
 
     public List<Word> getTranslations(WordDto originalWord, Long desiredLanguageId)
@@ -54,9 +52,7 @@ public class TranslationService
 
         List<Translation> translations = translationRepo.getAllByLanguageIdAndWordNumberAndTranslatedLanguageId(word.getLanguageId(), word.getWordNumber(), desiredLanguageId);
         List<Translation> invertedTranslations = translationRepo.getAllByTranslatedLanguageIdAndTranslatedWordNumberAndLanguageId(word.getLanguageId(), word.getWordNumber(), desiredLanguageId);
-        invertedTranslations.forEach(Translation::swap);
-        translations.addAll(invertedTranslations);
-        return getTranslatedWords(translations);
+        return getTranslatedWords(translations, invertedTranslations);
     }
 
     public void deleteTranslation(long firstLanguage, long firstWordNumber, long secondLanguage, long secondWordNumber) throws IllegalAccessException
@@ -79,16 +75,18 @@ public class TranslationService
         translationRepo.deleteById(translation.getCombinedId());
     }
 
-    public void linkWords(WordDto firstDto, WordDto secondDto) throws IllegalAccessException
+    public Word linkWords(WordDto originalWordDto, WordDto translatedWordDto) throws IllegalAccessException
     {
-        log.trace("linkWords() called with wordDtos={} and {}", firstDto, secondDto);
+        log.trace("linkWords() called with wordDtos={} and {}", originalWordDto, translatedWordDto);
 
-        Word firstWord = saveOrGetWord(firstDto);
-        Word secondWord = saveOrGetWord(secondDto);
-        if (isNotLinked(firstWord, secondWord) && isNotLinked(secondWord, firstWord)) {
-            Translation translation = WordConverter.convertToTranslation(firstWord, secondWord);
+        Word originalWord = saveOrGetWord(originalWordDto);
+        Word translatedWord = saveOrGetWord(translatedWordDto);
+        if (isNotLinked(originalWord, translatedWord) && isNotLinked(translatedWord, originalWord)) {
+            Translation translation = WordConverter.convertToTranslation(originalWord, translatedWord);
             translationRepo.save(translation);
         }
+
+        return translatedWord;
     }
 
     public void saveWords(List<WordDto> words) throws IllegalAccessException
@@ -163,11 +161,16 @@ public class TranslationService
         return word.getWordNumber();
     }
 
-    private List<Word> getTranslatedWords(List<Translation> translations)
+    private List<Word> getTranslatedWords(List<Translation> translations, List<Translation> invertedTranslations)
     {
         List<Word> translatedWords = new ArrayList<>();
         translations.forEach(translation -> {
             Word translatedWord = wordRepo.getByLanguageIdAndWordNumber(translation.getTranslatedLanguageId(), translation.getTranslatedWordNumber());
+            if (translatedWord != null)
+                translatedWords.add(translatedWord);
+        });
+        invertedTranslations.forEach(translation -> {
+            Word translatedWord = wordRepo.getByLanguageIdAndWordNumber(translation.getLanguageId(), translation.getWordNumber());
             if (translatedWord != null)
                 translatedWords.add(translatedWord);
         });
