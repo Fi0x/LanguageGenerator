@@ -8,7 +8,6 @@
 <div class="container">
     <h1>Dictionary for '${languageName}'</h1>
     <%--TODO: Make all tables sortable by a desired column--%>
-    <%--TODO: Add a button and text field to add a new custom word--%>
     <label class="search-label">
         <input type="text" id="searchText" onkeyup="searchFunction()" class="search-input" placeholder="Search...">
     </label>
@@ -38,28 +37,9 @@
         </c:forEach>
         </tbody>
     </table>
+    <%--TODO: Add a button and text field to add a new custom word--%>
 </div>
 <%@include file="../common/scripts.jspf" %>
-<script>
-    function searchFunction() {
-        var input, filter, table, rows, td, i, txtValue;
-        input = document.getElementById("searchText");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("searchableTable");
-        rows = table.getElementsByTagName("tr");
-
-        for (i = 0; i < rows.length; i++) {
-            td = rows[i].getElementsByTagName("td")[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    rows[i].style.display = "";
-                } else {
-                    rows[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
+<script src="${pageContext.request.contextPath}/js/functions.js"></script>
 </body>
 </html>

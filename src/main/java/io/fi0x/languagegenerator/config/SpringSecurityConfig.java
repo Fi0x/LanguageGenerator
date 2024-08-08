@@ -50,7 +50,8 @@ public class SpringSecurityConfig
             "/css/design.css",
             "/images/*",
             "/dictionary", "/WEB-INF/jsp/dictionary.jsp",
-            "/word", "/WEB-INF/jsp/word.jsp"
+            "/word", "/WEB-INF/jsp/word.jsp",
+            "/js/functions.js"
     };
     private static final String[] ANONYMOUS_URLS = new String[]{
             "/register", "/WEB-INF/jsp/signup.jsp",

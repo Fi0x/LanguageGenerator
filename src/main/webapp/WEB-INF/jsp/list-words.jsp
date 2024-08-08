@@ -50,13 +50,6 @@
     <a href="generate" class="btn">Generate new words in this language</a>
 </div>
 <%@include file="../common/scripts.jspf" %>
-<script>
-    function updateSaveState(originalWord, text, isAlreadySaved, listIndex) {
-        if (originalWord !== text || !isAlreadySaved) {
-            document.getElementById("deleteButton" + listIndex).style.visibility = 'hidden';
-            document.getElementById("saveButton" + listIndex).style.visibility = 'visible';
-        }
-    }
-</script>
+<script src="${pageContext.request.contextPath}/js/functions.js"></script>
 </body>
 </html>

@@ -8,6 +8,11 @@
 <div class="container">
     <%--@elvariable id="username" type="java.lang.String"--%>
     <h1>Loaded languages for user ${username}:</h1>
+
+    <%--TODO: Make this search work--%>
+    <label class="search-label">
+        <input type="text" id="searchTest" onkeyup="searchFunction()" class="search-input" placeholder="Search...">
+    </label>
     <table class="table">
         <thead>
         <tr class="underlined-row">
@@ -51,5 +56,6 @@
     </table>
 </div>
 <%@include file="../common/scripts.jspf" %>
+<script src="${pageContext.request.contextPath}/js/functions.js"></script>
 </body>
 </html>
