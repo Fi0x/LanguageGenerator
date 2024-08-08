@@ -7,9 +7,12 @@
 <%@include file="../common/navigation.jspf" %>
 <div class="container">
     <h1>Dictionary for '${languageName}'</h1>
-<%--TODO: Add a search function--%>
-<%--TODO: Add a button and text field to add a new custom word--%>
-    <table class="table">
+    <%--TODO: Make all tables sortable by a desired column--%>
+    <%--TODO: Add a button and text field to add a new custom word--%>
+    <label class="search-label">
+        <input type="text" id="searchText" onkeyup="searchFunction()" class="search-input" placeholder="Search...">
+    </label>
+    <table id="searchableTable" class="table">
         <thead>
         <tr>
             <th>Word</th>
@@ -27,7 +30,8 @@
                 </td>
                 <td>
                     <c:if test="${languageCreator == username}">
-                        <a href="delete-word?languageId=${word.languageId}&wordNumber=${word.wordNumber}" class="btn-danger">Delete</a>
+                        <a href="delete-word?languageId=${word.languageId}&wordNumber=${word.wordNumber}"
+                           class="btn-danger">Delete</a>
                     </c:if>
                 </td>
             </tr>
@@ -36,5 +40,26 @@
     </table>
 </div>
 <%@include file="../common/scripts.jspf" %>
+<script>
+    function searchFunction() {
+        var input, filter, table, rows, td, i, txtValue;
+        input = document.getElementById("searchText");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("searchableTable");
+        rows = table.getElementsByTagName("tr");
+
+        for (i = 0; i < rows.length; i++) {
+            td = rows[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 </body>
 </html>
