@@ -7,11 +7,10 @@
 <%@include file="../common/navigation.jspf" %>
 <div class="container">
     <h1>Dictionary for '${languageName}'</h1>
-    <%--TODO: Make all tables sortable by a desired column--%>
     <label class="search-label">
         <input type="text" id="searchText" onkeyup="searchFunction()" class="search-input" placeholder="Search...">
     </label>
-    <table id="searchableTable" class="table">
+    <table id="searchableTable" class="table sortable">
         <thead>
         <tr>
             <th>Word</th>

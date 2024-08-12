@@ -12,7 +12,8 @@
     <table class="table">
         <thead>
         <tr>
-            <th colspan="3">Word</th>
+            <th>Word</th>
+            <th colspan="2">Options</th>
         </tr>
         </thead>
         <tbody>
@@ -31,8 +32,8 @@
                     <td>
                         <a href="word?languageId=${singleWord.languageId}&word=${singleWord.word}" class="btn">Translations</a>
                     </td>
-                    <c:if test="${languageCreator == username}">
-                        <td>
+                    <td>
+                        <c:if test="${languageCreator == username}">
                             <input id="saveButton${singleWord.listIndex}"
                                    style="visibility: ${singleWord.savedInDb ? "hidden" : "visible"}" type="submit"
                                    class="btn-success" value="Save"/>
@@ -40,8 +41,8 @@
                             <a href="delete-word?languageId=${singleWord.languageId}&wordNumber=${singleWord.wordNumber}"
                                id="deleteButton${singleWord.listIndex}"
                                style="visibility: ${singleWord.savedInDb ? "visible" : "hidden"}" class="btn-danger">Delete</a>
-                        </td>
-                    </c:if>
+                        </c:if>
+                    </td>
                 </form:form>
             </tr>
         </c:forEach>

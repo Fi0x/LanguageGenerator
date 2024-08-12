@@ -13,7 +13,7 @@
     <label class="search-label">
         <input type="text" id="searchTest" onkeyup="searchFunction()" class="search-input" placeholder="Search...">
     </label>
-    <table class="table">
+    <table class="table sortable">
         <thead>
         <tr class="underlined-row">
             <th>Language</th>
