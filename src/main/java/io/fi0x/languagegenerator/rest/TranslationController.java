@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Controller
 @AllArgsConstructor
-@SessionAttributes({"amount", "language", "languages", "languageCreator", "languageName", "originalLanguageData", "username", "savedWords", "translations", "word", "words"})
+@SessionAttributes({"amount", "language", "languages", "languageCreator", "languageName", "originalEndpoint", "originalLanguageData", "username", "savedWords", "translations", "word", "words"})
 public class TranslationController
 {
     private AuthenticationService authenticationService;
@@ -43,7 +43,8 @@ public class TranslationController
             wordDto.setWord(word);
 
             try {
-                translationService.saveOrGetWord(wordDto);
+                Word savedWord = translationService.saveOrGetWord(wordDto);
+                wordDto.setWordNumber(savedWord.getWordNumber());
             } catch (IllegalAccessException e) {
                 log.info("User '{}' tried to save word '{}' in a language, which is not allowed", authenticationService.getAuthenticatedUsername(), word);
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save translations in this language");
@@ -77,9 +78,9 @@ public class TranslationController
 
     @Transactional
     @GetMapping("/delete-word")
-    public String deleteWord(@RequestParam("languageId") long languageId, @RequestParam("wordNumber") long wordNumber)
+    public String deleteWord(ModelMap model, @RequestParam("languageId") long languageId, @RequestParam("wordNumber") long wordNumber)
     {
-        log.info("deleteWord() called with languageId={} nad wordNumber={}", languageId, wordNumber);
+        log.info("deleteWord() called with languageId={} and wordNumber={}", languageId, wordNumber);
 
         Word word = new Word();
         word.setLanguageId(languageId);
@@ -91,9 +92,24 @@ public class TranslationController
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User is not allowed to delete any saved words of this language");
         }
 
-        //TODO: remove the deleted word from the UI
-        //TODO: Return to the correct page (where the call came from)
-        return "dictionary";
+        String originalEndpoint = (String) model.get("originalEndpoint");
+        if (originalEndpoint == null)
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No return page found for delete-word operation");
+
+        if (originalEndpoint.equals("dictionary")) {
+            List<Word> wordList = ((List<Word>) model.get("savedWords")).stream()
+                    .filter(word1 -> word1.getLanguageId() != languageId || word1.getWordNumber() == null || word1.getWordNumber() != wordNumber).toList();
+            model.put("savedWords", wordList);
+        } else if (originalEndpoint.equals("list-words")) {
+            List<WordDto> wordList = ((List<WordDto>) model.get("words")).stream()
+                    .peek(word1 -> {
+                        if (word1.getLanguageId() == languageId && word1.getWordNumber() != null && word1.getWordNumber() == wordNumber)
+                            word1.setSavedInDb(false);
+                    }).toList();
+            model.put("words", wordList);
+        }
+
+        return originalEndpoint;
     }
 
     @Transactional
@@ -107,6 +123,7 @@ public class TranslationController
         model.put("languageCreator", languageData.getUsername());
         model.put("savedWords", translationService.getAllWords(languageId));
         model.put("username", authenticationService.getAuthenticatedUsername());
+        model.put("originalEndpoint", "dictionary");
 
         return "dictionary";
     }
@@ -121,8 +138,7 @@ public class TranslationController
             Word newWord = translationService.linkWords(new WordDto(language1.longValue(), word1), new WordDto(language2.longValue(), word2));
 
             Object translationsObject = model.get("translations");
-            if(translationsObject instanceof List<?> translationsList && (translationsList.isEmpty() || translationsList.get(0) instanceof WordDto))
-            {
+            if (translationsObject instanceof List<?> translationsList && (translationsList.isEmpty() || translationsList.get(0) instanceof WordDto)) {
                 List<WordDto> dtoList = translationsList.stream().map(object -> (WordDto) object).collect(Collectors.toList());
                 WordDto newWordDto = WordConverter.convertToDto(newWord);
                 newWordDto.setLanguageName(languageService.getLanguageData(newWordDto.getLanguageId()).getName());

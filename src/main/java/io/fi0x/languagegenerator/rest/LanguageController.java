@@ -24,7 +24,7 @@ import java.util.Objects;
 @Slf4j
 @Controller
 @AllArgsConstructor
-@SessionAttributes({"amount", "language", "languages", "languageCreator", "languageName", "username", "words"})
+@SessionAttributes({"amount", "language", "languages", "languageCreator", "languageName", "originalEndpoint", "username", "words"})
 public class LanguageController
 {
     private GenerationService generationService;
@@ -55,6 +55,7 @@ public class LanguageController
             model.put("username", authenticationService.getAuthenticatedUsername());
             model.put("languageName", languageData.getName());
             model.put("languageCreator", languageData.getUsername());
+            model.put("originalEndpoint", "list-words");
         } catch (EntityNotFoundException e) {
             log.warn("Could not find a language with id={}", language);
             return "redirect:/";

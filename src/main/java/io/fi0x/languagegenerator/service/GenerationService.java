@@ -64,7 +64,12 @@ public class GenerationService
         for (int i = 0; i < count; i++) {
             WordDto word = generateWord(language);
             word.setListIndex(i);
-            word.setSavedInDb(wordRepo.getByLanguageIdAndLetters(languageData.getId(), word.getWord()).isPresent());
+            Optional<Word> savedWord = wordRepo.getByLanguageIdAndLetters(languageData.getId(), word.getWord());
+            if(savedWord.isPresent())
+            {
+                word.setSavedInDb(true);
+                word.setWordNumber(savedWord.get().getWordNumber());
+            }
             generatedWords.add(word);
         }
 
