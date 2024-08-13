@@ -11,6 +11,7 @@ public class LanguageConverter
         Language language = new Language();
         language.setId(languageData.getId());
         language.setName(languageData.getName());
+        language.setRealLanguage(languageData.getRealLanguage());
         language.setUsername(languageData.getUsername());
         language.setVisible(languageData.isVisible());
         language.setMinWordLength(languageData.getMinWordLength());
@@ -27,6 +28,8 @@ public class LanguageConverter
 
     public static LanguageJson convertToJson(LanguageData languageData)
     {
+        if(languageData.getRealLanguage())
+            return new LanguageJson();
         LanguageJson languageJson = new LanguageJson();
         languageJson.setNameLengths(new int[]{languageData.getMinWordLength(), languageData.getMaxWordLength()});
         languageJson.setSpecialCharacterLengths(new int[]{languageData.getCharsBeforeSpecial(), languageData.getCharsAfterSpecial(),

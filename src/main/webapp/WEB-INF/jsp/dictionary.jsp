@@ -14,6 +14,7 @@
         <thead>
         <tr>
             <th>Word</th>
+            <th>English Translation</th>
             <th colspan="2">Options</th>
         </tr>
         </thead>
@@ -22,6 +23,9 @@
             <tr>
                 <td>
                     <label>${word.letters}</label>
+                </td>
+                <td>
+                        <%--TODO: Add the english translation for each word--%>
                 </td>
                 <td>
                     <a href="word?languageId=${word.languageId}&word=${word.letters}" class="btn">Translations</a>

@@ -14,6 +14,7 @@ public class Language
     private Long id;
 
     private String name;
+    private Boolean realLanguage;
     private String username;
     private Boolean visible;
     private int minWordLength = 3;

@@ -19,7 +19,13 @@
             </tr>
             </thead>
             <tbody>
-<%--TODO: Add an option, to create an existing real language. This disables all the generation options and creates a placeholder language--%>
+            <tr>
+                <td>Real Language*:</td>
+                <td><form:checkbox path="realLanguage"/></td>
+                    <%--TODO: Disable all the generation options and create a placeholder language with this option set--%>
+                <td></td>
+                <td></td>
+            </tr>
             <tr>
                 <td>Name*:</td>
                 <td><form:input type="text" path="name"/></td>
@@ -85,7 +91,9 @@
         </table>
     </form:form>
 
-    <a>* Not all, but at least 1 allowed letter combination needs to contain entries.<br>
+    <a>* A real language (like english) does not need any generation parameters and is only available for
+        translations.<br>
+        Not all, but at least 1 allowed letter combination needs to contain entries.<br>
         Special characters, forbidden, starting and ending combinations can be empty.<br>
         The combinations are used to build words in the following order:
         consonant-vocal > consonant > vocal-consonant > vocal.
@@ -93,10 +101,12 @@
         While looping, the forbidden combinations are constantly checked, to avoid any entries in there.<br>
         If a combination list does not contain enough entries to avoid a forbidden combination,
         the next combination list will be used instead.<br>
-        If entries are present in the starting combinations, those will be used before looping through the other combinations.<br>
+        If entries are present in the starting combinations, those will be used before looping through the other
+        combinations.<br>
         If ending combinations exist, those will be added to the end of each created word,
         but they will not exceed the maximum word length for the language.<br>
-        Special characters will be added after the word is completed and has not used the maximum word length for this language.<br>
+        Special characters will be added after the word is completed and has not used the maximum word length for this
+        language.<br>
     </a>
 </div>
 <%@include file="../common/scripts.jspf" %>

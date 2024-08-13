@@ -34,6 +34,7 @@ public class LanguageService
     private final StartingRepository staRepo;
     private final EndingRepository endRepo;
 
+    //TODO: Add support for real languages
     public void addLanguage(LanguageData languageData) throws InvalidObjectException, IllegalAccessException
     {
         log.trace("addLanguage() called with languageData={}", languageData);
@@ -157,8 +158,7 @@ public class LanguageService
         List<Language> publicLanguages = languageRepository.getAllByVisible(true);
         result.removeAll(publicLanguages);
         result.addAll(publicLanguages);
-
-        return result;
+        return result.stream().filter(language -> !language.getRealLanguage()).toList();
     }
 
     public List<WordDto> addLanguageNameToWords(List<Word> words)

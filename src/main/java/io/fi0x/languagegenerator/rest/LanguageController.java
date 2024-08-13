@@ -64,6 +64,8 @@ public class LanguageController
             return "redirect:/";
         } catch (IllegalAccessException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, e.getLocalizedMessage());
         }
 
         return "list-words";

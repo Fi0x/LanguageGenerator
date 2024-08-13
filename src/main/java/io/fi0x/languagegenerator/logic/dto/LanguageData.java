@@ -13,6 +13,7 @@ public class LanguageData
 {
     private Long id;
     private String name;
+    private Boolean realLanguage;
     private String username;
     private boolean visible;
     private int minWordLength;
@@ -34,8 +35,8 @@ public class LanguageData
 
     public static LanguageData getFromEntity(Language language)
     {
-        return LanguageData.builder().id(language.getId()).name(language.getName()).username(language.getUsername())
-                .minWordLength(language.getMinWordLength()).maxWordLength(language.getMaxWordLength())
+        return LanguageData.builder().id(language.getId()).name(language.getName()).realLanguage(language.getRealLanguage())
+                .username(language.getUsername()).minWordLength(language.getMinWordLength()).maxWordLength(language.getMaxWordLength())
                 .charsBeforeSpecial(language.getCharsBeforeSpecial()).charsAfterSpecial(language.getCharsAfterSpecial())
                 .minSpecialChars(language.getMinSpecialChars()).maxSpecialChars(language.getMaxSpecialChars())
                 .specialCharacterChance(language.getSpecialCharacterChance()).visible(language.getVisible()).build();
@@ -46,28 +47,30 @@ public class LanguageData
         String errors = "The following errors occurred:";
         boolean errorFound = false;
 
-        if (id == null || name == null || username == null || name.isBlank() || username.isBlank()) {
+        if (id == null || name == null || name.isBlank() || ((username == null || username.isBlank()) && !realLanguage)) {
             errors += "\nAn internal field was null or empty";
             errorFound = true;
         }
-        if (vocals == null || consonants == null || vocalConsonant == null || consonantVocals == null) {
-            errors += "\nA character-list was null";
-            errorFound = true;
-        } else if (vocals.isEmpty() && consonants.isEmpty() && vocalConsonant.isEmpty() && consonantVocals.isEmpty()) {
-            errors += "\nAt least one character-list must not be empty";
-            errorFound = true;
+        if (!realLanguage) {
+            if (vocals == null || consonants == null || vocalConsonant == null || consonantVocals == null) {
+                errors += "\nA character-list was null";
+                errorFound = true;
+            } else if (vocals.isEmpty() && consonants.isEmpty() && vocalConsonant.isEmpty() && consonantVocals.isEmpty()) {
+                errors += "\nAt least one character-list must not be empty";
+                errorFound = true;
+            }
+
+            if (minWordLength <= 0) {
+                errors += "\nThe min-word-length must be greater than 0";
+                errorFound = true;
+            }
+            if (maxWordLength < minWordLength) {
+                errors += "\nThe max-word-length must be at least as high as the min-word-length";
+                errorFound = true;
+            }
         }
 
-        if (minWordLength <= 0) {
-            errors += "\nThe min-word-length must be greater than 0";
-            errorFound = true;
-        }
-        if (maxWordLength < minWordLength) {
-            errors += "\nThe max-word-length must be at least as high as the min-word-length";
-            errorFound = true;
-        }
-
-        if(errorFound)
+        if (errorFound)
             throw new InvalidObjectException(errors);
     }
 }

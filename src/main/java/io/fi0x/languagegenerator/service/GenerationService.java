@@ -35,7 +35,7 @@ public class GenerationService
     private final EndingRepository endRepository;
     private final WordRepository wordRepo;
 
-    public List<WordDto> generateWords(@NonNull LanguageData languageData, int count) throws EntityNotFoundException, InvalidObjectException, IllegalAccessException
+    public List<WordDto> generateWords(@NonNull LanguageData languageData, int count) throws EntityNotFoundException, InvalidObjectException, IllegalAccessException, IllegalArgumentException
     {
         log.trace("generateWords() called for language={} with amount={}", languageData, count);
 
@@ -47,6 +47,9 @@ public class GenerationService
         Optional<Language> result = languageRepository.findById(languageData.getId());
         if (result.isEmpty())
             throw new EntityNotFoundException("Could not find language with id=" + languageData.getId());
+
+        if(result.get().getRealLanguage())
+            throw new IllegalArgumentException("Language '" + result.get().getName() + "' is not designed to generate words, but rather a placeholder for translations.");
 
         LanguageData language = LanguageData.getFromEntity(result.get());
         language.setConsonants(getLetters(cRepository.getAllByLanguageId(languageData.getId()).stream().map(ConsonantCombination::getLetterId).collect(Collectors.toList())));
