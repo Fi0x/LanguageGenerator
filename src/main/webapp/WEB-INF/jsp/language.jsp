@@ -21,66 +21,66 @@
             <tbody>
             <tr>
                 <td>Real Language*:</td>
-                <td><form:checkbox path="realLanguage"/></td>
-                    <%--TODO: Disable all the generation options and create a placeholder language with this option set--%>
+                <td><form:checkbox path="realLanguage" onchange="updateRealState(value)"/></td>
+                    <%--TODO: Make sure this works--%>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
                 <td>Name*:</td>
                 <td><form:input type="text" path="name"/></td>
-                <td>Min Characters before special Chars:</td>
-                <td><form:input type="number" path="charsBeforeSpecial"/></td>
+                <td class="onlyFictionalLanguageOption">Min Characters before special Chars:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="number" path="charsBeforeSpecial"/></td>
             </tr>
             <tr>
-                <td>Public Language*:</td>
-                <td><form:checkbox path="visible"/></td>
-                <td>Min Characters after special Chars:</td>
-                <td><form:input type="number" path="charsAfterSpecial"/></td>
+                <td class="onlyFictionalLanguageOption">Public Language*:</td>
+                <td class="onlyFictionalLanguageOption"><form:checkbox path="visible"/></td>
+                <td class="onlyFictionalLanguageOption">Min Characters after special Chars:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="number" path="charsAfterSpecial"/></td>
             </tr>
             <tr>
-                <td>Min-Word-Length*:</td>
-                <td><form:input type="number" path="minWordLength"/></td>
-                <td>Min-Amount of special Chars per word:</td>
-                <td><form:input type="number" path="minSpecialChars"/></td>
+                <td class="onlyFictionalLanguageOption">Min-Word-Length*:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="number" path="minWordLength"/></td>
+                <td class="onlyFictionalLanguageOption">Min-Amount of special Chars per word:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="number" path="minSpecialChars"/></td>
             </tr>
             <tr>
-                <td>Max-Word-Length*:</td>
-                <td><form:input type="number" path="maxWordLength"/></td>
-                <td>Max-Amount of special chars per word:</td>
-                <td><form:input type="number" path="maxSpecialChars"/></td>
+                <td class="onlyFictionalLanguageOption">Max-Word-Length*:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="number" path="maxWordLength"/></td>
+                <td class="onlyFictionalLanguageOption">Max-Amount of special chars per word:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="number" path="maxSpecialChars"/></td>
             </tr>
             <tr>
                 <td colspan="2"></td>
-                <td>Chance for special characters:</td>
-                <td><form:input type="number" path="specialCharacterChance"/></td>
+                <td class="onlyFictionalLanguageOption">Chance for special characters:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="number" path="specialCharacterChance"/></td>
             </tr>
             <tr>
                 <th colspan="4">Letter combinations*, separated by ','.</th>
             </tr>
             <tr>
-                <td>Possible Vocals:</td>
-                <td><form:input type="text" path="vocals"/></td>
-                <td>Special Character Combinations:</td>
-                <td><form:input type="text" path="specialCharacters"/></td>
+                <td class="onlyFictionalLanguageOption">Possible Vocals:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="text" path="vocals"/></td>
+                <td class="onlyFictionalLanguageOption">Special Character Combinations:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="text" path="specialCharacters"/></td>
             </tr>
             <tr>
-                <td>Possible Consonants:</td>
-                <td><form:input type="text" path="consonants"/></td>
-                <td>Forbidden Combinations:</td>
-                <td><form:input type="text" path="forbiddenCombinations"/></td>
+                <td class="onlyFictionalLanguageOption">Possible Consonants:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="text" path="consonants"/></td>
+                <td class="onlyFictionalLanguageOption">Forbidden Combinations:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="text" path="forbiddenCombinations"/></td>
             </tr>
             <tr>
-                <td>Possible Vocal-Consonant-Combinations:</td>
-                <td><form:input type="text" path="vocalConsonant"/></td>
-                <td>Word Beginnings:</td>
-                <td><form:input type="text" path="startingCombinations"/></td>
+                <td class="onlyFictionalLanguageOption">Possible Vocal-Consonant-Combinations:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="text" path="vocalConsonant"/></td>
+                <td class="onlyFictionalLanguageOption">Word Beginnings:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="text" path="startingCombinations"/></td>
             </tr>
             <tr>
-                <td>Possible Consonant-Vocal-Combinations:</td>
-                <td><form:input type="text" path="consonantVocals"/></td>
-                <td>Word Endings:</td>
-                <td><form:input type="text" path="endingCombinations"/></td>
+                <td class="onlyFictionalLanguageOption">Possible Consonant-Vocal-Combinations:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="text" path="consonantVocals"/></td>
+                <td class="onlyFictionalLanguageOption">Word Endings:</td>
+                <td class="onlyFictionalLanguageOption"><form:input type="text" path="endingCombinations"/></td>
             </tr>
             <tr>
                 <td colspan="4">

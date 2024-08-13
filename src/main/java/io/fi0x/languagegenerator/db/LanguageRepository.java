@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface LanguageRepository extends JpaRepository<Language, Long>
 {
+    List<Language> getAllByName(String name);
     List<Language> getAllByUsername(String username);
 
     List<Language> getAllByVisible(boolean visible);

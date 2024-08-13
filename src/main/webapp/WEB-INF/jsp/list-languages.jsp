@@ -29,7 +29,9 @@
                         ${language.name}
                 </td>
                 <td>
-                    <a href="generate?language=${language.id}&amount=50" class="btn">Generate new words</a>
+                    <c:if test="${!language.realLanguage}">
+                        <a href="generate?language=${language.id}&amount=50" class="btn">Generate new words</a>
+                    </c:if>
                 </td>
                 <td>
                     <a href="dictionary?languageId=${language.id}" class="btn">Dictionary</a>
@@ -38,9 +40,11 @@
                         ${language.username}
                 </td>
                 <td>
-                    <a href="download?languageId=${language.id}" class="btn">Download</a>
+                    <c:if test="${!language.realLanguage}">
+                        <a href="download?languageId=${language.id}" class="btn">Download</a>
+                    </c:if>
                 </td>
-                <c:if test="${language.username == username}">
+                <c:if test="${language.username == username && !language.realLanguage}">
                     <td>
                         <a href="language?languageId=${language.id}" class="btn-edit">Edit</a>
                     </td>

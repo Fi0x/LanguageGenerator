@@ -34,12 +34,14 @@ public class LanguageService
     private final StartingRepository staRepo;
     private final EndingRepository endRepo;
 
-    //TODO: Add support for real languages
     public void addLanguage(LanguageData languageData) throws InvalidObjectException, IllegalAccessException
     {
         log.trace("addLanguage() called with languageData={}", languageData);
 
-        if(!languageData.getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+        if (languageData.getRealLanguage())
+            addRealLanguage(languageData);
+
+        if (!languageData.getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName()))
             throw new IllegalAccessException("You are not allowed to change the selected language");
 
         if (languageData.getId() == null) {
@@ -158,7 +160,8 @@ public class LanguageService
         List<Language> publicLanguages = languageRepository.getAllByVisible(true);
         result.removeAll(publicLanguages);
         result.addAll(publicLanguages);
-        return result.stream().filter(language -> !language.getRealLanguage()).toList();
+
+        return result;
     }
 
     public List<WordDto> addLanguageNameToWords(List<Word> words)
@@ -195,7 +198,7 @@ public class LanguageService
         log.trace("deleteLanguage() called for languageId={}", languageId);
 
         String languageCreator = getLanguageCreator(languageId);
-        if(languageCreator == null || !languageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+        if (languageCreator == null || !languageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
             throw new IllegalAccessException("You are not allowed to delete the selected language");
 
         Optional<Language> languageEntity = languageRepository.findById(languageId);
@@ -203,6 +206,19 @@ public class LanguageService
             throw new EntityNotFoundException("The language you were trying to delete, could not be found");
 
         languageRepository.deleteById(languageId);
+    }
+
+    private void addRealLanguage(LanguageData languageData) throws IllegalAccessException, InvalidObjectException
+    {
+        if (!languageRepository.getAllByName(languageData.getName()).isEmpty())
+            throw new IllegalAccessException("The language '" + languageData.getName() + "' already exists and it is not allowed to alter it");
+
+        Optional<Long> id = languageRepository.getHighestId();
+        languageData.setId((id.isPresent() ? id.get() : -1) + 1);
+
+        languageData.validate();
+
+        languageRepository.save(LanguageConverter.convertToEntity(languageData));
     }
 
     private long getLetterIdOrSaveIfNew(String letterCombination)

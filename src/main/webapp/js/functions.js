@@ -24,3 +24,7 @@ function updateSaveState(originalWord, text, isAlreadySaved, listIndex) {
         document.getElementById("saveButton" + listIndex).style.visibility = 'visible';
     }
 }
+
+function updateRealState(newState) {
+    document.getElementsByClassName("onlyFictionalLanguageOption").disabled = newState;
+}
