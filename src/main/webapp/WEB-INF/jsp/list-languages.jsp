@@ -8,12 +8,10 @@
 <div class="container">
     <%--@elvariable id="username" type="java.lang.String"--%>
     <h1>Loaded languages for user ${username}:</h1>
-
-    <%--TODO: Make this search work--%>
     <label class="search-label">
-        <input type="text" id="searchTest" onkeyup="searchFunction()" class="search-input" placeholder="Search...">
+        <input type="text" id="searchText" onkeyup="searchFunction()" class="search-input" placeholder="Search...">
     </label>
-    <table class="table sortable">
+    <table id="searchableTable" class="table sortable">
         <thead>
         <tr class="underlined-row">
             <th>Language</th>

@@ -19,6 +19,7 @@
             </tr>
             </thead>
             <tbody>
+<%--TODO: Add an option, to create an existing real language. This disables all the generation options and creates a placeholder language--%>
             <tr>
                 <td>Name*:</td>
                 <td><form:input type="text" path="name"/></td>
