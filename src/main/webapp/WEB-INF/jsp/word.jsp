@@ -40,7 +40,7 @@
         <form:form method="post" action="translation">
             <input type="hidden" name="languageId" value="${originalLanguageData.id}">
             <input type="hidden" name="word" value="${word.letters}">
-            <%--TODO: Fix css (Adjust all input types as well)--%>
+            <%--TODO: Fix css (Adjust all input types as well) (Also fix design of readOnly elements)--%>
             <label>
                 <select name="translationLanguageId" class="selection">
                     <c:forEach items="${languages}" var="selectableLanguage">

@@ -25,6 +25,10 @@ function updateSaveState(originalWord, text, isAlreadySaved, listIndex) {
     }
 }
 
-function updateRealState(newState) {
-    document.getElementsByClassName("onlyFictionalLanguageOption").disabled = newState;
+function updateRealState(checkbox) {
+    console.log("disabled state: " + checkbox)
+    let elements = document.getElementsByClassName("onlyFictionalLanguageOption");
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].readOnly = checkbox.checked;
+    }
 }
