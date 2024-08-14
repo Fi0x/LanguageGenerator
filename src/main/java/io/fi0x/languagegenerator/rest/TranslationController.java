@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Controller
 @AllArgsConstructor
-@SessionAttributes({"amount", "language", "languages", "languageCreator", "languageName", "originalEndpoint", "originalLanguageData", "username", "savedWords", "translations", "word", "words"})
+@SessionAttributes({"amount", "englishTranslations", "language", "languages", "languageCreator", "languageName", "originalEndpoint", "originalLanguageData", "username", "savedWords", "translations", "word", "words"})
 public class TranslationController
 {
     private AuthenticationService authenticationService;
@@ -121,7 +121,9 @@ public class TranslationController
         LanguageData languageData = languageService.getLanguageData(languageId);
         model.put("languageName", languageData.getName());
         model.put("languageCreator", languageData.getUsername());
-        model.put("savedWords", translationService.getAllWords(languageId));
+        List<Word> savedWords = translationService.getAllWords(languageId);
+        model.put("savedWords", savedWords);
+        model.put("englishTranslations", translationService.getEnglishTranslations(savedWords));
         model.put("username", authenticationService.getAuthenticatedUsername());
         model.put("originalEndpoint", "dictionary");
 

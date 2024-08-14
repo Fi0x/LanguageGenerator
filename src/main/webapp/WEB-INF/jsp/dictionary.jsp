@@ -14,7 +14,9 @@
         <thead>
         <tr>
             <th>Word</th>
-            <th>English Translation</th>
+            <c:if test="${!languageName.equals('English')}">
+                <th>English Translation</th>
+            </c:if>
             <th colspan="2">Options</th>
         </tr>
         </thead>
@@ -24,9 +26,11 @@
                 <td>
                     <label>${word.letters}</label>
                 </td>
-                <td>
-                        <%--TODO: Add the english translation for each word--%>
-                </td>
+                <c:if test="${!languageName.equals('English')}">
+                    <td>
+                        <label>${englishTranslations.get(word.wordNumber)}</label>
+                    </td>
+                </c:if>
                 <td>
                     <a href="word?languageId=${word.languageId}&word=${word.letters}" class="btn">Translations</a>
                 </td>

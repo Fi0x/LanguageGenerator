@@ -51,6 +51,9 @@ public class LanguageService
 
         languageData.validate();
 
+        if(languageData.getRealLanguage())
+            languageData.setVisible(true);
+
         languageRepository.save(LanguageConverter.convertToEntity(languageData));
 
         cRepo.deleteAllByLanguageId(languageData.getId());

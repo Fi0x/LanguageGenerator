@@ -36,7 +36,7 @@
         </c:forEach>
         </tbody>
     </table>
-    <c:if test="${username == originalLanguageData.username && languages.size() > 1}">
+    <c:if test="${(originalLanguageData.name.equals('English') || username == originalLanguageData.username) && languages.size() > 1}">
         <form:form method="post" action="translation">
             <input type="hidden" name="languageId" value="${originalLanguageData.id}">
             <input type="hidden" name="word" value="${word.letters}">

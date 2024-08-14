@@ -15,19 +15,48 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @AllArgsConstructor
 public class TranslationService
 {
+    private static final String ENGLISH_LANGUAGE_NAME = "English";
+
     private final WordRepository wordRepo;
     private final TranslationRepository translationRepo;
     private final LanguageRepository languageRepository;
+
+    public Map<Long, String> getEnglishTranslations(List<Word> wordList)
+    {
+        List<Language> englishEntities = languageRepository.getAllByName(ENGLISH_LANGUAGE_NAME);
+
+        if (englishEntities.isEmpty()) {
+            Language english = new Language();
+            english.setName(ENGLISH_LANGUAGE_NAME);
+            english.setRealLanguage(true);
+            english.setVisible(true);
+            english.setSpecialCharacterChance(0.0);
+
+            Optional<Long> id = languageRepository.getHighestId();
+            english.setId((id.isPresent() ? id.get() : -1) + 1);
+
+            languageRepository.save(english);
+            return wordList.stream().collect(Collectors.toMap(Word::getWordNumber, word -> ""));
+        }
+        if (englishEntities.size() > 1)
+            throw new IllegalStateException("There were multiple english languages found in the database");
+
+        Map<Long, String> resultMap = new HashMap<>();
+        for (Word word : wordList) {
+            List<Word> translations = getTranslations(WordConverter.convertToDto(word), englishEntities.get(0).getId());
+            resultMap.put(word.getWordNumber(), translations.toString().replace("[", "").replace("]", ""));
+        }
+
+        return resultMap;
+    }
 
     public List<Word> getTranslations(WordDto originalWord)
     {
@@ -113,8 +142,9 @@ public class TranslationService
         if (result != null)
             return result;
 
-        String languageCreator = getLanguageCreator(wordDto.getLanguageId());
-        if (languageCreator == null || !languageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+        Optional<Language> languageEntity = languageRepository.findById(wordDto.getLanguageId());
+        if (languageEntity.isEmpty() || (!languageEntity.get().getRealLanguage() &&
+                (languageEntity.get().getUsername() == null || !languageEntity.get().getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName()))))
             throw new IllegalAccessException();
 
         Long id = saveOrOverwriteWord(wordDto.toEntity());
