@@ -35,7 +35,6 @@ public class TestFileController
     private static final String DOWNLOAD_URL = "/download";
     private static final Long LANGUAGE_ID = 3L;
     private static final String USERNAME = "Otto";
-    private static final String INVALID_USERNAME = "Fake-Otto";
     private static final String LANGUAGE_NAME = "Chinesisch";
 
     @MockBean
@@ -52,8 +51,6 @@ public class TestFileController
     void setup()
     {
         MockitoAnnotations.openMocks(this);
-
-        doReturn(true).when(fileService).isFileValid(any());
     }
 
     @Test
@@ -85,7 +82,7 @@ public class TestFileController
         File realFile = ResourceUtils.getFile("classpath:testLanguageValid.json");
         InputStream content = new FileInputStream(realFile);
         MockMultipartFile file = new MockMultipartFile("languageFile", "filename.txt", "application/json", content);
-        doReturn(false).when(fileService).isFileValid(any());
+        doThrow(IllegalArgumentException.class).when(languageService).addLanguage(any(), anyString(), eq(false));
 
         mvc.perform(MockMvcRequestBuilders.multipart(UPLOAD_URL).file(file))
                 .andExpect(status().is(HttpStatus.BAD_REQUEST.value()))
@@ -119,6 +116,20 @@ public class TestFileController
 
     @Test
     @Tag("UnitTest")
+    void test_uploadLanguage_unauthorized() throws Exception
+    {
+        File realFile = ResourceUtils.getFile("classpath:testLanguageValid.json");
+        InputStream content = new FileInputStream(realFile);
+        MockMultipartFile file = new MockMultipartFile("languageFile", "filename.txt", "application/json", content);
+        doThrow(IllegalAccessException.class).when(languageService).addLanguage(any(), anyString(), eq(false));
+
+        mvc.perform(MockMvcRequestBuilders.multipart(UPLOAD_URL).file(file))
+                .andExpect(status().is(HttpStatus.FORBIDDEN.value()))
+                .andExpect(forwardedUrl(null));
+    }
+
+    @Test
+    @Tag("UnitTest")
     void test_downloadLanguageFile_success() throws Exception
     {
         LanguageData languageData = getLanguageData();
@@ -138,7 +149,7 @@ public class TestFileController
     {
         LanguageData languageData = getLanguageData();
         doReturn(languageData).when(languageService).getLanguageData(eq(LANGUAGE_ID));
-        doReturn(INVALID_USERNAME).when(authenticationService).getAuthenticatedUsername();
+        doThrow(IllegalAccessException.class).when(fileService).getLanguageFile(eq(languageData));
 
         mvc.perform(get(DOWNLOAD_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
                 .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
@@ -174,6 +185,7 @@ public class TestFileController
     {
         return LanguageData.builder().username(USERNAME).name(LANGUAGE_NAME).build();
     }
+
     private Resource getFileResource() throws MalformedURLException, FileNotFoundException
     {
         File file = ResourceUtils.getFile("classpath:emptyFile.json");

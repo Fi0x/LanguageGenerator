@@ -16,8 +16,12 @@ public class WordConverter
         return translation;
     }
 
-    public static WordDto convertToDto(Long languageId, String letters)
+    public static WordDto convertToDto(Word word)
     {
-        return new WordDto(languageId, letters);
+        WordDto wordDto = new WordDto();
+        wordDto.setLanguageId(word.getLanguageId());
+        wordDto.setWordNumber(word.getWordNumber());
+        wordDto.setWord(word.getLetters());
+        return wordDto;
     }
 }

@@ -3,22 +3,26 @@ package io.fi0x.languagegenerator.service;
 import io.fi0x.languagegenerator.db.*;
 import io.fi0x.languagegenerator.db.entities.*;
 import io.fi0x.languagegenerator.logic.converter.LanguageConverter;
+import io.fi0x.languagegenerator.logic.converter.WordConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
+import io.fi0x.languagegenerator.logic.dto.WordDto;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.InvalidObjectException;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class LanguageService
 {
-    private final AuthenticationService authenticationService;
-
     private final LanguageRepository languageRepository;
     private final LetterRepository letterRepository;
     private final ConsonantRepository cRepo;
@@ -30,16 +34,25 @@ public class LanguageService
     private final StartingRepository staRepo;
     private final EndingRepository endRepo;
 
-    public void addLanguage(LanguageData languageData) throws InvalidObjectException
+    public void addLanguage(LanguageData languageData) throws InvalidObjectException, IllegalAccessException
     {
-        if (languageData.getId() == null)
-        {
+        log.trace("addLanguage() called with languageData={}", languageData);
+
+        if (Boolean.TRUE.equals(languageData.getRealLanguage()))
+            addRealLanguage(languageData);
+
+        if (!languageData.getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+            throw new IllegalAccessException("You are not allowed to change the selected language");
+
+        if (languageData.getId() == null) {
             Optional<Long> id = languageRepository.getHighestId();
             languageData.setId((id.isPresent() ? id.get() : -1) + 1);
         }
 
-        if (languageData.invalid())
-            throw new InvalidObjectException("Can't save language with the provided settings");
+        languageData.validate();
+
+        if(Boolean.TRUE.equals(languageData.getRealLanguage()))
+            languageData.setVisible(true);
 
         languageRepository.save(LanguageConverter.convertToEntity(languageData));
 
@@ -132,14 +145,21 @@ public class LanguageService
         });
     }
 
-    public void addLanguage(LanguageJson languageJson, String name, boolean visible) throws InvalidObjectException
+    public void addLanguage(LanguageJson languageJson, String name, boolean visible) throws InvalidObjectException, IllegalArgumentException, IllegalAccessException
     {
-        addLanguage(LanguageConverter.convertToData(languageJson, languageRepository.getHighestId().orElse(0L) + 1, name, authenticationService.getAuthenticatedUsername(), visible));
+        log.trace("addLanguage() called with name={}, visibility={} and languageJson={}", name, visible, languageJson);
+
+        if (isFileValid(languageJson))
+            addLanguage(LanguageConverter.convertToData(languageJson, languageRepository.getHighestId().orElse(0L) + 1, name, SecurityContextHolder.getContext().getAuthentication().getName(), visible));
+        else
+            throw new IllegalArgumentException();
     }
 
     public List<Language> getUserAndPublicLanguages()
     {
-        List<Language> result = languageRepository.getAllByUsername(authenticationService.getAuthenticatedUsername());
+        log.trace("getUserAndPublicLanguages() called");
+
+        List<Language> result = languageRepository.getAllByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         List<Language> publicLanguages = languageRepository.getAllByVisible(true);
         result.removeAll(publicLanguages);
         result.addAll(publicLanguages);
@@ -147,36 +167,67 @@ public class LanguageService
         return result;
     }
 
+    public List<WordDto> addLanguageNameToWords(List<Word> words)
+    {
+        log.trace("addLanguageNameToWords() called for words={}", words);
+
+        List<WordDto> results = words.stream().map(WordConverter::convertToDto).toList();
+        results.forEach(wordDto -> wordDto.setLanguageName(getLanguageData(wordDto.getLanguageId()).getName()));
+
+        return results;
+    }
+
     public LanguageData getLanguageData(long languageId)
     {
+        log.trace("getLanguageData() called for languageId={}", languageId);
+
         Optional<Language> languageEntity = languageRepository.findById(languageId);
 
         return languageEntity.map(language -> addLettersToLanguage(LanguageData.getFromEntity(language)))
-                .orElseGet(() -> LanguageData.builder().username(authenticationService.getAuthenticatedUsername()).build());
+                .orElseGet(() -> LanguageData.builder().username(SecurityContextHolder.getContext().getAuthentication().getName()).build());
     }
 
     @Nullable
     public String getLanguageCreator(long languageId)
     {
+        log.trace("getLanguageCreator() called for languageId={}", languageId);
+
         Optional<Language> data = languageRepository.findById(languageId);
         return data.map(Language::getUsername).orElse(null);
     }
 
-    public boolean deleteLanguage(long languageId)
+    public void deleteLanguage(long languageId) throws EntityNotFoundException, IllegalAccessException
     {
+        log.trace("deleteLanguage() called for languageId={}", languageId);
+
+        String languageCreator = getLanguageCreator(languageId);
+        if (languageCreator == null || !languageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+            throw new IllegalAccessException("You are not allowed to delete the selected language");
+
         Optional<Language> languageEntity = languageRepository.findById(languageId);
         if (languageEntity.isEmpty())
-            return false;
+            throw new EntityNotFoundException("The language you were trying to delete, could not be found");
 
         languageRepository.deleteById(languageId);
-        return true;
+    }
+
+    private void addRealLanguage(LanguageData languageData) throws IllegalAccessException, InvalidObjectException
+    {
+        if (!languageRepository.getAllByName(languageData.getName()).isEmpty())
+            throw new IllegalAccessException("The language '" + languageData.getName() + "' already exists and it is not allowed to alter it");
+
+        Optional<Long> id = languageRepository.getHighestId();
+        languageData.setId((id.isPresent() ? id.get() : -1) + 1);
+
+        languageData.validate();
+
+        languageRepository.save(LanguageConverter.convertToEntity(languageData));
     }
 
     private long getLetterIdOrSaveIfNew(String letterCombination)
     {
         List<Letter> letters = letterRepository.getAllByLetters(letterCombination);
-        if (letters.isEmpty())
-        {
+        if (letters.isEmpty()) {
             Letter letter = new Letter();
             Optional<Long> id = letterRepository.getHighestId();
             letter.setId((id.isPresent() ? id.get() : 0) + 1);
@@ -222,5 +273,15 @@ public class LanguageService
         languageData.setEndingCombinations(endLetters);
 
         return languageData;
+    }
+
+    private boolean isFileValid(LanguageJson languageJson)
+    {
+        if (languageJson == null || languageJson.getNameLengths() == null || languageJson.getSpecialCharacterLengths() == null
+                || languageJson.getSpecialCharacterChance() < 0 || languageJson.getSpecialCharacterChance() > 1) {
+            return false;
+        }
+
+        return languageJson.getNameLengths().length == 2 && languageJson.getSpecialCharacterLengths().length == 4;
     }
 }

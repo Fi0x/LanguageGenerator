@@ -3,18 +3,20 @@ package io.fi0x.languagegenerator.service;
 import io.fi0x.languagegenerator.db.*;
 import io.fi0x.languagegenerator.db.entities.Language;
 import io.fi0x.languagegenerator.db.entities.Letter;
+import io.fi0x.languagegenerator.db.entities.Word;
 import io.fi0x.languagegenerator.logic.converter.LanguageConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import io.fi0x.languagegenerator.logic.dto.WordDto;
+import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.InvalidObjectException;
@@ -25,6 +27,8 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
+//TODO: Check coverage of all unit-tests
+
 @RunWith(SpringRunner.class)
 public class TestLanguageService
 {
@@ -34,9 +38,10 @@ public class TestLanguageService
     private static final String LANGUAGE_NAME = "Geheimsprache";
     private static final String EXISTING_LETTERS = "kkk";
     private static final Long RANDOM_ID = 17L;
+    private static final Long LANGUAGE_ID = 18L;
 
-    @Mock
-    private AuthenticationService authenticationService;
+    private MockedStatic<SecurityContextHolder> staticMock;
+
     @Mock
     private LanguageRepository languageRepository;
     @Mock
@@ -58,6 +63,11 @@ public class TestLanguageService
     @Mock
     private EndingRepository endRepo;
 
+    @Mock
+    private SecurityContext securityContext;
+    @Mock
+    private Authentication authentication;
+
     @InjectMocks
     private LanguageService service;
 
@@ -65,16 +75,26 @@ public class TestLanguageService
     void setup()
     {
         MockitoAnnotations.openMocks(this);
+        staticMock = mockStatic(SecurityContextHolder.class);
+
+        staticMock.when(SecurityContextHolder::getContext).thenReturn(securityContext);
+        doReturn(authentication).when(securityContext).getAuthentication();
+        doReturn(USERNAME).when(authentication).getName();
 
         doReturn(Optional.of(HIGHEST_ID)).when(languageRepository).getHighestId();
         doNothing().when(languageRepository).deleteById(anyLong());
-        doReturn(USERNAME).when(authenticationService).getAuthenticatedUsername();
         Letter letter = new Letter();
         letter.setId(354L);
         doReturn(List.of(letter)).when(letterRepository).getAllByLetters(eq(EXISTING_LETTERS));
         doReturn(getLanguageList(2, 0)).when(languageRepository).getAllByUsername(eq(USERNAME));
         doReturn(getLanguageList(3, 2)).when(languageRepository).getAllByVisible(eq(true));
         doReturn(Optional.of(LanguageConverter.convertToEntity(getLanguageData()))).when(languageRepository).findById(HIGHEST_ID);
+    }
+
+    @AfterEach
+    void teardown()
+    {
+        staticMock.close();
     }
 
     @Test
@@ -118,16 +138,42 @@ public class TestLanguageService
 
     @Test
     @Tag("UnitTest")
+    void test_addLanguage_unauthorized()
+    {
+        LanguageData languageData = getLanguageData();
+        fillLanguageData(languageData);
+        languageData.setUsername("Wrong User");
+
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.addLanguage(languageData));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_addLanguage_success_newId()
+    {
+        LanguageData languageData = getLanguageData();
+        fillLanguageData(languageData);
+        doReturn(Optional.empty()).when(languageRepository).getHighestId();
+
+        Assertions.assertDoesNotThrow(() -> service.addLanguage(languageData));
+    }
+
+    @Test
+    @Tag("UnitTest")
     void test_addLanguage_json()
     {
         LanguageJson languageJson = new LanguageJson();
-        MockedStatic<LanguageConverter> staticMock = mockStatic(LanguageConverter.class);
-        staticMock.when(() -> LanguageConverter.convertToData(eq(languageJson), eq(NEXT_FREE_ID), eq(LANGUAGE_NAME), eq(USERNAME), eq(false)))
-                .thenReturn(LanguageData.builder().id(NEXT_FREE_ID).build());
+        languageJson.setNameLengths(new int[]{1, 2});
+        languageJson.setSpecialCharacterLengths(new int[]{1, 2, 3, 4});
 
         Assertions.assertThrows(InvalidObjectException.class, () -> service.addLanguage(languageJson, LANGUAGE_NAME, false));
+    }
 
-        staticMock.close();
+    @Test
+    @Tag("UnitTest")
+    void test_addLanguage_invalidJson()
+    {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> service.addLanguage(null, LANGUAGE_NAME, false));
     }
 
     @Test
@@ -135,6 +181,27 @@ public class TestLanguageService
     void test_getUserAndPublicLanguages()
     {
         Assertions.assertEquals(5, service.getUserAndPublicLanguages().size());
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_addLanguageNameToWords()
+    {
+        List<Word> words = new ArrayList<>();
+        Word word = new Word();
+        word.setLanguageId(LANGUAGE_ID);
+        word.setLetters(EXISTING_LETTERS);
+        words.add(word);
+        List<WordDto> wordDtos = new ArrayList<>();
+        wordDtos.add(new WordDto(LANGUAGE_ID, LANGUAGE_NAME, null, EXISTING_LETTERS, null, null));
+
+        Language language = new Language();
+        language.setName(LANGUAGE_NAME);
+        language.setSpecialCharacterChance(0.0);
+        language.setVisible(false);
+        doReturn(Optional.of(language)).when(languageRepository).findById(eq(LANGUAGE_ID));
+
+        Assertions.assertEquals(wordDtos, service.addLanguageNameToWords(words));
     }
 
     @Test
@@ -158,10 +225,25 @@ public class TestLanguageService
 
     @Test
     @Tag("UnitTest")
-    void test_deleteLanguage()
+    void test_deleteLanguage_success()
     {
-        Assertions.assertFalse(service.deleteLanguage(NEXT_FREE_ID));
-        Assertions.assertTrue(service.deleteLanguage(HIGHEST_ID));
+        Assertions.assertDoesNotThrow(() -> service.deleteLanguage(HIGHEST_ID));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_deleteLanguage_unauthorized()
+    {
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteLanguage(NEXT_FREE_ID));
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteLanguage(NEXT_FREE_ID));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_deleteLanguage_notFound()
+    {
+        doReturn(Optional.empty()).when(languageRepository).findById(eq(NEXT_FREE_ID));
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteLanguage(NEXT_FREE_ID));
     }
 
     private LanguageData getLanguageData()

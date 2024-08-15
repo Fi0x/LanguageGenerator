@@ -12,7 +12,8 @@
     <table class="table">
         <thead>
         <tr>
-            <th colspan="3">Word</th>
+            <th>Word</th>
+            <th colspan="2">Options</th>
         </tr>
         </thead>
         <tbody>
@@ -29,17 +30,19 @@
                         </label>
                     </td>
                     <td>
-                            <%--TODO: Add button to show translation page for this word (Should also save the word before showing the page, if it is not yet saved)--%>
+                        <a href="word?languageId=${singleWord.languageId}&word=${singleWord.word}" class="btn">Translations</a>
                     </td>
-                    <c:if test="${languageCreator == username}">
-                        <td>
-                            <label id="savedLabel${singleWord.listIndex}"
-                                   style="visibility: ${singleWord.savedInDb ? "visible" : "hidden"}">Saved</label>
+                    <td>
+                        <c:if test="${languageCreator == username}">
                             <input id="saveButton${singleWord.listIndex}"
                                    style="visibility: ${singleWord.savedInDb ? "hidden" : "visible"}" type="submit"
                                    class="btn-success" value="Save"/>
-                        </td>
-                    </c:if>
+
+                            <a href="delete-word?languageId=${singleWord.languageId}&wordNumber=${singleWord.wordNumber}"
+                               id="deleteButton${singleWord.listIndex}"
+                               style="visibility: ${singleWord.savedInDb ? "visible" : "hidden"}" class="btn-danger">Delete</a>
+                        </c:if>
+                    </td>
                 </form:form>
             </tr>
         </c:forEach>
@@ -48,13 +51,6 @@
     <a href="generate" class="btn">Generate new words in this language</a>
 </div>
 <%@include file="../common/scripts.jspf" %>
-<script>
-    function updateSaveState(originalWord, text, isAlreadySaved, listIndex) {
-        if (originalWord !== text || !isAlreadySaved) {
-            document.getElementById("savedLabel" + listIndex).style.visibility = 'hidden';
-            document.getElementById("saveButton" + listIndex).style.visibility = 'visible';
-        }
-    }
-</script>
+<script src="${pageContext.request.contextPath}/js/functions.js"></script>
 </body>
 </html>

@@ -8,7 +8,10 @@
 <div class="container">
     <%--@elvariable id="username" type="java.lang.String"--%>
     <h1>Loaded languages for user ${username}:</h1>
-    <table class="table">
+    <label class="search-label">
+        <input type="text" id="searchText" onkeyup="searchFunction()" class="search-input" placeholder="Search...">
+    </label>
+    <table id="searchableTable" class="table sortable">
         <thead>
         <tr class="underlined-row">
             <th>Language</th>
@@ -26,19 +29,22 @@
                         ${language.name}
                 </td>
                 <td>
-                    <a href="generate?language=${language.id}&amount=50" class="btn">Generate new words</a>
+                    <c:if test="${!language.realLanguage}">
+                        <a href="generate?language=${language.id}&amount=50" class="btn">Generate new words</a>
+                    </c:if>
                 </td>
                 <td>
-<%--                    TODO: Replace with link to dictionary of this language--%>
-                    <a href="generate?language=${language.id}&amount=2" class="btn">Dictionary</a>
+                    <a href="dictionary?languageId=${language.id}" class="btn">Dictionary</a>
                 </td>
                 <td>
                         ${language.username}
                 </td>
                 <td>
-                    <a href="download?languageId=${language.id}" class="btn">Download</a>
+                    <c:if test="${!language.realLanguage}">
+                        <a href="download?languageId=${language.id}" class="btn">Download</a>
+                    </c:if>
                 </td>
-                <c:if test="${language.username == username}">
+                <c:if test="${language.username == username && !language.realLanguage}">
                     <td>
                         <a href="language?languageId=${language.id}" class="btn-edit">Edit</a>
                     </td>
@@ -52,5 +58,6 @@
     </table>
 </div>
 <%@include file="../common/scripts.jspf" %>
+<script src="${pageContext.request.contextPath}/js/functions.js"></script>
 </body>
 </html>

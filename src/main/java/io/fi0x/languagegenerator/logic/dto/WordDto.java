@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 public class WordDto
 {
     private Long languageId;
+    private String languageName;
+    private Long wordNumber;
     private String word;
     private Integer listIndex;
     private Boolean savedInDb;
@@ -24,7 +26,8 @@ public class WordDto
     public Word toEntity()
     {
         Word entity = new Word();
-        entity.setLanguageId(languageId);
+        entity.setLanguageId(this.languageId);
+        entity.setWordNumber(this.wordNumber);
         entity.setLetters(this.word);
         return entity;
     }

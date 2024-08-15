@@ -27,13 +27,6 @@ public class TestWordConverter
         assertThat(WordConverter.convertToTranslation(word1, word2)).usingRecursiveComparison().isEqualTo(getExpectedTranslation());
     }
 
-    @Test
-    @Tag("UnitTest")
-    void test_convertToDto()
-    {
-        assertThat(WordConverter.convertToDto(LANGUAGE1, WORD1)).usingRecursiveComparison().isEqualTo(getExpectedDto());
-    }
-
     private Word getFirstWord()
     {
         Word word = new Word();

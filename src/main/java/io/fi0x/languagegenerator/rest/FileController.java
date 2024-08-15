@@ -3,7 +3,6 @@ package io.fi0x.languagegenerator.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
-import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.FileService;
 import io.fi0x.languagegenerator.service.LanguageService;
 import lombok.AllArgsConstructor;
@@ -29,7 +28,6 @@ import java.util.Objects;
 @SessionAttributes({"language", "amount", "words", "username"})
 public class FileController
 {
-    AuthenticationService authenticationService;
     LanguageService languageService;
     FileService fileService;
 
@@ -53,18 +51,16 @@ public class FileController
             InputStream is = multipartFile.getInputStream();
             ObjectMapper mapper = new ObjectMapper();
             LanguageJson languageJson = mapper.readValue(is, LanguageJson.class);
-            if (fileService.isFileValid(languageJson))
-            {
-                languageService.addLanguage(
-                        languageJson,
-                        Objects.requireNonNullElse(multipartFile.getOriginalFilename(), "New Language").split("\\.")[0],
-                        false);
-            } else
-            {
-                log.warn("LanguageJson was malformed.");
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The provided language-file does not contain all of the required values");
-            }
 
+            languageService.addLanguage(
+                    languageJson,
+                    Objects.requireNonNullElse(multipartFile.getOriginalFilename(), "New Language").split("\\.")[0],
+                    false);
+
+        } catch (IllegalArgumentException e)
+        {
+            log.warn("LanguageJson was malformed.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The provided language-file does not contain all of the required values");
         } catch (InvalidObjectException e)
         {
             log.warn("Could not save the language because it was not complete.");
@@ -73,6 +69,10 @@ public class FileController
         {
             log.warn("Could not create an InputStream of the uploaded file '{}'", multipartFile.getName(), e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong when uploading the file", e);
+        } catch (IllegalAccessException e)
+        {
+            log.warn("Could not add or edit a language, because the original creator does not have the same name as the current user");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
         }
         return "redirect:/";
     }
@@ -82,13 +82,9 @@ public class FileController
     @ResponseBody
     public ResponseEntity<Resource> downloadLanguageFile(@RequestParam(value = "languageId") long languageId)
     {
-        LanguageData languageData = languageService.getLanguageData(languageId);
+        log.info("downloadLanguageFile() called for languageId={}", languageId);
 
-        if (!languageData.getUsername().equals(authenticationService.getAuthenticatedUsername()))
-        {
-            log.info("User '{}' tried to download language with id={}, but does not have access to it", authenticationService.getAuthenticatedUsername(), languageId);
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User is not allowed to download the selected language");
-        }
+        LanguageData languageData = languageService.getLanguageData(languageId);
 
         Resource resource;
         try
@@ -102,6 +98,9 @@ public class FileController
         {
             log.warn("Could not write language with id={} to internal file, or file could not get converted to resource", languageData.getId(), e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not write selected language to a downloadable file", e);
+        } catch (IllegalAccessException e)
+        {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
         }
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + languageData.getName() + ".json\"").body(resource);

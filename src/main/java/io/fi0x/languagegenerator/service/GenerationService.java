@@ -6,7 +6,9 @@ import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.InvalidObjectException;
@@ -33,31 +35,44 @@ public class GenerationService
     private final EndingRepository endRepository;
     private final WordRepository wordRepo;
 
-    public List<WordDto> generateWords(long languageId, int count) throws EntityNotFoundException, InvalidObjectException
+    public List<WordDto> generateWords(@NonNull LanguageData languageData, int count) throws EntityNotFoundException, InvalidObjectException, IllegalAccessException, IllegalArgumentException
     {
-        Optional<Language> result = languageRepository.findById(languageId);
+        log.trace("generateWords() called for language={} with amount={}", languageData, count);
+
+        if (!languageData.getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName()) && !languageData.isVisible()) {
+            log.info("User '{}' tried to generate words with language {}, to which he has no access to", SecurityContextHolder.getContext().getAuthentication().getName(), languageData.getId());
+            throw new IllegalAccessException("You are not allowed to access the selected language");
+        }
+
+        Optional<Language> result = languageRepository.findById(languageData.getId());
         if (result.isEmpty())
-            throw new EntityNotFoundException("Could not find language with id=" + languageId);
+            throw new EntityNotFoundException("Could not find language with id=" + languageData.getId());
+
+        if(Boolean.TRUE.equals(result.get().getRealLanguage()))
+            throw new IllegalArgumentException("Language '" + result.get().getName() + "' is not designed to generate words, but rather a placeholder for translations.");
 
         LanguageData language = LanguageData.getFromEntity(result.get());
-        language.setConsonants(getLetters(cRepository.getAllByLanguageId(languageId).stream().map(ConsonantCombination::getLetterId).collect(Collectors.toList())));
-        language.setConsonantVocals(getLetters(cvRepository.getAllByLanguageId(languageId).stream().map(ConsonantVocalCombination::getLetterId).collect(Collectors.toList())));
-        language.setVocals(getLetters(vRepository.getAllByLanguageId(languageId).stream().map(VocalCombination::getLetterId).collect(Collectors.toList())));
-        language.setVocalConsonant(getLetters(vcRepository.getAllByLanguageId(languageId).stream().map(VocalConsonantCombination::getLetterId).collect(Collectors.toList())));
-        language.setForbiddenCombinations(getLetters(fRepository.getAllByLanguageId(languageId).stream().map(ForbiddenCombination::getLetterId).collect(Collectors.toList())));
-        language.setSpecialCharacters(getLetters(speRepository.getAllByLanguageId(languageId).stream().map(SpecialCharacterCombinations::getLetterId).collect(Collectors.toList())));
-        language.setStartingCombinations(getLetters(staRepository.getAllByLanguageId(languageId).stream().map(StartingCombinations::getLetterId).collect(Collectors.toList())));
-        language.setEndingCombinations(getLetters(endRepository.getAllByLanguageId(languageId).stream().map(EndingCombinations::getLetterId).collect(Collectors.toList())));
+        language.setConsonants(getLetters(cRepository.getAllByLanguageId(languageData.getId()).stream().map(ConsonantCombination::getLetterId).collect(Collectors.toList())));
+        language.setConsonantVocals(getLetters(cvRepository.getAllByLanguageId(languageData.getId()).stream().map(ConsonantVocalCombination::getLetterId).collect(Collectors.toList())));
+        language.setVocals(getLetters(vRepository.getAllByLanguageId(languageData.getId()).stream().map(VocalCombination::getLetterId).collect(Collectors.toList())));
+        language.setVocalConsonant(getLetters(vcRepository.getAllByLanguageId(languageData.getId()).stream().map(VocalConsonantCombination::getLetterId).collect(Collectors.toList())));
+        language.setForbiddenCombinations(getLetters(fRepository.getAllByLanguageId(languageData.getId()).stream().map(ForbiddenCombination::getLetterId).collect(Collectors.toList())));
+        language.setSpecialCharacters(getLetters(speRepository.getAllByLanguageId(languageData.getId()).stream().map(SpecialCharacterCombinations::getLetterId).collect(Collectors.toList())));
+        language.setStartingCombinations(getLetters(staRepository.getAllByLanguageId(languageData.getId()).stream().map(StartingCombinations::getLetterId).collect(Collectors.toList())));
+        language.setEndingCombinations(getLetters(endRepository.getAllByLanguageId(languageData.getId()).stream().map(EndingCombinations::getLetterId).collect(Collectors.toList())));
 
-        if (language.invalid())
-            throw new InvalidObjectException("Can't generate words with the settings of language: " + languageId);
+        language.validate();
 
         ArrayList<WordDto> generatedWords = new ArrayList<>();
-        for (int i = 0; i < count; i++)
-        {
+        for (int i = 0; i < count; i++) {
             WordDto word = generateWord(language);
             word.setListIndex(i);
-            word.setSavedInDb(wordRepo.getByLanguageIdAndLetters(languageId, word.getWord()).isPresent());
+            Optional<Word> savedWord = wordRepo.getByLanguageIdAndLetters(languageData.getId(), word.getWord());
+            if(savedWord.isPresent())
+            {
+                word.setSavedInDb(true);
+                word.setWordNumber(savedWord.get().getWordNumber());
+            }
             generatedWords.add(word);
         }
 
@@ -75,11 +90,9 @@ public class GenerationService
         int desiredLength = (int) (Math.random() * (language.getMaxWordLength() - language.getMinWordLength()) + language.getMinWordLength());
         desiredLength -= ending.length();
 
-        for (int i = (int) (Math.random() * 4); name.length() < desiredLength && i < desiredLength + 4; i++)
-        {
+        for (int i = (int) (Math.random() * 4); name.length() < desiredLength && i < desiredLength + 4; i++) {
             List<String> selectedList;
-            switch (i % 4)
-            {
+            switch (i % 4) {
                 case 0 -> selectedList = language.getConsonantVocals();
                 case 1 -> selectedList = language.getConsonants();
                 case 2 -> selectedList = language.getVocalConsonant();
@@ -105,8 +118,7 @@ public class GenerationService
         int tries = 0;
         int randomIdx = (int) (Math.random() * newPossibilities.size());
 
-        while (tries < newPossibilities.size())
-        {
+        while (tries < newPossibilities.size()) {
             String nextPossiblePart = newPossibilities.get((randomIdx + tries) % newPossibilities.size());
 
             if (isAllowed(forbiddenCombinations, previousLetters, nextPossiblePart, ending))
@@ -133,16 +145,13 @@ public class GenerationService
 
     private String addSpecialCharacters(String currentWord, LanguageData languageData)
     {
-        if(languageData.getSpecialCharacterChance() == null)
-            return currentWord;
         if (currentWord.length() >= languageData.getMaxWordLength())
             return currentWord;
         if (Math.random() >= languageData.getSpecialCharacterChance() && languageData.getMaxSpecialChars() <= 0)
             return currentWord;
 
         int lastSpecialCharIdx = 0;
-        for (int specCharCount = 0; currentWord.length() < languageData.getMaxWordLength() && specCharCount < languageData.getMaxSpecialChars(); specCharCount++)
-        {
+        for (int specCharCount = 0; currentWord.length() < languageData.getMaxWordLength() && specCharCount < languageData.getMaxSpecialChars(); specCharCount++) {
             int nextSpecialCharIdx = lastSpecialCharIdx;
             if (lastSpecialCharIdx == 0)
                 nextSpecialCharIdx = languageData.getCharsBeforeSpecial() - 1;

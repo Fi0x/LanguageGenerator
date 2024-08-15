@@ -24,7 +24,7 @@ import java.util.Objects;
 @Slf4j
 @Controller
 @AllArgsConstructor
-@SessionAttributes({"amount", "language", "languageCreator", "languageName", "username", "words"})
+@SessionAttributes({"amount", "language", "languages", "languageCreator", "languageName", "originalEndpoint", "username", "words"})
 public class LanguageController
 {
     private GenerationService generationService;
@@ -49,29 +49,23 @@ public class LanguageController
             model.put("amount", amount);
 
         LanguageData languageData = languageService.getLanguageData(language);
+        try {
+            model.put("words", generationService.generateWords(languageData, amount));
 
-        String currentUser = authenticationService.getAuthenticatedUsername();
-        if(!languageData.getUsername().equals(currentUser) && !languageData.isVisible())
-        {
-            log.info("User '{}' tried to generate words with language {}, to which he has no access to", currentUser, language);
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access the selected language");
-        }
-
-        model.put("username", currentUser);
-        model.put("languageName", languageData.getName());
-        model.put("languageCreator", languageData.getUsername());
-
-        try
-        {
-            model.put("words", generationService.generateWords(language, amount));
-        } catch (EntityNotFoundException e)
-        {
+            model.put("username", authenticationService.getAuthenticatedUsername());
+            model.put("languageName", languageData.getName());
+            model.put("languageCreator", languageData.getUsername());
+            model.put("originalEndpoint", "list-words");
+        } catch (EntityNotFoundException e) {
             log.warn("Could not find a language with id={}", language);
             return "redirect:/";
-        } catch (InvalidObjectException e)
-        {
-            log.warn("The constraints for the language with id={} are not valid to generate a word", language);
+        } catch (InvalidObjectException e) {
+            log.warn("The constraints for the language with id={} are not valid to generate a word\n{}", language, e.getLocalizedMessage());
             return "redirect:/";
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, e.getLocalizedMessage());
         }
 
         return "list-words";
@@ -106,8 +100,7 @@ public class LanguageController
 
         LanguageData languageData = languageService.getLanguageData(languageId);
 
-        if(!languageData.getUsername().equals(authenticationService.getAuthenticatedUsername()))
-        {
+        if (!languageData.getUsername().equals(authenticationService.getAuthenticatedUsername())) {
             log.info("User '{}' tried to edit language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageData.getId());
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to edit the selected language");
         }
@@ -119,24 +112,18 @@ public class LanguageController
 
     @Transactional
     @PostMapping("/language")
-    public String addLanguage(ModelMap model, @Valid LanguageData languageData)
+    public String addLanguage(@Valid LanguageData languageData)
     {
         log.info("addLanguage() called");
-        log.debug("arguments for addLanguage() call are model={}, languageData={}", model, languageData);
 
-        if(!languageData.getUsername().equals(authenticationService.getAuthenticatedUsername()))
-        {
-            log.info("User '{}' tried to update language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageData.getId());
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to change the selected language");
-        }
-
-        try
-        {
+        try {
             languageService.addLanguage(languageData);
-        } catch (InvalidObjectException e)
-        {
+        } catch (InvalidObjectException e) {
             log.info("Could not save the language because it was not complete.");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not save the language, because the language-object was not complete", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ("Could not save the language.\n" + e.getLocalizedMessage()).replace("\n", "<br />"));
+        } catch (IllegalAccessException e) {
+            log.info("User '{}' tried to update language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageData.getId());
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
         }
 
         return "redirect:/";
@@ -148,18 +135,14 @@ public class LanguageController
     {
         log.info("deleteLanguage() called for languageId={}", languageId);
 
-        if(!authenticationService.getAuthenticatedUsername().equals(languageService.getLanguageCreator(languageId)))
-        {
-            log.info("User '{}' tried to delete language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageId);
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to delete the selected language");
-        }
-
-        if(languageService.deleteLanguage(languageId))
-            log.info("Language with id={} successfully deleted", languageId);
-        else
-        {
+        try {
+            languageService.deleteLanguage(languageId);
+        } catch (EntityNotFoundException e) {
             log.warn("Could not delete language with id={}", languageId);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The language you were trying to delete, could not be found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
+        } catch (IllegalAccessException e) {
+            log.info("User '{}' tried to delete language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageId);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
         }
 
         return "redirect:/";
