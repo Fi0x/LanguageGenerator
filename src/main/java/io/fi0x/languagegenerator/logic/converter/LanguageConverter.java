@@ -28,7 +28,7 @@ public class LanguageConverter
 
     public static LanguageJson convertToJson(LanguageData languageData)
     {
-        if(languageData.getRealLanguage())
+        if(Boolean.TRUE.equals(languageData.getRealLanguage()))
             return new LanguageJson();
         LanguageJson languageJson = new LanguageJson();
         languageJson.setNameLengths(new int[]{languageData.getMinWordLength(), languageData.getMaxWordLength()});

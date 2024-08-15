@@ -38,7 +38,7 @@ public class LanguageService
     {
         log.trace("addLanguage() called with languageData={}", languageData);
 
-        if (languageData.getRealLanguage())
+        if (Boolean.TRUE.equals(languageData.getRealLanguage()))
             addRealLanguage(languageData);
 
         if (!languageData.getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName()))
@@ -51,7 +51,7 @@ public class LanguageService
 
         languageData.validate();
 
-        if(languageData.getRealLanguage())
+        if(Boolean.TRUE.equals(languageData.getRealLanguage()))
             languageData.setVisible(true);
 
         languageRepository.save(LanguageConverter.convertToEntity(languageData));

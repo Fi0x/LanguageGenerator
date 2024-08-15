@@ -47,11 +47,11 @@ public class LanguageData
         String errors = "The following errors occurred:";
         boolean errorFound = false;
 
-        if (id == null || name == null || name.isBlank() || ((username == null || username.isBlank()) && !realLanguage)) {
+        if (id == null || name == null || name.isBlank() || ((username == null || username.isBlank()) && (realLanguage == null || !realLanguage))) {
             errors += "\nAn internal field was null or empty";
             errorFound = true;
         }
-        if (!realLanguage) {
+        if (realLanguage == null || !realLanguage) {
             if (vocals == null || consonants == null || vocalConsonant == null || consonantVocals == null) {
                 errors += "\nA character-list was null";
                 errorFound = true;

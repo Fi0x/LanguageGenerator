@@ -60,8 +60,10 @@ public class TestTranslationController
     void test_saveWord_success() throws Exception
     {
         doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
+        doReturn(getValidWord(0).toEntity()).when(translationService).saveOrGetWord(any());
 
-        mvc.perform(post(WORD_URL).param("listIndex", "1").param("word", WORD).sessionAttr("words", getWords(2)))
+        mvc.perform(post(WORD_URL).param("listIndex", "1").param("word", WORD)
+                        .sessionAttr("originalEndpoint", "list-words").sessionAttr("words", getWords(2)))
                 .andExpect(status().is(HttpStatus.OK.value()))
                 .andExpect(forwardedUrl("/WEB-INF/jsp/list-words.jsp"));
     }
@@ -82,25 +84,29 @@ public class TestTranslationController
     @Tag("UnitTest")
     void test_saveWord_wrongDto() throws Exception
     {
-        mvc.perform(post(WORD_URL).param("listIndex", "1").param("word", WORD).sessionAttr("words", Collections.emptyList()))
+        mvc.perform(post(WORD_URL).param("listIndex", "1").param("word", WORD)
+                        .sessionAttr("originalEndpoint", "list-words").sessionAttr("words", Collections.emptyList()))
                 .andExpect(status().is(HttpStatus.OK.value()))
                 .andExpect(forwardedUrl("/WEB-INF/jsp/list-words.jsp"));
 
         List<WordDto> list = getWords(3);
         list.set(1, null);
-        mvc.perform(post(WORD_URL).param("listIndex", "1").param("word", WORD).sessionAttr("words", Collections.emptyList()))
+        mvc.perform(post(WORD_URL).param("listIndex", "1").param("word", WORD)
+                        .sessionAttr("originalEndpoint", "list-words").sessionAttr("words", Collections.emptyList()))
                 .andExpect(status().is(HttpStatus.OK.value()))
                 .andExpect(forwardedUrl("/WEB-INF/jsp/list-words.jsp"));
 
-        mvc.perform(post(WORD_URL).param("listIndex", "1").param("word", WORD).sessionAttr("words", new WordDto()))
+        mvc.perform(post(WORD_URL).param("listIndex", "1").param("word", WORD)
+                        .sessionAttr("originalEndpoint", "otherEndpoint").sessionAttr("words", new WordDto()))
                 .andExpect(status().is(HttpStatus.OK.value()))
-                .andExpect(forwardedUrl("/WEB-INF/jsp/list-words.jsp"));
+                .andExpect(forwardedUrl("/WEB-INF/jsp/otherEndpoint.jsp"));
 
         List<Word> wrongListType = new ArrayList<>();
         wrongListType.add(new Word());
-        mvc.perform(post(WORD_URL).param("listIndex", "0").param("word", WORD).sessionAttr("words", wrongListType))
+        mvc.perform(post(WORD_URL).param("listIndex", "0").param("word", WORD)
+                        .sessionAttr("originalEndpoint", "").sessionAttr("words", wrongListType))
                 .andExpect(status().is(HttpStatus.OK.value()))
-                .andExpect(forwardedUrl("/WEB-INF/jsp/list-words.jsp"));
+                .andExpect(forwardedUrl("/WEB-INF/jsp/.jsp"));
     }
 
     @Test

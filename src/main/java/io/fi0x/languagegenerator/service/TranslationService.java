@@ -143,7 +143,7 @@ public class TranslationService
             return result;
 
         Optional<Language> languageEntity = languageRepository.findById(wordDto.getLanguageId());
-        if (languageEntity.isEmpty() || (!languageEntity.get().getRealLanguage() &&
+        if (languageEntity.isEmpty() || ((languageEntity.get().getRealLanguage() == null || !languageEntity.get().getRealLanguage()) &&
                 (languageEntity.get().getUsername() == null || !languageEntity.get().getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName()))))
             throw new IllegalAccessException();
 
