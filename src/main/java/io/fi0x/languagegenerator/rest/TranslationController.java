@@ -13,12 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,24 +32,35 @@ public class TranslationController
 
     @Transactional
     @PostMapping("/word")
-    public String saveWord(ModelMap model, @RequestParam("listIndex") Integer listIndex, @RequestParam(value = "word") String word)
+    public String saveWord(ModelMap model, @RequestParam("listIndex") Integer listIndex, @RequestParam(value = "word") String word, @ModelAttribute("savedWords") List<Word> savedWords)
     {
-        log.info("saveWord() called for word={} with listIndex={}", word, listIndex);
+        log.info("saveWord() called for word={} with listIndex={} and savedWords={}", word, listIndex, savedWords);
 
-        Object object = model.get("words");
-        if (object instanceof List<?> someList && someList.size() > listIndex && someList.get(listIndex) instanceof WordDto wordDto) {
+        if (listIndex == -1) {
+            WordDto wordDto = new WordDto();
+            wordDto.setLanguageId((Long) model.get("language"));
             wordDto.setWord(word);
-
             try {
-                Word savedWord = translationService.saveOrGetWord(wordDto);
-                wordDto.setWordNumber(savedWord.getWordNumber());
+                savedWords.add(translationService.saveOrGetWord(wordDto));
             } catch (IllegalAccessException e) {
-                log.info("User '{}' tried to save word '{}' in a language, which is not allowed", authenticationService.getAuthenticatedUsername(), word);
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save translations in this language");
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save words in this language, only the owner can");
+            }
+        } else {
+            Object object = model.get("words");
+            if (object instanceof List<?> someList && listIndex >= 0 && someList.size() > listIndex && someList.get(listIndex) instanceof WordDto wordDto) {
+                wordDto.setWord(word);
+
+                try {
+                    Word savedWord = translationService.saveOrGetWord(wordDto);
+                    wordDto.setWordNumber(savedWord.getWordNumber());
+                } catch (IllegalAccessException e) {
+                    log.info("User '{}' tried to save word '{}' in a language, which is not allowed", authenticationService.getAuthenticatedUsername(), word);
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save translations in this language");
+                }
             }
         }
 
-        return "list-words";
+        return (String) model.getAttribute("originalEndpoint");
     }
 
     @Transactional
@@ -125,6 +134,7 @@ public class TranslationController
         model.put("savedWords", savedWords);
         model.put("englishTranslations", translationService.getEnglishTranslations(savedWords));
         model.put("username", authenticationService.getAuthenticatedUsername());
+        model.put("language", languageId);
         model.put("originalEndpoint", "dictionary");
 
         return "dictionary";
@@ -168,5 +178,10 @@ public class TranslationController
         }
 
         return "redirect:/";
+    }
+
+    @ModelAttribute("savedWords")
+    public List<Word> getInitializedSavedWords() {
+        return new ArrayList<>();
     }
 }

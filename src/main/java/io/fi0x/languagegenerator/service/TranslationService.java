@@ -51,7 +51,7 @@ public class TranslationService
 
         Map<Long, String> resultMap = new HashMap<>();
         for (Word word : wordList) {
-            List<Word> translations = getTranslations(WordConverter.convertToDto(word), englishEntities.get(0).getId());
+            List<String> translations = getTranslations(WordConverter.convertToDto(word), englishEntities.get(0).getId()).stream().map(Word::getLetters).toList();
             resultMap.put(word.getWordNumber(), translations.toString().replace("[", "").replace("]", ""));
         }
 

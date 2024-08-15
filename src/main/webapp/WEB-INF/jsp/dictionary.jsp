@@ -44,7 +44,13 @@
         </c:forEach>
         </tbody>
     </table>
-    <%--TODO: Add a button and text field to add a new custom word--%>
+    <form:form method="post" action="word">
+        <input type="hidden" name="listIndex" value="-1">
+        <label>
+            <input type="text" name="word"/>
+        </label>
+        <input type="submit" class="btn-success" value="Add Word"/>
+    </form:form>
 </div>
 <%@include file="../common/scripts.jspf" %>
 <script src="${pageContext.request.contextPath}/js/functions.js"></script>
