@@ -157,3 +157,15 @@ table {
     background-color: var(--dark-accent);
     border-radius: 5px;
 }
+
+.non-editable {
+    background-color: var(--light-accent);
+}
+
+/*TODO: Optimize css*/
+input {
+    background-color: var(--custom-white);
+    border-color: transparent;
+    border-radius: 2px;
+    border-color: var(--custom-black);
+}

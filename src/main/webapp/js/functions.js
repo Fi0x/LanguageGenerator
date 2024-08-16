@@ -29,6 +29,16 @@ function updateRealState(checkbox) {
     console.log("disabled state: " + checkbox)
     let elements = document.getElementsByClassName("onlyFictionalLanguageOption");
     for (let i = 0; i < elements.length; i++) {
+        if(elements[i].type === "checkbox")
+        {
+            elements[i].disabled = checkbox.checked;
+            continue;
+        }
         elements[i].readOnly = checkbox.checked;
+        if(checkbox.checked) {
+            elements[i].classList.add("non-editable");
+        } else {
+            elements[i].classList.remove("non-editable")
+        }
     }
 }
