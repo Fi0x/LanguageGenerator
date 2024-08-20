@@ -175,6 +175,16 @@ public class TestLanguageController
 
     @Test
     @Tag("UnitTest")
+    void test_generateWords_realLanguage() throws Exception
+    {
+        doThrow(IllegalArgumentException.class).when(generationService).generateWords(eq(getLanguageData()), eq(WORD_AMOUNT));
+
+        mvc.perform(get(GENERATE_URL).param("language", String.valueOf(LANGUAGE_ID)).param("amount", String.valueOf(WORD_AMOUNT)))
+                .andExpect(status().is(HttpStatus.NOT_ACCEPTABLE.value()));
+    }
+
+    @Test
+    @Tag("UnitTest")
     void test_redirectWrongUrl() throws Exception
     {
         mvc.perform(get(WRONG_URL))
