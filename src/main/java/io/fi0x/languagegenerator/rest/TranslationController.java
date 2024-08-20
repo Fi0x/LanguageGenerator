@@ -30,7 +30,6 @@ public class TranslationController
     private LanguageService languageService;
     private TranslationService translationService;
 
-    //TODO: Increase test-coverage for the entire class
     @Transactional
     @PostMapping("/word")
     public String saveWord(ModelMap model, @RequestParam("listIndex") Integer listIndex, @RequestParam(value = "word") String word, @ModelAttribute("savedWords") List<Word> savedWords)
@@ -123,6 +122,7 @@ public class TranslationController
         return originalEndpoint;
     }
 
+    //TODO: Increase test-coverage for all methods below
     @Transactional
     @GetMapping("/dictionary")
     public String showDictionary(ModelMap model, @RequestParam("languageId") long languageId)

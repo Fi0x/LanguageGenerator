@@ -32,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TestTranslationController
 {
     private static final String WORD_URL = "/word";
+    private static final String DELETE_WORD_URL = "/delete-word";
     private static final String WORD = "bla";
     private static final Long WORD_NUMBER = 3L;
     private static final long LANGUAGE_ID = 3;
@@ -57,9 +58,8 @@ public class TestTranslationController
 
     @Test
     @Tag("UnitTest")
-    void test_saveWord_success() throws Exception
+    void test_saveWord_success_normalListIndex() throws Exception
     {
-        doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
         doReturn(getValidWord(0).toEntity()).when(translationService).saveOrGetWord(any());
 
         mvc.perform(post(WORD_URL).param("listIndex", "1").param("word", WORD)
@@ -70,12 +70,27 @@ public class TestTranslationController
 
     @Test
     @Tag("UnitTest")
+    void test_saveWord_success_negativeListIndex() throws Exception
+    {
+        doReturn(getValidWord(0).toEntity()).when(translationService).saveOrGetWord(any());
+
+        mvc.perform(post(WORD_URL).param("listIndex", "-1").param("word", WORD)
+                        .sessionAttr("originalEndpoint", "list-words").sessionAttr("words", getWords(2)))
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/list-words.jsp"));
+    }
+
+    @Test
+    @Tag("UnitTest")
     void test_saveWord_unauthorized() throws Exception
     {
-        doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
         doThrow(IllegalAccessException.class).when(translationService).saveOrGetWord(any());
 
         mvc.perform(post(WORD_URL).param("listIndex", "1").param("word", WORD).sessionAttr("words", getWords(2)))
+                .andExpect(status().is(HttpStatus.FORBIDDEN.value()))
+                .andExpect(forwardedUrl(null));
+
+        mvc.perform(post(WORD_URL).param("listIndex", "-1").param("word", WORD).sessionAttr("words", getWords(2)))
                 .andExpect(status().is(HttpStatus.FORBIDDEN.value()))
                 .andExpect(forwardedUrl(null));
     }
@@ -133,11 +148,52 @@ public class TestTranslationController
     @Tag("UnitTest")
     void test_showWord_unauthorized() throws Exception
     {
-        doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
         doThrow(IllegalAccessException.class).when(translationService).saveOrGetWord(any());
 
         mvc.perform(get(WORD_URL).param("languageId", String.valueOf(LANGUAGE_ID)).param("word", WORD))
                 .andExpect(status().is(HttpStatus.FORBIDDEN.value()))
+                .andExpect(forwardedUrl(null));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_deleteWord_success() throws Exception
+    {
+        doNothing().when(translationService).deleteWord(any());
+
+        mvc.perform(get(DELETE_WORD_URL).param("languageId", String.valueOf(LANGUAGE_ID)).param("wordNumber", String.valueOf(WORD_NUMBER))
+                        .sessionAttr("originalEndpoint", "dictionary"))
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/dictionary.jsp"));
+
+        mvc.perform(get(DELETE_WORD_URL).param("languageId", String.valueOf(LANGUAGE_ID)).param("wordNumber", String.valueOf(WORD_NUMBER))
+                        .sessionAttr("originalEndpoint", "list-words")
+                        .sessionAttr("words", List.of(getValidWord(0))))
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(model().attribute("words", List.of(getValidWord(0))))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/list-words.jsp"));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_deleteWord_unauthorized() throws Exception
+    {
+        doThrow(IllegalAccessException.class).when(translationService).deleteWord(any());
+
+        mvc.perform(get(DELETE_WORD_URL).param("languageId", String.valueOf(LANGUAGE_ID)).param("wordNumber", String.valueOf(WORD_NUMBER))
+                        .sessionAttr("originalEndpoint", "endpointToReturnTo"))
+                .andExpect(status().is(HttpStatus.FORBIDDEN.value()))
+                .andExpect(forwardedUrl(null));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_deleteWord_noOriginalEndpoint() throws Exception
+    {
+        doNothing().when(translationService).deleteWord(any());
+
+        mvc.perform(get(DELETE_WORD_URL).param("languageId", String.valueOf(LANGUAGE_ID)).param("wordNumber", String.valueOf(WORD_NUMBER)))
+                .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()))
                 .andExpect(forwardedUrl(null));
     }
 
