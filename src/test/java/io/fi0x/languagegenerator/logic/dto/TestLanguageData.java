@@ -1,6 +1,7 @@
 package io.fi0x.languagegenerator.logic.dto;
 
 import io.fi0x.languagegenerator.db.entities.Language;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -59,8 +60,10 @@ public class TestLanguageData
     void test_validate_success()
     {
         LanguageData data = getData();
+        Assertions.assertDoesNotThrow(data::validate);
 
-        org.junit.jupiter.api.Assertions.assertDoesNotThrow(data::validate);
+        data.setRealLanguage(false);
+        Assertions.assertDoesNotThrow( data::validate);
     }
 
     @Test
@@ -69,31 +72,31 @@ public class TestLanguageData
     {
         LanguageData data = getData();
         data.setId(null);
-        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+        Assertions.assertThrows(InvalidObjectException.class, data::validate);
 
         data = getData();
         data.setName(null);
-        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+        Assertions.assertThrows(InvalidObjectException.class, data::validate);
 
         data = getData();
         data.setUsername(null);
-        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+        Assertions.assertThrows(InvalidObjectException.class, data::validate);
 
         data = getData();
         data.setVocals(null);
-        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+        Assertions.assertThrows(InvalidObjectException.class, data::validate);
 
         data = getData();
         data.setConsonants(null);
-        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+        Assertions.assertThrows(InvalidObjectException.class, data::validate);
 
         data = getData();
         data.setVocalConsonant(null);
-        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+        Assertions.assertThrows(InvalidObjectException.class, data::validate);
 
         data = getData();
         data.setConsonantVocals(null);
-        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+        Assertions.assertThrows(InvalidObjectException.class, data::validate);
     }
 
     @Test
@@ -102,27 +105,27 @@ public class TestLanguageData
     {
         LanguageData data = getData();
         data.setName("");
-        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+        Assertions.assertThrows(InvalidObjectException.class, data::validate);
 
         data = getData();
         data.setUsername("");
-        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+        Assertions.assertThrows(InvalidObjectException.class, data::validate);
 
         data = getData();
         data.setVocals(new ArrayList<>());
         data.setConsonants(new ArrayList<>());
         data.setVocalConsonant(new ArrayList<>());
         data.setConsonantVocals(new ArrayList<>());
-        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+        Assertions.assertThrows(InvalidObjectException.class, data::validate);
 
         data.getConsonantVocals().add("a");
-        org.junit.jupiter.api.Assertions.assertDoesNotThrow(data::validate);
+        Assertions.assertDoesNotThrow(data::validate);
 
         data.getVocalConsonant().add("a");
-        org.junit.jupiter.api.Assertions.assertDoesNotThrow(data::validate);
+        Assertions.assertDoesNotThrow(data::validate);
 
         data.getConsonants().add("a");
-        org.junit.jupiter.api.Assertions.assertDoesNotThrow(data::validate);
+        Assertions.assertDoesNotThrow(data::validate);
     }
 
     @Test
@@ -131,11 +134,11 @@ public class TestLanguageData
     {
         LanguageData data = getData();
         data.setMinWordLength(0);
-        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+        Assertions.assertThrows(InvalidObjectException.class, data::validate);
 
         data = getData();
         data.setMaxWordLength(MIN_WORD_LENGTH - 1);
-        org.junit.jupiter.api.Assertions.assertThrows(InvalidObjectException.class, data::validate);
+        Assertions.assertThrows(InvalidObjectException.class, data::validate);
     }
 
     private LanguageData getData()
