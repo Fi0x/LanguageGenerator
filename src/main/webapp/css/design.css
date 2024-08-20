@@ -158,14 +158,21 @@ table {
     border-radius: 5px;
 }
 
-.non-editable {
-    background-color: var(--light-accent);
+.clickable {
+    cursor: pointer;
 }
 
-/*TODO: Optimize css*/
+.non-editable {
+    background-color: var(--light-accent);
+    border-color: transparent;
+}
+
+.non-editable:focus-visible {
+    outline-width: 0;
+}
+
 input {
     background-color: var(--custom-white);
     border-color: transparent;
     border-radius: 2px;
-    border-color: var(--custom-black);
 }
