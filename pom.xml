@@ -116,6 +116,7 @@
       <groupId>jakarta.servlet.jsp.jstl</groupId>
       <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
     </dependency>
+<!--TODO: Update this dependency if possible-->
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>glassfish-jstl</artifactId>

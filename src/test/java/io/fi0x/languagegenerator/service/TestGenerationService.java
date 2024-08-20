@@ -83,6 +83,8 @@ public class TestGenerationService
         staticMock.when(SecurityContextHolder::getContext).thenReturn(securityContext);
         doReturn(authentication).when(securityContext).getAuthentication();
         doReturn(USERNAME).when(authentication).getName();
+        doReturn(Optional.of(DEFAULT_LETTER_ID)).when(speRepository).getHighestId();
+        doReturn(Optional.of(DEFAULT_LETTER_ID)).when(wordRepository).getHighestId(any());
 
         doReturn(getLanguage(NORMAL_WORD_LENGTH)).when(languageRepository).findById(eq(VALID_LANGUAGE_ID));
     }

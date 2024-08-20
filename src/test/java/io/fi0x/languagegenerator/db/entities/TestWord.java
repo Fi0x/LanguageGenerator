@@ -8,13 +8,10 @@ public class TestWord
 {
     private static final Long ID1 = 1L;
     private static final Long ID2 = 2L;
-    private static final Long ID3 = 3L;
     private static final Long WORD1 = 11L;
     private static final Long WORD2 = 22L;
-    private static final Long WORD3 = 33L;
     private static final String LETTERS1 = "A";
     private static final String LETTERS2 = "B";
-    private static final String LETTERS3 = "C";
 
     @Test
     @Tag("UnitTest")
