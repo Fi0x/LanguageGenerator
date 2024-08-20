@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class TranslationService
 {
+    //TODO: Add test-coverage for untested methods
     private static final String ENGLISH_LANGUAGE_NAME = "English";
 
     private final WordRepository wordRepo;

@@ -42,6 +42,7 @@ public class LanguageData
                 .specialCharacterChance(language.getSpecialCharacterChance()).visible(language.getVisible()).build();
     }
 
+    //TODO: Increase test-branch coverage
     public void validate() throws InvalidObjectException
     {
         String errors = "The following errors occurred:";

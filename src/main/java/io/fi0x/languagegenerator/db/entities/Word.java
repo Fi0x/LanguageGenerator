@@ -22,6 +22,7 @@ public class Word
 
     private String letters;
 
+    //TODO: Test this method
     public WordId getCombinedId()
     {
         WordId id = new WordId();

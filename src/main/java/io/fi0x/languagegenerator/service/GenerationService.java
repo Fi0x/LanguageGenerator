@@ -35,6 +35,7 @@ public class GenerationService
     private final EndingRepository endRepository;
     private final WordRepository wordRepo;
 
+    //TODO: Try to increase coverage for this class
     public List<WordDto> generateWords(@NonNull LanguageData languageData, int count) throws EntityNotFoundException, InvalidObjectException, IllegalAccessException, IllegalArgumentException
     {
         log.trace("generateWords() called for language={} with amount={}", languageData, count);

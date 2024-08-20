@@ -34,6 +34,7 @@ public class Translation
         translatedWordNumber = tmp;
     }
 
+    //TODO: Test this method
     public TranslationId getCombinedId()
     {
         TranslationId id = new TranslationId();

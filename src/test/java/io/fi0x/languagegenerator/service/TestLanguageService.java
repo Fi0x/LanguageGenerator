@@ -27,8 +27,6 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
-//TODO: Check coverage of all unit-tests
-
 @RunWith(SpringRunner.class)
 public class TestLanguageService
 {

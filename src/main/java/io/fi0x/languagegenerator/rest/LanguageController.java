@@ -65,6 +65,7 @@ public class LanguageController
         } catch (IllegalAccessException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
         } catch (IllegalArgumentException e) {
+            //TODO: Handle this case in tests
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, e.getLocalizedMessage());
         }
 
