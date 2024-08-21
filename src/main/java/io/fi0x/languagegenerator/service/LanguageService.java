@@ -188,6 +188,22 @@ public class LanguageService
                 .orElseGet(() -> LanguageData.builder().username(SecurityContextHolder.getContext().getAuthentication().getName()).build());
     }
 
+    // TODO: Add test-coverage for this method
+    public LanguageData getAuthenticatedLanguageData(long languageId) throws IllegalAccessException
+    {
+        log.trace("getAuthenticatedLanguageId() called for languageId={}", languageId);
+
+        Optional<Language> languageEntity = languageRepository.findById(languageId);
+
+        if(languageEntity.isEmpty())
+            return LanguageData.builder().username(SecurityContextHolder.getContext().getAuthentication().getName()).build();
+
+        if(languageEntity.get().getVisible() || SecurityContextHolder.getContext().getAuthentication().getName().equals(languageEntity.get().getUsername()))
+            return languageEntity.map(language -> addLettersToLanguage(LanguageData.getFromEntity(language))).get();
+
+        throw new IllegalAccessException("User is not allowed to access this language");
+    }
+
     @Nullable
     public String getLanguageCreator(long languageId)
     {

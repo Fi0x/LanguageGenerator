@@ -18,9 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -33,6 +31,7 @@ public class TestTranslationController
 {
     private static final String WORD_URL = "/word";
     private static final String DELETE_WORD_URL = "/delete-word";
+    private static final String DICTIONARY_URL = "/dictionary";
     private static final String WORD = "bla";
     private static final Long WORD_NUMBER = 3L;
     private static final long LANGUAGE_ID = 3;
@@ -197,6 +196,40 @@ public class TestTranslationController
                 .andExpect(forwardedUrl(null));
     }
 
+    @Test
+    @Tag("UnitTest")
+    void test_showDictionary_success() throws Exception
+    {
+        List<Word> wordList = getWordList();
+        Map<Long, String> englishTranslations = getEnglishTranslations();
+        doReturn(LanguageData.builder().id(LANGUAGE_ID).name(LANGUAGE_NAME).username(USERNAME).build()).when(languageService).getAuthenticatedLanguageData(eq(LANGUAGE_ID));
+        doReturn(wordList).when(translationService).getAllWords(eq(LANGUAGE_ID));
+        doReturn(englishTranslations).when(translationService).getEnglishTranslations(eq(wordList));
+        doReturn(USERNAME).when(authenticationService).getAuthenticatedUsername();
+
+        mvc.perform(get(DICTIONARY_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(model().attribute("languageName", LANGUAGE_NAME))
+                .andExpect(model().attribute("languageCreator", USERNAME))
+                .andExpect(model().attribute("savedWords", wordList))
+                .andExpect(model().attribute("englishTranslations", englishTranslations))
+                .andExpect(model().attribute("username", USERNAME))
+                .andExpect(model().attribute("language", LANGUAGE_ID))
+                .andExpect(model().attribute("originalEndpoint", "dictionary"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/dictionary.jsp"));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_showDictionary_unauthorized() throws Exception
+    {
+        doThrow(IllegalAccessException.class).when(languageService).getAuthenticatedLanguageData(eq(LANGUAGE_ID));
+
+        mvc.perform(get(DICTIONARY_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
+                .andExpect(status().is(HttpStatus.FORBIDDEN.value()))
+                .andExpect(forwardedUrl(null));
+    }
+
     private List<WordDto> getWords(int listSize)
     {
         List<WordDto> wordList = new ArrayList<>();
@@ -210,5 +243,18 @@ public class TestTranslationController
     private WordDto getValidWord(int listIdx)
     {
         return new WordDto(LANGUAGE_ID, LANGUAGE_NAME, WORD_NUMBER, WORD, listIdx, SAVED);
+    }
+
+    private List<Word> getWordList()
+    {
+        List<Word> list = new ArrayList<>();
+        Word word = new Word();
+        word.setLanguageId(LANGUAGE_ID);
+        list.add(word);
+        return list;
+    }
+    private Map<Long, String> getEnglishTranslations()
+    {
+        return new HashMap<>();
     }
 }

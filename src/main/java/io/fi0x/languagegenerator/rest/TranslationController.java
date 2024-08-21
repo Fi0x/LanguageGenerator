@@ -122,14 +122,19 @@ public class TranslationController
         return originalEndpoint;
     }
 
-    //TODO: Increase test-coverage for all methods below
     @Transactional
     @GetMapping("/dictionary")
     public String showDictionary(ModelMap model, @RequestParam("languageId") long languageId)
     {
         log.info("showDictionary() called for languageId={}", languageId);
 
-        LanguageData languageData = languageService.getLanguageData(languageId);
+        LanguageData languageData;
+        try {
+            languageData = languageService.getAuthenticatedLanguageData(languageId);
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access this language");
+        }
+
         model.put("languageName", languageData.getName());
         model.put("languageCreator", languageData.getUsername());
         List<Word> savedWords = translationService.getAllWords(languageId);
@@ -142,6 +147,7 @@ public class TranslationController
         return "dictionary";
     }
 
+    //TODO: Increase test-coverage for all methods below
     @Transactional
     @PostMapping("/translation")
     public String saveTranslation(ModelMap model, @RequestParam("languageId") Integer language1, @RequestParam("word") String word1, @RequestParam("translationLanguageId") Integer language2, @RequestParam(value = "translationWord") String word2)
