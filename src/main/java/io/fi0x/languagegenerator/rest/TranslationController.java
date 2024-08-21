@@ -172,7 +172,6 @@ public class TranslationController
         return "word";
     }
 
-    //TODO: Add tests for this method
     @Transactional
     @GetMapping("/delete-translation")
     public String deleteTranslation(@RequestParam("languageId1") long languageId1, @RequestParam("wordNumber1") long wordNumber1, @RequestParam("languageId2") long languageId2, @RequestParam("wordNumber2") long wordNumber2)

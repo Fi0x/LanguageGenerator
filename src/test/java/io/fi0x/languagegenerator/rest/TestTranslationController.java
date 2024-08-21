@@ -33,10 +33,12 @@ public class TestTranslationController
     private static final String DELETE_WORD_URL = "/delete-word";
     private static final String DICTIONARY_URL = "/dictionary";
     private static final String TRANSLATION_URL = "/translation";
+    private static final String DELETE_TRANSLATION_URL = "/delete-translation";
     private static final String WORD = "bla";
     private static final String TRANSLATED_WORD = "blub";
     private static final Long WORD_NUMBER = 3L;
-    private static final long LANGUAGE_ID = 3;
+    private static final Long TRANSLATED_WORD_NUMBER = 12L;
+    private static final long LANGUAGE_ID = 6;
     private static final long TRANSLATED_LANGUAGE_ID = 4;
     private static final String LANGUAGE_NAME = "Test language";
     private static final boolean SAVED = false;
@@ -259,6 +261,30 @@ public class TestTranslationController
                         .sessionAttr("translations", getTranslationsList()))
                 .andExpect(status().is(HttpStatus.FORBIDDEN.value()))
                 .andExpect(forwardedUrl(null));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_deleteTranslation_success() throws Exception
+    {
+        doNothing().when(translationService).deleteTranslation(eq(LANGUAGE_ID), eq(WORD_NUMBER), eq(TRANSLATED_LANGUAGE_ID), eq(TRANSLATED_WORD_NUMBER));
+
+        mvc.perform(get(DELETE_TRANSLATION_URL).param("languageId1", String.valueOf(LANGUAGE_ID)).param("wordNumber1", String.valueOf(WORD_NUMBER))
+                        .param("languageId2", String.valueOf(TRANSLATED_LANGUAGE_ID)).param("wordNumber2", String.valueOf(TRANSLATED_WORD_NUMBER)))
+                .andExpect(status().is(HttpStatus.FOUND.value()))
+                .andExpect(redirectedUrl("/"));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_deleteTranslation_unauthorized() throws Exception
+    {
+        doThrow(IllegalAccessException.class).when(translationService).deleteTranslation(eq(LANGUAGE_ID), eq(WORD_NUMBER), eq(TRANSLATED_LANGUAGE_ID), eq(TRANSLATED_WORD_NUMBER));
+
+        mvc.perform(get(DELETE_TRANSLATION_URL).param("languageId1", String.valueOf(LANGUAGE_ID)).param("wordNumber1", String.valueOf(WORD_NUMBER))
+                        .param("languageId2", String.valueOf(TRANSLATED_LANGUAGE_ID)).param("wordNumber2", String.valueOf(TRANSLATED_WORD_NUMBER)))
+                .andExpect(status().is(HttpStatus.FORBIDDEN.value()))
+                .andExpect(redirectedUrl(null));
     }
 
     private List<WordDto> getWords(int listSize)
