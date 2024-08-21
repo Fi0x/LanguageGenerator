@@ -73,6 +73,56 @@ public class TestTranslationService
 
     @Test
     @Tag("UnitTest")
+    void test_getEnglishTranslations_success_noEnglishLanguage()
+    {
+        doReturn(Collections.emptyList()).when(languageRepository).getAllByName(anyString());
+
+        Assertions.assertEquals(new HashMap<>(), service.getEnglishTranslations(Collections.emptyList()));
+
+        Map<Long, String> expectedMap = new HashMap<>();
+        expectedMap.put(WORD_NUMBER11, "");
+        List<Word> suppliedList = new ArrayList<>();
+        Word suppliedWord = new Word();
+        suppliedWord.setWordNumber(WORD_NUMBER11);
+        suppliedList.add(suppliedWord);
+        Assertions.assertEquals(expectedMap, service.getEnglishTranslations(suppliedList));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_getEnglishTranslations_success_englishLanguageExists()
+    {
+        Language english = new Language();
+        english.setId(LANGUAGE_ID3);
+        doReturn(List.of(english)).when(languageRepository).getAllByName(anyString());
+
+        Assertions.assertEquals(new HashMap<>(), service.getEnglishTranslations(Collections.emptyList()));
+
+        doReturn(Optional.empty()).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID3), any());
+        Map<Long, String> expectedMap = new HashMap<>();
+        expectedMap.put(WORD_NUMBER11, "");
+        List<Word> suppliedList = new ArrayList<>();
+        Word suppliedWord = new Word();
+        suppliedWord.setWordNumber(WORD_NUMBER11);
+        suppliedList.add(suppliedWord);
+        Assertions.assertEquals(expectedMap, service.getEnglishTranslations(suppliedList));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_getEnglishTranslations_success_multipleEnglishLanguages()
+    {
+        Language english = new Language();
+        english.setId(LANGUAGE_ID3);
+        Language english2 = new Language();
+        english2.setId(LANGUAGE_ID2);
+        doReturn(List.of(english, english2)).when(languageRepository).getAllByName(anyString());
+
+        Assertions.assertThrows(IllegalStateException.class, () -> service.getEnglishTranslations(Collections.emptyList()));
+    }
+
+    @Test
+    @Tag("UnitTest")
     void test_getTranslations_unknownWord()
     {
         doReturn(Optional.empty()).when(wordRepository).getByLanguageIdAndLetters(eq(LANGUAGE_ID1), eq(WORD11));
@@ -160,6 +210,49 @@ public class TestTranslationService
         actualResult.sort(this::wordCompare);
 
         Assertions.assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_deleteTranslation_success()
+    {
+        setupAuthentication();
+
+        Language language1 = getLanguage();
+        language1.setId(LANGUAGE_ID1);
+        doReturn(Optional.of(language1)).when(languageRepository).findById(eq(LANGUAGE_ID1));
+        Language language2 = getLanguage();
+        language2.setId(LANGUAGE_ID2);
+        doReturn(Optional.of(language2)).when(languageRepository).findById(eq(LANGUAGE_ID2));
+
+        Assertions.assertDoesNotThrow(() -> service.deleteTranslation(LANGUAGE_ID1, WORD_NUMBER11, LANGUAGE_ID2, WORD_NUMBER21));
+        verify(translationRepository, times(2)).deleteById(any());
+
+        staticMock.close();
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_deleteTranslation_unauthorized()
+    {
+        setupAuthentication();
+
+        doReturn(Optional.empty()).when(languageRepository).findById(eq(LANGUAGE_ID1));
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteTranslation(LANGUAGE_ID1, WORD_NUMBER11, LANGUAGE_ID2, WORD_NUMBER21));
+
+        Language language1 = getLanguage();
+        language1.setId(LANGUAGE_ID1);
+        language1.setUsername("Wrong User");
+        doReturn(Optional.of(language1)).when(languageRepository).findById(eq(LANGUAGE_ID1));
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteTranslation(LANGUAGE_ID1, WORD_NUMBER11, LANGUAGE_ID2, WORD_NUMBER21));
+
+        Language language2 = getLanguage();
+        language2.setId(LANGUAGE_ID2);
+        language2.setUsername("Wrong User");
+        doReturn(Optional.of(language2)).when(languageRepository).findById(eq(LANGUAGE_ID2));
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteTranslation(LANGUAGE_ID1, WORD_NUMBER11, LANGUAGE_ID2, WORD_NUMBER21));
+
+        staticMock.close();
     }
 
     @Test
@@ -323,6 +416,45 @@ public class TestTranslationService
         staticMock.close();
     }
 
+    @Test
+    @Tag("UnitTest")
+    void test_deleteWord_success()
+    {
+        setupAuthentication();
+
+        Assertions.assertDoesNotThrow(() -> service.deleteWord(getFirstWordEntity()));
+
+        staticMock.close();
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_deleteWord_unauthorized()
+    {
+        setupAuthentication();
+
+        doReturn(Optional.empty()).when(languageRepository).findById(any());
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteWord(getFirstWordEntity()));
+
+        Language language = getLanguage();
+        language.setUsername("Wrong User");
+        doReturn(Optional.of(language)).when(languageRepository).findById(any());
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteWord(getFirstWordEntity()));
+
+        staticMock.close();
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_getAllWords_success()
+    {
+        List<Word> wordList = getAllWords(true);
+        doReturn(wordList).when(wordRepository).getAllByLanguageId(eq(LANGUAGE_ID3));
+
+        Assertions.assertEquals(wordList, service.getAllWords(LANGUAGE_ID3));
+        Assertions.assertNotEquals(wordList, service.getAllWords(LANGUAGE_ID1));
+    }
+
     private void setupAuthentication()
     {
         staticMock = mockStatic(SecurityContextHolder.class);
@@ -444,17 +576,17 @@ public class TestTranslationService
     {
         return LanguageConverter.convertToEntity(
                 LanguageData.builder()
-                .name("Some name")
-                .username(USERNAME)
-                .vocals(new ArrayList<>())
-                .consonants(new ArrayList<>())
-                .vocalConsonant(new ArrayList<>())
-                .consonantVocals(Arrays.asList("a", "aa"))
-                .forbiddenCombinations(new ArrayList<>())
-                .specialCharacters(new ArrayList<>())
-                .startingCombinations(new ArrayList<>())
-                .endingCombinations(new ArrayList<>())
-                .minWordLength(2)
-                .maxWordLength(2).build());
+                        .name("Some name")
+                        .username(USERNAME)
+                        .vocals(new ArrayList<>())
+                        .consonants(new ArrayList<>())
+                        .vocalConsonant(new ArrayList<>())
+                        .consonantVocals(Arrays.asList("a", "aa"))
+                        .forbiddenCombinations(new ArrayList<>())
+                        .specialCharacters(new ArrayList<>())
+                        .startingCombinations(new ArrayList<>())
+                        .endingCombinations(new ArrayList<>())
+                        .minWordLength(2)
+                        .maxWordLength(2).build());
     }
 }
