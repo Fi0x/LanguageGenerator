@@ -32,9 +32,12 @@ public class TestTranslationController
     private static final String WORD_URL = "/word";
     private static final String DELETE_WORD_URL = "/delete-word";
     private static final String DICTIONARY_URL = "/dictionary";
+    private static final String TRANSLATION_URL = "/translation";
     private static final String WORD = "bla";
+    private static final String TRANSLATED_WORD = "blub";
     private static final Long WORD_NUMBER = 3L;
     private static final long LANGUAGE_ID = 3;
+    private static final long TRANSLATED_LANGUAGE_ID = 4;
     private static final String LANGUAGE_NAME = "Test language";
     private static final boolean SAVED = false;
     private static final String USERNAME = "Heinrich";
@@ -230,6 +233,34 @@ public class TestTranslationController
                 .andExpect(forwardedUrl(null));
     }
 
+    @Test
+    @Tag("UnitTest")
+    void test_saveTranslation_success() throws Exception
+    {
+        doReturn(getValidWordEntity()).when(translationService).linkWords(any(), any());
+        doReturn(LanguageData.builder().build()).when(languageService).getLanguageData(eq(LANGUAGE_ID));
+
+        mvc.perform(post(TRANSLATION_URL).param("languageId", String.valueOf(LANGUAGE_ID)).param("word", WORD)
+                        .param("translationLanguageId", String.valueOf(TRANSLATED_LANGUAGE_ID)).param("translationWord", TRANSLATED_WORD)
+                        .sessionAttr("translations", getTranslationsList()))
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(model().attributeExists("translations"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/word.jsp"));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_saveTranslation_unauthorized() throws Exception
+    {
+        doThrow(IllegalAccessException.class).when(translationService).linkWords(any(), any());
+
+        mvc.perform(post(TRANSLATION_URL).param("languageId", String.valueOf(LANGUAGE_ID)).param("word", WORD)
+                        .param("translationLanguageId", String.valueOf(TRANSLATED_LANGUAGE_ID)).param("translationWord", TRANSLATED_WORD)
+                        .sessionAttr("translations", getTranslationsList()))
+                .andExpect(status().is(HttpStatus.FORBIDDEN.value()))
+                .andExpect(forwardedUrl(null));
+    }
+
     private List<WordDto> getWords(int listSize)
     {
         List<WordDto> wordList = new ArrayList<>();
@@ -255,6 +286,22 @@ public class TestTranslationController
     }
     private Map<Long, String> getEnglishTranslations()
     {
-        return new HashMap<>();
+        Map<Long, String> map = new HashMap<>();
+        map.put(WORD_NUMBER, WORD);
+        return map;
+    }
+
+    private List<WordDto> getTranslationsList()
+    {
+        List<WordDto> list = new ArrayList<>();
+        list.add(new WordDto());
+        return list;
+    }
+
+    private Word getValidWordEntity()
+    {
+        Word word = new Word();
+        word.setLanguageId(LANGUAGE_ID);
+        return word;
     }
 }

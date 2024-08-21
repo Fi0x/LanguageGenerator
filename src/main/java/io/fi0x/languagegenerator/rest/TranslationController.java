@@ -147,7 +147,6 @@ public class TranslationController
         return "dictionary";
     }
 
-    //TODO: Increase test-coverage for all methods below
     @Transactional
     @PostMapping("/translation")
     public String saveTranslation(ModelMap model, @RequestParam("languageId") Integer language1, @RequestParam("word") String word1, @RequestParam("translationLanguageId") Integer language2, @RequestParam(value = "translationWord") String word2)
@@ -173,6 +172,7 @@ public class TranslationController
         return "word";
     }
 
+    //TODO: Add tests for this method
     @Transactional
     @GetMapping("/delete-translation")
     public String deleteTranslation(@RequestParam("languageId1") long languageId1, @RequestParam("wordNumber1") long wordNumber1, @RequestParam("languageId2") long languageId2, @RequestParam("wordNumber2") long wordNumber2)
