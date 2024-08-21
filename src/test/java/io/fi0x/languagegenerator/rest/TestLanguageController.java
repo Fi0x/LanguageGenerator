@@ -284,17 +284,6 @@ public class TestLanguageController
                 .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
     }
 
-    @Test
-    @Tag("UnitTest")
-    void test_deleteLanguage_notFound() throws Exception
-    {
-        doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
-        doThrow(EntityNotFoundException.class).when(languageService).deleteLanguage(eq(LANGUAGE_ID));
-
-        mvc.perform(get(DELETE_LANGUAGE_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
-                .andExpect(status().is(HttpStatus.NOT_FOUND.value()));
-    }
-
     private LanguageData getLanguageData()
     {
         return LanguageData.builder().username(USERNAME).name(LANGUAGE_NAME).specialCharacterChance(SPECIAL_CHANCE).visible(false).build();

@@ -20,10 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.InvalidObjectException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.mockito.Mockito.*;
 
@@ -158,6 +155,28 @@ public class TestLanguageService
 
     @Test
     @Tag("UnitTest")
+    void test_addLanguage_success_realLanguage()
+    {
+        LanguageData languageData = getLanguageData();
+        languageData.setRealLanguage(true);
+        doReturn(Collections.emptyList()).when(languageRepository).getAllByName(eq(LANGUAGE_NAME));
+
+        Assertions.assertDoesNotThrow(() -> service.addLanguage(languageData));
+    }
+
+    @Test
+    @Tag("UnitTest")
+    void test_addLanguage_unauthorized_realLanguage()
+    {
+        LanguageData languageData = getLanguageData();
+        languageData.setRealLanguage(true);
+        doReturn(getLanguageList(1, 0)).when(languageRepository).getAllByName(eq(LANGUAGE_NAME));
+
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.addLanguage(languageData));
+    }
+
+    @Test
+    @Tag("UnitTest")
     void test_addLanguage_json()
     {
         LanguageJson languageJson = new LanguageJson();
@@ -215,10 +234,18 @@ public class TestLanguageService
 
     @Test
     @Tag("UnitTest")
-    void test_getLanguageCreator()
+    void test_getAuthenticatedLanguageData() throws IllegalAccessException
     {
-        Assertions.assertEquals(USERNAME, service.getLanguageCreator(HIGHEST_ID));
-        Assertions.assertNull(service.getLanguageCreator(NEXT_FREE_ID));
+        Assertions.assertEquals(LanguageData.builder().username(USERNAME).build(), service.getAuthenticatedLanguageData(NEXT_FREE_ID));
+
+        LanguageData expectedData = getLanguageData();
+        expectedData.setConsonantVocals(new ArrayList<>());
+        Assertions.assertEquals(expectedData, service.getAuthenticatedLanguageData(HIGHEST_ID));
+
+        Language language = new Language();
+        language.setVisible(false);
+        doReturn(Optional.of(language)).when(languageRepository).findById(eq(NEXT_FREE_ID));
+        Assertions.assertThrows(IllegalAccessException.class, () -> service.getAuthenticatedLanguageData(NEXT_FREE_ID));
     }
 
     @Test
@@ -233,15 +260,14 @@ public class TestLanguageService
     void test_deleteLanguage_unauthorized()
     {
         Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteLanguage(NEXT_FREE_ID));
-        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteLanguage(NEXT_FREE_ID));
     }
 
     @Test
     @Tag("UnitTest")
-    void test_deleteLanguage_notFound()
+    void test_getLanguageCreator()
     {
-        doReturn(Optional.empty()).when(languageRepository).findById(eq(NEXT_FREE_ID));
-        Assertions.assertThrows(IllegalAccessException.class, () -> service.deleteLanguage(NEXT_FREE_ID));
+        Assertions.assertEquals(USERNAME, service.getLanguageCreator(HIGHEST_ID));
+        Assertions.assertNull(service.getLanguageCreator(NEXT_FREE_ID));
     }
 
     private LanguageData getLanguageData()

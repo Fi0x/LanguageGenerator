@@ -7,7 +7,6 @@ import io.fi0x.languagegenerator.logic.converter.WordConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.LanguageJson;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
@@ -34,7 +33,6 @@ public class LanguageService
     private final StartingRepository staRepo;
     private final EndingRepository endRepo;
 
-    //TODO: Increase test-coverage for the entire class
     public void addLanguage(LanguageData languageData) throws InvalidObjectException, IllegalAccessException
     {
         log.trace("addLanguage() called with languageData={}", languageData);
@@ -188,7 +186,6 @@ public class LanguageService
                 .orElseGet(() -> LanguageData.builder().username(SecurityContextHolder.getContext().getAuthentication().getName()).build());
     }
 
-    // TODO: Add test-coverage for this method
     public LanguageData getAuthenticatedLanguageData(long languageId) throws IllegalAccessException
     {
         log.trace("getAuthenticatedLanguageId() called for languageId={}", languageId);
@@ -204,16 +201,7 @@ public class LanguageService
         throw new IllegalAccessException("User is not allowed to access this language");
     }
 
-    @Nullable
-    public String getLanguageCreator(long languageId)
-    {
-        log.trace("getLanguageCreator() called for languageId={}", languageId);
-
-        Optional<Language> data = languageRepository.findById(languageId);
-        return data.map(Language::getUsername).orElse(null);
-    }
-
-    public void deleteLanguage(long languageId) throws EntityNotFoundException, IllegalAccessException
+    public void deleteLanguage(long languageId) throws IllegalAccessException
     {
         log.trace("deleteLanguage() called for languageId={}", languageId);
 
@@ -221,11 +209,16 @@ public class LanguageService
         if (languageCreator == null || !languageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
             throw new IllegalAccessException("You are not allowed to delete the selected language");
 
-        Optional<Language> languageEntity = languageRepository.findById(languageId);
-        if (languageEntity.isEmpty())
-            throw new EntityNotFoundException("The language you were trying to delete, could not be found");
-
         languageRepository.deleteById(languageId);
+    }
+
+    @Nullable
+    public String getLanguageCreator(long languageId)
+    {
+        log.trace("getLanguageCreator() called for languageId={}", languageId);
+
+        Optional<Language> data = languageRepository.findById(languageId);
+        return data.map(Language::getUsername).orElse(null);
     }
 
     private void addRealLanguage(LanguageData languageData) throws IllegalAccessException, InvalidObjectException
