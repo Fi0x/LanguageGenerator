@@ -2,6 +2,7 @@ package io.fi0x.languagegenerator.service;
 
 import io.fi0x.languagegenerator.db.*;
 import io.fi0x.languagegenerator.db.entities.*;
+import io.fi0x.languagegenerator.logic.ControlledRandom;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
 import jakarta.persistence.EntityNotFoundException;
@@ -42,6 +43,8 @@ public class TestGenerationService
     private static final Long END_LETTER_ID = 32L;
     private static final Long FORBIDDEN_LETTER_ID = 64L;
     private static final String FORBIDDEN_AA = "aa";
+    private static final Long SPECIAL_CHARACTER_ID = 128L;
+    private static final String SPECIAL_CHARACTER = "z";
 
     private MockedStatic<SecurityContextHolder> staticMock;
 
@@ -67,6 +70,8 @@ public class TestGenerationService
     private EndingRepository endRepository;
     @Mock
     private WordRepository wordRepository;
+    @Mock
+    private ControlledRandom random;
 
     @Mock
     private Authentication authentication;
@@ -85,10 +90,17 @@ public class TestGenerationService
         staticMock.when(SecurityContextHolder::getContext).thenReturn(securityContext);
         doReturn(authentication).when(securityContext).getAuthentication();
         doReturn(USERNAME).when(authentication).getName();
+
         doReturn(Optional.of(DEFAULT_LETTER_ID)).when(speRepository).getHighestId();
         doReturn(Optional.of(DEFAULT_LETTER_ID)).when(wordRepository).getHighestId(any());
-
         doReturn(getLanguage(NORMAL_WORD_LENGTH)).when(languageRepository).findById(eq(VALID_LANGUAGE_ID));
+        doReturn(0.5).when(random).randomDouble();
+        doReturn(new ControlledRandom().randomInt(0, 3)).when(random).randomInt(eq(0), eq(3));
+        doReturn(new ControlledRandom().randomInt(2, 2)).when(random).randomInt(eq(2), eq(2));
+        doReturn(new ControlledRandom().randomInt(0, 1)).when(random).randomInt(eq(0), eq(1));
+        doReturn(new ControlledRandom().randomInt(0, 2)).when(random).randomInt(eq(0), eq(2));
+        doReturn(new ControlledRandom().randomInt(0, 4)).when(random).randomInt(eq(0), eq(4));
+        doReturn(new ControlledRandom().randomInt(4, 4)).when(random).randomInt(eq(4), eq(4));
     }
 
     @AfterEach
@@ -195,16 +207,20 @@ public class TestGenerationService
         doReturn(getConsonantVocalCombinations()).when(cvRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
         doReturn(getVocalConsonantCombinations()).when(vcRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
         doReturn(getForbiddenCombinationsForSpecialChars()).when(fRepository).getAllByLanguageId(eq(VALID_LANGUAGE_ID));
+        doReturn(getSpecialCombinations()).when(speRepository).getAllByLanguageId(VALID_LANGUAGE_ID);
+        doReturn(getDefaultLetter()).when(letterRepository).findById(eq(DEFAULT_LETTER_ID));
         doReturn(getForbiddenLetter()).when(letterRepository).findById(eq(FORBIDDEN_LETTER_ID));
+        doReturn(getSpecialLetter()).when(letterRepository).findById(eq(SPECIAL_CHARACTER_ID));
         Word firstWord = new WordDto(VALID_LANGUAGE_ID, null, null, "Aa", 0, null).toEntity();
         doReturn(Optional.of(firstWord)).when(wordRepository).getByLanguageIdAndLetters(eq(VALID_LANGUAGE_ID), eq("Aa"));
         doReturn(getSpecialCharLanguage()).when(languageRepository).findById(eq(VALID_LANGUAGE_ID));
+        doReturn(2).when(random).randomInt(eq(0), eq(2));
 
         WordDto expectedWord = new WordDto();
         expectedWord.setLanguageId(VALID_LANGUAGE_ID);
         expectedWord.setLanguageName(null);
         expectedWord.setWordNumber(null);
-        expectedWord.setWord("");
+        expectedWord.setWord("Az");
         expectedWord.setListIndex(0);
         expectedWord.setSavedInDb(null);
 
@@ -326,6 +342,15 @@ public class TestGenerationService
         return result;
     }
 
+    private List<SpecialCharacterCombinations> getSpecialCombinations()
+    {
+        List<SpecialCharacterCombinations> result = new ArrayList<>();
+        SpecialCharacterCombinations combination = new SpecialCharacterCombinations();
+        combination.setLetterId(SPECIAL_CHARACTER_ID);
+        result.add(combination);
+        return result;
+    }
+
     private List<StartingCombinations> getBeginningCombinations()
     {
         List<StartingCombinations> result = new ArrayList<>();
@@ -355,6 +380,13 @@ public class TestGenerationService
     {
         Letter letter = new Letter();
         letter.setLetters(FORBIDDEN_AA);
+        return Optional.of(letter);
+    }
+
+    private Optional<Letter> getSpecialLetter()
+    {
+        Letter letter = new Letter();
+        letter.setLetters(SPECIAL_CHARACTER);
         return Optional.of(letter);
     }
 
