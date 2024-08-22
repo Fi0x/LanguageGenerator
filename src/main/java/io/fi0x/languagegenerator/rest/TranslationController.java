@@ -86,6 +86,7 @@ public class TranslationController
     }
 
     @Transactional
+    @SuppressWarnings("unchecked")
     @GetMapping("/delete-word")
     public String deleteWord(ModelMap model, @RequestParam("languageId") long languageId, @RequestParam("wordNumber") long wordNumber)
     {
@@ -105,7 +106,6 @@ public class TranslationController
         if (originalEndpoint == null)
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No return page found for delete-word operation");
 
-        //TODO: Fix unchecked casts
         if (originalEndpoint.equals("dictionary")) {
             List<Word> wordList = ((List<Word>) model.get("savedWords")).stream()
                     .filter(word1 -> word1.getLanguageId() != languageId || word1.getWordNumber() == null || word1.getWordNumber() != wordNumber).toList();
