@@ -32,6 +32,7 @@ public class LanguageService
     private final SpecialCharacterRepository speRepo;
     private final StartingRepository staRepo;
     private final EndingRepository endRepo;
+    private final WordRepository wordRepo;
 
     public void addLanguage(LanguageData languageData) throws InvalidObjectException, IllegalAccessException
     {
@@ -209,6 +210,7 @@ public class LanguageService
         if (languageCreator == null || !languageCreator.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
             throw new IllegalAccessException("You are not allowed to delete the selected language");
 
+        wordRepo.deleteAllByLanguageId(languageId);
         languageRepository.deleteById(languageId);
     }
 

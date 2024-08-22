@@ -16,7 +16,6 @@ public interface WordRepository extends JpaRepository<Word, Word.WordId>
 
     Word getByLanguageIdAndWordNumber(Long languageId, Long wordNumber);
 
-    //TODO: Use this call to clean the db when a language gets deleted
     void deleteAllByLanguageId(Long languageId);
 
     @Query(value = "SELECT MAX(wordNumber) FROM Word WHERE languageId = :languageId")

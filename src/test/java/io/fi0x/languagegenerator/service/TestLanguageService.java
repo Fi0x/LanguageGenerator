@@ -57,6 +57,8 @@ public class TestLanguageService
     private StartingRepository staRepo;
     @Mock
     private EndingRepository endRepo;
+    @Mock
+    private WordRepository wordRepo;
 
     @Mock
     private SecurityContext securityContext;
@@ -84,6 +86,7 @@ public class TestLanguageService
         doReturn(getLanguageList(2, 0)).when(languageRepository).getAllByUsername(eq(USERNAME));
         doReturn(getLanguageList(3, 2)).when(languageRepository).getAllByVisible(eq(true));
         doReturn(Optional.of(LanguageConverter.convertToEntity(getLanguageData()))).when(languageRepository).findById(HIGHEST_ID);
+        doNothing().when(wordRepo).deleteAllByLanguageId(anyLong());
     }
 
     @AfterEach
@@ -253,6 +256,7 @@ public class TestLanguageService
     void test_deleteLanguage_success()
     {
         Assertions.assertDoesNotThrow(() -> service.deleteLanguage(HIGHEST_ID));
+        verify(wordRepo, atLeastOnce()).deleteAllByLanguageId(anyLong());
     }
 
     @Test
