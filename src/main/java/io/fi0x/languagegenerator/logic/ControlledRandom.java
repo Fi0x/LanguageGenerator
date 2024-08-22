@@ -2,7 +2,6 @@ package io.fi0x.languagegenerator.logic;
 
 import org.springframework.stereotype.Component;
 
-//TODO: Add tests for this class
 @Component
 public class ControlledRandom
 {
