@@ -171,6 +171,10 @@ table {
     outline-width: 0;
 }
 
+.file-input {
+    color: var(--custom-black);
+}
+
 input {
     background-color: var(--custom-white);
     border-color: transparent;

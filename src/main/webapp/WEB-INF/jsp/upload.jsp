@@ -11,7 +11,7 @@
             <tr>
                 <td>File to upload:</td>
                 <td>
-                    <input type="file" name="languageFile"/>
+                    <input type="file" name="languageFile" class="file-input"/>
                 </td>
             </tr>
             <tr>
