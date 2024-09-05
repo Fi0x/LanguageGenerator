@@ -2,6 +2,7 @@ package io.fi0x.languagegenerator.service;
 
 import io.fi0x.languagegenerator.db.*;
 import io.fi0x.languagegenerator.db.entities.*;
+import io.fi0x.languagegenerator.logic.ControlledRandom;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
 import jakarta.persistence.EntityNotFoundException;
@@ -35,6 +36,8 @@ public class GenerationService
     private final EndingRepository endRepository;
     private final WordRepository wordRepo;
 
+    private final ControlledRandom random;
+
     public List<WordDto> generateWords(@NonNull LanguageData languageData, int count) throws EntityNotFoundException, InvalidObjectException, IllegalAccessException, IllegalArgumentException
     {
         log.trace("generateWords() called for language={} with amount={}", languageData, count);
@@ -48,7 +51,7 @@ public class GenerationService
         if (result.isEmpty())
             throw new EntityNotFoundException("Could not find language with id=" + languageData.getId());
 
-        if(Boolean.TRUE.equals(result.get().getRealLanguage()))
+        if (Boolean.TRUE.equals(result.get().getRealLanguage()))
             throw new IllegalArgumentException("Language '" + result.get().getName() + "' is not designed to generate words, but rather a placeholder for translations.");
 
         LanguageData language = LanguageData.getFromEntity(result.get());
@@ -68,8 +71,7 @@ public class GenerationService
             WordDto word = generateWord(language);
             word.setListIndex(i);
             Optional<Word> savedWord = wordRepo.getByLanguageIdAndLetters(languageData.getId(), word.getWord());
-            if(savedWord.isPresent())
-            {
+            if (savedWord.isPresent()) {
                 word.setSavedInDb(true);
                 word.setWordNumber(savedWord.get().getWordNumber());
             }
@@ -87,10 +89,10 @@ public class GenerationService
         name.append(getBeginning(language));
         String ending = getNewRandom(forbiddenCombinations, name.toString(), language.getEndingCombinations(), "");
 
-        int desiredLength = (int) (Math.random() * (language.getMaxWordLength() - language.getMinWordLength()) + language.getMinWordLength());
+        int desiredLength = random.randomInt(language.getMinWordLength(), language.getMaxWordLength());
         desiredLength -= ending.length();
 
-        for (int i = (int) (Math.random() * 4); name.length() < desiredLength && i < desiredLength + 4; i++) {
+        for (int i = random.randomInt(0, 3); name.length() < desiredLength && i < desiredLength + 4; i++) {
             List<String> selectedList;
             switch (i % 4) {
                 case 0 -> selectedList = language.getConsonantVocals();
@@ -116,7 +118,7 @@ public class GenerationService
     private String getNewRandom(List<String> forbiddenCombinations, String previousLetters, List<String> newPossibilities, String ending)
     {
         int tries = 0;
-        int randomIdx = (int) (Math.random() * newPossibilities.size());
+        int randomIdx = random.randomInt(0, newPossibilities.size());
 
         while (tries < newPossibilities.size()) {
             String nextPossiblePart = newPossibilities.get((randomIdx + tries) % newPossibilities.size());
@@ -147,7 +149,7 @@ public class GenerationService
     {
         if (currentWord.length() >= languageData.getMaxWordLength())
             return currentWord;
-        if (Math.random() >= languageData.getSpecialCharacterChance() && languageData.getMaxSpecialChars() <= 0)
+        if (random.randomDouble() >= languageData.getSpecialCharacterChance() && languageData.getMaxSpecialChars() <= 0)
             return currentWord;
 
         int lastSpecialCharIdx = 0;
@@ -155,7 +157,7 @@ public class GenerationService
             int nextSpecialCharIdx = lastSpecialCharIdx;
             if (lastSpecialCharIdx == 0)
                 nextSpecialCharIdx = languageData.getCharsBeforeSpecial() - 1;
-            nextSpecialCharIdx += (int) (Math.random() * (currentWord.length() - nextSpecialCharIdx - languageData.getCharsAfterSpecial() + 1));
+            nextSpecialCharIdx += random.randomInt(0, currentWord.length() - nextSpecialCharIdx - languageData.getCharsAfterSpecial());
             if (nextSpecialCharIdx <= lastSpecialCharIdx)
                 break;
 

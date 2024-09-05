@@ -137,9 +137,6 @@ public class LanguageController
 
         try {
             languageService.deleteLanguage(languageId);
-        } catch (EntityNotFoundException e) {
-            log.warn("Could not delete language with id={}", languageId);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
         } catch (IllegalAccessException e) {
             log.info("User '{}' tried to delete language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageId);
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());

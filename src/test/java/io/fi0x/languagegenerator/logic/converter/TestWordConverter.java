@@ -2,7 +2,6 @@ package io.fi0x.languagegenerator.logic.converter;
 
 import io.fi0x.languagegenerator.db.entities.Translation;
 import io.fi0x.languagegenerator.db.entities.Word;
-import io.fi0x.languagegenerator.logic.dto.WordDto;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -53,10 +52,5 @@ public class TestWordConverter
         translation.setTranslatedLanguageId(LANGUAGE2);
         translation.setTranslatedWordNumber(WORD_NUMBER2);
         return translation;
-    }
-
-    private WordDto getExpectedDto()
-    {
-        return new WordDto(LANGUAGE1, WORD1);
     }
 }

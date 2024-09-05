@@ -41,6 +41,10 @@ public class TestLanguageConverter
     @Tag("UnitTest")
     void test_convertToJson()
     {
+        LanguageData realLang = getData();
+        realLang.setRealLanguage(true);
+
+        assertThat(LanguageConverter.convertToJson(realLang)).usingRecursiveComparison().isEqualTo(new LanguageJson());
         assertThat(LanguageConverter.convertToJson(getData())).usingRecursiveComparison().isEqualTo(getJson());
     }
 

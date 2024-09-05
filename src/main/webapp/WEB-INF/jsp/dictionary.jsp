@@ -13,11 +13,11 @@
     <table id="searchableTable" class="table sortable">
         <thead>
         <tr>
-            <th>Word</th>
+            <th class="clickable">Word</th>
             <c:if test="${!languageName.equals('English')}">
-                <th>English Translation</th>
+                <th class="clickable">English Translation</th>
             </c:if>
-            <th colspan="2">Options</th>
+            <th colspan="2" class="clickable">Options</th>
         </tr>
         </thead>
         <tbody>

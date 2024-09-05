@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TestWordDto
 {
     private static final Long ID = 42L;
-    private static final Long WORD_NUMBER = 84L;
     private static final String LETTERS = "bla";
 
     @Test

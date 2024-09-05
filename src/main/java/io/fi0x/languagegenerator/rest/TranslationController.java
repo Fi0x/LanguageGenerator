@@ -86,6 +86,7 @@ public class TranslationController
     }
 
     @Transactional
+    @SuppressWarnings("unchecked")
     @GetMapping("/delete-word")
     public String deleteWord(ModelMap model, @RequestParam("languageId") long languageId, @RequestParam("wordNumber") long wordNumber)
     {
@@ -127,7 +128,13 @@ public class TranslationController
     {
         log.info("showDictionary() called for languageId={}", languageId);
 
-        LanguageData languageData = languageService.getLanguageData(languageId);
+        LanguageData languageData;
+        try {
+            languageData = languageService.getAuthenticatedLanguageData(languageId);
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access this language");
+        }
+
         model.put("languageName", languageData.getName());
         model.put("languageCreator", languageData.getUsername());
         List<Word> savedWords = translationService.getAllWords(languageId);

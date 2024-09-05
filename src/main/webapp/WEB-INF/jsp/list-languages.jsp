@@ -14,11 +14,12 @@
     <table id="searchableTable" class="table sortable">
         <thead>
         <tr class="underlined-row">
-            <th>Language</th>
-            <th colspan="2">Generate words</th>
-            <th>Creator</th>
-            <th>.json-Download</th>
-            <th colspan="2">Options for creator</th>
+            <th class="clickable">Language</th>
+            <th class="clickable">Generate words</th>
+            <th class="clickable">Dictionary</th>
+            <th class="clickable">Creator</th>
+            <th class="clickable">.json-Download</th>
+            <th colspan="2" class="clickable">Options for creator</th>
         </tr>
         </thead>
         <tbody>

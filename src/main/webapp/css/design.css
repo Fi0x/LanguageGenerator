@@ -157,3 +157,26 @@ table {
     background-color: var(--dark-accent);
     border-radius: 5px;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+.non-editable {
+    background-color: var(--light-accent);
+    border-color: transparent;
+}
+
+.non-editable:focus-visible {
+    outline-width: 0;
+}
+
+.file-input {
+    color: var(--custom-black);
+}
+
+input {
+    background-color: var(--custom-white);
+    border-color: transparent;
+    border-radius: 2px;
+}

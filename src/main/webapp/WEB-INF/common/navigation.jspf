@@ -15,6 +15,7 @@
     </div>
     <ul class="navbar-nav">
         <c:choose>
+            <%--@elvariable id="username" type="java.lang.String"--%>
             <c:when test="${username == 'anonymousUser'}">
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/custom-login">Login</a></li>
             </c:when>

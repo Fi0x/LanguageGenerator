@@ -12,8 +12,6 @@ public interface WordRepository extends JpaRepository<Word, Word.WordId>
 {
     List<Word> getAllByLanguageId(Long languageId);
 
-    List<Word> getAllByLetters(String letters);
-
     Optional<Word> getByLanguageIdAndLetters(Long languageId, String letters);
 
     Word getByLanguageIdAndWordNumber(Long languageId, Long wordNumber);

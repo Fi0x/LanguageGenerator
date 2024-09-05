@@ -175,6 +175,16 @@ public class TestLanguageController
 
     @Test
     @Tag("UnitTest")
+    void test_generateWords_realLanguage() throws Exception
+    {
+        doThrow(IllegalArgumentException.class).when(generationService).generateWords(eq(getLanguageData()), eq(WORD_AMOUNT));
+
+        mvc.perform(get(GENERATE_URL).param("language", String.valueOf(LANGUAGE_ID)).param("amount", String.valueOf(WORD_AMOUNT)))
+                .andExpect(status().is(HttpStatus.NOT_ACCEPTABLE.value()));
+    }
+
+    @Test
+    @Tag("UnitTest")
     void test_redirectWrongUrl() throws Exception
     {
         mvc.perform(get(WRONG_URL))
@@ -272,17 +282,6 @@ public class TestLanguageController
 
         mvc.perform(get(DELETE_LANGUAGE_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
                 .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
-    }
-
-    @Test
-    @Tag("UnitTest")
-    void test_deleteLanguage_notFound() throws Exception
-    {
-        doReturn(USERNAME).when(languageService).getLanguageCreator(eq(LANGUAGE_ID));
-        doThrow(EntityNotFoundException.class).when(languageService).deleteLanguage(eq(LANGUAGE_ID));
-
-        mvc.perform(get(DELETE_LANGUAGE_URL).param("languageId", String.valueOf(LANGUAGE_ID)))
-                .andExpect(status().is(HttpStatus.NOT_FOUND.value()));
     }
 
     private LanguageData getLanguageData()
