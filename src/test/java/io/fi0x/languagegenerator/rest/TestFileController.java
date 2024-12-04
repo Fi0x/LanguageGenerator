@@ -1,9 +1,9 @@
 package io.fi0x.languagegenerator.rest;
 
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
-import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.FileService;
 import io.fi0x.languagegenerator.service.LanguageService;
+import io.github.fi0x.util.components.Authenticator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ public class TestFileController
     private static final String LANGUAGE_NAME = "Chinesisch";
 
     @MockBean
-    private AuthenticationService authenticationService;
+    private Authenticator authenticationService;
     @MockBean
     private LanguageService languageService;
     @MockBean

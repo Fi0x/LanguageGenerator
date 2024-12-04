@@ -4,9 +4,9 @@ import io.fi0x.languagegenerator.db.entities.Word;
 import io.fi0x.languagegenerator.logic.converter.WordConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
-import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.LanguageService;
 import io.fi0x.languagegenerator.service.TranslationService;
+import io.github.fi0x.util.components.Authenticator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @SessionAttributes({"amount", "englishTranslations", "language", "languages", "languageCreator", "languageName", "originalEndpoint", "originalLanguageData", "username", "savedWords", "translations", "word", "words"})
 public class TranslationController
 {
-    private AuthenticationService authenticationService;
+    private Authenticator authenticator;
     private LanguageService languageService;
     private TranslationService translationService;
 
@@ -54,7 +54,7 @@ public class TranslationController
                     Word savedWord = translationService.saveOrGetWord(wordDto);
                     wordDto.setWordNumber(savedWord.getWordNumber());
                 } catch (IllegalAccessException e) {
-                    log.info("User '{}' tried to save word '{}' in a language, which is not allowed", authenticationService.getAuthenticatedUsername(), word);
+                    log.info("User '{}' tried to save word '{}' in a language, which is not allowed", authenticator.getAuthenticatedUsername(), word);
                     throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save translations in this language");
                 }
             }
@@ -77,7 +77,7 @@ public class TranslationController
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "To see translations for this word, it needs to be saved in the database, but you are not authorized to do so.");
         }
 
-        model.put("username", authenticationService.getAuthenticatedUsername());
+        model.put("username", authenticator.getAuthenticatedUsername());
         model.put("originalLanguageData", languageService.getLanguageData(languageId));
         model.put("translations", languageService.addLanguageNameToWords(translationService.getTranslations(wordDto)));
         model.put("languages", languageService.getUserAndPublicLanguages());
@@ -140,7 +140,7 @@ public class TranslationController
         List<Word> savedWords = translationService.getAllWords(languageId);
         model.put("savedWords", savedWords);
         model.put("englishTranslations", translationService.getEnglishTranslations(savedWords));
-        model.put("username", authenticationService.getAuthenticatedUsername());
+        model.put("username", authenticator.getAuthenticatedUsername());
         model.put("language", languageId);
         model.put("originalEndpoint", "dictionary");
 
@@ -165,7 +165,7 @@ public class TranslationController
                 model.put("translations", dtoList);
             }
         } catch (IllegalAccessException e) {
-            log.info("User '{}' tried to save word '{}' in a language, which is not allowed", authenticationService.getAuthenticatedUsername(), word1);
+            log.info("User '{}' tried to save word '{}' in a language, which is not allowed", authenticator.getAuthenticatedUsername(), word1);
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save translations in this language");
         }
 

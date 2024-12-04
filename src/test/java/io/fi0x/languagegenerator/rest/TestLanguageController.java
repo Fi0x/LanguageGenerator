@@ -3,9 +3,9 @@ package io.fi0x.languagegenerator.rest;
 import io.fi0x.languagegenerator.db.entities.Language;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
-import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.GenerationService;
 import io.fi0x.languagegenerator.service.LanguageService;
+import io.github.fi0x.util.components.Authenticator;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -49,7 +49,7 @@ public class TestLanguageController
     @MockBean
     private LanguageService languageService;
     @MockBean
-    private AuthenticationService authenticationService;
+    private Authenticator authenticationService;
 
     @Autowired
     private MockMvc mvc;
