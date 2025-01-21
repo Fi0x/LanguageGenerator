@@ -6,8 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Slf4j
+@EnableScheduling
 @SpringBootApplication
 //TODO:Disable the config-imports, when homeserver.use-hub=false
 @Import({HomeServerUtilConfig.class, HubRegisterConfig.class, UtilLoggingConfig.class, LoginConfig.class,

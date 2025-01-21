@@ -24,6 +24,7 @@ public class SpringSecurityConfig
 
 	private static final String[] PRIVATE_URLS = new String[]{};
 
+	//TODO: Add all the private urls
 	@Bean
 	@Order(SecurityProperties.BASIC_AUTH_ORDER)
 	public SecurityFilterChain securityFilterChain2(HttpSecurity http) throws Exception
@@ -33,6 +34,7 @@ public class SpringSecurityConfig
 		return HomeServerUtilConfig.securityFilterChainSetup(http, PUBLIC_URLS, ANONYMOUS_URLS, PRIVATE_URLS);
 	}
 
+	//TODO: Re-Enable this config when service is not using a hub
 //	@Bean
 //	@Order(SecurityProperties.BASIC_AUTH_ORDER)
 //	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
