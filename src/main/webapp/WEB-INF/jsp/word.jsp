@@ -58,5 +58,10 @@
     </c:if>
 </div>
 <%@include file="../common/scripts.jspf" %>
+<script>
+    onload = function () {
+        loadNavBar();
+    }
+</script>
 </body>
 </html>

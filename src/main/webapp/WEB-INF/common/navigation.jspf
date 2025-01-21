@@ -21,7 +21,7 @@
     </ul>
 </nav>
 <script>
-    onload = function () {
+    function loadNavBar() {
         const list = document.getElementById("menuBarList");
         const loginElement = document.getElementById("loginNavBarElement");
 
@@ -88,7 +88,6 @@
                             elements[0].parentNode.removeChild(elements[0]);
                         }
                     } else {
-                        console.log(res.username)
                         let elements = document.getElementsByClassName('anonymous-user');
                         while (elements[0]) {
                             elements[0].parentNode.removeChild(elements[0]);
