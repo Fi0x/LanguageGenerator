@@ -1,6 +1,6 @@
 package io.fi0x.languagegenerator;
 
-import io.github.fi0x.util.config.*;
+import io.github.fi0x.util.config.HomeServerUtilConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,9 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Slf4j
 @EnableScheduling
 @SpringBootApplication
-//TODO:Disable the config-imports, when homeserver.use-hub=false
-@Import({HomeServerUtilConfig.class, HubRegisterConfig.class, UtilLoggingConfig.class, LoginConfig.class,
-        ApiConfig.class})
+@Import({HomeServerUtilConfig.class})
 public class MainApplication extends SpringBootServletInitializer
 {
 	public static void main(String[] args)
