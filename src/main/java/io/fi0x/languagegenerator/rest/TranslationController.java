@@ -31,39 +31,6 @@ public class TranslationController
     private TranslationService translationService;
 
     @Transactional
-    @PostMapping("/word")
-    public String saveWord(ModelMap model, @RequestParam("listIndex") Integer listIndex, @RequestParam(value = "word") String word, @ModelAttribute("savedWords") List<Word> savedWords)
-    {
-        log.info("saveWord() called for word={} with listIndex={} and savedWords={}", word, listIndex, savedWords);
-
-        if (listIndex == -1) {
-            WordDto wordDto = new WordDto();
-            wordDto.setLanguageId((Long) model.get("language"));
-            wordDto.setWord(word);
-            try {
-                savedWords.add(translationService.saveOrGetWord(wordDto));
-            } catch (IllegalAccessException e) {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save words in this language, only the owner can");
-            }
-        } else {
-            Object object = model.get("words");
-            if (object instanceof List<?> someList && listIndex >= 0 && someList.size() > listIndex && someList.get(listIndex) instanceof WordDto wordDto) {
-                wordDto.setWord(word);
-
-                try {
-                    Word savedWord = translationService.saveOrGetWord(wordDto);
-                    wordDto.setWordNumber(savedWord.getWordNumber());
-                } catch (IllegalAccessException e) {
-                    log.info("User '{}' tried to save word '{}' in a language, which is not allowed", authenticator.getAuthenticatedUsername(), word);
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save translations in this language");
-                }
-            }
-        }
-
-        return (String) model.getAttribute("originalEndpoint");
-    }
-
-    @Transactional
     @GetMapping("/word")
     public String showWord(ModelMap model, @RequestParam("languageId") long languageId, @RequestParam("word") String word)
     {
@@ -83,43 +50,6 @@ public class TranslationController
         model.put("languages", languageService.getUserAndPublicLanguages());
 
         return "word";
-    }
-
-    @Transactional
-    @SuppressWarnings("unchecked")
-    @GetMapping("/delete-word")
-    public String deleteWord(ModelMap model, @RequestParam("languageId") long languageId, @RequestParam("wordNumber") long wordNumber)
-    {
-        log.info("deleteWord() called with languageId={} and wordNumber={}", languageId, wordNumber);
-
-        Word word = new Word();
-        word.setLanguageId(languageId);
-        word.setWordNumber(wordNumber);
-
-        try {
-            translationService.deleteWord(word);
-        } catch (IllegalAccessException e) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User is not allowed to delete any saved words of this language");
-        }
-
-        String originalEndpoint = (String) model.get("originalEndpoint");
-        if (originalEndpoint == null)
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No return page found for delete-word operation");
-
-        if (originalEndpoint.equals("dictionary")) {
-            List<Word> wordList = ((List<Word>) model.get("savedWords")).stream()
-                    .filter(word1 -> word1.getLanguageId() != languageId || word1.getWordNumber() == null || word1.getWordNumber() != wordNumber).toList();
-            model.put("savedWords", wordList);
-        } else if (originalEndpoint.equals("list-words")) {
-            List<WordDto> wordList = ((List<WordDto>) model.get("words")).stream()
-                    .peek(word1 -> {
-                        if (word1.getLanguageId() == languageId && word1.getWordNumber() != null && word1.getWordNumber() == wordNumber)
-                            word1.setSavedInDb(false);
-                    }).toList();
-            model.put("words", wordList);
-        }
-
-        return originalEndpoint;
     }
 
     @Transactional

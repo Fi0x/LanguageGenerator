@@ -18,14 +18,15 @@
         </thead>
         <tbody>
         <%--@elvariable id="words" type="java.util.List"--%>
-        <c:forEach items="${words}" var="singleWord" varStatus="status">
+        <c:forEach items="${words}" var="singleWord" varStatus="loop">
             <tr>
                 <form:form method="post" action="word">
                     <input type="hidden" name="listIndex" value="${singleWord.listIndex}"/>
                     <input type="hidden" name="languageId" value="${singleWord.languageId}"/>
                     <td>
                         <label>
-                            <input onchange="updateSaveState('${singleWord.word}', word.value, ${singleWord.savedInDb}, ${singleWord.listIndex})"
+                            <input id="wordText${loop.index}"
+                                   onchange="updateSaveState('${singleWord.word}', word.value, ${singleWord.savedInDb}, ${loop.index})"
                                    type="text" name="word" value="${singleWord.word}"/>
                         </label>
                     </td>
@@ -34,13 +35,12 @@
                     </td>
                     <td>
                         <c:if test="${languageCreator == username}">
-                            <input id="saveButton${singleWord.listIndex}"
-                                   style="visibility: ${singleWord.savedInDb ? "hidden" : "visible"}" type="submit"
-                                   class="btn-success" value="Save"/>
-
-                            <a href="delete-word?languageId=${singleWord.languageId}&wordNumber=${singleWord.wordNumber}"
-                               id="deleteButton${singleWord.listIndex}"
-                               style="visibility: ${singleWord.savedInDb ? "visible" : "hidden"}" class="btn-danger">Delete</a>
+                            <a id="saveButton${loop.index}" class="btn btn-success"
+                               style="visibility: ${singleWord.savedInDb ? 'hidden' : 'visible'}"
+                               onclick="saveInDb(${loop.index}, ${singleWord.languageId}, this)">Save</a>
+                            <a id="deleteButton${loop.index}" class="btn btn-danger"
+                               onclick="deleteFromDb(${loop.index}, ${singleWord.languageId}, this)"
+                               style="visibility: ${singleWord.savedInDb ? "visible" : "hidden"}">Delete</a>
                         </c:if>
                     </td>
                 </form:form>
@@ -52,6 +52,18 @@
 </div>
 <%@include file="../common/scripts.jspf" %>
 <script src="${pageContext.request.contextPath}/js/functions.js"></script>
+<script src="${pageContext.request.contextPath}/js/word-functions.js"></script>
+<script>
+    let baseUrl = `${pageContext.request.contextPath}/api`;
+    let wordIdMapping = [
+        <c:forEach items="${words}" var="singleWord" varStatus="loop">
+        {
+            text: `${singleWord.word}`,
+            dbNumber: ${singleWord.savedInDb ? singleWord.wordNumber : -1}
+        }${loop.last ? '' : ','}
+        </c:forEach>
+    ];
+</script>
 <script>
     onload = function () {
         loadNavBar();
