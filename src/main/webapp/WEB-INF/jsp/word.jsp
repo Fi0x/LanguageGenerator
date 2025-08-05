@@ -28,6 +28,7 @@
                 </td>
                 <td>
                     <c:if test="${username == originalLanguageData.username}">
+<%--                        TODO: Change this to a normal rest-call--%>
                         <a href="delete-translation?languageId1=${singleTranslation.languageId}&wordNumber1=${singleTranslation.wordNumber}&languageId2=${word.languageId}&wordNumber2=${word.wordNumber}"
                            class="btn-danger">Delete Translation</a>
                     </c:if>
@@ -37,6 +38,7 @@
         </tbody>
     </table>
     <c:if test="${(originalLanguageData.name.equals('English') || username == originalLanguageData.username) && languages.size() > 1}">
+<%--        TODO: Change this to a normal rest-call and remove the form--%>
         <form:form method="post" action="translation">
             <input type="hidden" name="languageId" value="${originalLanguageData.id}">
             <input type="hidden" name="word" value="${word.letters}">

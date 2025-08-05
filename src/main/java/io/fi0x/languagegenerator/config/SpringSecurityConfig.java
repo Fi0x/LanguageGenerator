@@ -24,7 +24,6 @@ public class SpringSecurityConfig
 
 	private static final String[] PRIVATE_URLS = new String[]{};
 
-	//TODO: Add all the private urls
 	@Bean
 	@Order(SecurityProperties.BASIC_AUTH_ORDER)
 	public SecurityFilterChain securityFilterChain2(HttpSecurity http) throws Exception
