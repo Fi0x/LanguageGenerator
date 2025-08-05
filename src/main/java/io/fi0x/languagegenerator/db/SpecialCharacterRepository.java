@@ -15,6 +15,6 @@ public interface SpecialCharacterRepository extends JpaRepository<SpecialCharact
     @Transactional
     void deleteAllByLanguageId(Long languageId);
 
-    @Query(value = "SELECT MAX(ID) FROM spechacom", nativeQuery = true)
+    @Query(value = "SELECT MAX(ID) FROM langspechacom", nativeQuery = true)
     Optional<Long> getHighestId();
 }

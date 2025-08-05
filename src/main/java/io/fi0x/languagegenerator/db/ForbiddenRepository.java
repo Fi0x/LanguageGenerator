@@ -15,6 +15,6 @@ public interface ForbiddenRepository extends JpaRepository<ForbiddenCombination,
     @Transactional
     void deleteAllByLanguageId(Long languageId);
 
-    @Query(value = "SELECT MAX(ID) FROM forbcom", nativeQuery = true)
+    @Query(value = "SELECT MAX(ID) FROM langforbcom", nativeQuery = true)
     Optional<Long> getHighestId();
 }

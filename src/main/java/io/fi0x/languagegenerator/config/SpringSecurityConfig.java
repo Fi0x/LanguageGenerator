@@ -33,32 +33,4 @@ public class SpringSecurityConfig
 
 		return HomeServerUtilSecurityConfig.securityFilterChainSetup(http, PUBLIC_URLS, ANONYMOUS_URLS, PRIVATE_URLS);
 	}
-
-	//TODO: Re-Enable this config when service is not using a hub
-//	@Bean
-//	@Order(SecurityProperties.BASIC_AUTH_ORDER)
-//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
-//	{
-//		log.debug("securityFilterChain() bean called");
-//
-//		http.authorizeHttpRequests(auth -> {
-//			auth.requestMatchers(PUBLIC_URLS).permitAll();
-//			auth.requestMatchers(ANONYMOUS_URLS).anonymous();
-//			auth.anyRequest().authenticated();
-//		});
-//
-//		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
-//
-//		http.formLogin(form -> {
-//			form.loginPage("/custom-login");
-//			form.loginProcessingUrl("/login");
-//			form.defaultSuccessUrl("/", true);
-//			form.permitAll();
-//		});
-//
-//		http.csrf(AbstractHttpConfigurer::disable);
-//		http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
-//
-//		return http.build();
-//	}
 }

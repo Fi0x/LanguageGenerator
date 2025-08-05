@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "FORBCOM")
+@Table(name = "LANGFORBCOM")
 public class ForbiddenCombination
 {
     @Id

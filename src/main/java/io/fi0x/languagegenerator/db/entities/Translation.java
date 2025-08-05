@@ -12,7 +12,7 @@ import java.util.Objects;
 @Data
 @Entity
 @IdClass(Translation.TranslationId.class)
-@Table(name = "TRANS")
+@Table(name = "LANGTRANS")
 public class Translation
 {
     @Id

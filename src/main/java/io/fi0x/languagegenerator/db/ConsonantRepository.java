@@ -15,6 +15,6 @@ public interface ConsonantRepository extends JpaRepository<ConsonantCombination,
     @Transactional
     void deleteAllByLanguageId(Long languageId);
 
-    @Query(value = "SELECT MAX(ID) FROM concom", nativeQuery = true)
+    @Query(value = "SELECT MAX(ID) FROM langconcom", nativeQuery = true)
     Optional<Long> getHighestId();
 }

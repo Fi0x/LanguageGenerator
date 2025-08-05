@@ -15,6 +15,6 @@ public interface VocalRepository extends JpaRepository<VocalCombination, Long>
     @Transactional
     void deleteAllByLanguageId(Long languageId);
 
-    @Query(value = "SELECT MAX(ID) FROM voccom", nativeQuery = true)
+    @Query(value = "SELECT MAX(ID) FROM langvoccom", nativeQuery = true)
     Optional<Long> getHighestId();
 }

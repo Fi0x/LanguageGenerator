@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "LANG")
+@Table(name = "LANGLANGUAGES")
 public class Language
 {
     @Id

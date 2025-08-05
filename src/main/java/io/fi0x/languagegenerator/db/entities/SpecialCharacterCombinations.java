@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "SPECHACOM")
+@Table(name = "LANGSPECHACOM")
 public class SpecialCharacterCombinations
 {
     @Id
