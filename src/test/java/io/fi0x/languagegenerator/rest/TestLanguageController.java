@@ -14,8 +14,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -44,12 +45,14 @@ public class TestLanguageController
     private static final Long FORBIDDEN_LANGUAGE = 498L;
     private static final Double SPECIAL_CHANCE = 0.0;
 
-    @MockBean
+    @MockitoBean
     private GenerationService generationService;
-    @MockBean
+    @MockitoBean
     private LanguageService languageService;
-    @MockBean
+    @MockitoBean
     private Authenticator authenticationService;
+    @MockitoBean
+    private UserDetailsManager userDetailsManager;
 
     @Autowired
     private MockMvc mvc;

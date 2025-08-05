@@ -1,6 +1,6 @@
 package io.fi0x.languagegenerator.config;
 
-import io.github.fi0x.util.config.HomeServerUtilConfig;
+import io.github.fi0x.util.config.HomeServerUtilSecurityConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +31,7 @@ public class SpringSecurityConfig
 	{
 		log.debug("securityFilterChain() bean called");
 
-		return HomeServerUtilConfig.securityFilterChainSetup(http, PUBLIC_URLS, ANONYMOUS_URLS, PRIVATE_URLS);
+		return HomeServerUtilSecurityConfig.securityFilterChainSetup(http, PUBLIC_URLS, ANONYMOUS_URLS, PRIVATE_URLS);
 	}
 
 	//TODO: Re-Enable this config when service is not using a hub

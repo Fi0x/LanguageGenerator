@@ -14,8 +14,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.*;
@@ -44,12 +45,14 @@ public class TestTranslationController
     private static final boolean SAVED = false;
     private static final String USERNAME = "Heinrich";
 
-    @MockBean
+    @MockitoBean
     private Authenticator authenticationService;
-    @MockBean
+    @MockitoBean
     private LanguageService languageService;
-    @MockBean
+    @MockitoBean
     private TranslationService translationService;
+    @MockitoBean
+    private UserDetailsManager userDetailsManager;
 
     @Autowired
     private MockMvc mvc;
