@@ -1,7 +1,6 @@
 package io.fi0x.languagegenerator.rest;
 
 import io.fi0x.languagegenerator.db.entities.Word;
-import io.fi0x.languagegenerator.logic.converter.WordConverter;
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
 import io.fi0x.languagegenerator.logic.dto.WordDto;
 import io.fi0x.languagegenerator.service.LanguageService;
@@ -13,12 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -75,46 +76,6 @@ public class TranslationController
         model.put("originalEndpoint", "dictionary");
 
         return "dictionary";
-    }
-
-    @Transactional
-    @PostMapping("/translation")
-    public String saveTranslation(ModelMap model, @RequestParam("languageId") Integer language1, @RequestParam("word") String word1, @RequestParam("translationLanguageId") Integer language2, @RequestParam(value = "translationWord") String word2)
-    {
-        log.info("saveTranslation() called for languageId={}, word={}, language2={} and word2={}", language1, word1, language2, word2);
-
-        try {
-            Word newWord = translationService.linkWords(new WordDto(language1.longValue(), word1), new WordDto(language2.longValue(), word2));
-
-            Object translationsObject = model.get("translations");
-            if (translationsObject instanceof List<?> translationsList && (translationsList.isEmpty() || translationsList.get(0) instanceof WordDto)) {
-                List<WordDto> dtoList = translationsList.stream().map(object -> (WordDto) object).collect(Collectors.toList());
-                WordDto newWordDto = WordConverter.convertToDto(newWord);
-                newWordDto.setLanguageName(languageService.getLanguageData(newWordDto.getLanguageId()).getName());
-                dtoList.add(newWordDto);
-                model.put("translations", dtoList);
-            }
-        } catch (IllegalAccessException e) {
-            log.info("User '{}' tried to save word '{}' in a language, which is not allowed", authenticator.getAuthenticatedUsername(), word1);
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to save translations in this language");
-        }
-
-        return "word";
-    }
-
-    @Transactional
-    @GetMapping("/delete-translation")
-    public String deleteTranslation(@RequestParam("languageId1") long languageId1, @RequestParam("wordNumber1") long wordNumber1, @RequestParam("languageId2") long languageId2, @RequestParam("wordNumber2") long wordNumber2)
-    {
-        log.info("deleteTranslation() called for languageId={}, wordNumber={} and languageId={}, wordNumber={}", languageId1, wordNumber1, languageId2, wordNumber2);
-
-        try {
-            translationService.deleteTranslation(languageId1, wordNumber1, languageId2, wordNumber2);
-        } catch (IllegalAccessException e) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to delete this translation. You need to own both languages in order to do so.");
-        }
-
-        return "redirect:/";
     }
 
     @ModelAttribute("savedWords")
