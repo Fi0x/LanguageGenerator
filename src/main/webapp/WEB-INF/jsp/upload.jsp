@@ -24,5 +24,10 @@
     </form>
 </div>
 <%@include file="../common/scripts.jspf" %>
+<script>
+    onload = function () {
+        loadNavBar();
+    }
+</script>
 </body>
 </html>

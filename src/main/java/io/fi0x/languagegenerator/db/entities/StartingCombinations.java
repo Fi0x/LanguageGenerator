@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "STARTCOM")
+@Table(name = "LANGSTARTCOM")
 public class StartingCombinations
 {
     @Id

@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "LTTRS")
+@Table(name = "LANGLTTRS")
 public class Letter
 {
     @Id

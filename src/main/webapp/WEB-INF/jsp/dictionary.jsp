@@ -21,8 +21,8 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${savedWords}" var="word">
-            <tr>
+        <c:forEach items="${savedWords}" var="word" varStatus="loop">
+            <tr id="wordRow${loop.index}">
                 <td>
                     <label>${word.letters}</label>
                 </td>
@@ -36,8 +36,8 @@
                 </td>
                 <td>
                     <c:if test="${languageCreator == username}">
-                        <a href="delete-word?languageId=${word.languageId}&wordNumber=${word.wordNumber}"
-                           class="btn-danger">Delete</a>
+                        <a onclick="deleteFromDb(${loop.index}, ${word.languageId}, this, true)"
+                           class="btn btn-danger">Delete</a>
                     </c:if>
                 </td>
             </tr>
@@ -54,5 +54,22 @@
 </div>
 <%@include file="../common/scripts.jspf" %>
 <script src="${pageContext.request.contextPath}/js/functions.js"></script>
+<script src="${pageContext.request.contextPath}/js/word-functions.js"></script>
+<script>
+    let baseUrl = `${pageContext.request.contextPath}/api`;
+    let wordIdMapping = [
+        <c:forEach items="${savedWords}" var="singleWord" varStatus="loop">
+        {
+            text: `${singleWord.letters}`,
+            dbNumber: ${singleWord.wordNumber}
+        }${loop.last ? '' : ','}
+        </c:forEach>
+    ];
+</script>
+<script>
+    onload = function () {
+        loadNavBar();
+    }
+</script>
 </body>
 </html>

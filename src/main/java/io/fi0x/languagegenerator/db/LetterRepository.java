@@ -11,6 +11,6 @@ public interface LetterRepository extends JpaRepository<Letter, Long>
 {
     List<Letter> getAllByLetters(String letters);
 
-    @Query(value = "SELECT MAX(ID) FROM lttrs", nativeQuery = true)
+    @Query(value = "SELECT MAX(ID) FROM langlttrs", nativeQuery = true)
     Optional<Long> getHighestId();
 }

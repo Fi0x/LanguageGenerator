@@ -14,22 +14,24 @@
             <th colspan="2">Options</th>
         </tr>
         </thead>
-        <tbody>
-        <c:forEach items="${translations}" var="singleTranslation" varStatus="status">
-            <tr>
+        <tbody id="translationTableBody">
+        <c:forEach items="${translations}" var="singleTranslation" varStatus="loop">
+            <tr id="translationRow${loop.index}">
                 <td>
                     <label>${singleTranslation.word}</label>
                 </td>
                 <td>
-                    <a href="dictionary?languageId=${singleTranslation.languageId}" class="btn-hidden-light">${singleTranslation.languageName}</a>
+                    <a href="dictionary?languageId=${singleTranslation.languageId}"
+                       class="btn-hidden-light">${singleTranslation.languageName}</a>
                 </td>
                 <td>
-                    <a href="word?languageId=${singleTranslation.languageId}&word=${singleTranslation.word}" class="btn">Translations</a>
+                    <a href="word?languageId=${singleTranslation.languageId}&word=${singleTranslation.word}"
+                       class="btn">Translations</a>
                 </td>
                 <td>
                     <c:if test="${username == originalLanguageData.username}">
-                        <a href="delete-translation?languageId1=${singleTranslation.languageId}&wordNumber1=${singleTranslation.wordNumber}&languageId2=${word.languageId}&wordNumber2=${word.wordNumber}"
-                           class="btn-danger">Delete Translation</a>
+                        <a onclick="deleteFromDb(${singleTranslation.languageId}, ${singleTranslation.wordNumber}, ${word.languageId}, ${word.wordNumber}, ${loop.index}, this)"
+                           class="btn btn-danger">Delete Translation</a>
                     </c:if>
                 </td>
             </tr>
@@ -37,26 +39,30 @@
         </tbody>
     </table>
     <c:if test="${(originalLanguageData.name.equals('English') || username == originalLanguageData.username) && languages.size() > 1}">
-        <form:form method="post" action="translation">
-            <input type="hidden" name="languageId" value="${originalLanguageData.id}">
-            <input type="hidden" name="word" value="${word.letters}">
-            <label>
-                <select name="translationLanguageId" class="selection">
-                    <c:forEach items="${languages}" var="selectableLanguage">
-                        <c:if test="${selectableLanguage.id != originalLanguageData.id}">
-                            <option value="${selectableLanguage.id}">${selectableLanguage.name}</option>
-                        </c:if>
-                    </c:forEach>
-                </select>
-            </label>
-            <label>
-                    <%--TODO: When the user types, provide reccommendations of existing words from the selected language--%>
-                <input type="text" name="translationWord"/>
-            </label>
-            <input type="submit" class="btn-success" value="Add Translation"/>
-        </form:form>
+        <label>
+            <select id="languageSelectionDropDown" class="selection">
+                <c:forEach items="${languages}" var="selectableLanguage">
+                    <c:if test="${selectableLanguage.id != originalLanguageData.id}">
+                        <option value="${selectableLanguage.id}">${selectableLanguage.name}</option>
+                    </c:if>
+                </c:forEach>
+            </select>
+        </label>
+        <label>
+            <input id="translationWord" type="text"/>
+        </label>
+        <a onclick="saveInDb(${word.languageId}, `${word.letters}`, this, ${word.wordNumber})" class="btn btn-success">Add Translation</a>
     </c:if>
 </div>
 <%@include file="../common/scripts.jspf" %>
+<script src="${pageContext.request.contextPath}/js/dictionary-functions.js"></script>
+<script>
+    let baseUrl = `${pageContext.request.contextPath}/api`;
+</script>
+<script>
+    onload = function () {
+        loadNavBar();
+    }
+</script>
 </body>
 </html>

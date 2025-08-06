@@ -1,9 +1,9 @@
 package io.fi0x.languagegenerator.rest;
 
 import io.fi0x.languagegenerator.logic.dto.LanguageData;
-import io.fi0x.languagegenerator.service.AuthenticationService;
 import io.fi0x.languagegenerator.service.GenerationService;
 import io.fi0x.languagegenerator.service.LanguageService;
+import io.github.fi0x.util.components.Authenticator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -29,7 +29,7 @@ public class LanguageController
 {
     private GenerationService generationService;
     private LanguageService languageService;
-    private AuthenticationService authenticationService;
+    private Authenticator authenticator;
 
     @Transactional
     @GetMapping("/generate")
@@ -52,7 +52,7 @@ public class LanguageController
         try {
             model.put("words", generationService.generateWords(languageData, amount));
 
-            model.put("username", authenticationService.getAuthenticatedUsername());
+            model.put("username", authenticator.getAuthenticatedUsername());
             model.put("languageName", languageData.getName());
             model.put("languageCreator", languageData.getUsername());
             model.put("originalEndpoint", "list-words");
@@ -87,7 +87,7 @@ public class LanguageController
         log.info("listLanguages() called");
 
         model.put("languages", languageService.getUserAndPublicLanguages());
-        model.put("username", authenticationService.getAuthenticatedUsername());
+        model.put("username", authenticator.getAuthenticatedUsername());
 
         return "list-languages";
     }
@@ -100,8 +100,8 @@ public class LanguageController
 
         LanguageData languageData = languageService.getLanguageData(languageId);
 
-        if (!languageData.getUsername().equals(authenticationService.getAuthenticatedUsername())) {
-            log.info("User '{}' tried to edit language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageData.getId());
+        if (!languageData.getUsername().equals(authenticator.getAuthenticatedUsername())) {
+            log.info("User '{}' tried to edit language {}, to which he has no access to", authenticator.getAuthenticatedUsername(), languageData.getId());
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to edit the selected language");
         }
 
@@ -122,7 +122,7 @@ public class LanguageController
             log.info("Could not save the language because it was not complete.");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ("Could not save the language.\n" + e.getLocalizedMessage()).replace("\n", "<br />"));
         } catch (IllegalAccessException e) {
-            log.info("User '{}' tried to update language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageData.getId());
+            log.info("User '{}' tried to update language {}, to which he has no access to", authenticator.getAuthenticatedUsername(), languageData.getId());
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
         }
 
@@ -138,7 +138,7 @@ public class LanguageController
         try {
             languageService.deleteLanguage(languageId);
         } catch (IllegalAccessException e) {
-            log.info("User '{}' tried to delete language {}, to which he has no access to", authenticationService.getAuthenticatedUsername(), languageId);
+            log.info("User '{}' tried to delete language {}, to which he has no access to", authenticator.getAuthenticatedUsername(), languageId);
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
         }
 

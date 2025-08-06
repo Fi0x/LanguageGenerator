@@ -12,7 +12,7 @@ import java.util.Objects;
 @Data
 @Entity
 @IdClass(Word.WordId.class)
-@Table(name = "WORD")
+@Table(name = "LANGWORD")
 public class Word
 {
     @Id

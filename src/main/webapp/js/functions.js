@@ -18,10 +18,10 @@ function searchFunction() {
     }
 }
 
-function updateSaveState(originalWord, text, isAlreadySaved, listIndex) {
+function updateSaveState(originalWord, text, isAlreadySaved, index) {
     if (originalWord !== text || !isAlreadySaved) {
-        document.getElementById("deleteButton" + listIndex).style.visibility = 'hidden';
-        document.getElementById("saveButton" + listIndex).style.visibility = 'visible';
+        document.getElementById("deleteButton" + index).style.visibility = 'hidden';
+        document.getElementById("saveButton" + index).style.visibility = 'visible';
     }
 }
 

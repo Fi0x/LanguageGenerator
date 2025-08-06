@@ -15,6 +15,6 @@ public interface EndingRepository extends JpaRepository<EndingCombinations, Long
     @Transactional
     void deleteAllByLanguageId(Long languageId);
 
-    @Query(value = "SELECT MAX(ID) FROM endcom", nativeQuery = true)
+    @Query(value = "SELECT MAX(ID) FROM langendcom", nativeQuery = true)
     Optional<Long> getHighestId();
 }

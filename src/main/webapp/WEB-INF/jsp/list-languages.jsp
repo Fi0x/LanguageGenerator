@@ -57,8 +57,16 @@
         </c:forEach>
         </tbody>
     </table>
+        <c:if test="${username != 'anonymousUser'}">
+            <a class="btn btn-success" href="${pageContext.request.contextPath}/language">Create new Language</a>
+        </c:if>
 </div>
 <%@include file="../common/scripts.jspf" %>
 <script src="${pageContext.request.contextPath}/js/functions.js"></script>
+<script>
+    onload = function () {
+        loadNavBar();
+    }
+</script>
 </body>
 </html>

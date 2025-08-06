@@ -15,6 +15,6 @@ public interface StartingRepository extends JpaRepository<StartingCombinations, 
     @Transactional
     void deleteAllByLanguageId(Long languageId);
 
-    @Query(value = "SELECT MAX(ID) FROM startcom", nativeQuery = true)
+    @Query(value = "SELECT MAX(ID) FROM langstartcom", nativeQuery = true)
     Optional<Long> getHighestId();
 }

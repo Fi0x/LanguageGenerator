@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "CONCOM")
+@Table(name = "LANGCONCOM")
 public class ConsonantCombination
 {
     @Id

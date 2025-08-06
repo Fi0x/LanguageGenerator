@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "ENDCOM")
+@Table(name = "LANGENDCOM")
 public class EndingCombinations
 {
     @Id
