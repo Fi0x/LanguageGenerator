@@ -49,7 +49,6 @@
             </select>
         </label>
         <label>
-                <%--TODO: When the user types, provide reccommendations of existing words from the selected language--%>
             <input id="translationWord" type="text"/>
         </label>
         <a onclick="saveInDb(${word.languageId}, `${word.letters}`, this, ${word.wordNumber})" class="btn btn-success">Add Translation</a>
